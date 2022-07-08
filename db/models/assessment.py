@@ -86,3 +86,18 @@ class AssessmentMethods:
             id=assessment_id.id,
             compliance_status=assessment_id.compliance_status,
         )
+
+    @staticmethod
+    def add_comment(assessment_id: str, comment: str):
+        """Function searches for an assessment_id from database
+        & adds a comment.
+
+        Args:
+            assessment_id (str): assessment_id.
+            status (str): compliance_status.
+
+        Returns:
+            class object with updated status, assessment id
+            and application id.
+        """
+        return ""
