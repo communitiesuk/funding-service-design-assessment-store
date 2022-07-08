@@ -59,6 +59,15 @@ components:
           type: string
         person_id:
           type: string
+    Compliance:
+      type: object
+      properties:
+        sub_criteria_id:
+          type: string
+        assessment_id:
+          type: string
+        is_compliant:
+          type: boolean
     Error:
       type: object
       properties:

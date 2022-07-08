@@ -101,7 +101,8 @@ class ScoresJustificationsMethods:
         )
         if not score_justification:
             raise ScoresJustifications(
-                message="Sub-Criteria could not be found"
+                message="Score and justification for \
+                    Sub-Criteria could not be found"
             )
         return score_justification
 
