@@ -49,6 +49,8 @@ components:
     ScoreJustification:
       type: object
       properties:
+        scores_justifications_id:
+          type: string
         sub_criteria_id:
           type: string
         assessment_id:
@@ -62,6 +64,8 @@ components:
     Compliance:
       type: object
       properties:
+        compliance_id:
+          type: string
         sub_criteria_id:
           type: string
         assessment_id:

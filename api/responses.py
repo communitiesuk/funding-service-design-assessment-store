@@ -86,6 +86,8 @@ def scores_justifications_response_list(
 
 
 def compliance_response(compliance: Compliance, code: int = 200):
+    if type(compliance) == dict:
+        compliance = Compliance(**compliance)
     return (
         make_response(
             {

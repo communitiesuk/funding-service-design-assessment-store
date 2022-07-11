@@ -69,7 +69,7 @@ class ComplianceError(Exception):
 class ComplianceMethods:
     @staticmethod
     def get_compliance(
-        sub_criteria_id: str, assessment_id: str, as_json=False
+        sub_criteria_id: str, assessment_id: str, return_as_json=False
     ):
         compliance = (
             db.session.query(Compliance)
@@ -77,10 +77,10 @@ class ComplianceMethods:
                 Compliance.assessment_id == assessment_id,
                 Compliance.sub_criteria_id == sub_criteria_id,
             )
-            .all()
+            .one()
         )
-        if as_json:
-            return [record.as_json() for record in compliance][0]
+        if return_as_json:
+            return [record.as_json() for record in compliance]
         return compliance
 
     @staticmethod

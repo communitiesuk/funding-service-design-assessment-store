@@ -18,30 +18,30 @@ class ComplianceView(ComplianceMethods, MethodView):
         """
         try:
             compliance_record = self.get_compliance(
-                sub_criteria_id, assessment_id, as_json=True
+                sub_criteria_id, assessment_id
             )
         except ComplianceError as e:
             return error_response(404, e.message)
         except IndexError:
-            return error_response(404, "List retunred was dead fam")
-
+            return error_response(404, "error")
         return compliance_response(compliance_record)
 
     def post(self, sub_criteria_id: str, assessment_id: str, body: dict):
         """
-        Registers a score and justification for assessment and subcriteria
+        Registers compliance status for an assessment and subcriteria
         :param sub_criteria_id: ID of sub-criteria
         :param assessment_id: ID of assessment
-        :return: a json of the score and justification
+        :param is_compliant: bool value of complaince status
+        :return: a json of the compliance record
                 created (or an error if failure)
         """
-        is_compliant = body.get("score")
+        is_compliant = body.get("is_compliant")
 
         try:
-            new_score_and_justification = self.register_compliance(
+            new_compliance = self.register_compliance(
                 sub_criteria_id, assessment_id, is_compliant
             )
         except ComplianceError as e:
             return error_response(401, e.message)
 
-        return compliance_response(new_score_and_justification, 201)
+        return compliance_response(new_compliance, 201)
