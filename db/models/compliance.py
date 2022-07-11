@@ -6,6 +6,7 @@ from db.models.assessment import Assessment
 from db.models.sub_criteria import SubCriteria
 from sqlalchemy import DateTime
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm.exc import NoResultFound
 from sqlalchemy_utils.types import UUIDType
 
 
@@ -71,14 +72,17 @@ class ComplianceMethods:
     def get_compliance(
         sub_criteria_id: str, assessment_id: str, return_as_json=False
     ):
-        compliance = (
-            db.session.query(Compliance)
-            .filter(
-                Compliance.assessment_id == assessment_id,
-                Compliance.sub_criteria_id == sub_criteria_id,
+        try:
+            compliance = (
+                db.session.query(Compliance)
+                .filter(
+                    Compliance.assessment_id == assessment_id,
+                    Compliance.sub_criteria_id == sub_criteria_id,
+                )
+                .one()
             )
-            .one()
-        )
+        except NoResultFound:
+            raise IndexError
         if return_as_json:
             return [record.as_json() for record in compliance]
         return compliance

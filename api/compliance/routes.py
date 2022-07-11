@@ -23,7 +23,9 @@ class ComplianceView(ComplianceMethods, MethodView):
         except ComplianceError as e:
             return error_response(404, e.message)
         except IndexError:
-            return error_response(404, "error")
+            return error_response(
+                404, "error - compliance record does not exist"
+            )
         return compliance_response(compliance_record)
 
     def post(self, sub_criteria_id: str, assessment_id: str, body: dict):
