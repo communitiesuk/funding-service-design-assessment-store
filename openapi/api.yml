@@ -123,3 +123,22 @@ paths:
                 code: 404
                 status: 'error'
                 message: 'Assessment could not be found'
+
+  /comment
+   get:
+     tags:
+       - commment
+     summary: Get list of comments
+     description: Get list of comments
+     operationId: api.Comments.list
+     response:
+       200:
+         description: SUCCESS = A list of sub_criterias
+         content:
+           application/json:
+             schema:
+               type: array
+               items:
+                 $ref: 'components.yml#/components/schemas/Comments'
+     parameters:
+       - name: comment

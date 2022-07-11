@@ -8,7 +8,7 @@ from flask.views import MethodView
 
 
 class CommentsView(CommentsMethods, MethodView):
-    def get(self, assessment_id: str, sub_criteria_id: str):
+    def get(self):
         """
         GET /assessments/{assessment_id}/sub_criterias/
                 {sub_criteria_id}/comment endpoint
@@ -18,6 +18,10 @@ class CommentsView(CommentsMethods, MethodView):
         :param sub_criteria_id: id of the sub_criteria
         :return: 200 assessment JSON / 404 Error
         """
+        json = request.get_json()
+        assessment_id = json.get("assessment_id")
+        sub_criteria_id = json.get("sub_criteria_id")
+
         try:
             comments_list = self.comment(assessment_id, sub_criteria_id)
         except CommentsError as e:
@@ -25,7 +29,7 @@ class CommentsView(CommentsMethods, MethodView):
 
         return comments_response_list(comments_list)
 
-    def post(self, body: dict):
+    def post(self):
         """
         Adss a comment for a subcriteria
         :param assessment_id: ID of assessment
