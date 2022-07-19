@@ -288,3 +288,45 @@ paths:
           schema:
             type: string
             format: path
+  '/assessments/{assessment_id}/sub_criterias/{sub_criteria_id}/comments':
+    get:
+      tags:
+        - commment
+      summary: Get list of comments
+      description: Get list of comments
+      operationId: api.CommentsView.get
+      responses:
+        200:
+          description: SUCCESS = A list of sub_criterias
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'components.yml#/components/schemas/GetComment'
+    post:
+      tags:
+        - commment
+      summary: Post a comment.
+      description: Post a single comment.
+      operationId: api.CommentsView.post
+      responses:
+        200:
+          description: SUCCESS = The comment was posted
+          content:
+            application/json:
+              schema:
+                $ref: 'components.yml#/components/schemas/PostComment'
+    parameters:
+      - name: assessment_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: path
+      - name: sub_criteria_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: path
