@@ -29,7 +29,7 @@ class Comments(db.Model):
     sub_criteria_id = db.Column(
         "sub_criteria_id",
         db.Text(),
-        db.ForeignKey(SubCriteria.sub_criteria_id),
+        db.ForeignKey(SubCriteria.id),
     )
     comment = db.Column(
         db.Text(),
