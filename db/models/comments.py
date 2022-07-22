@@ -38,26 +38,25 @@ class Comments(db.Model):
     def __repr__(self):
         return f"""Comments(
             assesment_id={self.assessment_id},
-            person_id={self.person_id},
+            assessor_user_id={self.assessor_user_id},
             sub_criteria_id={self.sub_criteria_id},
             comment={self.comment}
         )"""
 
     def __str__(self):
         return f"Comment {self.comment} \
-                for Sub-Criteria {self.sub_criteria_id} \
-                of Assessment {self.assessment_id} \
-                by Person {self.person_id}>"
+                for Sub-Criteria {str(self.sub_criteria_id)} \
+                of Assessment {str(self.assessment_id)} \
+                by Assessor {self.assessor_user_id}>"
 
     def as_json(self):
         return {
-            "scores_justifications_id": self.scores_justifications_id,
+            "id": self.id,
             "created_at": self.created_at,
-            "assessment_id": self.assessment_id,
-            "person_id": self.person_id,
-            "sub_criteria_id": self.sub_criteria_id,
-            "score": self.score,
-            "justification": self.justification,
+            "assessment_id": str(self.assessment_id),
+            "assessor_user_id": self.assessor_user_id,
+            "sub_criteria_id": str(self.sub_criteria_id),
+            "comment": self.comment,
         }
 
 
@@ -74,14 +73,14 @@ class CommentsError(Exception):
 
 class CommentsMethods:
     @staticmethod
-    def comments(
-        assessment_id: str, sub_criteria_id: str, person_id: str, comment: str
+    def create_comment(
+        assessment_id: str, sub_criteria_id: str, assessor_user_id: str, comment: str
     ):
         try:
             newComment = Comments(
                 assessment_id=assessment_id,
                 sub_criteria_id=sub_criteria_id,
-                person_id=person_id,
+                assessor_user_id=assessor_user_id,
                 comment=comment,
             )
             db.session.add(newComment)
@@ -92,14 +91,14 @@ class CommentsMethods:
         return newComment
 
     @staticmethod
-    def comment(assessment_id: str, sub_criteria_id: str, as_json=False):
+    def comments_list(assessment_id: str, sub_criteria_id: str, as_json=False):
         comments = (
             db.session.query(Comments)
             .filter(
                 Comments.assessment_id == assessment_id,
                 Comments.sub_criteria_id == sub_criteria_id,
             )
-            .all
+            .all()
         )
         if as_json:
             return [record.as_json() for record in comments]
