@@ -6,6 +6,7 @@ import flask_migrate
 from config import Config
 from db import db
 from db.models.assessment import Assessment
+from db.models.comments import Comments
 from db.models.criteria import Criteria
 from db.models.scores_justifications import ScoresJustifications
 from db.models.sub_criteria import SubCriteria
@@ -27,6 +28,7 @@ class SqliteTestDB:
     score_uuid_2 = uuid.uuid4()
     score_uuid_3 = uuid.uuid4()
     score_uuid_4 = uuid.uuid4()
+    comment_uuid_1 = uuid.uuid4()
 
     assessment_1 = Assessment(
         id=assessment_1_uuid,
@@ -137,6 +139,17 @@ class SqliteTestDB:
         assessor_user_id="person_1",
     )
 
+    comment_1 = Comments(
+        created_at=datetime.datetime.strptime(
+            "2022-07-07T09:11:38.240578Z", "%Y-%m-%dT%H:%M:%S.%fZ"
+        ),
+        id=comment_uuid_1,
+        assessment_id=assessment_2_uuid,
+        sub_criteria_id=sub_crit_2_uuid,
+        assessor_user_id="rio",
+        comment="wow",
+    )
+
     @classmethod
     def remove(cls):
         flask_root = Config.FLASK_ROOT
@@ -188,3 +201,6 @@ class SqliteTestDB:
 
         db.session.add(cls.assessment_2)
         db.session.commit()
+
+        # db.session.add(cls.comment_1)
+        # db.session.commit()
