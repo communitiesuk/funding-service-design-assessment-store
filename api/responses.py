@@ -66,16 +66,32 @@ def comments_list_response(comments_list: List[Comments], code: int = 200):
             {
                 "comments": [
                     {
-                        "user_id": comment.user_id,
+                        "assessor_user_id": comment.assessor_user_id,
                         "created_at": comment.created_at,
                         "assessment_id": comment.assessment_id,
                         "sub_criteria_id": comment.sub_criteria_id,
                         "comment": comment.comment,
-                        "comment_id": comment.comment_id,
+                        "id": comment.id,
                     }
                     for comment in comments_list
                 ]
             }
+        ),
+        code,
+    )
+
+
+def created_comment_response(comment: Comments, code: int = 200):
+    return (
+        make_response(
+                {
+                    "assessor_user_id": comment.assessor_user_id,
+                    "created_at": comment.created_at,
+                    "assessment_id": comment.assessment_id,
+                    "sub_criteria_id": comment.sub_criteria_id,
+                    "comment": comment.comment,
+                    "id": comment.id,
+                }
         ),
         code,
     )
