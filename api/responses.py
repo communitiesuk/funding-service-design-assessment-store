@@ -2,6 +2,7 @@
 from typing import List
 
 from db.models.assessment import Assessment
+from db.models.comments import Comments
 from db.models.scores_justifications import ScoresJustifications
 from db.models.sub_criteria import SubCriteria
 from flask import make_response
@@ -32,7 +33,6 @@ def sub_criteria_response(sub_criteria: SubCriteria, code: int = 200):
         make_response(
             {
                 "id": sub_criteria.id,
-                "round_id": sub_criteria.round_id,
                 "criteria_id": sub_criteria.criteria_id,
                 "title": sub_criteria.sub_criteria_title,
             }
@@ -82,3 +82,41 @@ def scores_justifications_response_list(
         ),
         code,
     )
+
+
+def comments_list_response(comments_list: List[Comments], code: int = 200):
+    return (
+        make_response(
+            {
+                "comments": [
+                    {
+                        "assessor_user_id": comment.assessor_user_id,
+                        "created_at": comment.created_at,
+                        "assessment_id": comment.assessment_id,
+                        "sub_criteria_id": comment.sub_criteria_id,
+                        "comment": comment.comment,
+                        "comment_id": comment.id,
+                    }
+                    for comment in comments_list
+                ]
+            }
+        ),
+        code,
+    )
+
+
+def created_comment_response(comment: Comments, code: int = 200):
+    return (
+        make_response(
+                {
+                    "assessor_user_id": comment.assessor_user_id,
+                    "created_at": comment.created_at,
+                    "assessment_id": comment.assessment_id,
+                    "sub_criteria_id": comment.sub_criteria_id,
+                    "comment": comment.comment,
+                    "id": comment.id,
+                }
+        ),
+        code,
+    )
+    

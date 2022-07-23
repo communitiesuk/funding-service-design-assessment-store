@@ -71,3 +71,38 @@ components:
       required:
         - code
         - message
+    AssessmentScores:
+      type: object
+      properties:
+        criteria_name:
+          type: string
+        actual_score:
+          type: integer
+        weight:
+          type: number
+          format: float
+        weighted_score:
+          type: number
+          format: float
+    PostComment:
+      type: object
+      properties:
+        assessor_user_id:
+          type: string
+        comment:
+          type: string
+    GetComment:
+      type: object
+      properties:
+        assessor_user_id:
+          type: string
+        created_at:
+          type: string
+        assessment_id:
+          type: string
+        sub_criteria_id:
+          type: string
+        comment_id:
+          type: string
+        comment:
+          type: string

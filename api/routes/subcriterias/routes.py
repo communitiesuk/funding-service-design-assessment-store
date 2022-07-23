@@ -16,9 +16,11 @@ class SubCriteriaView(SubCriteriaMethods, MethodView):
         :return: Json Response
         """
         return Response(
-            json.dumps(self.subcriterias(as_json=True)),
+            json.dumps(
+                self.subcriterias_by_assessment_id(assessment_id, as_json=True)
+            ),
             mimetype="application/json",
-            code=200,
+            status=200,
         )
 
     def get(self, assessment_id: str = None, sub_criteria_id: str = None):
