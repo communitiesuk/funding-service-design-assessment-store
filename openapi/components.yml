@@ -87,14 +87,14 @@ components:
     PostComment:
       type: object
       properties:
-        user_id:
+        assessor_user_id:
           type: string
         comment:
           type: string
     GetComment:
       type: object
       properties:
-        user_id:
+        assessor_user_id:
           type: string
         created_at:
           type: string
