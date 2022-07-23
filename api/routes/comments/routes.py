@@ -1,19 +1,16 @@
-from sqlite3 import IntegrityError
-
-import db
 from api.responses import comments_list_response, created_comment_response
 from api.responses import error_response
-from db.models.comments import Comments, CommentsError, CommentsMethods
+from db.models.comments import  CommentsError, CommentsMethods
 from flask.views import MethodView
 
 
 class CommentsView(CommentsMethods, MethodView):
 
-    def get(self, sub_criteria_id: str, assessment_id: str):
+    def get(self, assessment_id: str, sub_criteria_id: str):
     
         try:
             comments_list = self.comments_list(
-                 assessment_id, sub_criteria_id
+                 assessment_id= assessment_id, sub_criteria_id= sub_criteria_id
             )
         except CommentsError as e:
             return error_response(404, e.message)
