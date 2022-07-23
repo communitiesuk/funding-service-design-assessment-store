@@ -60,6 +60,30 @@ def scores_justifications_response(
     )
 
 
+def scores_justifications_response_list(
+    scores_justifications_list: List[ScoresJustifications], code: int = 200
+):
+    return (
+        make_response(
+            {
+                "scores_justifications": [
+                    {
+                        "id": scores_justifications.id,
+                        "created_at": scores_justifications.created_at,
+                        "assessor_user_id": scores_justifications.assessor_user_id,
+                        "sub_criteria_id": scores_justifications.sub_criteria_id,
+                        "assessment_id": scores_justifications.assessment_id,
+                        "score": scores_justifications.score,
+                        "justification": scores_justifications.justification,
+                    }
+                    for scores_justifications in scores_justifications_list
+                ]
+            }
+        ),
+        code,
+    )
+
+
 def comments_list_response(comments_list: List[Comments], code: int = 200):
     return (
         make_response(
@@ -71,7 +95,7 @@ def comments_list_response(comments_list: List[Comments], code: int = 200):
                         "assessment_id": comment.assessment_id,
                         "sub_criteria_id": comment.sub_criteria_id,
                         "comment": comment.comment,
-                        "id": comment.id,
+                        "comment_id": comment.id,
                     }
                     for comment in comments_list
                 ]
@@ -95,27 +119,4 @@ def created_comment_response(comment: Comments, code: int = 200):
         ),
         code,
     )
-
-
-def scores_justifications_response_list(
-    scores_justifications_list: List[ScoresJustifications], code: int = 200
-):
-    return (
-        make_response(
-            {
-                "scores_justifications": [
-                    {
-                        "id": scores_justifications.id,
-                        "created_at": scores_justifications.created_at,
-                        "assessor_user_id": scores_justifications.assessor_user_id,
-                        "sub_criteria_id": scores_justifications.sub_criteria_id,
-                        "assessment_id": scores_justifications.assessment_id,
-                        "score": scores_justifications.score,
-                        "justification": scores_justifications.justification,
-                    }
-                    for scores_justifications in scores_justifications_list
-                ]
-            }
-        ),
-        code,
-    )
+    
