@@ -51,7 +51,7 @@ class Comments(db.Model):
 
     def as_json(self):
         return {
-            "id": self.id,
+            "comment_id": self.id,
             "created_at": self.created_at,
             "assessment_id": str(self.assessment_id),
             "assessor_user_id": self.assessor_user_id,
