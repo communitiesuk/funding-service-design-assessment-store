@@ -297,16 +297,16 @@ paths:
       operationId: api.CommentsView.get
       responses:
         200:
-          description: SUCCESS = A list of sub_criterias
+          description: SUCCESS = A list of comments
           content:
             application/json:
               schema:
                 type: object
                 properties:
-                  scores:
+                  comments:
                     type: array
-                items:
-                  $ref: 'components.yml#/components/schemas/GetComment'
+                    items:
+                      $ref: 'components.yml#/components/schemas/GetComment'
     post:
       tags:
         - commment
