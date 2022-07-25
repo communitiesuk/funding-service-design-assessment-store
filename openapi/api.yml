@@ -302,6 +302,9 @@ paths:
             application/json:
               schema:
                 type: object
+                properties:
+                  scores:
+                    type: array
                 items:
                   $ref: 'components.yml#/components/schemas/GetComment'
     post:
