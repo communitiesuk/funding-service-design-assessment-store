@@ -12,7 +12,6 @@ class TestCommentsEndpoint:
    
     def test_comments_endpoints(self, flask_test_client):
         
-        #---------- POST endpoint ----------#
         """
         GIVEN a running Flask client and db
         WHEN we post to /assessments/{assessment_id}/
@@ -41,7 +40,7 @@ class TestCommentsEndpoint:
             == post_comment_body['comment']
         )
         
-         #---------- GET endpoint ----------#
+        
         """
         GIVEN a running Flask client and db
         WHEN we get to /assessments/{assessment_id}/
