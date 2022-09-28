@@ -3,6 +3,7 @@ bandit
 safety==1.10.3
 black
 deepdiff
+invoke
 pip-tools
 pre-commit
 pytest
@@ -13,5 +14,7 @@ pytest-selenium==2.0.1
 pip-tools
 axe-selenium-python==2.1.6
 json2html==1.3.0
+pytest-flask-sqlalchemy
+colored
 selenium==4.2.0
 webdriver-manager==3.7.0
