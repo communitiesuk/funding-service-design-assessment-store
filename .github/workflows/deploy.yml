@@ -3,6 +3,8 @@ name: Deploy to Gov PaaS
 on:
   workflow_dispatch:
   push:
+    branches-ignore:
+      - "fs-1344-fix-tests"
     # branches:
     # - master
     # - FS-389
