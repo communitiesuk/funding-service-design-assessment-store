@@ -28,7 +28,6 @@ def app():
     :return: A flask test client.
     """
     app = create_app()
-    print("in app()")
     with app.app_context():
         upgrade()
     yield app
