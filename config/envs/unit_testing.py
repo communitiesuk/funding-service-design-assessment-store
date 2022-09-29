@@ -1,5 +1,5 @@
 """Flask Unit Testing Environment Configuration."""
-from os import path
+from os import environ
 
 from config.envs.default import DefaultConfig
 from fsd_utils import CommonConfig
@@ -21,9 +21,13 @@ class UnitTestingConfig(DefaultConfig):
     # Security
     FORCE_HTTPS = False
 
-    # Database
-    SQLITE_DB_NAME = "test_sqlite.db"
-    SQLALCHEMY_DATABASE_URI = "sqlite:///" + path.join(
-        DefaultConfig.FLASK_ROOT, SQLITE_DB_NAME
-    )
+    # # Database
+    # SQLITE_DB_NAME = "test_sqlite.db"
+    # SQLALCHEMY_DATABASE_URI = "sqlite:///" + path.join(
+    #     DefaultConfig.FLASK_ROOT, SQLITE_DB_NAME
+    # )
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    SQLALCHEMY_DATABASE_URI = environ.get("DATABASE_URL").replace(
+        "postgres://", "postgresql://"
+    )
