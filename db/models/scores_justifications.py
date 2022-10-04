@@ -2,7 +2,9 @@ import uuid
 from collections import defaultdict
 from datetime import datetime
 
-from api.routes.scores_justifications.utils import calc_weights
+from api.routes.scores_justifications.utils import (
+    calc_weighted_scores_for_criteria,
+)
 from db import db
 from db.models.assessment import Assessment
 from db.models.criteria import Criteria
@@ -127,7 +129,7 @@ class ScoresJustificationsMethods:
 
             crit_name = crit_row.criteria_name
 
-            calculated_scores = calc_weights(
+            calculated_scores = calc_weighted_scores_for_criteria(
                 fund_id=fund_id,
                 crit_id=crit_id,
                 list_of_scores=grouped_by_crit[crit_id],

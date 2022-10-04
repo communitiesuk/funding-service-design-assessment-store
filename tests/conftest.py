@@ -126,10 +126,37 @@ def seed_data(db_session):
     seeded_scores_justifications.append(
         ScoresJustifications(
             assessment_id=seeded_assessment_ids[1],
-            sub_criteria_id=seeded_subcriteria[3].id,
-            score=2,
-            justification="wow",
+            sub_criteria_id=seeded_subcriteria[0].id,
+            score=0,
+            justification="wow0",
             assessor_user_id="person_1",
+        )
+    )
+    seeded_scores_justifications.append(
+        ScoresJustifications(
+            assessment_id=seeded_assessment_ids[1],
+            sub_criteria_id=seeded_subcriteria[1].id,
+            score=1,
+            justification="wow1",
+            assessor_user_id="person_1",
+        )
+    )
+    seeded_scores_justifications.append(
+        ScoresJustifications(
+            assessment_id=seeded_assessment_ids[1],
+            sub_criteria_id=seeded_subcriteria[2].id,
+            score=2,
+            justification="wow2",
+            assessor_user_id="person_1",
+        )
+    )
+    seeded_scores_justifications.append(
+        ScoresJustifications(
+            assessment_id=seeded_assessment_ids[1],
+            sub_criteria_id=seeded_subcriteria[2].id,
+            score=2,
+            justification="not great",
+            assessor_user_id="person_2",
         )
     )
 

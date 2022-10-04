@@ -1,9 +1,13 @@
 """
 Test magic links functionality
 """
+from unittest import mock
+
 from tests.conftest import seeded_assessment_ids
+from tests.conftest import seeded_criteria
 from tests.conftest import seeded_scores_justifications
 from tests.conftest import seeded_subcriteria
+from tests.mocks.mock_round_store import mock_get_round
 
 
 class TestScoreJustificationEndpoints:
@@ -16,7 +20,7 @@ class TestScoreJustificationEndpoints:
         :param client:
         """
         assessment_id = seeded_assessment_ids[1]
-        sub_criteria_id = seeded_subcriteria[3].id
+        sub_criteria_id = seeded_subcriteria[2].id
         endpoint = (
             f"/assessments/{assessment_id}/"
             f"sub_criterias/{sub_criteria_id}/scores"
@@ -27,7 +31,7 @@ class TestScoreJustificationEndpoints:
         assert response.status_code == 200
         assert (
             scores_justifications["scores_justifications"][0]
-            == seeded_scores_justifications[0].as_json()
+            == seeded_scores_justifications[2].as_json()
         )
 
     def test_score_justification_is_created(self, client):
@@ -56,35 +60,36 @@ class TestScoreJustificationEndpoints:
         assert response.status_code == 201
         assert score_justification.get("score") == 1
 
-
-# TODO FS-1344 reinstate this when we go back to assessment. Currently points
-# at data on test which isn't compatible with this test. Should use fixed
-# test data
-# def test_scores(self, client):
-#     expected_response = [
-#         {
-#             "criteria_id": str(SqliteTestDB.crit_1_uuid),
-#             "criteria_name": "strategy",
-#             "total_score": 5,
-#             "weight": 0.3,
-#             "weighted_score": 1.5,
-#         },
-#         {
-#             "criteria_id": str(SqliteTestDB.crit_2_uuid),
-#             "criteria_name": "deliverability",
-#             "total_score": 6,
-#             "weight": 0.4,
-#             "weighted_score": 2.4000000000000004,
-#         },
-#         {
-#             "criteria_id": str(SqliteTestDB.crit_3_uuid),
-#             "criteria_name": "value_for_money",
-#             "total_score": 5,
-#             "weight": 0.3,
-#             "weighted_score": 1.5,
-#         },
-#     ]
-#     assessment_id = str(SqliteTestDB.assessment_2_uuid)
-#     endpoint = f"/assessments/{assessment_id}/scores"
-#     response = client.get(endpoint)
-#     assert response.json["scores"] == expected_response
+    # @mock.patch('requests.get', side_effect=mock_get_round)
+    def test_scores(self, client):
+        expected_response = [
+            {
+                "criteria_id": str(seeded_criteria[0].id),
+                "criteria_name": seeded_criteria[0].criteria_name,
+                "total_score": 0,
+                "weight": 0.8,
+                "weighted_score": 0,
+            },
+            {
+                "criteria_id": str(seeded_criteria[1].id),
+                "criteria_name": seeded_criteria[1].criteria_name,
+                "total_score": 1,
+                "weight": 0.1,
+                "weighted_score": 0.1,
+            },
+            {
+                "criteria_id": str(seeded_criteria[2].id),
+                "criteria_name": seeded_criteria[2].criteria_name,
+                "total_score": 4,
+                "weight": 0.1,
+                "weighted_score": 0.4,
+            },
+        ]
+        assessment_id = str(seeded_assessment_ids[1])
+        endpoint = f"/assessments/{assessment_id}/scores"
+        with mock.patch(
+            "api.routes.scores_justifications.utils.get_round_json",
+            side_effect=mock_get_round,
+        ):
+            response = client.get(endpoint)
+        assert response.json["scores"] == expected_response
