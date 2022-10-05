@@ -19,6 +19,7 @@ jobs:
       users: 2
       spawn-rate: 2
       run-time: 11s
+      upgrade_db: true
     secrets:
       CF_API: ${{secrets.CF_API}}
       CF_ORG: ${{secrets.CF_ORG}}
