@@ -5,7 +5,7 @@ def mock_get_round(*args, **kwargs):
 
     print("in mock_get_round")
 
-    mock_round_data = {  # MockResponse(
+    mock_round_data = {
         "assessment_criteria_weighting": [
             {
                 "id": seeded_criteria[0].id,

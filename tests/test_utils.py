@@ -15,10 +15,11 @@ def mock_get_round(*args, **kwargs):
 
 class Test_Utils:
     def test_calc_weights_by_id(self):
+
         with mock.patch(
             "api.routes.scores_justifications.utils.get_round_json",
-            side_effect=mock_get_round,
-        ):
+            return_value=mock_get_round(),
+        ) as mock_get_round_json_func:
             result = utils.calc_weighted_scores_for_criteria(
                 fund_id="fund_1",
                 round_id="round_1",
@@ -27,15 +28,19 @@ class Test_Utils:
                 list_of_scores=[4, 6],
                 query_by_name=False,
             )
-        assert 10 == result["total_score"], "Wrong total score"
-        assert 8 == result["weighted_score"], "Wrong weighted score"
-        assert 0.8 == result["weight"]
+            mock_get_round_json_func.assert_called_once_with(
+                "fund_1", "round_1"
+            )
+
+            assert 10 == result["total_score"], "Wrong total score"
+            assert 8 == result["weighted_score"], "Wrong weighted score"
+            assert 0.8 == result["weight"]
 
     def test_calc_weights_by_name(self):
         with mock.patch(
             "api.routes.scores_justifications.utils.get_round_json",
-            side_effect=mock_get_round,
-        ):
+            return_value=mock_get_round(),
+        ) as mock_get_round_json_func:
             result = utils.calc_weighted_scores_for_criteria(
                 fund_id="fund_1",
                 round_id="round_1",
@@ -44,6 +49,9 @@ class Test_Utils:
                 list_of_scores=[12, 8],
                 query_by_name=True,
             )
-        assert 20 == result["total_score"], "Wrong total score"
-        assert 16 == result["weighted_score"], "Wrong weighted score"
-        assert 0.8 == result["weight"]
+            mock_get_round_json_func.assert_called_once_with(
+                "fund_1", "round_1"
+            )
+            assert 20 == result["total_score"], "Wrong total score"
+            assert 16 == result["weighted_score"], "Wrong weighted score"
+            assert 0.8 == result["weight"]
