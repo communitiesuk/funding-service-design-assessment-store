@@ -26,6 +26,7 @@ jobs:
       CF_USER: ${{secrets.CF_USER}}
       CF_PASSWORD: ${{secrets.CF_PASSWORD}}
   apply_network_policy_dev:
+    needs: test_and_deploy
     runs-on: ubuntu-latest
     environment: Dev
     steps:
@@ -39,6 +40,8 @@ jobs:
           cf_password: ${{secrets.CF_PASSWORD}}
           command: add-network-policy funding-service-design-assessment-store-dev funding-service-design-notification-dev --protocol tcp --port 8080
   apply_network_policy_test:
+    needs: test_and_deploy
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     environment: Test
     steps:
