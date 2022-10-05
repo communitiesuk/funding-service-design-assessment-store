@@ -78,7 +78,7 @@ def seed_data(db_session):
 
     for c in seeded_criteria:
         db.session.add(c)
-        db.session.commit()
+    db.session.commit()
 
     seeded_subcriteria.append(
         SubCriteria(
@@ -109,7 +109,7 @@ def seed_data(db_session):
 
     for s in seeded_subcriteria:
         db.session.add(s)
-        db.session.commit()
+    db.session.commit()
 
     seeded_compliance_records.append(
         Compliance(
@@ -121,7 +121,7 @@ def seed_data(db_session):
 
     for cr in seeded_compliance_records:
         db.session.add(cr)
-        db.session.commit()
+    db.session.commit()
 
     seeded_scores_justifications.append(
         ScoresJustifications(
@@ -162,7 +162,7 @@ def seed_data(db_session):
 
     for sj in seeded_scores_justifications:
         db.session.add(sj)
-        db.session.commit()
+    db.session.commit()
 
     yield
 
