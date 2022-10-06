@@ -119,7 +119,7 @@ class TestAssessmentEndpoints:
 
     def testHealthcheckRoute(self, client):
         expected_result = {
-            "checks": [{"check_running": "OK"}, {"check_db": "OK"}]
+            "checks": [{"check_flask_running": "OK"}, {"check_db": "OK"}]
         }
 
         result = client.get("/healthcheck")
