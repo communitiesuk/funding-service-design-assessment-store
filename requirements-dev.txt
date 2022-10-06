@@ -44,7 +44,6 @@ click==8.1.3
     #   clickclick
     #   flask
     #   pip-tools
-    #   safety
 clickclick==20.10.2
     # via
     #   -r requirements.txt
@@ -65,8 +64,6 @@ deepdiff==5.8.1
     # via -r requirements-dev.in
 distlib==0.3.4
     # via virtualenv
-dparse==0.5.1
-    # via safety
 filelock==3.7.1
     # via virtualenv
 flask==2.1.1
@@ -90,6 +87,10 @@ gitdb==4.0.9
     # via gitpython
 gitpython==3.1.27
     # via bandit
+greenlet==1.1.3
+    # via
+    #   -r requirements.txt
+    #   sqlalchemy
 gunicorn==20.1.0
     # via
     #   -r requirements.txt
@@ -152,10 +153,7 @@ packaging==21.3
     #   -r requirements.txt
     #   build
     #   connexion
-    #   dparse
     #   pytest
-    #   pytest-flask-sqlalchemy
-    #   safety
 pathspec==0.9.0
     # via black
 pbr==5.9.0
@@ -233,7 +231,6 @@ pyyaml==6.0
     #   bandit
     #   clickclick
     #   connexion
-    #   dparse
     #   funding-service-design-utils
     #   openapi-spec-validator
     #   pre-commit
@@ -283,9 +280,7 @@ stevedore==3.5.0
 swagger-ui-bundle==0.0.9
     # via -r requirements.txt
 toml==0.10.2
-    # via
-    #   dparse
-    #   pre-commit
+    # via pre-commit
 tomli==2.0.1
     # via
     #   black
