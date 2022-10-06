@@ -42,7 +42,7 @@ class TestComplianceEndpoints:
         :param client:
         """
         assessment_id = seeded_assessment_ids[1]
-        sub_criteria_id = str(uuid.uuid4())
+        sub_criteria_id = seeded_subcriteria[0].id
         endpoint = f"/assessments/{assessment_id}/sub_criterias/{sub_criteria_id}/compliance"
         response = client.get(endpoint)
         error_response = response.get_json()
@@ -71,6 +71,25 @@ class TestComplianceEndpoints:
         assert response.status_code == 201
         assert compliance_record.get("is_compliant") == False  # noqa
 
+    def test_duplicate_compliance_is_not_created(self, client):
+        """
+        GIVEN a running Flask client and db
+        WHEN we POST to /assessments/{assessment_id}/
+                sub_criterias/{sub_criteria_id}/compliance
+                with and json payload
+        THEN a compliance record is created and returned
+        :param client:
+        """
+        assessment_id = seeded_assessment_ids[1]
+        sub_criteria_id = seeded_subcriteria[1].id
+        endpoint = f"/assessments/{assessment_id}/sub_criterias/{sub_criteria_id}/compliance"
+        payload = {"is_compliant": False}
+        response = client.post(endpoint, json=payload)
+        compliance_record = response.get_json()
+
+        assert response.status_code == 201
+        assert compliance_record.get("is_compliant") == False  # noqa
+
     def test_wrong_payload_compliance_is_not_created(self, client):
         """
         GIVEN a running Flask client and db
@@ -80,8 +99,8 @@ class TestComplianceEndpoints:
         THEN a compliance record is not created and error returned
         :param client:
         """
-        assessment_id = "123e4567-e89b-12d3-a456-426655449999"
-        sub_criteria_id = "123e4567-e89b-12d3-a456-426655449999"
+        assessment_id = seeded_assessment_ids[1]
+        sub_criteria_id = seeded_subcriteria[0].id
         endpoint = f"/assessments/{assessment_id}/sub_criterias/{sub_criteria_id}/compliance"
         payload = {"is_compliant": "something wrong here"}
         response = client.post(endpoint, json=payload)
