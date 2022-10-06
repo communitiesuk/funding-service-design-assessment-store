@@ -144,4 +144,4 @@ flask_session
 # Sqlite
 sqlite.db
 test_sqlite.db
-.run/Python tests in tests.run.xml
+.run/
