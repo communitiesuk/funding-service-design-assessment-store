@@ -2,8 +2,6 @@
 """
 Test magic links functionality
 """
-import uuid
-
 from tests.conftest import seeded_assessment_ids
 from tests.conftest import seeded_compliance_records
 from tests.conftest import seeded_subcriteria
