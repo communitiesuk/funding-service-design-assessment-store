@@ -74,7 +74,7 @@ class AssessmentMethods:
             db.session.commit()
         except IntegrityError:
             db.session.rollback()
-            current_app.logger.exception(
+            current_app.logger.warning(
                 (
                     "An assessment for this application "
                     f"({application_id}) already exists"
