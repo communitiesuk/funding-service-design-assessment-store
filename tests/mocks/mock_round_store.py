@@ -1,8 +1,9 @@
 from tests.conftest import seeded_criteria
 
+STRATEGIC_CASE_ID = "123"
 
-def mock_get_round(*args, **kwargs):
 
+def mock_get_round_full_data(*args, **kwargs):
     print("in mock_get_round")
 
     mock_round_data = {
@@ -42,3 +43,11 @@ def mock_get_round(*args, **kwargs):
         "title": "Round 2 Window 2",
     }
     return mock_round_data
+
+
+def mock_get_round_just_weightings(*args, **kwargs):
+    return {
+        "assessment_criteria_weighting": [
+            {"id": STRATEGIC_CASE_ID, "name": "Strategic case", "value": 0.8},
+        ]
+    }

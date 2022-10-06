@@ -1,24 +1,15 @@
 from unittest import mock
 
 from api.routes.scores_justifications import utils
-
-STRATEGIC_CASE_ID = "123"
-
-
-def mock_get_round(*args, **kwargs):
-    return {
-        "assessment_criteria_weighting": [
-            {"id": STRATEGIC_CASE_ID, "name": "Strategic case", "value": 0.8},
-        ]
-    }
+from tests.mocks.mock_round_store import mock_get_round_just_weightings
+from tests.mocks.mock_round_store import STRATEGIC_CASE_ID
 
 
 class Test_Utils:
     def test_calc_weights_by_id(self):
-
         with mock.patch(
             "api.routes.scores_justifications.utils.get_round_json",
-            return_value=mock_get_round(),
+            return_value=mock_get_round_just_weightings(),
         ) as mock_get_round_json_func:
             result = utils.calc_weighted_scores_for_criteria(
                 fund_id="fund_1",
@@ -39,7 +30,7 @@ class Test_Utils:
     def test_calc_weights_by_name(self):
         with mock.patch(
             "api.routes.scores_justifications.utils.get_round_json",
-            return_value=mock_get_round(),
+            return_value=mock_get_round_just_weightings(),
         ) as mock_get_round_json_func:
             result = utils.calc_weighted_scores_for_criteria(
                 fund_id="fund_1",

@@ -7,7 +7,7 @@ from tests.conftest import seeded_assessment_ids
 from tests.conftest import seeded_criteria
 from tests.conftest import seeded_scores_justifications
 from tests.conftest import seeded_subcriteria
-from tests.mocks.mock_round_store import mock_get_round
+from tests.mocks.mock_round_store import mock_get_round_full_data
 
 
 class TestScoreJustificationEndpoints:
@@ -89,7 +89,7 @@ class TestScoreJustificationEndpoints:
         endpoint = f"/assessments/{assessment_id}/scores"
         with mock.patch(
             "api.routes.scores_justifications.utils.get_round_json",
-            side_effect=mock_get_round,
+            side_effect=mock_get_round_full_data,
         ):
             response = client.get(endpoint)
         assert response.json["scores"] == expected_response
