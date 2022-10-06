@@ -24,6 +24,6 @@ class DevelopmentConfig(DefaultConfig):
     # SQLITE_DB_NAME = "sqlite.db"
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    SQLALCHEMY_DATABASE_URI = (
-        "postgresql://postgres:postgres@127.0.0.1:5432/fsd_assess_store_test"
-    )
+    # SQLALCHEMY_DATABASE_URI = (
+    #     "postgresql://postgres:postgres@127.0.0.1:5432/fsd_assess_store_test"
+    # )
