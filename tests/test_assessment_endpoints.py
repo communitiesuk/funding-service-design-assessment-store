@@ -22,7 +22,6 @@ class TestAssessmentEndpoints:
         endpoint = "/assessments"
         response = client.post(endpoint, json=payload)
         assessment = response.get_json()
-        # self.assessment_ids.append(assessment.get("id"))
 
         assert response.status_code == 201
         assert assessment.get("applicationId") == expected_link_attributes.get(

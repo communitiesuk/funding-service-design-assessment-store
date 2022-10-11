@@ -10,7 +10,6 @@ from db.models.criteria import Criteria
 from db.models.scores_justifications import ScoresJustifications
 from db.models.sub_criteria import SubCriteria
 from flask_migrate import upgrade
-from tests.mocks import *  # noqa
 
 TEST_STYLE = fg("dark_orange_3a") + attr("bold")
 seeded_assessment_ids = []

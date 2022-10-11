@@ -60,7 +60,6 @@ class TestScoreJustificationEndpoints:
         assert response.status_code == 201
         assert score_justification.get("score") == 1
 
-    # @mock.patch('requests.get', side_effect=mock_get_round)
     def test_scores(self, client):
         expected_response = [
             {
