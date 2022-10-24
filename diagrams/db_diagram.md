@@ -69,20 +69,13 @@ erDiagram
 	}
 	
 	
-
-	SectionCompliance ||--|| SectionsFile : ""
-	SubCriteriaFile ||--|{ SectionsFile : ""
-	SectionsFile ||--|{ FieldsFile : ""
-	FieldsFile ||--|{ Answers : ""
 	Assessments ||--|{ ScoresAndJustifications : ""
-	ScoresAndJustifications ||--o| SubCriteriaFile : ""
 	Assessments ||--|{ Comments : ""
 	Assessments ||--|{ SectionCompliance : ""
 	Assessments ||--|{ Answers : ""
 	AssessorAssessment ||--|{ Comments : ""
 	AssessorAssessment ||--|{ ScoresAndJustifications : ""
 	AssessorAssessment }|--|| AssessorsAD : ""
-	Comments ||--|| SectionsFile : ""
 	
 	Criteria ||--|{ SubCriteria : ""
 	SubCriteria ||--|{ Sections : ""
