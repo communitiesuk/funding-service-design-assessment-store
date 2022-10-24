@@ -67,7 +67,7 @@ erDiagram
 	}
 
 	Criteria ||--|{ SubCriteria : ""
-	AssessmentCompliance ||--|| Sections : ""
+	SectionCompliance ||--|| Sections : ""
 	SubCriteria ||--|{ Sections : ""
 	Sections ||--|{ Fields : ""
 	Fields ||--|{ Answers : ""
@@ -76,7 +76,7 @@ erDiagram
 	Assessments }|--|{ Assessors : ""
 	Assessments ||--|{ Criteria : ""
 	Assessments ||--|{ Comments : ""
-	Assessments ||--|{ AssessmentCompliance : ""
+	Assessments ||--|{ SectionCompliance : ""
 	Assessors ||--|{ Comments : ""
 	Comments ||--|| Sections : ""
 ```
