@@ -37,12 +37,9 @@ erDiagram
 		string field_display_type "This is used to decide how the answers are displayed in the frontend."
 		integer order
 	}
-	Answers {
-		uuid answer_id PK
-		string field_key FK "File Lookup"
+	AssessmentApplicationJson {
 		uuid assessment_id FK
-		uuid application_id FK
-		string answer
+		json application_json
 	}
 	SubCriteriaScores {
 		uuid score_id PK
@@ -72,7 +69,7 @@ erDiagram
 	Assessments ||--|{ SubCriteriaScores : ""
 	Assessments ||--|{ SectionComments : ""
 	Assessments ||--|{ SectionCompliance : ""
-	Assessments ||--|{ Answers : ""
+	Assessments ||--|{ AssessmentApplicationJson : ""
 	Assessments ||--|{ AssessorAssessment : ""
 	AssessorsAD ||--|{ SectionComments : ""
 	AssessorsAD ||--|{ SubCriteriaScores : ""
