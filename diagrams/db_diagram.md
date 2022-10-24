@@ -76,12 +76,12 @@ erDiagram
 	FieldsFile ||--|{ Answers : ""
 	Assessments ||--|{ ScoresAndJustifications : ""
 	ScoresAndJustifications ||--o| SubCriteriaFile : ""
-	Assessments }|--|{ Assessors : ""
 	Assessments ||--|{ Comments : ""
 	Assessments ||--|{ SectionCompliance : ""
 	Assessments ||--|{ Answers : ""
 	AssessorAssessment ||--|{ Comments : ""
 	AssessorAssessment ||--|{ ScoresAndJustifications : ""
+	AssessorAssessment }|--|| AssessorsAD : ""
 	Comments ||--|| SectionsFile : ""
 	
 	Criteria ||--|{ SubCriteria : ""
