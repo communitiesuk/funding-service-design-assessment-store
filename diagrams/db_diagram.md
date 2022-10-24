@@ -68,17 +68,16 @@ erDiagram
 		datetime created_at
 	}
 
-	Criteria ||--|{ SubCriteria : ""
-	SectionCompliance ||--|| Sections : ""
-	SubCriteria ||--|{ Sections : ""
-	Sections ||--|{ Fields : ""
-	Fields ||--|{ Answers : ""
+	SectionCompliance ||--|| SectionsFile : ""
+	SubCriteriaFile ||--|{ SectionsFile : ""
+	SectionsFile ||--|{ FieldsFile : ""
+	FieldsFile ||--|{ Answers : ""
 	Assessments ||--|{ ScoresAndJustifications : ""
-	ScoresAndJustifications ||--o| SubCriteria : ""
+	ScoresAndJustifications ||--o| SubCriteriaFile : ""
 	Assessments }|--|{ Assessors : ""
 	Assessments ||--|{ Comments : ""
 	Assessments ||--|{ SectionCompliance : ""
 	Assessments ||--|{ Answers : ""
 	Assessors ||--|{ Comments : ""
-	Comments ||--|| Sections : ""
+	Comments ||--|| SectionsFile : ""
 ```
