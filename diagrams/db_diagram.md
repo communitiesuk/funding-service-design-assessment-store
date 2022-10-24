@@ -78,7 +78,7 @@ erDiagram
 	Assessments ||--|{ Comments : ""
 	Assessments ||--|{ SectionCompliance : ""
 	Assessments ||--|{ Answers : ""
-	Assessors ||--|{ Comments : ""
-	Assessors ||--|{ ScoresAndJustifications : ""
+	AssessorAssessment ||--|{ Comments : ""
+	AssessorAssessment ||--|{ ScoresAndJustifications : ""
 	Comments ||--|| SectionsFile : ""
 ```
