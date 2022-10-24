@@ -84,7 +84,7 @@ erDiagram
 	AssessorAssessment ||--|{ ScoresAndJustifications : ""
 	Comments ||--|| SectionsFile : ""
 	
-	Criteria ||--|{ Subcriteria : ""
+	Criteria ||--|{ SubCriteria : ""
 	SubCriteria ||--|{ Sections : ""
 	Sections ||--|{ Fields : ""
 	Sections ||--|{ Fields : ""
