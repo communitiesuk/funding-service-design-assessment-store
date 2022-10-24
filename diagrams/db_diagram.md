@@ -32,16 +32,6 @@ erDiagram
 		string field_display_type "This is used to decide how the answers are displayed in the frontend."
 		integer order
 	}
-	SectionsData {
-		uuid sections_id FK
-		string title
-		enum langauge
-	}
-	FieldData {
-		uuid field_id FK
-		string title
-		enum langauge		
-	}
 	Answers {
 		uuid answer_id PK
 		uuid field_id FK
