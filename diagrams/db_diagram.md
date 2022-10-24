@@ -31,6 +31,7 @@ erDiagram
 	}
 	Fields {
 		uuid field_id PK
+		string field_key
 		string title
 		uuid sections_id FK
 		string field_display_type "This is used to decide how the answers are displayed in the frontend."
@@ -38,7 +39,7 @@ erDiagram
 	}
 	Answers {
 		uuid answer_id PK
-		uuid field_id FK
+		string field_key FK
 		uuid assessment_id FK
 		uuid application_id FK
 		string answer
