@@ -44,7 +44,7 @@ erDiagram
 		uuid application_id FK
 		string answer
 	}
-	ScoresAndJustifications {
+	SubCriteriaScores {
 		uuid score_id PK
 		uuid sub_criteria FK
 		uuid assessment_id FK
@@ -69,13 +69,13 @@ erDiagram
 	}
 	
 	
-	Assessments ||--|{ ScoresAndJustifications : ""
+	Assessments ||--|{ SubCriteriaScores : ""
 	Assessments ||--|{ SectionComments : ""
 	Assessments ||--|{ SectionCompliance : ""
 	Assessments ||--|{ Answers : ""
 	Assessments ||--|{ AssessorAssessment : ""
 	AssessorsAD ||--|{ SectionComments : ""
-	AssessorsAD ||--|{ ScoresAndJustifications : ""
+	AssessorsAD ||--|{ SubCriteriaScores : ""
 	AssessorsAD ||--|{ SectionCompliance : ""
 	AssessorAssessment }|--|| AssessorsAD : ""
 	
