@@ -22,12 +22,14 @@ erDiagram
 		uuid fund_id
 	}
 	Sections {
-		uuid sections_id PK	
+		uuid sections_id PK
+		string title
 		uuid sub_criteria_id FK		
 		integer order
 	}
 	Fields {
 		uuid field_id PK
+		string title
 		uuid sections_id FK
 		string field_display_type "This is used to decide how the answers are displayed in the frontend."
 		integer order
@@ -67,8 +69,6 @@ erDiagram
 	AssessmentCompliance ||--|| Criteria : ""
 	SubCriteria ||--|{ Sections : ""
 	Sections ||--|{ Fields : ""
-	Sections ||--|{ SectionsData : ""
-	Fields ||--|{ FieldData : ""
 	Fields ||--|{ Answers : ""
 	Assessments ||--|{ ScoresAndJustifications : ""
 	ScoresAndJustifications ||--o| SubCriteria : ""
