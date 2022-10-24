@@ -81,4 +81,6 @@ erDiagram
 	AssessorAssessment ||--|{ Comments : ""
 	AssessorAssessment ||--|{ ScoresAndJustifications : ""
 	Comments ||--|| SectionsFile : ""
+	
+	style Comments stroke:#eb34db
 ```
