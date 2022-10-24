@@ -1,10 +1,10 @@
 ```mermaid
 erDiagram
-	SubCriteria {
+	SubCriteria-File {
 		uuid sub_criteria PK
 		uuid criteria_id FK
 	}
-	Criteria {
+	Criteria-File {
 		uuid criteria_id
 		string criteria_name
 		uuid round_id FK
@@ -23,13 +23,13 @@ erDiagram
 		enum langauge 
 		boolean is_compliant  "Calculated from SectionCompliance"
 	}
-	Sections {
+	Sections-File {
 		uuid sections_id PK
 		string title
 		uuid sub_criteria_id FK		
 		integer order
 	}
-	Fields {
+	Fields-File {
 		uuid field_id PK
 		string field_key
 		string title
@@ -39,14 +39,14 @@ erDiagram
 	}
 	Answers {
 		uuid answer_id PK
-		string field_key FK
+		string field_key FK "File Lookup"
 		uuid assessment_id FK
 		uuid application_id FK
 		string answer
 	}
 	SubCriteriaScores {
 		uuid score_id PK
-		uuid sub_criteria FK
+		uuid sub_criteria  "File Lookup"
 		uuid assessment_id FK
 		uuid assessor_id
 		integer score
@@ -54,14 +54,14 @@ erDiagram
 		datetime submission_dt
 	}
 	SectionCompliance {
-		uuid sections_id PK
+		uuid sections_id FK "File Lookup"
 		uuid assessor_id FK
 		uuid assessment_id FK
 		boolean is_compliant
 	}
 	SectionComments {
 		uuid comment_id PK
-		uuid sections_id FK
+		uuid sections_id FK "File Lookup"
 		uuid assessor_id FK
 		uuid assessment_id FK
 		string comment
@@ -79,9 +79,9 @@ erDiagram
 	AssessorsAD ||--|{ SectionCompliance : ""
 	AssessorAssessment }|--|| AssessorsAD : ""
 	
-	Criteria ||--|{ SubCriteria : ""
-	SubCriteria ||--|{ Sections : ""
-	Sections ||--|{ Fields : ""
-	Sections ||--|{ Fields : ""
+	Criteria-File ||--|{ SubCriteria-File : ""
+	SubCriteria-File ||--|{ Sections-File : ""
+	Sections-File ||--|{ Fields-File : ""
+	Sections-File ||--|{ Fields-File : ""
 
 ```
