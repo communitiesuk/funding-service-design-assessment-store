@@ -59,7 +59,7 @@ erDiagram
 		datetime submission_dt
 	}
 	AssessmentCompliance {
-		uuid compliance_id PK
+		uuid criteria_id PK
 		uuid assessor_id FK
 		uuid assessment_id FK
 		boolean is_compliant
