@@ -74,8 +74,8 @@ erDiagram
 	Assessments ||--|{ SectionCompliance : ""
 	Assessments ||--|{ Answers : ""
 	Assessments ||--|{ AssessorAssessment : ""
-	AssessorAssessment ||--|{ Comments : ""
-	AssessorAssessment ||--|{ ScoresAndJustifications : ""
+	AssessorsAD ||--|{ Comments : ""
+	AssessorsAD ||--|{ ScoresAndJustifications : ""
 	AssessorAssessment }|--|| AssessorsAD : ""
 	
 	Criteria ||--|{ SubCriteria : ""
