@@ -3,7 +3,6 @@ erDiagram
 	SubCriteria {
 		uuid sub_criteria PK
 		uuid criteria_id FK
-		style stroke:#eb34db
 	}
 	Criteria {
 		uuid criteria_id
@@ -68,6 +67,8 @@ erDiagram
 		string comment
 		datetime created_at
 	}
+	
+	
 
 	SectionCompliance ||--|| SectionsFile : ""
 	SubCriteriaFile ||--|{ SectionsFile : ""
@@ -83,5 +84,9 @@ erDiagram
 	AssessorAssessment ||--|{ ScoresAndJustifications : ""
 	Comments ||--|| SectionsFile : ""
 	
-	style Comments stroke:#eb34db
+	Criteria ||--|{ Subcriteria : ""
+	SubCriteria ||--|{ Sections : ""
+	Sections ||--|{ Fields : ""
+	Sections ||--|{ Fields : ""
+
 ```
