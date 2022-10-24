@@ -73,7 +73,7 @@ erDiagram
 	Assessments ||--|{ Comments : ""
 	Assessments ||--|{ SectionCompliance : ""
 	Assessments ||--|{ Answers : ""
-	Assessments ||--|{ AssessorAssessment
+	Assessments ||--|{ AssessorAssessment : ""
 	AssessorAssessment ||--|{ Comments : ""
 	AssessorAssessment ||--|{ ScoresAndJustifications : ""
 	AssessorAssessment }|--|| AssessorsAD : ""
