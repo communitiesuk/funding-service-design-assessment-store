@@ -52,14 +52,14 @@ erDiagram
 		datetime submission_dt
 	}
 	AssessmentCompliance {
-		uuid criteria_id PK
+		uuid sections_id PK
 		uuid assessor_id FK
 		uuid assessment_id FK
 		boolean is_compliant
 	}
 	Comments {
 		uuid comment_id PK
-		uuid Sections_id FK
+		uuid sections_id FK
 		uuid assessor_id FK
 		uuid assessment_id FK
 		string comment
@@ -67,7 +67,7 @@ erDiagram
 	}
 
 	Criteria ||--|{ SubCriteria : ""
-	AssessmentCompliance ||--|| Criteria : ""
+	AssessmentCompliance ||--|| Sections : ""
 	SubCriteria ||--|{ Sections : ""
 	Sections ||--|{ Fields : ""
 	Fields ||--|{ Answers : ""
