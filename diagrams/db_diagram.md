@@ -20,6 +20,7 @@ erDiagram
 		uuid application_id
 		uuid round_id FK
 		uuid fund_id
+		enum langauge 
 	}
 	Sections {
 		uuid sections_id PK
