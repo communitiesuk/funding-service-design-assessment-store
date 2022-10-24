@@ -21,6 +21,7 @@ erDiagram
 		uuid round_id FK
 		uuid fund_id
 		enum langauge 
+		boolean is_compliant  "Calculated from SectionCompliance"
 	}
 	Sections {
 		uuid sections_id PK
@@ -74,7 +75,6 @@ erDiagram
 	Assessments ||--|{ ScoresAndJustifications : ""
 	ScoresAndJustifications ||--o| SubCriteria : ""
 	Assessments }|--|{ Assessors : ""
-	Assessments ||--|{ Criteria : ""
 	Assessments ||--|{ Comments : ""
 	Assessments ||--|{ SectionCompliance : ""
 	Assessors ||--|{ Comments : ""
