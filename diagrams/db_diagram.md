@@ -59,7 +59,7 @@ erDiagram
 		uuid assessment_id FK
 		boolean is_compliant
 	}
-	Comments {
+	SectionComments {
 		uuid comment_id PK
 		uuid sections_id FK
 		uuid assessor_id FK
@@ -70,11 +70,11 @@ erDiagram
 	
 	
 	Assessments ||--|{ ScoresAndJustifications : ""
-	Assessments ||--|{ Comments : ""
+	Assessments ||--|{ SectionComments : ""
 	Assessments ||--|{ SectionCompliance : ""
 	Assessments ||--|{ Answers : ""
 	Assessments ||--|{ AssessorAssessment : ""
-	AssessorsAD ||--|{ Comments : ""
+	AssessorsAD ||--|{ SectionComments : ""
 	AssessorsAD ||--|{ ScoresAndJustifications : ""
 	AssessorsAD ||--|{ SectionCompliance : ""
 	AssessorAssessment }|--|| AssessorsAD : ""
