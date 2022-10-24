@@ -1,15 +1,5 @@
 ```mermaid
 erDiagram
-	SubCriteria-File {
-		uuid sub_criteria PK
-		uuid criteria_id FK
-	}
-	Criteria-File {
-		uuid criteria_id
-		string criteria_name
-		uuid round_id FK
-		enum criteria_type  "Selects if the criteria is for compliance or scoring"
-	}
 	AssessorAssessment {
 		uuid assessor_id FK "Uses account store id."
 		uuid assessment_id FK
@@ -22,20 +12,6 @@ erDiagram
 		uuid fund_id
 		enum langauge 
 		boolean is_compliant  "Calculated from SectionCompliance"
-	}
-	Sections-File {
-		uuid sections_id PK
-		string title
-		uuid sub_criteria_id FK		
-		integer order
-	}
-	Fields-File {
-		uuid field_id PK
-		string field_key
-		string title
-		uuid sections_id FK
-		string field_display_type "This is used to decide how the answers are displayed in the frontend."
-		integer order
 	}
 	AssessmentApplicationJson {
 		uuid assessment_id FK
@@ -64,6 +40,15 @@ erDiagram
 		string comment
 		datetime created_at
 	}
+	Metadata {
+		uuid field_key
+		uuid sub_criteria_id
+		uuid criteria_id
+		uuid section_id
+		int order
+		int section_order
+	}
+		
 	
 	
 	Assessments ||--|{ SubCriteriaScores : ""
@@ -75,10 +60,4 @@ erDiagram
 	AssessorsAD ||--|{ SubCriteriaScores : ""
 	AssessorsAD ||--|{ SectionCompliance : ""
 	AssessorAssessment }|--|| AssessorsAD : ""
-	
-	Criteria-File ||--|{ SubCriteria-File : ""
-	SubCriteria-File ||--|{ Sections-File : ""
-	Sections-File ||--|{ Fields-File : ""
-	Sections-File ||--|{ Fields-File : ""
-
 ```
