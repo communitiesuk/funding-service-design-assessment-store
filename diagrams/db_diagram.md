@@ -10,7 +10,7 @@ erDiagram
 		uuid round_id FK
 		enum criteria_type  "Selects if the criteria is for compliance or scoring"
 	}
-	Assessors {
+	AssessorAssessment {
 		uuid assessor_id FK "Uses account store id."
 		uuid assessment_id FK
 	}
