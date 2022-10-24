@@ -51,7 +51,7 @@ erDiagram
 		string justification
 		datetime submission_dt
 	}
-	AssessmentCompliance {
+	SectionCompliance {
 		uuid sections_id PK
 		uuid assessor_id FK
 		uuid assessment_id FK
