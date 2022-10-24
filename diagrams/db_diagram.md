@@ -3,6 +3,7 @@ erDiagram
 	SubCriteria {
 		uuid sub_criteria PK
 		uuid criteria_id FK
+		style stroke:#eb34db
 	}
 	Criteria {
 		uuid criteria_id
