@@ -41,17 +41,6 @@ erDiagram
 		datetime created_at
 	}
 	
-	
-	Metadata {
-		uuid field_key
-		uuid section_id
-		int order
-	}
-	Metadata-Sections{
-		uuid section_id
-		uuid sub_criteria_id
-		uuid criteria_id
-	}
 
 	Assessments ||--|{ SubCriteriaScores : ""
 	Assessments ||--|{ SectionComments : ""
@@ -62,5 +51,20 @@ erDiagram
 	AssessorsAD ||--|{ SubCriteriaScores : ""
 	AssessorsAD ||--|{ SectionCompliance : ""
 	AssessorAssessment }|--|| AssessorsAD : ""
+
+```
+
+```mermaid
+	Metadata {
+		uuid field_key
+		uuid section_id
+		int order
+	}
+	Metadata-Sections{
+		uuid section_id
+		uuid sub_criteria_id
+		uuid criteria_id
+	}
+	
 	Metadata ||--|{ Metadata-Sections : ""
 ```
