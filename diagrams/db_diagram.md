@@ -42,16 +42,15 @@ erDiagram
 	}
 	Metadata {
 		uuid field_key
-		uuid sub_criteria_id
-		uuid criteria_id
 		uuid section_id
 		int order
-		int section_order
-		enum langauge
 	}
-		
-	
-	
+	Metadata-Sections{
+		uuid section_id
+		uuid sub_criteria_id
+		uuid criteria_id
+	}
+
 	Assessments ||--|{ SubCriteriaScores : ""
 	Assessments ||--|{ SectionComments : ""
 	Assessments ||--|{ SectionCompliance : ""
@@ -61,4 +60,5 @@ erDiagram
 	AssessorsAD ||--|{ SubCriteriaScores : ""
 	AssessorsAD ||--|{ SectionCompliance : ""
 	AssessorAssessment }|--|| AssessorsAD : ""
+	Metadata ||--|{ Metadata-Sections : ""
 ```
