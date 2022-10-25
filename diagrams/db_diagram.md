@@ -47,6 +47,7 @@ erDiagram
 		uuid section_id
 		int order
 		int section_order
+		enum langauge
 	}
 		
 	
