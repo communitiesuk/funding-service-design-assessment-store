@@ -55,6 +55,7 @@ erDiagram
 ```
 
 ```mermaid
+erDiagram
 	Metadata {
 		uuid field_key
 		uuid section_id
