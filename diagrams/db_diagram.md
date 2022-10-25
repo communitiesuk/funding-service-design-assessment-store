@@ -59,6 +59,8 @@ erDiagram
 	Metadata {
 		uuid field_key
 		uuid section_id
+		uuid round_id
+		uuid fund_id
 		int order
 	}
 	Metadata-Sections{
