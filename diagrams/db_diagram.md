@@ -69,5 +69,5 @@ erDiagram
 		uuid criteria_id
 	}
 	
-	Metadata ||--|{ Metadata-Sections : ""
+	Metadata }|--|| Metadata-Sections : ""
 ```
