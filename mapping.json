@@ -1,0 +1,111 @@
+{
+    "schema_id": "cof_r2_assessment",
+    "unscored_assessment_sections": [{
+        "id": "unscored_org_info",
+        "name": "Organisation information",
+        "sub_criteria": [{
+            "id": "org_info",
+            "name": "Organisation information",
+            "themes": [{
+                "id": "general_info",
+                "name": "General information",
+                "answers": [{
+                    "field_id": "pipopl",
+                    "field_type": "textarea"
+                },{
+                    "field_id": "pipxpo",
+                    "field_type": "textarea"
+                },
+                {
+                    "field_id": "pipfoz",
+                    "field_type": "textarea"
+                }]
+            }]
+        },
+        {
+            "id": "org_info",
+            "name": "Organisation information",
+            "themes": [{
+                "id": "activities",
+                "name": "Activities",
+                "answers": [{
+                    "field_id": "bvbvvb",
+                    "field_type": "textarea"
+                },{
+                    "field_id": "tbttbtb",
+                    "field_type": "textarea"
+                }]
+            }]
+        }]
+    }],
+    "scored_assessment_criteria": [{
+        "id": "strategic_case",
+        "name": "Strategic case",
+        "weighting": 0.30,
+        "sub_criteria": [{
+            "id": "benefits",
+            "name": "Benefits",
+            "themes": [{
+                "id": "community_use",
+                "name": "Community use",
+                "answers": [{
+                    "field_id": "acbdef",
+                    "field_type": "textarea"
+                },
+                {
+                    "field_id": "abcdef",
+                    "field_type": "phone"
+                }]
+            },
+            {
+                "id": "risk_loss_mpact",
+                "name": "Risk and impact of loss",
+                "answers": [{
+                    "field_id": "acbdef",
+                    "field_type": "textarea"
+                },
+                {
+                    "field_id": "abcdef",
+                    "field_type": "phone"
+                }]
+            }]
+        },
+        {
+            "id": "engagement",
+            "name": "Enagagement",
+            "themes": [{
+                "id": "community_engagement",
+                "name": "Community engagement",
+                "answers": [{
+                    "field_id": "acbdef",
+                    "field_type": "textarea"
+                },
+                {
+                    "field_id": "abcdef",
+                    "field_type": "phone"
+                }]
+            }]
+        }]
+    },
+    {
+        "id": "management_case",
+        "name": "Management case",
+        "weighting": 0.30,
+        "sub_criteria": [{
+            "id": "funding_breakdown",
+            "name": "Funding breakdown",
+            "themes": [{
+                "id": "funding_requested",
+                "name": "Funding requested",
+                "answers": [{
+                    "field_id": "acbdef",
+                    "field_type": "textarea"
+                },
+                {
+                    "field_id": "abcdef",
+                    "field_type": "phone"
+                }]
+            }]
+        }]
+    }]
+}
