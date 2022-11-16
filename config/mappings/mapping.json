@@ -1,5 +1,5 @@
 {
-    "schema_id": "cof_r2_assessment",
+    "schema_id": "cof_r2w2_assessment",
     "unscored_assessment_sections": [{
         "id": "org_info",
         "name": "Organisation information",
@@ -11,28 +11,16 @@
                 "name": "General information",
                 "answers": [{
                     "field_id": "pipopl",
+                    "form_name":"",
                     "field_type": "textarea"
                 },{
                     "field_id": "pipxpo",
+                    "form_name": "",
                     "field_type": "textarea"
                 },
                 {
                     "field_id": "pipfoz",
-                    "field_type": "textarea"
-                }]
-            }]
-        },
-        {
-            "id": "org_info",
-            "name": "Organisation information",
-            "themes": [{
-                "id": "activities",
-                "name": "Activities",
-                "answers": [{
-                    "field_id": "bvbvvb",
-                    "field_type": "textarea"
-                },{
-                    "field_id": "tbttbtb",
+                    "form_name":"",
                     "field_type": "textarea"
                 }]
             }]
@@ -50,10 +38,12 @@
                 "name": "Community use",
                 "answers": [{
                     "field_id": "acbdef",
+                    "form_name":"",
                     "field_type": "textarea"
                 },
                 {
                     "field_id": "abcdef",
+                    "form_name":"",
                     "field_type": "phone"
                 }]
             },
@@ -62,50 +52,16 @@
                 "name": "Risk and impact of loss",
                 "answers": [{
                     "field_id": "acbdef",
+                    "form_name":"",
                     "field_type": "textarea"
                 },
                 {
                     "field_id": "abcdef",
-                    "field_type": "phone"
-                }]
-            }]
-        },
-        {
-            "id": "engagement",
-            "name": "Enagagement",
-            "themes": [{
-                "id": "community_engagement",
-                "name": "Community engagement",
-                "answers": [{
-                    "field_id": "acbdef",
-                    "field_type": "textarea"
-                },
-                {
-                    "field_id": "abcdef",
-                    "field_type": "phone"
-                }]
-            }]
-        }]
-    },
-    {
-        "id": "management_case",
-        "name": "Management case",
-        "weighting": 0.30,
-        "sub_criteria": [{
-            "id": "funding_breakdown",
-            "name": "Funding breakdown",
-            "themes": [{
-                "id": "funding_requested",
-                "name": "Funding requested",
-                "answers": [{
-                    "field_id": "acbdef",
-                    "field_type": "textarea"
-                },
-                {
-                    "field_id": "abcdef",
+                    "form_name":"",
                     "field_type": "phone"
                 }]
             }]
         }]
     }]
 }
+
