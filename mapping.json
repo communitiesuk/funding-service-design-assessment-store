@@ -1,7 +1,7 @@
 {
     "schema_id": "cof_r2_assessment",
     "unscored_assessment_sections": [{
-        "id": "unscored_org_info",
+        "id": "org_info",
         "name": "Organisation information",
         "sub_criteria": [{
             "id": "org_info",
