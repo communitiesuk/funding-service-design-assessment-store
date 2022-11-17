@@ -1,12 +1,25 @@
+field_id_schema = {
+    "type": ["string", "array"],
+    "items": {
+        "type": "string"
+    }
+}
+
 answer_schema = {
     "type": "array",
     "items": {
         "type": "object",
         "properties": {
-            "field_id": {"type": "string"},
-            "form_name": {"type": "string"},
-            "field_type": {"type": "string"},
-            "question": {"type": "string"},
+            "field_id": field_id_schema,
+            "form_name": {
+                "type": "string"
+            },
+            "field_type": {
+                "type": "string"
+            },
+            "question": {
+                "type": "string"
+            }
         },
         "additionalProperties": False,
         "minProperties": 3,

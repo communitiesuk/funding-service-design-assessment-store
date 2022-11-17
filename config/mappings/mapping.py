@@ -4,7 +4,7 @@ cof_r2w2_assessment = {
     "schema_id": "cof_r2w2_assessment",
     "unscored_assessment_sections": [
         {
-            "id": "org_info",
+            "id": "organisation_info",
             "name": "Organisation information",
             "sub_criteria": [
                 {
@@ -34,120 +34,193 @@ cof_r2w2_assessment = {
                                     "question": "Does your organisation use any other names",
                                 },
                                 {
-                                    "field_id": "[PHFkCs, QgNhXX, XCcqae]",
-                                    "form_name": "organisation-information",
+                                    "field_id": ["PHFkCs", "QgNhXX", "XCcqae"],
+                                    "form_name":"organisation-information",
                                     "field_type": "TextField",
-                                    "question": "Alternative names of your organisation",
+                                    "question": "Alternative names of your organisation"
                                 },
-                                # {
-                                #     "field_id": "QgNhXX",
-                                #     "form_name":"organisation-information",
-                                #     "field_type": "TextField",
-                                #     "question": "Alternative names of your organisation - Alternative name 2 "
-                                # },
-                                # {
-                                #     "field_id": "XCcqae",
-                                #     "form_name":"organisation-information",
-                                #     "field_type": "TextField",
-                                #     "question": "Alternative names of your organisation - Alternative name 3 "
-                                # },
                                 {
-                                    "field_id": "lajFtB",
-                                    "form_name": "organisation-information",
+                                    "field_id": ["lajFtB", "plmwJv"],
+                                    "form_name":"organisation-information",
                                     "field_type": "RadiosField",
-                                    "question": "Type of organisation",
-                                },
-                                {
-                                    "field_id": "plmwJv",
-                                    "form_name": "organisation-information",
-                                    "field_type": "TextField",
-                                    "question": "Type of organisation (other)",
+                                    "question": "Type of organisation"
                                 },
                                 {
                                     "field_id": "GlPmCX",
                                     "form_name": "organisation-information",
                                     "field_type": "TextField",
-                                    "question": "Company registration number",
+                                    "question": "Company registration number"
                                 },
                                 {
-                                    "field_id": "GvPSna",
-                                    "form_name": "organisation-information",
+                                    "field_id": ["GvPSna", "zsbmRx"],
+                                    "form_name":"organisation-information",
                                     "field_type": "RadiosField",
-                                    "question": "Which regulatory body is your company registered with?",
-                                },
-                                {
-                                    "field_id": "zsbmRx",
-                                    "form_name": "organisation-information",
-                                    "field_type": "TextField",
-                                    "question": "Which regulatory body is your company registered with? (Other)",
+                                    "question": "Which regulatory body is your company registered with?"
                                 },
                                 {
                                     "field_id": "aHIGbK",
                                     "form_name": "organisation-information",
                                     "field_type": "TextField",
-                                    "question": "Charity number",
+                                    "question": "Charity number"
                                 },
                                 {
                                     "field_id": "DwfHtk",
                                     "form_name": "organisation-information",
                                     "field_type": "YesNoField",
-                                    "question": "Is your organisation a trading subsidiary of a parent company?",
+                                    "question": "Is your organisation a trading subsidiary of a parent company?"
                                 },
                                 {
                                     "field_id": "MPNlZx",
                                     "form_name": "organisation-information",
                                     "field_type": "TextField",
-                                    "question": "Name of parent organisation",
+                                    "question": "Name of parent organisation"
                                 },
                                 {
                                     "field_id": "MyiYMw",
                                     "form_name": "organisation-information",
                                     "field_type": "DatePartsField",
-                                    "question": "Date parent organisation was established",
+                                    "question": "Date parent organisation was established"
                                 },
                                 {
                                     "field_id": "ZQolYb",
                                     "form_name": "organisation-information",
                                     "field_type": "UkAddressField",
-                                    "question": "Organisation address",
+                                    "question": "Organisation address"
                                 },
                                 {
                                     "field_id": "zsoLdf",
                                     "form_name": "organisation-information",
                                     "field_type": "YesNoField",
-                                    "question": "Is your correspondence address different to the organisation address?",
+                                    "question": "Is your correspondence address different to the organisation address?"
                                 },
                                 {
                                     "field_id": "VhkCbM",
                                     "form_name": "organisation-information",
                                     "field_type": "UkAddressField",
-                                    "question": "Correspondence address",
+                                    "question": "Correspondence address"
                                 },
                                 {
-                                    "field_id": "FhbaEy",
-                                    "form_name": "organisation-information",
+                                    "field_id": ["FhbaEy", "FcdKlB", "BzxgDA"],
+                                    "form_name":"organisation-information",
                                     "field_type": "WebsiteField",
-                                    "question": "Website and social media",
-                                },
+                                    "question": "Website and social media"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "activities",
+                            "name": "Activities",
+                            "answers": [
                                 {
-                                    "field_id": "FcdKlB",
+                                    "field_id": "emVGxS",
                                     "form_name": "organisation-information",
-                                    "field_type": "WebsiteField",
-                                    "question": "Website and social media - Link or username 2",
-                                },
+                                    "field_type": "MultilineTextField",
+                                    "question": "What is your organisation's main purpose?"
+                                }, 
                                 {
-                                    "field_id": "BzxgDA",
+                                    "field_id": ["btTtIb", "SkocDi", "CNeeiC"],
                                     "form_name": "organisation-information",
-                                    "field_type": "WebsiteField",
-                                    "question": "Website and social media - Link or username 3",
-                                },
-                            ],
+                                    "field_type": "MultilineTextField",
+                                    "question": "Tell us about your organisation's main activities"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "partnerships",
+                            "name": "Partnerships",
+                            "answers": [
+                                {
+                                    "field_id": "hnLurH",
+                                    "form_name": "organisation-information",
+                                    "field_type": "YesNoField",
+                                    "question": "Is your application a joint bid in partnership with other organisations?"
+                                }, 
+                                {
+                                    "field_id": "APSjeB",
+                                    "form_name": "organisation-information",
+                                    "field_type": "TextField",
+                                    "question": "Partner organisation name"
+                                }, 
+                                {
+                                    "field_id": "biTJjF",
+                                    "form_name": "organisation-information",
+                                    "field_type": "UkAddressField",
+                                    "question": "Partner organisation address"
+                                }, 
+                                {
+                                    "field_id": "IkmvEt",
+                                    "form_name": "organisation-information",
+                                    "field_type": "MultilineTextField",
+                                    "question": "Tell us about your partnership and how you plan to work together"
+                                }
+                            ]
                         }
-                    ],
+                    ]
+                }, 
+                {
+                    "id": "applicant_info",
+                    "name": "Applicant information",
+                    "themes": [
+                        {
+                            "id": "contact_information",
+                            "name": "Contact information",
+                            "answers": [
+                                {
+                                "field_id": "ZBjDTn",
+                                "form_name": "applicant-information",
+                                "field_type": "TextField",
+                                "question": "Name of lead contact"
+                                }, 
+                                {
+                                "field_id": "LZBrEj",
+                                "form_name": "applicant-information",
+                                "field_type": "EmailAddressField",
+                                "question": "Lead contact email address"
+                                }, 
+                                {
+                                "field_id": "lRfhGB",
+                                "form_name": "applicant-information",
+                                "field_type": "TelephoneNumberField",
+                                "question": "Lead contact telephone number"
+                                }
+                            ]
+                        },
+                        {
+                            "id": "partnerships",
+                            "name": "Partnerships",
+                            "answers": [
+                                {
+                                    "field_id": "hnLurH",
+                                    "form_name": "organisation-information",
+                                    "field_type": "YesNoField",
+                                    "question": "Is your application a joint bid in partnership with other organisations?"
+                                }, 
+                                {
+                                    "field_id": "APSjeB",
+                                    "form_name": "organisation-information",
+                                    "field_type": "TextField",
+                                    "question": "Partner organisation name"
+                                }, 
+                                {
+                                    "field_id": "biTJjF",
+                                    "form_name": "organisation-information",
+                                    "field_type": "UkAddressField",
+                                    "question": "Partner organisation address"
+                                },
+                                {
+                                    "field_id": "IkmvEt",
+                                    "form_name": "organisation-information",
+                                    "field_type": "MultilineTextField",
+                                    "question": "Tell us about your partnership and how you plan to work together"
+                                }
+                            ]
+                        }
+                    ]
                 }
-            ],
+            ]
         }
     ],
+
     "scored_assessment_criteria": [
         {
             "id": "strategic_case",
@@ -293,7 +366,7 @@ cof_r2w2_assessment = {
             ],
         }
     ],
-}
+
 
 
 # Template Sub Criteria
