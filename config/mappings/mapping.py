@@ -220,7 +220,6 @@ cof_r2w2_assessment = {
             ]
         }
     ],
-
     "scored_assessment_criteria": [
         {
             "id": "strategic_case",
@@ -366,8 +365,7 @@ cof_r2w2_assessment = {
             ],
         }
     ],
-
-
+}
 
 # Template Sub Criteria
 
