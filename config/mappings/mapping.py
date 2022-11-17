@@ -1,179 +1,318 @@
+# flake8: noqa
+# Ignore line length
 cof_r2w2_assessment = {
     "schema_id": "cof_r2w2_assessment",
-    "unscored_assessment_sections": [{
-        "id": "org_info",
-        "name": "Organisation information",
-        "sub_criteria": [{
+    "unscored_assessment_sections": [
+        {
             "id": "org_info",
             "name": "Organisation information",
-            "themes": [{
-                "id": "general_info",
-                "name": "General information",
-                "answers": [{
-                    "field_id": "WWWWxy",
-                    "form_name":"organisation-information",
-                    "field_type": "TextField",
-                    "question": "Your unique tracker number"
+            "sub_criteria": [
+                {
+                    "id": "org_info",
+                    "name": "Organisation information",
+                    "themes": [
+                        {
+                            "id": "general_info",
+                            "name": "General information",
+                            "answers": [
+                                {
+                                    "field_id": "WWWWxy",
+                                    "form_name": "organisation-information",
+                                    "field_type": "TextField",
+                                    "question": "Your unique tracker number",
+                                },
+                                {
+                                    "field_id": "YdtlQZ",
+                                    "form_name": "organisation-information",
+                                    "field_type": "TextField",
+                                    "question": "Organisation name",
+                                },
+                                {
+                                    "field_id": "iBCGxY",
+                                    "form_name": "organisation-information",
+                                    "field_type": "YesNoField",
+                                    "question": "Does your organisation use any other names",
+                                },
+                                {
+                                    "field_id": "[PHFkCs, QgNhXX, XCcqae]",
+                                    "form_name": "organisation-information",
+                                    "field_type": "TextField",
+                                    "question": "Alternative names of your organisation",
+                                },
+                                # {
+                                #     "field_id": "QgNhXX",
+                                #     "form_name":"organisation-information",
+                                #     "field_type": "TextField",
+                                #     "question": "Alternative names of your organisation - Alternative name 2 "
+                                # },
+                                # {
+                                #     "field_id": "XCcqae",
+                                #     "form_name":"organisation-information",
+                                #     "field_type": "TextField",
+                                #     "question": "Alternative names of your organisation - Alternative name 3 "
+                                # },
+                                {
+                                    "field_id": "lajFtB",
+                                    "form_name": "organisation-information",
+                                    "field_type": "RadiosField",
+                                    "question": "Type of organisation",
+                                },
+                                {
+                                    "field_id": "plmwJv",
+                                    "form_name": "organisation-information",
+                                    "field_type": "TextField",
+                                    "question": "Type of organisation (other)",
+                                },
+                                {
+                                    "field_id": "GlPmCX",
+                                    "form_name": "organisation-information",
+                                    "field_type": "TextField",
+                                    "question": "Company registration number",
+                                },
+                                {
+                                    "field_id": "GvPSna",
+                                    "form_name": "organisation-information",
+                                    "field_type": "RadiosField",
+                                    "question": "Which regulatory body is your company registered with?",
+                                },
+                                {
+                                    "field_id": "zsbmRx",
+                                    "form_name": "organisation-information",
+                                    "field_type": "TextField",
+                                    "question": "Which regulatory body is your company registered with? (Other)",
+                                },
+                                {
+                                    "field_id": "aHIGbK",
+                                    "form_name": "organisation-information",
+                                    "field_type": "TextField",
+                                    "question": "Charity number",
+                                },
+                                {
+                                    "field_id": "DwfHtk",
+                                    "form_name": "organisation-information",
+                                    "field_type": "YesNoField",
+                                    "question": "Is your organisation a trading subsidiary of a parent company?",
+                                },
+                                {
+                                    "field_id": "MPNlZx",
+                                    "form_name": "organisation-information",
+                                    "field_type": "TextField",
+                                    "question": "Name of parent organisation",
+                                },
+                                {
+                                    "field_id": "MyiYMw",
+                                    "form_name": "organisation-information",
+                                    "field_type": "DatePartsField",
+                                    "question": "Date parent organisation was established",
+                                },
+                                {
+                                    "field_id": "ZQolYb",
+                                    "form_name": "organisation-information",
+                                    "field_type": "UkAddressField",
+                                    "question": "Organisation address",
+                                },
+                                {
+                                    "field_id": "zsoLdf",
+                                    "form_name": "organisation-information",
+                                    "field_type": "YesNoField",
+                                    "question": "Is your correspondence address different to the organisation address?",
+                                },
+                                {
+                                    "field_id": "VhkCbM",
+                                    "form_name": "organisation-information",
+                                    "field_type": "UkAddressField",
+                                    "question": "Correspondence address",
+                                },
+                                {
+                                    "field_id": "FhbaEy",
+                                    "form_name": "organisation-information",
+                                    "field_type": "WebsiteField",
+                                    "question": "Website and social media",
+                                },
+                                {
+                                    "field_id": "FcdKlB",
+                                    "form_name": "organisation-information",
+                                    "field_type": "WebsiteField",
+                                    "question": "Website and social media - Link or username 2",
+                                },
+                                {
+                                    "field_id": "BzxgDA",
+                                    "form_name": "organisation-information",
+                                    "field_type": "WebsiteField",
+                                    "question": "Website and social media - Link or username 3",
+                                },
+                            ],
+                        }
+                    ],
+                }
+            ],
+        }
+    ],
+    "scored_assessment_criteria": [
+        {
+            "id": "strategic_case",
+            "name": "Strategic case",
+            "weighting": 0.30,
+            "sub_criteria": [
+                {
+                    "id": "benefits",
+                    "name": "Benefits",
+                    "themes": [
+                        {
+                            "id": "community_use",
+                            "name": "Community use",
+                            "answers": [
+                                {
+                                    "field_id": "kxgWTy",
+                                    "form_name": "community-use",
+                                    "field_type": "MultilineTextField",
+                                    "question": "Who in the community uses the asset, or has used it in the past, and who benefits from it?",
+                                },
+                                {
+                                    "field_id": "wudRxx",
+                                    "form_name": "project-information",
+                                    "field_type": "MultilineTextField",
+                                    "question": "Tell us how the asset is currently being used, or how it has been used before, and why it's important to the community",
+                                },
+                            ],
+                        },
+                        {
+                            "id": "risk_loss_mpact",
+                            "name": "Risk and impact of loss",
+                            "answers": [
+                                {
+                                    "field_id": "TlGjXb",
+                                    "form_name": "project-information",
+                                    "field_type": "MultilineTextField",
+                                    "question": "Explain why the asset is at risk of being lost to the community, or why it has already been lost",
+                                },
+                                {
+                                    "field_id": "UDTxqC",
+                                    "form_name": "asset-information",
+                                    "field_type": "CheckboxesField",
+                                    "question": "Why is the asset at risk of closure?",
+                                },
+                                {
+                                    "field_id": "GNhrIs",
+                                    "form_name": "community-use",
+                                    "field_type": "MultilineTextField",
+                                    "question": "Tell us how losing the asset would affect, or has already affected, people in the community",
+                                },
+                                {
+                                    "field_id": "qsZLjZ",
+                                    "form_name": "community-use",
+                                    "field_type": "MultilineTextField",
+                                    "question": "Why will the asset be lost without community intervention?",
+                                },
+                            ],
+                        },
+                    ],
                 },
                 {
-                    "field_id": "YdtlQZ",
-                    "form_name": "organisation-information",
-                    "field_type": "TextField",
-                    "question": "Organisation name"
+                    "id": "engagement",
+                    "name": "Engagement",
+                    "themes": [
+                        {
+                            "id": "engaging-the-community",
+                            "name": "Engaging the community",
+                            "answers": [
+                                {
+                                    "field_id": "HJBgvw",
+                                    "form_name": "community-engagement",
+                                    "field_type": "MultilineTextField",
+                                    "question": "Tell us how you have engaged with the community about your intention to take ownership of the asset, and explain how this has shaped your project plans",
+                                },
+                                {
+                                    "field_id": "JCACTy",
+                                    "form_name": "community-engagement",
+                                    "field_type": "YesNoField",
+                                    "question": "Have you done any fundraising in the community?",
+                                    # Yes-No determines dpLyQh
+                                },
+                                {
+                                    "field_id": "dpLyQh",
+                                    "form_name": "community-engagement",
+                                    "field_type": "MultilineTextField",
+                                    "question": "[if y] Describe your fundraising activities",
+                                    # Determined by Yes-No JCACTy
+                                },
+                            ],
+                        },
+                        {
+                            "id": "local-support",
+                            "name": "Local support",
+                            "answers": [
+                                {
+                                    "field_id": "NZKHOp",
+                                    "form_name": "community-engagement",
+                                    "field_type": "MultilineTextField",
+                                    "question": "Tell us how your project supports any wider local plans",
+                                },
+                                {
+                                    "field_id": "KqoaJL",
+                                    "form_name": "local-support",
+                                    "field_type": "YesNoField",
+                                    "question": "Are you confident there is local support for your project?",
+                                    # Yes-No determines KqoaJL
+                                },
+                                {
+                                    "field_id": "BFbzux",
+                                    "form_name": "local-support",
+                                    "field_type": "MultilineTextField",
+                                    "question": "Tell us more about the local support for your project",
+                                    # Determined by Yes-No KqoaJL
+                                },
+                                {
+                                    "field_id": "EEBFao",
+                                    "form_name": "local-support",
+                                    "field_type": "FileUploadField",
+                                    "question": "Upload supporting evidence (optional)",
+                                },
+                            ],
+                        },
+                    ],
                 },
                 {
-                    "field_id": "iBCGxY",
-                    "form_name":"organisation-information",
-                    "field_type": "YesNoField",
-                    "question": "Does your organisation use any other names"
+                    "id": "environmental_sustainability",
+                    "name": "Environmental Sustainability",
+                    "themes": [
+                        {
+                            "id": "environmental-considerations",
+                            "name": "Environmental considerations",
+                            "answers": [
+                                {
+                                    "field_id": "CvVZJv",
+                                    "form_name": "environmental-sustainability",
+                                    "field_type": "MultilineTextField",
+                                    "question": "Tell us how you have considered the environmental sustainability of your project",
+                                }
+                            ],
+                        }
+                    ],
                 },
-                {
-                    "field_id": "[PHFkCs, QgNhXX, XCcqae]",
-                    "form_name":"organisation-information",
-                    "field_type": "TextField",
-                    "question": "Alternative names of your organisation"
-                },
-                # {
-                #     "field_id": "QgNhXX",
-                #     "form_name":"organisation-information",
-                #     "field_type": "TextField",
-                #     "question": "Alternative names of your organisation - Alternative name 2 "
-                # },                
-                # {
-                #     "field_id": "XCcqae",
-                #     "form_name":"organisation-information",
-                #     "field_type": "TextField",
-                #     "question": "Alternative names of your organisation - Alternative name 3 "
-                # },                    
-                {
-                    "field_id": "lajFtB",
-                    "form_name":"organisation-information",
-                    "field_type": "RadiosField",
-                    "question": "Type of organisation"
-                },
-                {
-                    "field_id": "plmwJv",
-                    "form_name":"organisation-information",
-                    "field_type": "TextField",
-                    "question": "Type of organisation (other)"
-                },                              
-                {
-                    "field_id": "GlPmCX",
-                    "form_name":"organisation-information",
-                    "field_type": "TextField",
-                    "question": "Company registration number"
-                },                              
-                {
-                    "field_id": "GvPSna",
-                    "form_name":"organisation-information",
-                    "field_type": "RadiosField",
-                    "question": "Which regulatory body is your company registered with?"
-                },                              
-                {
-                    "field_id": "zsbmRx",
-                    "form_name":"organisation-information",
-                    "field_type": "TextField",
-                    "question": "Which regulatory body is your company registered with? (Other)"
-                },                              
-                {
-                    "field_id": "aHIGbK",
-                    "form_name":"organisation-information",
-                    "field_type": "TextField",
-                    "question": "Charity number"
-                },                              
-                {
-                    "field_id": "DwfHtk",
-                    "form_name":"organisation-information",
-                    "field_type": "YesNoField",
-                    "question": "Is your organisation a trading subsidiary of a parent company?"
-                },                              
-                {
-                    "field_id": "MPNlZx",
-                    "form_name":"organisation-information",
-                    "field_type": "TextField",
-                    "question": "Name of parent organisation"
-                },                              
-                {
-                    "field_id": "MyiYMw",
-                    "form_name":"organisation-information",
-                    "field_type": "DatePartsField",
-                    "question": "Date parent organisation was established"
-                },                              
-                {
-                    "field_id": "ZQolYb",
-                    "form_name":"organisation-information",
-                    "field_type": "UkAddressField",
-                    "question": "Organisation address"
-                },                              
-                {
-                    "field_id": "zsoLdf",
-                    "form_name":"organisation-information",
-                    "field_type": "YesNoField",
-                    "question": "Is your correspondence address different to the organisation address?"
-                },                              
-                {
-                    "field_id": "VhkCbM",
-                    "form_name":"organisation-information",
-                    "field_type": "UkAddressField",
-                    "question": "Correspondence address"
-                },                              
-                {
-                    "field_id": "FhbaEy",
-                    "form_name":"organisation-information",
-                    "field_type": "WebsiteField",
-                    "question": "Website and social media"
-                },                              
-                {
-                    "field_id": "FcdKlB",
-                    "form_name":"organisation-information",
-                    "field_type": "WebsiteField",
-                    "question": "Website and social media - Link or username 2"
-                },                              
-                {
-                    "field_id": "BzxgDA",
-                    "form_name": "organisation-information",
-                    "field_type": "WebsiteField",
-                    "question": "Website and social media - Link or username 3"
-                }]
-            }]
-        }]
-    }],
-    "scored_assessment_criteria": [{
-        "id": "strategic_case",
-        "name": "Strategic case",
-        "weighting": 0.30,
-        "sub_criteria": [{
-            "id": "benefits",
-            "name": "Benefits",
-            "themes": [{
-                "id": "community_use",
-                "name": "Community use",
-                "answers": [{
-                    "field_id": "acbdef",
-                    "form_name":"",
-                    "field_type": "textarea"
-                },
-                {
-                    "field_id": "abcdef",
-                    "form_name":"",
-                    "field_type": "phone"
-                }]
-            },
-            {
-                "id": "risk_loss_mpact",
-                "name": "Risk and impact of loss",
-                "answers": [{
-                    "field_id": "acbdef",
-                    "form_name":"",
-                    "field_type": "textarea"
-                },
-                {
-                    "field_id": "abcdef",
-                    "form_name":"",
-                    "field_type": "phone"
-                }]
-            }]
-        }]
-    }]
+            ],
+        }
+    ],
 }
 
+
+# Template Sub Criteria
+
+#                 {
+#                     "id": "environmental_sustainability",
+#                     "name": "Environmental Sustainability",
+#                     "themes": [
+#                         {
+#                             "id": "",
+#                             "name": "",
+#                             "answers": [
+#                                 {
+#                                     "field_id": "acbdef",
+#                                     "form_name": "",
+#                                     "field_type": "textarea",
+#                                     "question": "",
+#                                 },
+#                             ],
+#                         }
+#                     ],
+#                 }
