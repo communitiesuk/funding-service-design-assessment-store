@@ -15,7 +15,8 @@ answer_schema = {
                 "type": "string"
             },
             "field_type": {
-                "type": "string"
+                "type": "string",
+                "enum": ["TextField", "YesNoField", "RadiosField", "DatePartsField", "UkAddressField", "WebsiteField", "MultilineTextField", "EmailAddressField", "TelephoneNumberField", "NumberField", "CheckboxesField", "FileUploadField"]
             },
             "question": {
                 "type": "string"

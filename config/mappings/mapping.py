@@ -115,7 +115,7 @@ cof_r2w2_assessment = {
                                     "field_id": "emVGxS",
                                     "form_name": "organisation-information",
                                     "field_type": "MultilineTextField",
-                                    "question": "What is your organisation's main purpose?",
+                                    "question": "What is your organisation's main purpose?"
                                 },
                                 {
                                     "field_id": ["btTtIb", "SkocDi", "CNeeiC"],
@@ -133,29 +133,29 @@ cof_r2w2_assessment = {
                                     "field_id": "hnLurH",
                                     "form_name": "organisation-information",
                                     "field_type": "YesNoField",
-                                    "question": "Is your application a joint bid in partnership with other organisations?",
+                                    "question": "Is your application a joint bid in partnership with other organisations?"
                                 },
                                 {
                                     "field_id": "APSjeB",
                                     "form_name": "organisation-information",
                                     "field_type": "TextField",
-                                    "question": "Partner organisation name",
+                                    "question": "Partner organisation name"
                                 },
                                 {
                                     "field_id": "biTJjF",
                                     "form_name": "organisation-information",
                                     "field_type": "UkAddressField",
-                                    "question": "Partner organisation address",
+                                    "question": "Partner organisation address"
                                 },
                                 {
                                     "field_id": "IkmvEt",
                                     "form_name": "organisation-information",
                                     "field_type": "MultilineTextField",
-                                    "question": "Tell us about your partnership and how you plan to work together",
-                                },
-                            ],
-                        },
-                    ],
+                                    "question": "Tell us about your partnership and how you plan to work together"
+                                }
+                            ]
+                        }
+                    ]
                 },
                 {
                     "id": "applicant_info",
@@ -169,21 +169,21 @@ cof_r2w2_assessment = {
                                     "field_id": "ZBjDTn",
                                     "form_name": "applicant-information",
                                     "field_type": "TextField",
-                                    "question": "Name of lead contact",
+                                    "question": "Name of lead contact"
                                 },
                                 {
                                     "field_id": "LZBrEj",
                                     "form_name": "applicant-information",
                                     "field_type": "EmailAddressField",
-                                    "question": "Lead contact email address",
+                                    "question": "Lead contact email address"
                                 },
                                 {
                                     "field_id": "lRfhGB",
                                     "form_name": "applicant-information",
                                     "field_type": "TelephoneNumberField",
-                                    "question": "Lead contact telephone number",
-                                },
-                            ],
+                                    "question": "Lead contact telephone number"
+                                }
+                            ]
                         },
                         {
                             "id": "partnerships",
@@ -193,13 +193,13 @@ cof_r2w2_assessment = {
                                     "field_id": "hnLurH",
                                     "form_name": "organisation-information",
                                     "field_type": "YesNoField",
-                                    "question": "Is your application a joint bid in partnership with other organisations?",
+                                    "question": "Is your application a joint bid in partnership with other organisations?"
                                 },
                                 {
                                     "field_id": "APSjeB",
                                     "form_name": "organisation-information",
                                     "field_type": "TextField",
-                                    "question": "Partner organisation name",
+                                    "question": "Partner organisation name"
                                 },
                                 {
                                     "field_id": "biTJjF",
@@ -211,7 +211,7 @@ cof_r2w2_assessment = {
                                     "field_id": "IkmvEt",
                                     "form_name": "organisation-information",
                                     "field_type": "MultilineTextField",
-                                    "question": "Tell us about your partnership and how you plan to work together",
+                                    "question": "Tell us about your partnership and how you plan to work together"
                                 },
                             ],
                         },
