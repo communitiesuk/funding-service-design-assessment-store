@@ -145,6 +145,3 @@ flask_session
 # Sqlite
 sqlite.db
 test_sqlite.db
-
-mapping copy.py
-mapping_schema copy.py
