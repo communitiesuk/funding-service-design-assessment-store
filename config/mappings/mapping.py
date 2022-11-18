@@ -18,67 +18,67 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "WWWWxy",
                                     "form_name": "organisation-information",
-                                    "field_type": "TextField",
+                                    "field_type": "textField",
                                     "question": "Your unique tracker number",
                                 },
                                 {
                                     "field_id": "YdtlQZ",
                                     "form_name": "organisation-information",
-                                    "field_type": "TextField",
+                                    "field_type": "textField",
                                     "question": "Organisation name",
                                 },
                                 {
                                     "field_id": "iBCGxY",
                                     "form_name": "organisation-information",
-                                    "field_type": "YesNoField",
+                                    "field_type": "yesNoField",
                                     "question": "Does your organisation use any other names",
                                 },
                                 {
                                     "field_id": ["PHFkCs", "QgNhXX", "XCcqae"],
                                     "form_name": "organisation-information",
-                                    "field_type": "TextField",
+                                    "field_type": "textField",
                                     "question": "Alternative names of your organisation",
                                 },
                                 {
                                     "field_id": ["lajFtB", "plmwJv"],
                                     "form_name": "organisation-information",
-                                    "field_type": "RadiosField",
+                                    "field_type": "radiosField",
                                     "question": "Type of organisation",
                                 },
                                 {
                                     "field_id": "GlPmCX",
                                     "form_name": "organisation-information",
-                                    "field_type": "TextField",
+                                    "field_type": "textField",
                                     "question": "Company registration number",
                                 },
                                 {
                                     "field_id": ["GvPSna", "zsbmRx"],
                                     "form_name": "organisation-information",
-                                    "field_type": "RadiosField",
+                                    "field_type": "radiosField",
                                     "question": "Which regulatory body is your company registered with?",
                                 },
                                 {
                                     "field_id": "aHIGbK",
                                     "form_name": "organisation-information",
-                                    "field_type": "TextField",
+                                    "field_type": "textField",
                                     "question": "Charity number",
                                 },
                                 {
                                     "field_id": "DwfHtk",
                                     "form_name": "organisation-information",
-                                    "field_type": "YesNoField",
+                                    "field_type": "yesNoField",
                                     "question": "Is your organisation a trading subsidiary of a parent company?",
                                 },
                                 {
                                     "field_id": "MPNlZx",
                                     "form_name": "organisation-information",
-                                    "field_type": "TextField",
+                                    "field_type": "textField",
                                     "question": "Name of parent organisation",
                                 },
                                 {
                                     "field_id": "MyiYMw",
                                     "form_name": "organisation-information",
-                                    "field_type": "DatePartsField",
+                                    "field_type": "datePartsField",
                                     "question": "Date parent organisation was established",
                                 },
                                 {
@@ -90,7 +90,7 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "zsoLdf",
                                     "form_name": "organisation-information",
-                                    "field_type": "YesNoField",
+                                    "field_type": "yesNoField",
                                     "question": "Is your correspondence address different to the organisation address?",
                                 },
                                 {
@@ -102,7 +102,7 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": ["FhbaEy", "FcdKlB", "BzxgDA"],
                                     "form_name": "organisation-information",
-                                    "field_type": "WebsiteField",
+                                    "field_type": "websiteField",
                                     "question": "Website and social media",
                                 },
                             ],
@@ -114,13 +114,13 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "emVGxS",
                                     "form_name": "organisation-information",
-                                    "field_type": "MultilineTextField",
+                                    "field_type": "multilineTextField",
                                     "question": "What is your organisation's main purpose?"
                                 },
                                 {
                                     "field_id": ["btTtIb", "SkocDi", "CNeeiC"],
                                     "form_name": "organisation-information",
-                                    "field_type": "MultilineTextField",
+                                    "field_type": "multilineTextField",
                                     "question": "Tell us about your organisation's main activities",
                                 },
                             ],
@@ -132,13 +132,13 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "hnLurH",
                                     "form_name": "organisation-information",
-                                    "field_type": "YesNoField",
+                                    "field_type": "yesNoField",
                                     "question": "Is your application a joint bid in partnership with other organisations?"
                                 },
                                 {
                                     "field_id": "APSjeB",
                                     "form_name": "organisation-information",
-                                    "field_type": "TextField",
+                                    "field_type": "textField",
                                     "question": "Partner organisation name"
                                 },
                                 {
@@ -150,7 +150,7 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "IkmvEt",
                                     "form_name": "organisation-information",
-                                    "field_type": "MultilineTextField",
+                                    "field_type": "multilineTextField",
                                     "question": "Tell us about your partnership and how you plan to work together"
                                 }
                             ]
@@ -168,19 +168,19 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "ZBjDTn",
                                     "form_name": "applicant-information",
-                                    "field_type": "TextField",
+                                    "field_type": "textField",
                                     "question": "Name of lead contact"
                                 },
                                 {
                                     "field_id": "LZBrEj",
                                     "form_name": "applicant-information",
-                                    "field_type": "EmailAddressField",
+                                    "field_type": "emailAddressField",
                                     "question": "Lead contact email address"
                                 },
                                 {
                                     "field_id": "lRfhGB",
                                     "form_name": "applicant-information",
-                                    "field_type": "TelephoneNumberField",
+                                    "field_type": "telephoneNumberField",
                                     "question": "Lead contact telephone number"
                                 }
                             ]
@@ -192,13 +192,13 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "hnLurH",
                                     "form_name": "organisation-information",
-                                    "field_type": "YesNoField",
+                                    "field_type": "yesNoField",
                                     "question": "Is your application a joint bid in partnership with other organisations?"
                                 },
                                 {
                                     "field_id": "APSjeB",
                                     "form_name": "organisation-information",
-                                    "field_type": "TextField",
+                                    "field_type": "textField",
                                     "question": "Partner organisation name"
                                 },
                                 {
@@ -210,7 +210,7 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "IkmvEt",
                                     "form_name": "organisation-information",
-                                    "field_type": "MultilineTextField",
+                                    "field_type": "multilineTextField",
                                     "question": "Tell us about your partnership and how you plan to work together"
                                 },
                             ],
@@ -237,13 +237,13 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "kxgWTy",
                                     "form_name": "community-use",
-                                    "field_type": "MultilineTextField",
+                                    "field_type": "multilineTextField",
                                     "question": "Who in the community uses the asset, or has used it in the past, and who benefits from it?",
                                 },
                                 {
                                     "field_id": "wudRxx",
                                     "form_name": "project-information",
-                                    "field_type": "MultilineTextField",
+                                    "field_type": "multilineTextField",
                                     "question": "Tell us how the asset is currently being used, or how it has been used before, and why it's important to the community",
                                 },
                             ],
@@ -255,25 +255,25 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "TlGjXb",
                                     "form_name": "project-information",
-                                    "field_type": "MultilineTextField",
+                                    "field_type": "multilineTextField",
                                     "question": "Explain why the asset is at risk of being lost to the community, or why it has already been lost",
                                 },
                                 {
                                     "field_id": "UDTxqC",
                                     "form_name": "asset-information",
-                                    "field_type": "CheckboxesField",
+                                    "field_type": "checkboxesField",
                                     "question": "Why is the asset at risk of closure?",
                                 },
                                 {
                                     "field_id": "GNhrIs",
                                     "form_name": "community-use",
-                                    "field_type": "MultilineTextField",
+                                    "field_type": "multilineTextField",
                                     "question": "Tell us how losing the asset would affect, or has already affected, people in the community",
                                 },
                                 {
                                     "field_id": "qsZLjZ",
                                     "form_name": "community-use",
-                                    "field_type": "MultilineTextField",
+                                    "field_type": "multilineTextField",
                                     "question": "Why will the asset be lost without community intervention?",
                                 },
                             ],
@@ -291,20 +291,20 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "HJBgvw",
                                     "form_name": "community-engagement",
-                                    "field_type": "MultilineTextField",
+                                    "field_type": "multilineTextField",
                                     "question": "Tell us how you have engaged with the community about your intention to take ownership of the asset, and explain how this has shaped your project plans",
                                 },
                                 {
                                     "field_id": "JCACTy",
                                     "form_name": "community-engagement",
-                                    "field_type": "YesNoField",
+                                    "field_type": "yesNoField",
                                     "question": "Have you done any fundraising in the community?",
                                     # Yes-No determines dpLyQh
                                 },
                                 {
                                     "field_id": "dpLyQh",
                                     "form_name": "community-engagement",
-                                    "field_type": "MultilineTextField",
+                                    "field_type": "multilineTextField",
                                     "question": "[if y] Describe your fundraising activities",
                                     # Determined by Yes-No JCACTy
                                 },
@@ -317,27 +317,27 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "NZKHOp",
                                     "form_name": "community-engagement",
-                                    "field_type": "MultilineTextField",
+                                    "field_type": "multilineTextField",
                                     "question": "Tell us how your project supports any wider local plans",
                                 },
                                 {
                                     "field_id": "KqoaJL",
                                     "form_name": "local-support",
-                                    "field_type": "YesNoField",
+                                    "field_type": "yesNoField",
                                     "question": "Are you confident there is local support for your project?",
                                     # Yes-No determines KqoaJL
                                 },
                                 {
                                     "field_id": "BFbzux",
                                     "form_name": "local-support",
-                                    "field_type": "MultilineTextField",
+                                    "field_type": "multilineTextField",
                                     "question": "Tell us more about the local support for your project",
                                     # Determined by Yes-No KqoaJL
                                 },
                                 {
                                     "field_id": "EEBFao",
                                     "form_name": "local-support",
-                                    "field_type": "FileUploadField",
+                                    "field_type": "fileUploadField",
                                     "question": "Upload supporting evidence (optional)",
                                 },
                             ],
@@ -355,7 +355,7 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "CvVZJv",
                                     "form_name": "environmental-sustainability",
-                                    "field_type": "MultilineTextField",
+                                    "field_type": "multilineTextField",
                                     "question": "Tell us how you have considered the environmental sustainability of your project",
                                 }
                             ],
@@ -387,7 +387,7 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "NdFwgy",
                                     "form_name": "funding-required",
-                                    "field_type": "MultiInputField",
+                                    "field_type": "multiInputField",
                                     "question": "Capital costs",
                                 },
                                 {
@@ -405,13 +405,13 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "NWTKzQ",
                                     "form_name": "funding-required",
-                                    "field_type": "YesNoField",
+                                    "field_type": "yesNoField",
                                     "question": "Are you applying for revenue funding from the Community Ownership Fund?",
                                 },
                                 {
                                     "field_id": "NyudvF",
                                     "form_name": "funding-required",
-                                    "field_type": "MultiInputField",
+                                    "field_type": "multiInputField",
                                     "question": "Revenue costs",
                                 },
                                 {
@@ -429,13 +429,13 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "DIZZOC",
                                     "form_name": "funding-required",
-                                    "field_type": "YesNoField",
+                                    "field_type": "yesNoField",
                                     "question": "Have you secured any match funding yet?",
                                 },
                                 {
                                     "field_id": "abkrwo",
                                     "form_name": "funding-required",
-                                    "field_type": "MultiInputField",
+                                    "field_type": "multiInputField",
                                     "question": "Secured match funding",
                                 },
                                 {
@@ -453,13 +453,13 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "RvbwSX",
                                     "form_name": "funding-required",
-                                    "field_type": "YesNoField",
+                                    "field_type": "yesNoField",
                                     "question": "Do you have any match funding identified but not yet secured?",
                                 },
                                 {
                                     "field_id": "AOLYnV",
                                     "form_name": "funding-required",
-                                    "field_type": "MultiInputField",
+                                    "field_type": "multiInputField",
                                     "question": "Unsecured match funding",
                                 },
                                 {
@@ -483,7 +483,7 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "oaIntA",
                                     "form_name": "funding-required",
-                                    "field_type": "YesNoField",
+                                    "field_type": "yesNoField",
                                     "question": "If successful, will you use your funding in the next 12 months? (Y/N)",
                                 },
                             ],
@@ -501,7 +501,7 @@ cof_r2w2_assessment = {
                                 {
                                     "field_id": "acbdef",
                                     "form_name": "",
-                                    "field_type": "textarea",
+                                    "field_type": "textArea",
                                     "question": "",
                                 },
                             ],
@@ -526,7 +526,7 @@ cof_r2w2_assessment = {
 #                                 {
 #                                     "field_id": "acbdef",
 #                                     "form_name": "",
-#                                     "field_type": "textarea",
+#                                     "field_type": "textArea",
 #                                     "question": "",
 #                                 },
 #                             ],

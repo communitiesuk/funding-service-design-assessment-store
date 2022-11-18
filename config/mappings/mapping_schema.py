@@ -14,9 +14,27 @@ answer_schema = {
             "form_name": {
                 "type": "string"
             },
+            # TODO
+            # the field types have been copid over from the application store payload thus far
+            # we might want to look at assessment specific types for display
             "field_type": {
                 "type": "string",
-                "enum": ["TextField", "YesNoField", "RadiosField", "DatePartsField", "UkAddressField", "WebsiteField", "MultilineTextField", "EmailAddressField", "TelephoneNumberField", "NumberField", "CheckboxesField", "FileUploadField"]
+                "enum": [
+                    "textField", 
+                    "yesNoField", 
+                    "radiosField", 
+                    "datePartsField", 
+                    "UkAddressField", 
+                    "websiteField", 
+                    "multiInputField", 
+                    "multilineTextField", 
+                    "textArea", 
+                    "emailAddressField", 
+                    "telephoneNumberField", 
+                    "numberField", 
+                    "checkboxesField", 
+                    "fileUploadField"
+                ]
             },
             "question": {
                 "type": "string"
