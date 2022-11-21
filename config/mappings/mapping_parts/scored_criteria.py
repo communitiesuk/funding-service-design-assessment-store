@@ -1,226 +1,7 @@
 # flake8: noqa
 # Ignore line length
-cof_r2w2_assessment = {
-    "schema_id": "cof_r2w2_assessment",
-    "unscored_assessment_sections": [
-        {
-            "id": "organisation_info",
-            "name": "Organisation information",
-            "sub_criteria": [
-                {
-                    "id": "org_info",
-                    "name": "Organisation information",
-                    "themes": [
-                        {
-                            "id": "general_info",
-                            "name": "General information",
-                            "answers": [
-                                {
-                                    "field_id": "WWWWxy",
-                                    "form_name": "organisation-information",
-                                    "field_type": "textField",
-                                    "question": "Your unique tracker number",
-                                },
-                                {
-                                    "field_id": "YdtlQZ",
-                                    "form_name": "organisation-information",
-                                    "field_type": "textField",
-                                    "question": "Organisation name",
-                                },
-                                {
-                                    "field_id": "iBCGxY",
-                                    "form_name": "organisation-information",
-                                    "field_type": "yesNoField",
-                                    "question": "Does your organisation use any other names",
-                                },
-                                {
-                                    "field_id": ["PHFkCs", "QgNhXX", "XCcqae"],
-                                    "form_name": "organisation-information",
-                                    "field_type": "textField",
-                                    "question": "Alternative names of your organisation",
-                                },
-                                {
-                                    "field_id": ["lajFtB", "plmwJv"],
-                                    "form_name": "organisation-information",
-                                    "field_type": "radiosField",
-                                    "question": "Type of organisation",
-                                },
-                                {
-                                    "field_id": "GlPmCX",
-                                    "form_name": "organisation-information",
-                                    "field_type": "textField",
-                                    "question": "Company registration number",
-                                },
-                                {
-                                    "field_id": ["GvPSna", "zsbmRx"],
-                                    "form_name": "organisation-information",
-                                    "field_type": "radiosField",
-                                    "question": "Which regulatory body is your company registered with?",
-                                },
-                                {
-                                    "field_id": "aHIGbK",
-                                    "form_name": "organisation-information",
-                                    "field_type": "textField",
-                                    "question": "Charity number",
-                                },
-                                {
-                                    "field_id": "DwfHtk",
-                                    "form_name": "organisation-information",
-                                    "field_type": "yesNoField",
-                                    "question": "Is your organisation a trading subsidiary of a parent company?",
-                                },
-                                {
-                                    "field_id": "MPNlZx",
-                                    "form_name": "organisation-information",
-                                    "field_type": "textField",
-                                    "question": "Name of parent organisation",
-                                },
-                                {
-                                    "field_id": "MyiYMw",
-                                    "form_name": "organisation-information",
-                                    "field_type": "datePartsField",
-                                    "question": "Date parent organisation was established",
-                                },
-                                {
-                                    "field_id": "ZQolYb",
-                                    "form_name": "organisation-information",
-                                    "field_type": "UkAddressField",
-                                    "question": "Organisation address",
-                                },
-                                {
-                                    "field_id": "zsoLdf",
-                                    "form_name": "organisation-information",
-                                    "field_type": "yesNoField",
-                                    "question": "Is your correspondence address different to the organisation address?",
-                                },
-                                {
-                                    "field_id": "VhkCbM",
-                                    "form_name": "organisation-information",
-                                    "field_type": "UkAddressField",
-                                    "question": "Correspondence address",
-                                },
-                                {
-                                    "field_id": ["FhbaEy", "FcdKlB", "BzxgDA"],
-                                    "form_name": "organisation-information",
-                                    "field_type": "websiteField",
-                                    "question": "Website and social media",
-                                },
-                            ],
-                        },
-                        {
-                            "id": "activities",
-                            "name": "Activities",
-                            "answers": [
-                                {
-                                    "field_id": "emVGxS",
-                                    "form_name": "organisation-information",
-                                    "field_type": "multilineTextField",
-                                    "question": "What is your organisation's main purpose?"
-                                },
-                                {
-                                    "field_id": ["btTtIb", "SkocDi", "CNeeiC"],
-                                    "form_name": "organisation-information",
-                                    "field_type": "multilineTextField",
-                                    "question": "Tell us about your organisation's main activities",
-                                },
-                            ],
-                        },
-                        {
-                            "id": "partnerships",
-                            "name": "Partnerships",
-                            "answers": [
-                                {
-                                    "field_id": "hnLurH",
-                                    "form_name": "organisation-information",
-                                    "field_type": "yesNoField",
-                                    "question": "Is your application a joint bid in partnership with other organisations?"
-                                },
-                                {
-                                    "field_id": "APSjeB",
-                                    "form_name": "organisation-information",
-                                    "field_type": "textField",
-                                    "question": "Partner organisation name"
-                                },
-                                {
-                                    "field_id": "biTJjF",
-                                    "form_name": "organisation-information",
-                                    "field_type": "UkAddressField",
-                                    "question": "Partner organisation address"
-                                },
-                                {
-                                    "field_id": "IkmvEt",
-                                    "form_name": "organisation-information",
-                                    "field_type": "multilineTextField",
-                                    "question": "Tell us about your partnership and how you plan to work together"
-                                }
-                            ]
-                        }
-                    ]
-                },
-                {
-                    "id": "applicant_info",
-                    "name": "Applicant information",
-                    "themes": [
-                        {
-                            "id": "contact_information",
-                            "name": "Contact information",
-                            "answers": [
-                                {
-                                    "field_id": "ZBjDTn",
-                                    "form_name": "applicant-information",
-                                    "field_type": "textField",
-                                    "question": "Name of lead contact"
-                                },
-                                {
-                                    "field_id": "LZBrEj",
-                                    "form_name": "applicant-information",
-                                    "field_type": "emailAddressField",
-                                    "question": "Lead contact email address"
-                                },
-                                {
-                                    "field_id": "lRfhGB",
-                                    "form_name": "applicant-information",
-                                    "field_type": "telephoneNumberField",
-                                    "question": "Lead contact telephone number"
-                                }
-                            ]
-                        },
-                        {
-                            "id": "partnerships",
-                            "name": "Partnerships",
-                            "answers": [
-                                {
-                                    "field_id": "hnLurH",
-                                    "form_name": "organisation-information",
-                                    "field_type": "yesNoField",
-                                    "question": "Is your application a joint bid in partnership with other organisations?"
-                                },
-                                {
-                                    "field_id": "APSjeB",
-                                    "form_name": "organisation-information",
-                                    "field_type": "textField",
-                                    "question": "Partner organisation name"
-                                },
-                                {
-                                    "field_id": "biTJjF",
-                                    "form_name": "organisation-information",
-                                    "field_type": "UkAddressField",
-                                    "question": "Partner organisation address",
-                                },
-                                {
-                                    "field_id": "IkmvEt",
-                                    "form_name": "organisation-information",
-                                    "field_type": "multilineTextField",
-                                    "question": "Tell us about your partnership and how you plan to work together"
-                                },
-                            ],
-                        },
-                    ],
-                },
-            ],
-        }
-    ],
-    "scored_assessment_criteria": [
+
+scored_assessment_criteria = [
         {
             "id": "strategic_case",
             "name": "Strategic case",
@@ -374,8 +155,8 @@ cof_r2w2_assessment = {
                     "name": "Funding breakdown",
                     "themes": [
                         {
-                            "id": "",
-                            "name": "",
+                            "id": "funding_requested",
+                            "name": "Funding requested",
                             "answers": [
                                 {
                                     # These 2 fields are capital and revenue funding respectively
@@ -491,18 +272,192 @@ cof_r2w2_assessment = {
                     ],
                 },
                 {
-                    "id": "",
-                    "name": "",
+                    "id": "financial_and_risk_forecasts",
+                    "name": "Financial and risk forecasts",
                     "themes": [
                         {
-                            "id": "",
-                            "name": "",
+                            "id": "feasibility",
+                            "name": "Feasibility",
                             "answers": [
                                 {
-                                    "field_id": "acbdef",
-                                    "form_name": "",
-                                    "field_type": "textArea",
-                                    "question": "",
+                                    "field_id": "ieRCkI",
+                                    "form_name": "feasibility",
+                                    "field_type": "multilineTextField",
+                                    "question": "Tell us about the feasibility studies you have carried out for your project",
+                                },
+                                {
+                                    "field_id": "aAeszH",
+                                    "form_name": "feasibility",
+                                    "field_type": "yesNoField",
+                                    "question": "Do you need to do any further feasibility work?",
+                                },
+                            ],
+                        },
+                        {
+                            "id": "risk",
+                            "name": "Risk",
+                            "answers": [
+                                {
+                                    "field_id": "ozgwXq",
+                                    "form_name": "risk",
+                                    "field_type": "fileUploadField",
+                                    "question": "Risks to your project (document upload)",
+                                },
+                            ],
+                        },
+                        {
+                            "id": "income_and_running_costs",
+                            "name": "Income and running costs",
+                            "answers": [
+                                {
+                                    "field_id": "WDDkVB",
+                                    "form_name": "project-costs",
+                                    "field_type": "multilineTextField",
+                                    "question": "Summarise your cash flow for the running of the asset",
+                                },
+                                {
+                                    "field_id": "TzOokX",
+                                    "form_name": "project-costs",
+                                    "field_type": "multiInputField",
+                                    "question": "Income source",
+                                },
+                                {
+                                    "field_id": "fbFeEx",
+                                    "form_name": "project-costs",
+                                    "field_type": "multiInputField",
+                                    "question": "Running costs",
+                                }
+                            ],
+                        }
+                    ],
+                },
+                {
+                    "id": "skills_and_resources",
+                    "name": "Skills and resources",
+                    "themes": [
+                        {
+                            "id": "previous_experience",
+                            "name": "Previous experience",
+                            "answers": [
+                                {
+                                    "field_id": "BBlCko",
+                                    "form_name": "organisation-information",
+                                    "field_type": "yesNoField",
+                                    "question": "Have you delivered projects like this before? (Y/N)",
+                                },
+                                {
+                                    "field_id": ["wxCszQ", "QJFQgi", "DGNWqE"],
+                                    "form_name": "organisation-information",
+                                    "field_type": "multilineTextField",
+                                    "question": "Describe your previous projects",
+                                },
+                                {
+                                    "field_id": "CBIWnt",
+                                    "form_name": "skills-and-resources",
+                                    "field_type": "yesNoField",
+                                    "question": "Do you have experience of managing a community asset?",
+                                },
+                                {
+                                    "field_id": "QWveYc",
+                                    "form_name": "skills-and-resources",
+                                    "field_type": "multilineTextField",
+                                    "question": "Describe any experience you have with community assets similar to this",
+                                }
+                            ],
+                        },
+                        {
+                            "id": "governance_and_structures",
+                            "name": "Governance and structures",
+                            "answers": [
+                                {
+                                    "field_id": "JnvsPq",
+                                    "form_name": "community-representation",
+                                    "field_type": "multilineTextField",
+                                    "question": "List the members of your board",
+                                },
+                                {
+                                    "field_id": "yMCivI",
+                                    "form_name": "community-representation",
+                                    "field_type": "multilineTextField",
+                                    "question": "Tell us about your governance and membership structures",
+                                }
+                            ],
+                        },
+                        {
+                            "id": "recuruitment",
+                            "name": "Recruitment",
+                            "answers": [
+                                {
+                                    "field_id": "vKnMPG",
+                                    "form_name": "skills-and-resources",
+                                    "field_type": "yesNoField",
+                                    "question": "Do you have plans to recruit people to help you manage the asset?",
+                                },
+                                {
+                                    "field_id": "VNjRgZ",
+                                    "form_name": "skills-and-resources",
+                                    "field_type": "multilineTextField",
+                                    "question": "Tells us about the roles you'll recruit",
+                                }
+                            ],
+                        }
+                    ],
+                },
+                {
+                    "id": "representation_inclusiveness_and_integration",
+                    "name": "Representation, inclusiveness and integration",
+                    "themes": [
+                        {
+                            "id": "representing_community_views",
+                            "name": "Representing community views",
+                            "answers": [
+                                {
+                                    "field_id": "NUZOvS",
+                                    "form_name": "community-representation",
+                                    "field_type": "multilineTextField",
+                                    "question": "Explain how you'll consider the views of the community in the running of the asset",
+                                },
+                            ],
+                        },
+                        {
+                            "id": "accessibility_and_inclusivity",
+                            "name": "Accessibility and inclusivity",
+                            "answers": [
+                                {
+                                    "field_id": "YbfbSC",
+                                    "form_name": "inclusiveness-and-integration",
+                                    "field_type": "multilineTextField",
+                                    "question": "Describe anything that might prevent people from using the asset or participating in its running",
+                                },
+                                {
+                                    "field_id": "KuhSWw",
+                                    "form_name": "inclusiveness-and-integration",
+                                    "field_type": "multilineTextField",
+                                    "question": "Tell us how you'll make your project accessible and inclusive to everyone in the community",
+                                },
+                                {
+                                    "field_id": "bkJsiO",
+                                    "form_name": "inclusiveness-and-integration",
+                                    "field_type": "multilineTextField",
+                                    "question": "Describe how the project will bring people together from all over the community",
+                                },
+                            ],
+                        }
+                    ],
+                },
+                {
+                    "id": "business_plan",
+                    "name": "Business plan",
+                    "themes": [
+                        {
+                            "id": "business_plan",
+                            "name": "Business plan",
+                            "answers": [
+                                {
+                                    "field_id": "rFXeZo",
+                                    "form_name": "upload-business-plan",
+                                    "field_type": "fileUploadField",
+                                    "question": "business plan (document upload)",
                                 },
                             ],
                         }
@@ -510,26 +465,92 @@ cof_r2w2_assessment = {
                 },
             ],
         },
-    ],
-}
+        {
+            "id": "potential_to_deliver_community_benefit",
+            "name": "Potential to deliver community benefit",
+            "weighting": 0.30,
+            "sub_criteria": [
+                {
+                    "id": "community-benefits",
+                    "name": "How the community benefits	",
+                    "themes": [
+                        {
+                            "id": "delivering_and_sustaining_benefits",
+                            "name": "Delivering and sustaining benefits",
+                            "answers": [
+                                {
+                                    "field_id": "SrtVAs",
+                                    "form_name": "inclusiveness_and_integration",
+                                    "field_type": "multilineTextField",
+                                    "question": "Describe the planned activities or services that will take place at the asset",
+                                },
+                                {
+                                    "field_id": "QjJtbs",
+                                    "form_name": "community_benefits",
+                                    "field_type": "checkboxesField",
+                                    "question": "What community benefits do you expect to deliver with this project?",
+                                },
+                                {
+                                    "field_id": "gDTsgG",
+                                    "form_name": "community_benefits",
+                                    "field_type": "multilineTextField",
+                                    "question": "Tell us about these benefits in detail, and explain how you'll measure the benefits it'll bring for the community",
+                                },
+                                {
+                                    "field_id": "kYjJFy",
+                                    "form_name": "community_benefits",
+                                    "field_type": "multilineTextField",
+                                    "question": "Explain how you plan to sustain, and potentially expand, these benefits over time",
+                                },
+                            ],
+                        },
+                        {
+                            "id": "benefitting_the_whole_community",
+                            "name": "Benefitting the whole community",
+                            "answers": [
+                                {
+                                    "field_id": "UbjYqE",
+                                    "form_name": "community_benefits",
+                                    "field_type": "multilineTextField",
+                                    "question": "Tell us how you'll make sure the whole community benefits from the asset",
+                                },
+                            ],
+                        }
+                    ],
+                }
 
-# Template Sub Criteria
+            ]
+        },
+        {
+            "id": "added_value_of_the_community_asset",
+            "name": "Added value of the community asset",
+            "weighting": 0.10,
+            "sub_criteria": [
+                {
+                    "id": "value-to-the-community",
+                    "name": "Value to the community",
+                    "themes": [
+                        {
+                            "id": "addressing_community_challenges",
+                            "name": "Addressing community challenges",
+                            "answers": [
+                                {
+                                    "field_id": "oOPUXI",
+                                    "form_name": "value-to-the-community",
+                                    "field_type": "multilineTextField",
+                                    "question": "Tell us about your local community as a whole",
+                                },
+                                {
+                                    "field_id": "NKOmNL",
+                                    "form_name": "value-to-the-community",
+                                    "field_type": "multilineTextField",
+                                    "question": "Describe any specific challenges your community faces, and how the asset will address these",
+                                },
+                            ],
+                        }
+                    ],
+                }
 
-#                 {
-#                     "id": "environmental_sustainability",
-#                     "name": "Environmental Sustainability",
-#                     "themes": [
-#                         {
-#                             "id": "",
-#                             "name": "",
-#                             "answers": [
-#                                 {
-#                                     "field_id": "acbdef",
-#                                     "form_name": "",
-#                                     "field_type": "textArea",
-#                                     "question": "",
-#                                 },
-#                             ],
-#                         }
-#                     ],
-#                 }
+            ]
+        }
+    ]
