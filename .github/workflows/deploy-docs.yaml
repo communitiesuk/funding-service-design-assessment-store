@@ -1,0 +1,37 @@
+name: website
+
+# build the documentation whenever there is a new tag.
+on:
+  push:
+    tags:
+      - 'v[0-9]+.[0-9]+.[0-9]+*'
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      FLASK_ENV : "docs"
+      VERSION : ${{github.ref_name}}
+      VERSION_LINK : https://github.com/communitiesuk/${{ github.event.repository.name }}/releases/tag/${{github.ref_name}}
+      DATABASE_URL : "docs"
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - name: Set up python 🐍
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install reqs 📦
+        run: pip install -r requirements-dev.txt pdoc
+      - name: pdoc setup ✨
+        run: cp README.md docs/README.md && cp tasks/TASKS.md docs/TASKS.md && cp CHANGELOG.md docs/CHANGELOG.md
+      - name: pdoc build 🏗️
+        run: pdoc api db tests -t docs/ -o docs/dist/
+      - name: Deploy 🚀
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs/dist/
