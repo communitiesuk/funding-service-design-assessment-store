@@ -14,9 +14,6 @@ answer_schema = {
             "form_name": {
                 "type": "string"
             },
-            # TODO
-            # the field types have been copid over from the application store payload thus far
-            # we might want to look at assessment specific types for display
             "field_type": {
                 "type": "string",
                 "enum": [
@@ -27,8 +24,7 @@ answer_schema = {
                     "UkAddressField", 
                     "websiteField", 
                     "multiInputField", 
-                    "multilineTextField", 
-                    "textArea", 
+                    "multilineTextField",
                     "emailAddressField", 
                     "telephoneNumberField", 
                     "numberField", 
@@ -36,12 +32,38 @@ answer_schema = {
                     "fileUploadField"
                 ]
             },
+            "presentation_type": {
+                "type": "string",
+                "enum": [
+                    "text",
+                    # covers:
+                    # "textField", 
+                    # "yesNoField", 
+                    # "radiosField", 
+                    # "datePartsField", 
+                    # "websiteField", 
+                    # "numberField", 
+                    # "emailAddressField", 
+                    # "telephoneNumberField",  
+                    "address",
+                    # covers:
+                    # "UkAddressField", 
+                    "list",
+                    # covers:
+                    # "multiInputField", 
+                    # "multilineTextField",
+                    # "checkboxesField", 
+                    "file",
+                    # covers:
+                    # "fileUploadField"
+                ]
+            },
             "question": {
                 "type": "string"
             }
         },
         "additionalProperties": False,
-        "minProperties": 3,
+        "minProperties": 4,
     },
 }
 
