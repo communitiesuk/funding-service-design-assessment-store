@@ -4,5 +4,4 @@ from config import Config
 
 
 def test_mapping():
-    validate(instance=Config.COF_R2W2_ASSESSMENT_MAPPING, schema=schema)
-    print("Mapping conforms with schema.")
+    assert validate(instance=Config.COF_R2W2_ASSESSMENT_MAPPING, schema=schema) == None
