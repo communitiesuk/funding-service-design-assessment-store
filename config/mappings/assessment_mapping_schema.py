@@ -136,8 +136,8 @@ top_level_assessment_mapping_schema = {
     "type": "object",
     "properties": {
         "schema_id": {"type": "string"},
-        "unscored_assessment_sections": unscored_section_schema,
-        "scored_assessment_criteria": scored_criteria_schema,
+        "unscored_sections": unscored_section_schema,
+        "scored_criteria": scored_criteria_schema,
     },
     "additionalProperties": False,
     "minProperties": 3,

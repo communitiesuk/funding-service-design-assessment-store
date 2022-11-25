@@ -1,7 +1,7 @@
 # flake8: noqa
 # Ignore line length
 
-scored_assessment_criteria = [
+scored_criteria = [
         {
             "id": "strategic_case",
             "name": "Strategic case",
@@ -32,7 +32,7 @@ scored_assessment_criteria = [
                             ],
                         },
                         {
-                            "id": "risk_loss_mpact",
+                            "id": "risk_loss_impact",
                             "name": "Risk and impact of loss",
                             "answers": [
                                 {

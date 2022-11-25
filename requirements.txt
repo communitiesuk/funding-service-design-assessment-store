@@ -61,6 +61,8 @@ flupy==1.2.0
     # via alembic-utils
 funding-service-design-utils==1.0.10
     # via -r requirements.in
+greenlet==2.0.1
+    # via sqlalchemy
 gunicorn==20.1.0
     # via funding-service-design-utils
 idna==3.4
