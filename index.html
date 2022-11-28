@@ -38,8 +38,8 @@
     </header>
     <main class="pdoc">
     <h1>
-        <a href="https://github.com/communitiesuk/funding-service-design-assessment-store/releases/tag/v1.0.0pre">
-            Version: v1.0.0pre
+        <a href="https://github.com/communitiesuk/funding-service-design-assessment-store/releases/tag/v0.0.1">
+            Version: v0.0.1
         </a>
     </h1>
 
@@ -229,6 +229,13 @@ upgrade the deployed db instances with your changes.</p>
 
 <p>Performance tests are stored in a separate repository which is then run in the pipeline. If you want to run the performance tests yourself follow the steps in the README for the performance test repo located <a href="https://github.com/communitiesuk/funding-service-design-performance-tests/blob/main/README.md">here</a></p>
 
+<h2 id="testing-faqs">Testing FAQS</h2>
+
+<h3 id="q-help-my-tests-are-failing-because-of-no-rows-found">Q: help! My tests are failing because of <code>no rows found</code></h3>
+
+<p>You've deleted your unit test db or done something manually, so pytest's cache is confused.
+Run <code>pytest --cache-clear</code> to fix your problem.</p>
+
 <h1 id="extras">Extras</h1>
 
 <p>This repo comes with a .pre-commit-config.yaml, if you wish to use this do
@@ -286,6 +293,10 @@ services:
 <h2 id="reqs"><code>reqs</code></h2>
 
 <p>Runs <code>pip-compile requirements.in</code> and <code>pip-compile requirements-dev.in</code> in that order.</p>
+
+<h2 id="generate_test_data"><code>generate_test_data</code></h2>
+
+<p>Execute the above command to create test data into app.json</p>
 <!-- TEMPLATE
 
 We bundle our changes into unreleased. When someone creates a tag, they move it into a proper version heading.
