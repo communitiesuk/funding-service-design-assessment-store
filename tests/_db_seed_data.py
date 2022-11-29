@@ -16,8 +16,7 @@ def get_dynamic_rows(
     number_of_apps_per_round, number_of_funds, number_of_rounds
 ):
 
-    from random import choice
-    from random import sample
+    from random import choice, sample
     from string import ascii_uppercase
     from uuid import uuid4
 
@@ -61,7 +60,7 @@ def get_dynamic_rows(
         "Newport",
     ]
 
-    for count, fund_id in enumerate(funds):
+    for _, fund_id in enumerate(funds):
 
         rounds = [uuid4() for _ in range(number_of_rounds)]
 

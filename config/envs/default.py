@@ -2,9 +2,9 @@
 from os import environ
 from pathlib import Path
 
+from fsd_utils import CommonConfig, configclass
+
 from config.mappings import assessment_mapping
-from fsd_utils import CommonConfig
-from fsd_utils import configclass
 
 
 @configclass

@@ -1,6 +1,7 @@
 import random
 
 import sqlalchemy
+
 from db.models.assessment_record.assessment_records import AssessmentRecord
 from db.queries.assessment_records import find_answer_by_key_runner
 from tests._helpers import get_random_row
@@ -40,7 +41,7 @@ def test_jsonb_blob_immutable(db_session):
     except sqlalchemy.exc.InternalError as error:
         assert "Cannot mutate application json" in str(error)
     else:
-        assert False
+        raise AssertionError()
 
 
 def test_non_blob_columns_mutable(db_session):

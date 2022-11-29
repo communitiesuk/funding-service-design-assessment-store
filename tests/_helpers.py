@@ -1,10 +1,10 @@
 from contextlib import contextmanager
 
-from db import db
-from sqlalchemy import event
-from sqlalchemy import func
+from sqlalchemy import event, func
 from sqlalchemy.engine import Engine
 from sqlalchemy.inspection import inspect
+
+from db import db
 
 
 @contextmanager

@@ -1,60 +1,18 @@
 import pytest
-from app import create_app
-from config import Config
-from db.queries.assessment_records import (
-    bulk_insert_application_record,
-)
 from flask_migrate import upgrade
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy_utils.functions import create_database
-from sqlalchemy_utils.functions import database_exists
-from sqlalchemy_utils.functions import drop_database
-from tests._db_seed_data import get_deterministic_rows
-from tests._db_seed_data import get_dynamic_rows
-from tests._sql_infos import attach_listeners
+from sqlalchemy_utils.functions import (
+    create_database,
+    database_exists,
+    drop_database,
+)
+
+from app import create_app
+from config import Config
+from db.queries.assessment_records import bulk_insert_application_record
+from tests._db_seed_data import get_deterministic_rows, get_dynamic_rows
 from tests._sql_infos import pytest_terminal_summary  # noqa
-
-
-def prep_db(reuse_db=False):
-    """Provide the transactional fixtures with access to the database via a
-    Flask-SQLAlchemy database connection."""
-    no_db = not database_exists(Config.SQLALCHEMY_DATABASE_URI)
-    refresh_db = not reuse_db
-
-    if no_db:
-
-        create_database(Config.SQLALCHEMY_DATABASE_URI)
-
-    elif refresh_db:
-
-        drop_database(Config.SQLALCHEMY_DATABASE_URI)
-        create_database(Config.SQLALCHEMY_DATABASE_URI)
-
-    upgrade()
-
-
-def row_data(apps_per_round, rounds_per_fund, number_of_funds):
-    """row_data A fixture which provides the test row data."""
-
-    row_data = list(
-        get_dynamic_rows(apps_per_round, rounds_per_fund, number_of_funds)
-    )
-
-    return row_data
-
-
-def seed_database_randomly(apps_per_round, rounds_per_fund, number_of_funds):
-    test_input_data = row_data(
-        apps_per_round, rounds_per_fund, number_of_funds
-    )
-
-    bulk_insert_application_record(test_input_data, "COF")
-
-
-def seed_database_deterministically():
-    test_input_data = get_deterministic_rows()
-
-    bulk_insert_application_record(test_input_data, "COF")
+from tests._sql_infos import attach_listeners
 
 
 @pytest.fixture(scope="session")
@@ -108,6 +66,48 @@ def _db(app, request):
                 seed_database_deterministically()
 
     return db
+
+
+def seed_database_randomly(apps_per_round, rounds_per_fund, number_of_funds):
+    test_input_data = row_data(
+        apps_per_round, rounds_per_fund, number_of_funds
+    )
+
+    bulk_insert_application_record(test_input_data, "COF")
+
+
+def seed_database_deterministically():
+    test_input_data = get_deterministic_rows()
+
+    bulk_insert_application_record(test_input_data, "COF")
+
+
+def row_data(apps_per_round, rounds_per_fund, number_of_funds):
+    """row_data A fixture which provides the test row data."""
+
+    row_data = list(
+        get_dynamic_rows(apps_per_round, rounds_per_fund, number_of_funds)
+    )
+
+    return row_data
+
+
+def prep_db(reuse_db=False):
+    """Provide the transactional fixtures with access to the database via a
+    Flask-SQLAlchemy database connection."""
+    no_db = not database_exists(Config.SQLALCHEMY_DATABASE_URI)
+    refresh_db = not reuse_db
+
+    if no_db:
+
+        create_database(Config.SQLALCHEMY_DATABASE_URI)
+
+    elif refresh_db:
+
+        drop_database(Config.SQLALCHEMY_DATABASE_URI)
+        create_database(Config.SQLALCHEMY_DATABASE_URI)
+
+    upgrade()
 
 
 @pytest.fixture(autouse=True)

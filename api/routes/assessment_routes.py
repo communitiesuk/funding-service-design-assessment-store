@@ -1,6 +1,5 @@
 # flake8: noqa
-from typing import Dict
-from typing import List
+from typing import Dict, List
 
 from db.queries.assessment_records import get_metadata_for_fund_round_id
 from db.schemas import AssessmentRecordMetadata

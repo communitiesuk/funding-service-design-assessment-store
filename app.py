@@ -1,10 +1,10 @@
 import connexion
 from connexion.resolver import MethodViewResolver
 from flask import Flask
-from fsd_utils.healthchecks.checkers import DbChecker
-from fsd_utils.healthchecks.checkers import FlaskRunningChecker
+from fsd_utils.healthchecks.checkers import DbChecker, FlaskRunningChecker
 from fsd_utils.healthchecks.healthcheck import Healthcheck
 from fsd_utils.logging import logging
+
 from openapi.utils import get_bundled_specs
 
 

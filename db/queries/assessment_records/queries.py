@@ -3,16 +3,15 @@
 Joins allowed.
 """
 import json
-from typing import Dict
-from typing import List
+from typing import Dict, List
+
+from sqlalchemy import func, select
+from sqlalchemy.orm import defer
 
 from db import db
 from db.models.assessment_record import AssessmentRecord
 from db.queries.assessment_records._helpers import derive_values_from_json
 from db.schemas import AssessmentRecordMetadata
-from sqlalchemy import func
-from sqlalchemy import select
-from sqlalchemy.orm import defer
 
 
 def get_metadata_for_fund_round_id(fund_id: str, round_id: str) -> List[Dict]:

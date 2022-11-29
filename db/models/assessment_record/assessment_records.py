@@ -4,17 +4,11 @@ within the Postgres db.
 Tangential structures such as triggers and ENUMS are kept in other
 files.
 """
+from sqlalchemy import Computed, Index, cast, func
+from sqlalchemy.dialects.postgresql import ENUM, JSONB, TEXT, UUID
+
 from db import db
-from db.models.assessment_record.enums import Language
-from db.models.assessment_record.enums import Status
-from sqlalchemy import cast
-from sqlalchemy import Computed
-from sqlalchemy import func
-from sqlalchemy import Index
-from sqlalchemy.dialects.postgresql import ENUM
-from sqlalchemy.dialects.postgresql import JSONB
-from sqlalchemy.dialects.postgresql import TEXT
-from sqlalchemy.dialects.postgresql import UUID
+from db.models.assessment_record.enums import Language, Status
 
 
 class AssessmentRecord(db.Model):

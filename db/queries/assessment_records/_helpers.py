@@ -1,8 +1,7 @@
-from db import db
-from sqlalchemy import cast
-from sqlalchemy import func
-from sqlalchemy import select
+from sqlalchemy import cast, func, select
 from sqlalchemy.dialects.postgresql import JSONB
+
+from db import db
 
 cof_json_mapper = {
     # "column name" : "jsonpath to value in jsonb blob".
@@ -20,29 +19,6 @@ cof_json_mapper = {
         '$.forms[*].questions[*].fields[*] ? (@.key == "yaQoxU")."answer"'
     ),
 }
-
-
-def get_mapper(application_type: str) -> dict:
-    """get_mapper A factory returning the dictionary associated with the given
-    `application_type`.
-
-    :param application_type: An application type for which we have an
-    associated mapper dict. For example, "cof" is associated with
-    `cof_json_mapper` through this function.
-    :raises KeyError: Raised if the given `application_type` doesn't have an
-    associated dict.
-    :return: A dictionary with keys equal to the column names in `db.models.
-    AssessmentRecord` and values equal to the jsonpath which will extract the
-    column values from a json with the corresponding application type.
-    """
-
-    match application_type:
-
-        case "COF":
-            return cof_json_mapper
-
-        case _:
-            raise KeyError("Valid application type not given.")
 
 
 def derive_values_from_json(loaded_json: dict, application_type: str) -> dict:
@@ -77,3 +53,26 @@ def derive_values_from_json(loaded_json: dict, application_type: str) -> dict:
     extract_fields_stmt = select(*selects).select_from(loaded_blob)
 
     return db.session.execute(extract_fields_stmt).one()._asdict()
+
+
+def get_mapper(application_type: str) -> dict:
+    """get_mapper A factory returning the dictionary associated with the given
+    `application_type`.
+
+    :param application_type: An application type for which we have an
+    associated mapper dict. For example, "cof" is associated with
+    `cof_json_mapper` through this function.
+    :raises KeyError: Raised if the given `application_type` doesn't have an
+    associated dict.
+    :return: A dictionary with keys equal to the column names in `db.models.
+    AssessmentRecord` and values equal to the jsonpath which will extract the
+    column values from a json with the corresponding application type.
+    """
+
+    match application_type:
+
+        case "COF":
+            return cof_json_mapper
+
+        case _:
+            raise KeyError("Valid application type not given.")
