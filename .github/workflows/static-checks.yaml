@@ -1,0 +1,22 @@
+name: Static Code Checking
+
+# build the documentation whenever there is a new tag.
+on:
+  push:
+
+jobs:
+  pre-commit-check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+      - name: Set up python 🐍
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+      - name: Install reqs 📦
+        run: pip install pre-commit
+      - name: install pre-commit ✨
+        run: pre-commit install
+      - name: Run pre-commit 🚀
+        run: pre-commit run --all-files
