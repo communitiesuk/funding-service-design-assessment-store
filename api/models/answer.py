@@ -5,7 +5,7 @@ from dataclass_dict_convert import dataclass_dict_convert
 
 
 @dataclass_dict_convert()
-@dataclass(frozen=True)
+@dataclass()
 class Answer:
     field_id: str
     form_name: str
