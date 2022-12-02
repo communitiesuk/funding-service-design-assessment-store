@@ -83,7 +83,12 @@ def test_get_sub_criteria(request, client, sub_criteria_response_keys):
     response_json = client.get(
         f"/sub_criteria_overview/{sub_criteria_id}"
     ).json
-
+    # The order of themes within a sub_criteria is important, ensure it is preserved
+    expected_theme_order = ["community_use", "risk_loss_impact"]
+    actual_theme_order = []
+    for theme in response_json["themes"]:
+        actual_theme_order.append(theme["id"])
+    assert expected_theme_order == actual_theme_order
     assert sub_criteria_response_keys in response_json 
 
 
