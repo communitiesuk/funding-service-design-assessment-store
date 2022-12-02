@@ -37,7 +37,7 @@ def sub_criteria(
     sub_criteria_id: str,
 ) -> Dict:
     """Returns metadata and themes for a sub_criteria
-    `/sub_criteria_overviews/{sub_criteria_id}`.
+    `/sub_criteria_overview/{sub_criteria_id}`.
 
     :param sub_criteria_id: The stringified sub criteria id (NOT sub critria name).
     :return: A sub criteria dictionary.

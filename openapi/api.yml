@@ -61,7 +61,7 @@ paths:
                 type: array
                 items:
                   $ref: 'components.yml#/components/schemas/Assessment'
-  /sub_criteria_overviews/{sub_criteria_id}:
+  /sub_criteria_overview/{sub_criteria_id}:
     parameters:
     - name: sub_criteria_id
       in: path

@@ -81,7 +81,7 @@ def test_get_sub_criteria(request, client, sub_criteria_response_keys):
 
     sub_criteria_id = "benefits"
     response_json = client.get(
-        f"/sub_criteria_overviews/{sub_criteria_id}"
+        f"/sub_criteria_overview/{sub_criteria_id}"
     ).json
 
     assert sub_criteria_response_keys in response_json 
@@ -92,7 +92,7 @@ def test_get_false_sub_criteria(request, client):
 
     sub_criteria_id = "does-not-exist"
     response = client.get(
-        f"/sub_criteria_overviews/{sub_criteria_id}"
+        f"/sub_criteria_overview/{sub_criteria_id}"
     )
 
     
