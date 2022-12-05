@@ -74,8 +74,8 @@ def test_search(client):
         assert len(response_json) == len(rows)
 
 
-@pytest.mark.parametrize("sub_criteria_response_keys", ["id", "name", "score_submitted","themes"])
-def test_get_sub_criteria(request, client, sub_criteria_response_keys):
+@pytest.mark.parametrize("sub_criteria_response_key", ["id", "name", "score_submitted","themes"])
+def test_get_sub_criteria(request, client, sub_criteria_response_key):
     """Test to check that sub criteria metadata and ordered themes are returned for
     a COFR2W2 sub criteria"""
 
@@ -89,7 +89,7 @@ def test_get_sub_criteria(request, client, sub_criteria_response_keys):
     for theme in response_json["themes"]:
         actual_theme_order.append(theme["id"])
     assert expected_theme_order == actual_theme_order
-    assert sub_criteria_response_keys in response_json 
+    assert sub_criteria_response_key in response_json 
 
 
 def test_get_false_sub_criteria(request, client):
