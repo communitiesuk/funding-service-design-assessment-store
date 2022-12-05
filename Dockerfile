@@ -4,6 +4,7 @@ WORKDIR /app
 # Additional dependency to support Postgres database
 RUN apt update && apt -yq install libpq-dev
 COPY requirements.txt requirements.txt
+RUN pip3 install psycopg2-binary --no-binary psycopg2-binary
 RUN python3 -m pip install --upgrade pip && pip install -r requirements.txt
 
 COPY . .
