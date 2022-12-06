@@ -42,7 +42,7 @@ class Comment(db.Model):
     )
 
     comment_type = db.Column(
-        "theme_index", db.ENUM(CommentType),  nullable=True
+        "comment_type", db.ENUM(CommentType),  nullable=True
     )
 
     theme_index = db.Column(
