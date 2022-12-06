@@ -38,6 +38,8 @@ class DefaultConfig:
         "postgres://", "postgresql://"
     )
 
+    # SQLALCHEMY_DATABASE_URI = "postgresql://postgres:password@localhost:5432/assessment_store"
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     COF_R2W2_ASSESSMENT_MAPPING = (

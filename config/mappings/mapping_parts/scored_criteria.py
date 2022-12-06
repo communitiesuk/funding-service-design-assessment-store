@@ -494,26 +494,7 @@ scored_criteria = [
                         ],
                     },
                 ],
-            },
-            {
-                "id": "business_plan",
-                "name": "Business plan",
-                "themes": [
-                    {
-                        "id": "business_plan",
-                        "name": "Business plan",
-                        "answers": [
-                            {
-                                "field_id": "rFXeZo",
-                                "form_name": "upload-business-plan",
-                                "field_type": "fileUploadField",
-                                "presentation_type": "file",
-                                "question": "business plan (document upload)",
-                            },
-                        ],
-                    }
-                ],
-            },
+            }
         ],
     },
     {

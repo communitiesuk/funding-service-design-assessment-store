@@ -3,8 +3,8 @@
 
 unscored_sections = [
     {
-        "id": "organisation_info",
-        "name": "Organisation information",
+        "id": "unscored",
+        "name": "Unscored",
         "sub_criteria": [
             {
                 "id": "org_info",
@@ -210,13 +210,7 @@ unscored_sections = [
                     },
                 ],
             },
-        ],
-    },
-    {
-        "id": "project_info",
-        "name": "Project information",
-        "sub_criteria": [
-            {
+{
                 "id": "project_info",
                 "name": "Project information",
                 "themes": [
@@ -474,11 +468,30 @@ unscored_sections = [
                     },
                 ],
             },
+{
+                "id": "business_plan",
+                "name": "Business plan",
+                "themes": [
+                    {
+                        "id": "business_plan",
+                        "name": "Business plan",
+                        "answers": [
+                            {
+                                "field_id": "rFXeZo",
+                                "form_name": "upload-business-plan",
+                                "field_type": "fileUploadField",
+                                "presentation_type": "file",
+                                "question": "business plan (document upload)",
+                            },
+                        ],
+                    }
+                ],
+            },
         ],
     },
     {
-        "id": "check_declarations",
-        "name": "Check declarations",
+        "id": "declarations",
+        "name": "Declarations",
         "sub_criteria": [
             {
                 "id": "declarations",
@@ -562,4 +575,5 @@ unscored_sections = [
             },
         ],
     },
+
 ]
