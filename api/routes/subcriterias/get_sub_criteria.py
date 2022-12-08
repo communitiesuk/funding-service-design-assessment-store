@@ -1,7 +1,6 @@
 from config import Config
 from api.models.sub_criteria import SubCriteria
 from flask import current_app, abort
-
 from db.queries.assessment_records.queries import get_application_jsonb_blob
 
 def get_all_subcriteria():
@@ -61,16 +60,17 @@ def replace_boolean_values(themes_answers):
                 answers.update(answer="No")
             if answers['answer']==True:
                answers.update(answer="Yes")
-      
+
+       
 def get_answers_for_assessors(application_id: str, theme_id: str):
     themes_answers = get_themes_answers(theme_id)
     application_json_blob = get_application_jsonb_blob(application_id)
- 
+    
     for themes_answer in themes_answers:
         for forms in application_json_blob['jsonb_blob']['forms']:
             for questions in forms['questions']:
                 if isinstance(themes_answer["field_id"], list):
-                    answer_list = [app['answer'] for app in questions['fields'] for field_id in themes_answer["field_id"] if app['key']==field_id]
+                    answer_list = tuple(((app['title'],app['answer']) for app in questions['fields'] for field_id in themes_answer["field_id"] if "answer" in app.keys() and app['key']==field_id))
                     if answer_list:
                         themes_answer['answer'] = answer_list                     
                 else:
@@ -78,6 +78,6 @@ def get_answers_for_assessors(application_id: str, theme_id: str):
                         if themes_answer["field_id"] ==  app_fields['key']:
                             themes_answer['answer'] = app_fields['answer']
                                     
-    replace_boolean_values(themes_answers)                                                                              
+    replace_boolean_values(themes_answers)    
+                                                             
     return themes_answers
-  
