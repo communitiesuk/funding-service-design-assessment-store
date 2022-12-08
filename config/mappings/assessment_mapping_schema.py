@@ -49,10 +49,12 @@ answer_schema = {
                     "file",
                     # covers:
                     # "fileUploadField",
-                    "boolean",
-                    #covers:
                     "heading",
                     #covers:
+                    # "title",
+                    "grouped_fields",
+                    #covers:
+                    # "multipleFields",
                 ],
             },
             "question": {"type": "string"},
