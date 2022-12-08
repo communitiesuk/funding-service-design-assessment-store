@@ -61,6 +61,13 @@ clickclick==20.10.2
     # via
     #   -r requirements.txt
     #   connexion
+colorama==0.4.6
+    # via
+    #   -r requirements.txt
+    #   bandit
+    #   build
+    #   click
+    #   pytest
 colored==1.4.4
     # via -r requirements-dev.in
 commonmark==0.9.1
@@ -69,7 +76,7 @@ commonmark==0.9.1
     #   rich
 connexion==2.14.1
     # via -r requirements.txt
-cryptography==38.0.3
+cryptography==38.0.4
     # via
     #   -r requirements.txt
     #   pyjwt
@@ -108,7 +115,7 @@ flupy==1.2.0
     # via
     #   -r requirements.txt
     #   alembic-utils
-funding-service-design-utils==1.0.10
+funding-service-design-utils==1.0.12
     # via -r requirements.txt
 gitdb==4.0.9
     # via gitpython
@@ -153,7 +160,7 @@ jinja2==3.1.2
     #   swagger-ui-bundle
 json2html==1.3.0
     # via -r requirements-dev.in
-jsonschema==4.17.0
+jsonschema==4.17.3
     # via
     #   -r requirements.txt
     #   connexion
@@ -320,7 +327,7 @@ semver==2.13.0
     # via
     #   -r requirements.txt
     #   prance
-sentry-sdk[flask]==1.11.0
+sentry-sdk[flask]==1.11.1
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
@@ -364,7 +371,7 @@ typing-extensions==4.4.0
     #   alembic-utils
     #   flupy
     #   jsonschema-spec
-urllib3==1.26.12
+urllib3==1.26.13
     # via
     #   -r requirements.txt
     #   requests

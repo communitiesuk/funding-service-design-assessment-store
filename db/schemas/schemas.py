@@ -1,6 +1,7 @@
 from db.models.assessment_record import AssessmentRecord
 from db.models.assessment_record.enums import Language
 from db.models.assessment_record.enums import Status
+from db.models.comment.comments import Comment
 from marshmallow.fields import Enum
 from marshmallow.fields import Field
 from marshmallow_sqlalchemy import auto_field
@@ -27,3 +28,14 @@ class AssessorTaskListMetadata(AssessmentRecordMetadata):
     date_submitted = Field(
         data_key="date_submitted", attribute="jsonb_blob.date_submitted"
     )
+
+class CommentMetadata(SQLAlchemyAutoSchema):
+    """CommentMetadata The marshmallow class used to turn SQLAlchemy
+    rows into json for return in http responses."""
+
+    class Meta:
+        model = Comment
+        include_relationships = True
+        load_instance = True
+    
+    application_id = auto_field(dump_only=True)
