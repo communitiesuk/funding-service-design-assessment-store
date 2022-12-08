@@ -48,7 +48,11 @@ answer_schema = {
                     # "checkboxesField",
                     "file",
                     # covers:
-                    # "fileUploadField"
+                    # "fileUploadField",
+                    "boolean",
+                    #covers:
+                    "heading",
+                    #covers:
                 ],
             },
             "question": {"type": "string"},
