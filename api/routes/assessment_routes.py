@@ -6,7 +6,7 @@ from typing import List
 from api.routes._helpers import transform_to_assessor_task_list_metadata
 from api.routes.subcriterias.get_sub_criteria import (
     get_answers_for_assessors,
-    get_theme_answers,
+    get_themes_answers,
     return_subcriteria_from_config,
 )
 from db.queries.assessment_records import get_metadata_for_fund_round_id

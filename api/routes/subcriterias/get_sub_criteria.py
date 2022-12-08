@@ -47,7 +47,7 @@ def return_subcriteria_from_config(sub_criteria_id):
     )
 
 
-def get_theme_answers(theme_id: str) -> list:
+def get_themes_answers(theme_id: str) -> list:
     """ function takes a theme_id arg & returns a list 
     of answers for the given theme_id.
     """
@@ -63,7 +63,7 @@ def replace_boolean_values(themes_answers):
                answers.update(answer="Yes")
       
 def get_answers_for_assessors(application_id: str, theme_id: str):
-    themes_answers = get_theme_answers(theme_id)
+    themes_answers = get_themes_answers(theme_id)
     application_json_blob = get_application_jsonb_blob(application_id)
  
     for themes_answer in themes_answers:
