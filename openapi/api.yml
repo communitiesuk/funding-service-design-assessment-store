@@ -194,3 +194,33 @@ paths:
               schema:
                 type: object
                 $ref: 'assessor_task_list.yml#/components/schemas/AssessorTaskListState'
+
+  '/sub_criteria_themes/{application_id}/{theme_id}':
+    parameters:
+    - name: application_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: path
+    - name: theme_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: path    
+    get:
+      tags:
+        - assessments
+      summary: Retrieves data to populate the answers for sub criteria theme
+      description: Retrieves data to populate the answers for sub criteria theme
+      operationId: api.routes.get_sub_criteria_theme_answers
+      responses:
+        200:
+          description: SUCCESS - Sub criteria themes
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: 'components.yml#/components/schemas/Sub_criteria_theme'
+              

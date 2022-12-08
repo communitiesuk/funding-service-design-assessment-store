@@ -156,6 +156,8 @@ components:
           type: string
         question:
           type: string
+    Sub_criteria_theme:
+      type: array
     Theme:
       type: object
       properties:
