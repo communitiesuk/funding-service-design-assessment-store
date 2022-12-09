@@ -119,13 +119,12 @@ class SubCriteriaThemes:
     def get_grouped_fields_answers(cls, themes_answers: list[dict], questions: dict) -> list:
         for theme in themes_answers:
                 for question in questions:
-                    # condition runs when field_ids are grouped together.
                     answer_list = tuple(((app['title'],app['answer']) for app in question['fields'] for field_id in theme["field_id"] if "answer" in app.keys() and app['key']==field_id))
                     if answer_list:
                         return answer_list
                     
     @classmethod
-    def get_answers_for_assessors(cls,application_id: str, theme_id: str):
+    def map_theme_answers(cls,application_id: str, theme_id: str):
         themes_answers = cls.get_themes_answers(theme_id)
         application_json_blob = get_application_jsonb_blob(application_id)
         questions = cls.get_application_form(application_json_blob)

@@ -78,5 +78,5 @@ def get_assessor_task_list_state(application_id: str) -> dict:
 
 
 def get_sub_criteria_theme_answers(application_id: str, theme_id: str):
-    return SubCriteriaThemes.get_answers_for_assessors(application_id, theme_id)
+    return SubCriteriaThemes.map_theme_answers(application_id, theme_id)
     
