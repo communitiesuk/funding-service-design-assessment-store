@@ -5,8 +5,7 @@ from typing import List
 
 from api.routes._helpers import transform_to_assessor_task_list_metadata
 from api.routes.subcriterias.get_sub_criteria import (
-    get_answers_for_assessors,
-    get_themes_answers,
+    SubCriteriaThemes,
     return_subcriteria_from_config,
 )
 from db.queries.assessment_records import get_metadata_for_fund_round_id
@@ -79,5 +78,5 @@ def get_assessor_task_list_state(application_id: str) -> dict:
 
 
 def get_sub_criteria_theme_answers(application_id: str, theme_id: str):
-    return get_answers_for_assessors(application_id, theme_id)
+    return SubCriteriaThemes.get_answers_for_assessors(application_id, theme_id)
     
