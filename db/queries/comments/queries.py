@@ -5,9 +5,8 @@ Joins allowed.
 import json
 from typing import Dict
 from typing import List
-
 from db import db
-from db.models.comment import Comment
+from db.models.comment.comments import Comment
 from db.schemas import CommentMetadata
 from sqlalchemy import func
 from sqlalchemy import select
