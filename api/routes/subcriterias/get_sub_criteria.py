@@ -1,6 +1,8 @@
 from config import Config
 from api.models.sub_criteria import SubCriteria
 from flask import current_app, abort
+import re
+from .test_json_blob import test_jsonb_blob
 from db.queries.assessment_records.queries import get_application_jsonb_blob
 
 def get_all_subcriteria():
@@ -45,39 +47,101 @@ def return_subcriteria_from_config(sub_criteria_id):
         {"score_submitted": score_submitted, **sub_criteria}
     )
 
-
-def get_themes_answers(theme_id: str) -> list:
-    """ function takes a theme_id arg & returns a list 
-    of answers for the given theme_id.
-    """
-    sub_criterias = get_all_subcriteria()
-    return [theme['answers'] for themes in sub_criterias for theme in themes['themes'] if theme_id==theme['id']][0]
- 
-def replace_boolean_values(themes_answers):
-    for answers in themes_answers:
-        if 'answer' in answers.keys():
-            if answers['answer']==False:
-                answers.update(answer="No")
-            if answers['answer']==True:
-               answers.update(answer="Yes")
-
-       
-def get_answers_for_assessors(application_id: str, theme_id: str):
-    themes_answers = get_themes_answers(theme_id)
-    application_json_blob = get_application_jsonb_blob(application_id)
+class SubCriteriaThemes:
     
-    for themes_answer in themes_answers:
-        for forms in application_json_blob['jsonb_blob']['forms']:
-            for questions in forms['questions']:
-                if isinstance(themes_answer["field_id"], list):
-                    answer_list = tuple(((app['title'],app['answer']) for app in questions['fields'] for field_id in themes_answer["field_id"] if "answer" in app.keys() and app['key']==field_id))
+    @classmethod
+    def get_themes_answers(cls, theme_id: str) -> list[dict]:
+        """ function takes a theme_id arg & returns a list 
+        of answers with given theme_id.
+        """
+        sub_criterias = get_all_subcriteria()
+        return [theme['answers'] for themes in sub_criterias for theme in themes['themes'] if theme_id==theme['id']][0]
+    
+    @classmethod
+    def get_application_form(cls, app_json_blob):
+        return [questions for forms in app_json_blob['jsonb_blob']['forms'] for questions in forms['questions'] ]
+       
+    
+    @classmethod
+    def convert_boolean_values(cls,themes_answers: list[dict]) -> list[dict]:
+        """ function checks boolean values in themes_answers & replace
+        boolean values to string. (False -> "No", True -> "Yes")
+        Args:
+            themes_answers (_type_): array of dict
+        """
+        for answers in themes_answers:
+            if 'answer' in answers.keys():
+                if answers['answer']==False:
+                    answers.update(answer="No")
+                if answers['answer']==True:
+                   answers.update(answer="Yes")
+    
+    
+    @classmethod
+    def map_add_another_component_contents(cls, themes_answers: list[dict]) -> list[dict]:
+        """ function checks for special presentation_type "heading"
+        in array of themes answers, if exists, adds question-value 
+        to an answer key for presentation_type "heading" theme and 
+        looks for presentation_type of "description" and "amount" with
+        same presentation_type "heading"s field_id, retrieve words only 
+        from strings of answers for presentation_type "description" theme
+        & numbers only for presentation_type "amount" theme. 
+
+        Args:
+            themes_answers (_type_): array of dict
+        """
+        for heading in themes_answers:
+            try:
+                if heading['presentation_type'] == "heading":
+                    heading['answer'] = heading['question']
+                    for theme in themes_answers:
+                        if heading["field_id"] in theme.values() and theme['presentation_type']=="description":
+                            #TODO: regex to get words only
+                            # description_answer = [re.sub('[^a-zA-Z]+',' ', description) for description in theme['answer']]
+                            description_answer = [description.split(":")[0] for description in theme['answer']]
+                        
+                            theme['answer'] = description_answer
+                    
+                        if heading["field_id"] in theme.values() and theme['presentation_type']=="amount":
+                            #TODO: regex to get currency sign (£) & numbers only
+                            # amount_answer = [re.findall(r'\d+', amount) for amount in theme['answer']]
+                            amount_answer = [amount.split(":")[1] for amount in theme['answer']]
+                        
+                            theme['answer'] = amount_answer
+                            
+                        else:
+                            continue    
+            
+            except (KeyError, IndexError):
+                current_app.logger.error("Incorrect field key")
+                
+    @classmethod
+    def get_grouped_fields_answers(cls, themes_answers: list[dict], questions: dict) -> list:
+        for theme in themes_answers:
+                for question in questions:
+                    # condition runs when field_ids are grouped together.
+                    answer_list = tuple(((app['title'],app['answer']) for app in question['fields'] for field_id in theme["field_id"] if "answer" in app.keys() and app['key']==field_id))
                     if answer_list:
-                        themes_answer['answer'] = answer_list                     
-                else:
-                    for app_fields in questions['fields']:
-                        if themes_answer["field_id"] ==  app_fields['key']:
-                            themes_answer['answer'] = app_fields['answer']
-                                    
-    replace_boolean_values(themes_answers)    
-                                                             
-    return themes_answers
+                        return answer_list
+                    
+    @classmethod
+    def get_answers_for_assessors(cls,application_id: str, theme_id: str):
+        themes_answers = cls.get_themes_answers(theme_id)
+        application_json_blob = get_application_jsonb_blob(application_id)
+        questions = cls.get_application_form(application_json_blob)
+        
+        for theme in themes_answers:
+            if isinstance(theme["field_id"], list):
+                answer_list = cls.get_grouped_fields_answers(themes_answers, questions)
+                theme['answer'] = answer_list                       
+            else:
+                    for question in questions:
+                        for app_fields in question['fields']:
+                            if theme["field_id"] ==  app_fields['key']:
+                                theme['answer'] = app_fields['answer']
+                                                
+        cls.convert_boolean_values(themes_answers)  
+        cls.map_add_another_component_contents(themes_answers)                                    
+        return themes_answers
+
+   
