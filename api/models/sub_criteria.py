@@ -12,13 +12,18 @@ from dataclass_dict_convert import dataclass_dict_convert
 class SubCriteria:
     id: str
     name: str
-    score_submitted: bool
     themes: List[Theme]
+    funding_amount_requested: int
+    project_name: str
+    fund_id: str
+    workflow_status: str
+
 
     def __post_init__(self):
         self.themes = [
             Theme.from_filtered_dict(theme) for theme in self.themes
         ]
+        self.workflow_status = self.workflow_status.name
 
     @classmethod
     def from_filtered_dict(cls, d: dict):

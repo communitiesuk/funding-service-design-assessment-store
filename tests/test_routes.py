@@ -83,14 +83,14 @@ def test_get_application_metadata_for_application_id(client):
     assert response_json == APPLICATION_METADATA_RESPONSE
 
 
-@pytest.mark.parametrize("sub_criteria_response_key", ["id", "name", "score_submitted","themes"])
-def test_get_sub_criteria(request, client, sub_criteria_response_key):
+def test_get_sub_criteria(client):
     """Test to check that sub criteria metadata and ordered themes are returned for
     a COFR2W2 sub criteria"""
 
     sub_criteria_id = "benefits"
+    picked_row = get_random_row(AssessmentRecord)
     response_json = client.get(
-        f"/sub_criteria_overview/{sub_criteria_id}"
+        f"/sub_criteria_overview/{picked_row.application_id}/{sub_criteria_id}"
     ).json
     # The order of themes within a sub_criteria is important, ensure it is preserved
     expected_theme_order = ["community_use", "risk_loss_impact"]
@@ -98,18 +98,19 @@ def test_get_sub_criteria(request, client, sub_criteria_response_key):
     for theme in response_json["themes"]:
         actual_theme_order.append(theme["id"])
     assert expected_theme_order == actual_theme_order
-    assert sub_criteria_response_key in response_json
+    assert "id" in response_json
 
 
-def test_get_false_sub_criteria(request, client):
-    """Test to check that sub criteria data is not retuned for false sub criteria"""
+def test_get_sub_criteria_metadata_for_false_sub_criteria_id(client):
+    """Test to check that sub criteria metadata is not retuned for false sub criteria"""
 
     sub_criteria_id = "does-not-exist"
+    picked_row = get_random_row(AssessmentRecord)
     response = client.get(
-        f"/sub_criteria_overview/{sub_criteria_id}"
-    )
+        f"/sub_criteria_overview/{picked_row.application_id}/{sub_criteria_id}"
+    ).json
 
 
-    assert response.json["status"] == 404
-    assert response.json["title"] == "Not Found"
-    assert response.json["detail"] == "sub_criteria: 'does-not-exist' not found."
+    assert response["status"] == 404
+    assert response["title"] == "Not Found"
+    assert response["detail"] == "sub_criteria: 'does-not-exist' not found."

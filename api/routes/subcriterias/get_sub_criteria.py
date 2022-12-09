@@ -1,5 +1,4 @@
 from config import Config
-from api.models.sub_criteria import SubCriteria
 from flask import current_app, abort
 
 def get_all_subcriteria():
@@ -35,11 +34,6 @@ def get_matching_sub_criteria(sub_criteria_id):
         abort(404, description=msg)
 
 
-def return_subcriteria_from_config(sub_criteria_id):
-    sub_criteria = get_matching_sub_criteria(sub_criteria_id)
-    # TODO get actual score submitted status when score table available
-    score_submitted = False
+def return_subcriteria_from_mapping(sub_criteria_id):
+    return get_matching_sub_criteria(sub_criteria_id)
 
-    return SubCriteria.from_filtered_dict(
-        {"score_submitted": score_submitted, **sub_criteria}
-    )
