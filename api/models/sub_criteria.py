@@ -1,8 +1,7 @@
 import inspect
+import enum
 from dataclasses import dataclass
-from typing import List, Dict
 from api.models.theme import Theme
-from stringcase import lowercase
 from dataclasses import dataclass
 from dataclass_dict_convert import dataclass_dict_convert
 
@@ -12,7 +11,7 @@ from dataclass_dict_convert import dataclass_dict_convert
 class SubCriteria:
     id: str
     name: str
-    themes: List[Theme]
+    themes: list[Theme]
     funding_amount_requested: int
     project_name: str
     fund_id: str
@@ -23,7 +22,8 @@ class SubCriteria:
         self.themes = [
             Theme.from_filtered_dict(theme) for theme in self.themes
         ]
-        self.workflow_status = self.workflow_status.name
+        if isinstance(self.workflow_status, enum.Enum):
+            self.workflow_status = self.workflow_status.name
 
     @classmethod
     def from_filtered_dict(cls, d: dict):
