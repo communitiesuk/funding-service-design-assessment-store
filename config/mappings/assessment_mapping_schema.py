@@ -49,12 +49,18 @@ answer_schema = {
                     "file",
                     # covers:
                     # "fileUploadField",
-                    "heading",
-                    #covers:
-                    # "title",
                     "grouped_fields",
                     #covers:
                     # "multipleFields",
+                    "heading",
+                    #covers:
+                    # "section title for add-another component",
+                    "description",
+                    #covers:
+                    # "question description for add-another component",
+                    "amount",
+                    # covers:
+                    # "amount (£) for add-another component question"
                 ],
             },
             "question": {"type": "string"},
