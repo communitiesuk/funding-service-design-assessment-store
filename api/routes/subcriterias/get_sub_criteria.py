@@ -52,25 +52,30 @@ def return_subcriteria_from_config(sub_criteria_id):
         {"score_submitted": score_submitted, **sub_criteria}
     )
 
-
 class SubCriteriaThemes:
+    
     @classmethod
     def get_themes_answers(cls, theme_id: str) -> list[dict]:
         """function takes a theme_id arg & returns a list
         of answers with given theme_id.
         """
         sub_criterias = get_all_subcriteria()
-        return [
-            theme["answers"]
-            for themes in sub_criterias
-            for theme in themes["themes"]
-            if theme_id == theme["id"]
-        ][0]
+
+        try:
+            return [
+                theme.get("answers")
+                for themes in sub_criterias
+                for theme in themes.get("themes")
+                if theme_id == theme.get("id")
+            ][0]
+
+        except IndexError:
+            current_app.logger.error(f"Incorrect theme ID -> {theme_id}")
 
     @classmethod
     def get_application_form(cls, app_json_blob):
         """function return list of all questions from application form"""
-
+    
         return [
             questions
             for forms in app_json_blob["jsonb_blob"]["forms"]
@@ -84,6 +89,7 @@ class SubCriteriaThemes:
         Args:
             themes_answers (_type_): array of dict
         """
+        current_app.logger.info("Converting boolean values to strings")
         for answers in themes_answers:
             if "answer" in answers.keys():
                 if answers["answer"] == False:
@@ -109,6 +115,9 @@ class SubCriteriaThemes:
         for heading in themes_answers:
             try:
                 if heading["presentation_type"] == "heading":
+                    current_app.logger.info(
+                        "mapping add-another component contents"
+                    )
                     heading["answer"] = heading["question"]
                     for theme in themes_answers:
                         if (
@@ -147,6 +156,9 @@ class SubCriteriaThemes:
     def get_grouped_fields_answers(
         cls, themes_answers: list[dict], questions: dict
     ) -> list:
+        """ function takes list of field_ids, map them question keys
+        and returns list of answers for given field ids"""
+        
         for theme in themes_answers:
             for question in questions:
                 answer_list = tuple(
@@ -162,10 +174,16 @@ class SubCriteriaThemes:
 
     @classmethod
     def map_theme_answers(cls, application_id: str, theme_id: str):
+        """function maps answers from application with assessor task list
+        themes through field ids. 
+        Args: application_id, theme_id
+        """
+
         themes_answers = cls.get_themes_answers(theme_id)
         application_json_blob = get_application_jsonb_blob(application_id)
         questions = cls.get_application_form(application_json_blob)
 
+        current_app.logger.info("mapping subcriteria theme contents")
         for theme in themes_answers:
             if isinstance(theme["field_id"], list):
                 answer_list = cls.get_grouped_fields_answers(
@@ -180,4 +198,7 @@ class SubCriteriaThemes:
 
         cls.convert_boolean_values(themes_answers)
         cls.map_add_another_component_contents(themes_answers)
+        current_app.logger.info(
+            "Successfully mapped subcriteria theme contents"
+        )
         return themes_answers
