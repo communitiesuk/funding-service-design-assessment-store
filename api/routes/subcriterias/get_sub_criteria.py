@@ -6,8 +6,6 @@ from db.queries.assessment_records.queries import get_application_jsonb_blob
 from flask import abort
 from flask import current_app
 
-from .test_json_blob import test_jsonb_blob
-
 
 def get_all_subcriteria():
     sub_criterias = []
