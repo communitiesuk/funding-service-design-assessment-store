@@ -122,7 +122,7 @@ class SubCriteriaThemes:
                             heading["field_id"] in theme.values()
                             and theme["presentation_type"] == "description"
                         ):
-                            # TODO: regex to get words only
+                            # READY: regex to get words only
                             # description_answer = [re.sub('[^a-zA-Z]+',' ', description) for description in theme['answer']]
                             description_answer = [
                                 description.split(":")[0]
@@ -151,27 +151,34 @@ class SubCriteriaThemes:
                 current_app.logger.error("Incorrect field key")
 
     @classmethod
-    def get_grouped_fields_answers(
-        cls, themes_answers: list[dict], questions: dict
+    def map_grouped_fields_answers(
+        cls, theme: dict, questions: dict
     ) -> list:
         """ function takes list of field_ids, map them question keys
         and returns list of answers for given field ids"""
         
-        for theme in themes_answers:
-            for question in questions:
-                answer_list = tuple(
-                    (
-                        (app["title"], app["answer"])
-                        for app in question["fields"]
-                        for field_id in theme["field_id"]
-                        if "answer" in app.keys() and app["key"] == field_id
-                    )
+        for question in questions:
+            answer_list = tuple(
+                (
+                    (app["title"], app["answer"])
+                    for app in question["fields"]
+                    for field_id in theme["field_id"]
+                    if "answer" in app.keys() and app["key"] == field_id
                 )
-                if answer_list:
-                    return answer_list
+            )
+            if answer_list:
+                return answer_list
+                
+    @classmethod
+    def map_single_field_answers(cls, theme: list, questions: dict) -> str:
+       for question in questions:
+            for app_fields in question["fields"]:
+                if theme["field_id"] == app_fields["key"]:
+                    theme["answer"] = app_fields["answer"]
+                    
 
     @classmethod
-    def map_theme_answers(cls, application_id: str, theme_id: str):
+    def map_application_with_sub_criteria_themes(cls, application_id: str, theme_id: str):
         """function maps answers from application with assessor task list
         themes through field ids. 
         Args: application_id, theme_id
@@ -184,15 +191,12 @@ class SubCriteriaThemes:
         current_app.logger.info("mapping subcriteria theme contents")
         for theme in themes_answers:
             if isinstance(theme["field_id"], list):
-                answer_list = cls.get_grouped_fields_answers(
-                    themes_answers, questions
+                answer_list = cls.map_grouped_fields_answers(
+                    theme, questions
                 )
                 theme["answer"] = answer_list
             else:
-                for question in questions:
-                    for app_fields in question["fields"]:
-                        if theme["field_id"] == app_fields["key"]:
-                            theme["answer"] = app_fields["answer"]
+                cls.map_single_field_answers(theme, questions)    
 
         cls.convert_boolean_values(themes_answers)
         cls.map_add_another_component_contents(themes_answers)
