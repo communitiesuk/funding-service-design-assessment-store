@@ -123,11 +123,13 @@ class SubCriteriaThemes:
                             and theme["presentation_type"] == "description"
                         ):
                             # READY: regex to get words only
-                            # description_answer = [re.sub('[^a-zA-Z]+',' ', description) for description in theme['answer']]
-                            description_answer = [
-                                description.split(":")[0]
-                                for description in theme["answer"]
-                            ]
+                            description_answer = [re.sub('[^a-zA-Z]+',' ', description) for description in theme['answer']]
+                            
+                            # DELETE: when numbers regex is ready
+                            # description_answer = [
+                            #     description.split(":")[0]
+                            #     for description in theme["answer"]
+                            # ]
 
                             theme["answer"] = description_answer
 
