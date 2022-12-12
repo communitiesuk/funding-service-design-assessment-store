@@ -3,6 +3,7 @@ from db.models.assessment_record.assessment_records import AssessmentRecord
 from tests._expected_responses import APPLICATION_METADATA_RESPONSE
 from tests._helpers import get_random_row
 from tests._helpers import get_rows_by_filters
+from api.routes.subcriterias.get_sub_criteria import SubCriteriaThemes
 
 
 def test_gets_all_apps_for_fund_round(request, client):
@@ -122,7 +123,6 @@ def test_get_sub_criteria_theme_answers_field_id(request, client):
     theme_id = "feasibility"
     application_id = "a3ec41db-3eac-4220-90db-c92dea049c00"
     
-    
     response = client.get(
         f"/sub_criteria_themes/{application_id}/{theme_id}"
     )
@@ -136,7 +136,6 @@ def test_get_sub_criteria_theme_answers_presentation_type(request, client):
     theme_id = "funding_requested"
     application_id = "a3ec41db-3eac-4220-90db-c92dea049c00"
     
-    
     response = client.get(
         f"/sub_criteria_themes/{application_id}/{theme_id}"
     )
@@ -144,4 +143,21 @@ def test_get_sub_criteria_theme_answers_presentation_type(request, client):
     assert response.json[1]['presentation_type'] == "heading"
     assert response.json[2]['presentation_type'] == "description"
     assert response.json[3]['presentation_type'] == "amount"
+    
+
+def test_map_application_with_sub_criteria_themes():
+    """ Test the function that maps the application & subcriteria themes
+    and return subcriteria_themes including an answer from the application
+    """
+    theme_id = "funding_requested"
+    application_id = "a3ec41db-3eac-4220-90db-c92dea049c00"
+    expected_response = (
+        ('Capital funding', '444'), ('Revenue funding (optional)', '444')
+        )
+    from app import app
+    with app.app_context(): 
+        response = SubCriteriaThemes.map_application_with_sub_criteria_themes(
+            application_id, theme_id)
+        assert response[0]['answer'] == expected_response
+    
 
