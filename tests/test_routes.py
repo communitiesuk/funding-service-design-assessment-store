@@ -143,6 +143,7 @@ def test_add_another_presentation_type(request, client):
     response = client.get(
         f"/sub_criteria_themes/{application_id}/{theme_id}"
     )
+    assert response.status_code == 200
     assert response.json[0]['presentation_type'] == "grouped_fields"
     assert response.json[1]['presentation_type'] == "heading"
     assert response.json[2]['presentation_type'] == "description"
@@ -155,7 +156,7 @@ theme, expected_response = random.choice(list(subcriteria_themes_and_expected_re
 def test_random_theme_content(app_id, theme_id, expected_response):
     """ Test the function with random theme that maps
     the application & subcriteria theme and
-    returns subcriteria_theme with an answer from the
+    returns subcriteria_theme with an answer from
     application
     """
 
