@@ -428,7 +428,7 @@ scored_criteria = [
                         ],
                     },
                     {
-                        "id": "recuruitment",
+                        "id": "recruitment",
                         "name": "Recruitment",
                         "answers": [
                             {
