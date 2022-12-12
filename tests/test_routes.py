@@ -38,7 +38,7 @@ def test_search(client):
         {
             "url": "{row.fund_id}/{row.round_id}?search_term={row.short_id}",
             "filter": lambda row: AssessmentRecord.short_id == row.short_id,
-        },
+        }, 
         {
             "url": "{row.fund_id}/{row.round_id}"
             "?search_term={row.project_name}",
@@ -113,3 +113,35 @@ def test_get_false_sub_criteria(request, client):
     assert response.json["status"] == 404
     assert response.json["title"] == "Not Found"
     assert response.json["detail"] == "sub_criteria: 'does-not-exist' not found."
+
+
+def test_get_sub_criteria_theme_answers(request, client):
+    """ Test to check field_id with given application_id and 
+    theme_id"""
+    
+    theme_id = "feasibility"
+    application_id = "a3ec41db-3eac-4220-90db-c92dea049c00"
+    
+    
+    response = client.get(
+        f"/sub_criteria_themes/{application_id}/{theme_id}"
+    )
+
+    assert response.json[0]['field_id'] == "ieRCkI"
+    
+def test_get_sub_criteria_theme_answers_presentation_type(request, client):
+    """ Test to check presentation_types for add_another component 
+    with given application_id and theme_id"""
+    
+    theme_id = "funding_requested"
+    application_id = "a3ec41db-3eac-4220-90db-c92dea049c00"
+    
+    
+    response = client.get(
+        f"/sub_criteria_themes/{application_id}/{theme_id}"
+    )
+    assert response.json[0]['presentation_type'] == "grouped_fields"
+    assert response.json[1]['presentation_type'] == "heading"
+    assert response.json[2]['presentation_type'] == "description"
+    assert response.json[3]['presentation_type'] == "amount"
+
