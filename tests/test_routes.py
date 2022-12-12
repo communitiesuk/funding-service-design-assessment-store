@@ -133,7 +133,7 @@ def test_get_sub_criteria_theme_answers_field_id(request, client):
 
     assert response.json[0]['field_id'] == "ieRCkI"
     
-def test_get_sub_criteria_theme_answers_presentation_type(request, client):
+def test_add_another_presentation_type(request, client):
     """ Test to check presentation_types for add_another component 
     with given application_id and theme_id"""
     
@@ -152,7 +152,7 @@ def test_get_sub_criteria_theme_answers_presentation_type(request, client):
 theme, expected_response = random.choice(list(subcriteria_themes_and_expected_response.items()))
 @pytest.mark.parametrize("app_id, theme_id, expected_response",[
                             ("a3ec41db-3eac-4220-90db-c92dea049c00", theme, expected_response),])
-def test_random_theme_answer_content(app_id, theme_id, expected_response):
+def test_random_theme_content(app_id, theme_id, expected_response):
     """ Test the function with random theme that maps
     the application & subcriteria theme and
     returns subcriteria_theme with an answer from the
