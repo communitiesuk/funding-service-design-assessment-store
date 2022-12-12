@@ -158,6 +158,21 @@ components:
           type: string
     Sub_criteria_theme:
       type: array
+      items:
+        type: object
+        properties:
+          presentation_type:
+            type: string  
+          question: 
+            type: string  
+          field_id:
+            oneOf:
+              - type: string   
+              - type: array
+          answer:
+            oneOf:
+              - type: string
+              - type: array
     Theme:
       type: object
       properties:
