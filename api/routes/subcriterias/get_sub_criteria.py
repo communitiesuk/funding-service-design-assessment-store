@@ -96,7 +96,7 @@ class SubCriteriaThemes:
                     answers.update(answer="Yes")
 
     @classmethod
-    def map_add_another_component_contents(
+    def sort_add_another_component_contents(
         cls, themes_answers: list[dict]
     ) -> list[dict]:
         """function checks for special presentation_type "heading"
@@ -147,8 +147,9 @@ class SubCriteriaThemes:
 
     @classmethod
     def map_grouped_fields_answers(cls, theme: dict, questions: dict) -> list:
-        """function takes list of field_ids, map them question keys
-        and returns list of answers for given field ids"""
+        """function looks for list of grouped field_ids such as ["JzWvhj", "jLIgoi"],
+        maps them  with question keys and returns a list of answers 
+        for given field ids"""
 
         for question in questions:
             answer_list = tuple(
@@ -163,7 +164,9 @@ class SubCriteriaThemes:
                 return answer_list
 
     @classmethod
-    def map_single_field_answers(cls, theme: list, questions: dict) -> str:
+    def map_single_field_answer(cls, theme: list, questions: dict) -> str:
+        """ function looks for a field_id, maps it with question keys
+        and returns an answer for given field id"""
         for question in questions:
             for app_fields in question["fields"]:
                 if theme["field_id"] == app_fields["key"]:
@@ -188,10 +191,10 @@ class SubCriteriaThemes:
                 answer_list = cls.map_grouped_fields_answers(theme, questions)
                 theme["answer"] = answer_list
             else:
-                cls.map_single_field_answers(theme, questions)
+                cls.map_single_field_answer(theme, questions)
 
         cls.convert_boolean_values(themes_answers)
-        cls.map_add_another_component_contents(themes_answers)
+        cls.sort_add_another_component_contents(themes_answers)
         current_app.logger.info(
             "Successfully mapped subcriteria theme contents"
         )
