@@ -69,6 +69,7 @@ class SubCriteriaThemes:
 
         except IndexError:
             current_app.logger.error(f"Incorrect theme ID -> {theme_id}")
+            return f"Incorrect theme ID {theme_id}" 
 
     @classmethod
     def get_application_form(cls, app_json_blob):
@@ -150,7 +151,7 @@ class SubCriteriaThemes:
         """function looks for list of grouped field_ids such as ["JzWvhj", "jLIgoi"],
         maps them  with question keys and returns a list of answers 
         for given field ids"""
-
+      
         for question in questions:
             answer_list = tuple(
                 (
@@ -162,6 +163,7 @@ class SubCriteriaThemes:
             )
             if answer_list:
                 return answer_list
+        
 
     @classmethod
     def map_single_field_answer(cls, theme: list, questions: dict) -> str:
@@ -179,6 +181,8 @@ class SubCriteriaThemes:
         """function maps answers from application with assessor task list
         themes through field ids.
         Args: application_id, theme_id
+        Exceptions: returning custom exception along with openapi
+        validation detail.
         """
 
         themes_answers = cls.get_themes_answers(theme_id)
@@ -187,11 +191,15 @@ class SubCriteriaThemes:
 
         current_app.logger.info("mapping subcriteria theme contents")
         for theme in themes_answers:
-            if isinstance(theme["field_id"], list):
-                answer_list = cls.map_grouped_fields_answers(theme, questions)
-                theme["answer"] = answer_list
-            else:
-                cls.map_single_field_answer(theme, questions)
+            try:
+                if isinstance(theme["field_id"], list):
+                    answer_list = cls.map_grouped_fields_answers(theme, questions)
+                    theme["answer"] = answer_list
+                else:
+                    cls.map_single_field_answer(theme, questions)
+            except TypeError:
+                current_app.logger.error(f"Incorrect theme id -> {theme_id}"  )
+                return f" Incorrect theme id -> {theme_id}. {theme_id}"        
 
         cls.convert_boolean_values(themes_answers)
         cls.sort_add_another_component_contents(themes_answers)
