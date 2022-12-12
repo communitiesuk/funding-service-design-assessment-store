@@ -49,6 +49,27 @@
                 </ul>
 
             </li>
+            <li>
+                    <a class="class" href="#ScoreMetadata">ScoreMetadata</a>
+                            <ul class="memberlist">
+                        <li>
+                                <a class="class" href="#ScoreMetadata.Meta">ScoreMetadata.Meta</a>
+                                        <ul class="memberlist">
+                                    <li>
+                                            <a class="function" href="#ScoreMetadata.Meta.__init__">Meta</a>
+                                    </li>
+                            </ul>
+
+                        </li>
+                </ul>
+
+            </li>
+            <li>
+                    <a class="class" href="#AssessorTaskListMetadata">AssessorTaskListMetadata</a>
+                            <ul class="memberlist">
+                </ul>
+
+            </li>
     </ul>
 
 
@@ -71,8 +92,10 @@
                         <label class="view-source-button" for="mod-schemas-view-source"><span>View Source</span></label>
 
                         <div class="pdoc-code codehilite"><pre><span></span><span id="L-1"><a href="#L-1"><span class="linenos">1</span></a><span class="kn">from</span> <span class="nn">.schemas</span> <span class="kn">import</span> <span class="n">AssessmentRecordMetadata</span>
-</span><span id="L-2"><a href="#L-2"><span class="linenos">2</span></a>
-</span><span id="L-3"><a href="#L-3"><span class="linenos">3</span></a><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="n">AssessmentRecordMetadata</span><span class="p">]</span>
+</span><span id="L-2"><a href="#L-2"><span class="linenos">2</span></a><span class="kn">from</span> <span class="nn">.schemas</span> <span class="kn">import</span> <span class="n">ScoreMetadata</span>
+</span><span id="L-3"><a href="#L-3"><span class="linenos">3</span></a><span class="kn">from</span> <span class="nn">.schemas</span> <span class="kn">import</span> <span class="n">AssessorTaskListMetadata</span>
+</span><span id="L-4"><a href="#L-4"><span class="linenos">4</span></a>
+</span><span id="L-5"><a href="#L-5"><span class="linenos">5</span></a><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;AssessmentRecordMetadata&quot;</span><span class="p">,</span> <span class="s2">&quot;ScoreMetadata&quot;</span><span class="p">,</span> <span class="s2">&quot;AssessorTaskListMetadata&quot;</span><span class="p">]</span>
 </span></pre></div>
 
 
@@ -88,16 +111,15 @@
 
     </div>
     <a class="headerlink" href="#AssessmentRecordMetadata"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="AssessmentRecordMetadata-9"><a href="#AssessmentRecordMetadata-9"><span class="linenos"> 9</span></a><span class="k">class</span> <span class="nc">AssessmentRecordMetadata</span><span class="p">(</span><span class="n">SQLAlchemyAutoSchema</span><span class="p">):</span>
-</span><span id="AssessmentRecordMetadata-10"><a href="#AssessmentRecordMetadata-10"><span class="linenos">10</span></a>    <span class="sd">&quot;&quot;&quot;AssessmentRecordMetadata The marshmallow class used to turn SQLAlchemy</span>
-</span><span id="AssessmentRecordMetadata-11"><a href="#AssessmentRecordMetadata-11"><span class="linenos">11</span></a><span class="sd">    rows into json for return in http responses.&quot;&quot;&quot;</span>
-</span><span id="AssessmentRecordMetadata-12"><a href="#AssessmentRecordMetadata-12"><span class="linenos">12</span></a>
-</span><span id="AssessmentRecordMetadata-13"><a href="#AssessmentRecordMetadata-13"><span class="linenos">13</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-</span><span id="AssessmentRecordMetadata-14"><a href="#AssessmentRecordMetadata-14"><span class="linenos">14</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">AssessmentRecord</span>
-</span><span id="AssessmentRecordMetadata-15"><a href="#AssessmentRecordMetadata-15"><span class="linenos">15</span></a>        <span class="n">exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;jsonb_blob&quot;</span><span class="p">,</span> <span class="s2">&quot;application_json_md5&quot;</span><span class="p">]</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AssessmentRecordMetadata-13"><a href="#AssessmentRecordMetadata-13"><span class="linenos">13</span></a><span class="k">class</span> <span class="nc">AssessmentRecordMetadata</span><span class="p">(</span><span class="n">SQLAlchemyAutoSchema</span><span class="p">):</span>
+</span><span id="AssessmentRecordMetadata-14"><a href="#AssessmentRecordMetadata-14"><span class="linenos">14</span></a>    <span class="sd">&quot;&quot;&quot;AssessmentRecordMetadata The marshmallow class used to turn SQLAlchemy</span>
+</span><span id="AssessmentRecordMetadata-15"><a href="#AssessmentRecordMetadata-15"><span class="linenos">15</span></a><span class="sd">    rows into json for return in http responses.&quot;&quot;&quot;</span>
 </span><span id="AssessmentRecordMetadata-16"><a href="#AssessmentRecordMetadata-16"><span class="linenos">16</span></a>
-</span><span id="AssessmentRecordMetadata-17"><a href="#AssessmentRecordMetadata-17"><span class="linenos">17</span></a>    <span class="n">workflow_status</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="n">Status</span><span class="p">)</span>
-</span><span id="AssessmentRecordMetadata-18"><a href="#AssessmentRecordMetadata-18"><span class="linenos">18</span></a>    <span class="n">language</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="n">Language</span><span class="p">)</span>
+</span><span id="AssessmentRecordMetadata-17"><a href="#AssessmentRecordMetadata-17"><span class="linenos">17</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+</span><span id="AssessmentRecordMetadata-18"><a href="#AssessmentRecordMetadata-18"><span class="linenos">18</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">AssessmentRecord</span>
+</span><span id="AssessmentRecordMetadata-19"><a href="#AssessmentRecordMetadata-19"><span class="linenos">19</span></a>
+</span><span id="AssessmentRecordMetadata-20"><a href="#AssessmentRecordMetadata-20"><span class="linenos">20</span></a>    <span class="n">workflow_status</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="n">Status</span><span class="p">)</span>
+</span><span id="AssessmentRecordMetadata-21"><a href="#AssessmentRecordMetadata-21"><span class="linenos">21</span></a>    <span class="n">language</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="n">Language</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -141,9 +163,8 @@ rows into json for return in http responses.</p>
 
     </div>
     <a class="headerlink" href="#AssessmentRecordMetadata.Meta"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="AssessmentRecordMetadata.Meta-13"><a href="#AssessmentRecordMetadata.Meta-13"><span class="linenos">13</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-</span><span id="AssessmentRecordMetadata.Meta-14"><a href="#AssessmentRecordMetadata.Meta-14"><span class="linenos">14</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">AssessmentRecord</span>
-</span><span id="AssessmentRecordMetadata.Meta-15"><a href="#AssessmentRecordMetadata.Meta-15"><span class="linenos">15</span></a>        <span class="n">exclude</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;jsonb_blob&quot;</span><span class="p">,</span> <span class="s2">&quot;application_json_md5&quot;</span><span class="p">]</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AssessmentRecordMetadata.Meta-17"><a href="#AssessmentRecordMetadata.Meta-17"><span class="linenos">17</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+</span><span id="AssessmentRecordMetadata.Meta-18"><a href="#AssessmentRecordMetadata.Meta-18"><span class="linenos">18</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">AssessmentRecord</span>
 </span></pre></div>
 
 
@@ -160,6 +181,148 @@ rows into json for return in http responses.</p>
     
     
 
+                            </div>
+                </section>
+                <section id="ScoreMetadata">
+                            <input id="ScoreMetadata-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">ScoreMetadata</span><wbr>(<span class="base">marshmallow_sqlalchemy.schema.SQLAlchemyAutoSchema</span>):
+
+                <label class="view-source-button" for="ScoreMetadata-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#ScoreMetadata"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ScoreMetadata-24"><a href="#ScoreMetadata-24"><span class="linenos">24</span></a><span class="k">class</span> <span class="nc">ScoreMetadata</span><span class="p">(</span><span class="n">SQLAlchemyAutoSchema</span><span class="p">):</span>
+</span><span id="ScoreMetadata-25"><a href="#ScoreMetadata-25"><span class="linenos">25</span></a>    <span class="sd">&quot;&quot;&quot;ScoreMetadata The marshmallow class used to turn SQLAlchemy</span>
+</span><span id="ScoreMetadata-26"><a href="#ScoreMetadata-26"><span class="linenos">26</span></a><span class="sd">    rows into json for return in http responses.&quot;&quot;&quot;</span>
+</span><span id="ScoreMetadata-27"><a href="#ScoreMetadata-27"><span class="linenos">27</span></a>
+</span><span id="ScoreMetadata-28"><a href="#ScoreMetadata-28"><span class="linenos">28</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+</span><span id="ScoreMetadata-29"><a href="#ScoreMetadata-29"><span class="linenos">29</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Score</span>
+</span><span id="ScoreMetadata-30"><a href="#ScoreMetadata-30"><span class="linenos">30</span></a>        <span class="n">include_relationships</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="ScoreMetadata-31"><a href="#ScoreMetadata-31"><span class="linenos">31</span></a>        <span class="n">load_instance</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="ScoreMetadata-32"><a href="#ScoreMetadata-32"><span class="linenos">32</span></a>    
+</span><span id="ScoreMetadata-33"><a href="#ScoreMetadata-33"><span class="linenos">33</span></a>    <span class="n">application_id</span> <span class="o">=</span> <span class="n">auto_field</span><span class="p">(</span><span class="n">dump_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>ScoreMetadata The marshmallow class used to turn SQLAlchemy
+rows into json for return in http responses.</p>
+</div>
+
+
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt>marshmallow_sqlalchemy.load_instance_mixin.LoadInstanceMixin.Schema</dt>
+                                <dd id="ScoreMetadata.__init__" class="function">LoadInstanceMixin.Schema</dd>
+                <dd id="ScoreMetadata.get_instance" class="function">get_instance</dd>
+                <dd id="ScoreMetadata.make_instance" class="function">make_instance</dd>
+                <dd id="ScoreMetadata.load" class="function">load</dd>
+                <dd id="ScoreMetadata.validate" class="function">validate</dd>
+
+            </div>
+            <div><dt>marshmallow.schema.Schema</dt>
+                                <dd id="ScoreMetadata.from_dict" class="function">from_dict</dd>
+                <dd id="ScoreMetadata.handle_error" class="function">handle_error</dd>
+                <dd id="ScoreMetadata.get_attribute" class="function">get_attribute</dd>
+                <dd id="ScoreMetadata.dump" class="function">dump</dd>
+                <dd id="ScoreMetadata.dumps" class="function">dumps</dd>
+                <dd id="ScoreMetadata.loads" class="function">loads</dd>
+                <dd id="ScoreMetadata.on_bind_field" class="function">on_bind_field</dd>
+
+            </div>
+                                </dl>
+                            </div>
+                </section>
+                <section id="ScoreMetadata.Meta">
+                            <input id="ScoreMetadata.Meta-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">ScoreMetadata.Meta</span>:
+
+                <label class="view-source-button" for="ScoreMetadata.Meta-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#ScoreMetadata.Meta"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ScoreMetadata.Meta-28"><a href="#ScoreMetadata.Meta-28"><span class="linenos">28</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+</span><span id="ScoreMetadata.Meta-29"><a href="#ScoreMetadata.Meta-29"><span class="linenos">29</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Score</span>
+</span><span id="ScoreMetadata.Meta-30"><a href="#ScoreMetadata.Meta-30"><span class="linenos">30</span></a>        <span class="n">include_relationships</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="ScoreMetadata.Meta-31"><a href="#ScoreMetadata.Meta-31"><span class="linenos">31</span></a>        <span class="n">load_instance</span> <span class="o">=</span> <span class="kc">True</span>
+</span></pre></div>
+
+
+    
+
+                            <div id="ScoreMetadata.Meta.__init__" class="classattr">
+                                <div class="attr function">
+            
+        <span class="name">ScoreMetadata.Meta</span><span class="signature pdoc-code condensed">()</span>
+
+        
+    </div>
+    <a class="headerlink" href="#ScoreMetadata.Meta.__init__"></a>
+    
+    
+
+                            </div>
+                </section>
+                <section id="AssessorTaskListMetadata">
+                            <input id="AssessorTaskListMetadata-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr class">
+            
+    <span class="def">class</span>
+    <span class="name">AssessorTaskListMetadata</span><wbr>(<span class="base"><a href="#AssessmentRecordMetadata">db.schemas.AssessmentRecordMetadata</a></span>):
+
+                <label class="view-source-button" for="AssessorTaskListMetadata-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#AssessorTaskListMetadata"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AssessorTaskListMetadata-35"><a href="#AssessorTaskListMetadata-35"><span class="linenos">35</span></a><span class="k">class</span> <span class="nc">AssessorTaskListMetadata</span><span class="p">(</span><span class="n">AssessmentRecordMetadata</span><span class="p">):</span>
+</span><span id="AssessorTaskListMetadata-36"><a href="#AssessorTaskListMetadata-36"><span class="linenos">36</span></a>    <span class="sd">&quot;&quot;&quot;AssessorTaskListMetadata The marshmallow class used to turn SQLAlchemy</span>
+</span><span id="AssessorTaskListMetadata-37"><a href="#AssessorTaskListMetadata-37"><span class="linenos">37</span></a><span class="sd">    rows into json for return in http responses.</span>
+</span><span id="AssessorTaskListMetadata-38"><a href="#AssessorTaskListMetadata-38"><span class="linenos">38</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="AssessorTaskListMetadata-39"><a href="#AssessorTaskListMetadata-39"><span class="linenos">39</span></a>
+</span><span id="AssessorTaskListMetadata-40"><a href="#AssessorTaskListMetadata-40"><span class="linenos">40</span></a>    <span class="n">short_id</span> <span class="o">=</span> <span class="n">auto_field</span><span class="p">(</span><span class="n">data_key</span><span class="o">=</span><span class="s2">&quot;project_reference&quot;</span><span class="p">)</span>
+</span><span id="AssessorTaskListMetadata-41"><a href="#AssessorTaskListMetadata-41"><span class="linenos">41</span></a>    <span class="n">date_submitted</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+</span><span id="AssessorTaskListMetadata-42"><a href="#AssessorTaskListMetadata-42"><span class="linenos">42</span></a>        <span class="n">data_key</span><span class="o">=</span><span class="s2">&quot;date_submitted&quot;</span><span class="p">,</span> <span class="n">attribute</span><span class="o">=</span><span class="s2">&quot;jsonb_blob.date_submitted&quot;</span>
+</span><span id="AssessorTaskListMetadata-43"><a href="#AssessorTaskListMetadata-43"><span class="linenos">43</span></a>    <span class="p">)</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>AssessorTaskListMetadata The marshmallow class used to turn SQLAlchemy
+rows into json for return in http responses.</p>
+</div>
+
+
+                            <div class="inherited">
+                                <h5>Inherited Members</h5>
+                                <dl>
+                                    <div><dt>marshmallow_sqlalchemy.load_instance_mixin.LoadInstanceMixin.Schema</dt>
+                                <dd id="AssessorTaskListMetadata.__init__" class="function">LoadInstanceMixin.Schema</dd>
+                <dd id="AssessorTaskListMetadata.get_instance" class="function">get_instance</dd>
+                <dd id="AssessorTaskListMetadata.make_instance" class="function">make_instance</dd>
+                <dd id="AssessorTaskListMetadata.load" class="function">load</dd>
+                <dd id="AssessorTaskListMetadata.validate" class="function">validate</dd>
+
+            </div>
+            <div><dt><a href="#AssessmentRecordMetadata">AssessmentRecordMetadata</a></dt>
+                                <dd id="AssessorTaskListMetadata.Meta" class="class"><a href="#AssessmentRecordMetadata.Meta">Meta</a></dd>
+
+            </div>
+            <div><dt>marshmallow.schema.Schema</dt>
+                                <dd id="AssessorTaskListMetadata.from_dict" class="function">from_dict</dd>
+                <dd id="AssessorTaskListMetadata.handle_error" class="function">handle_error</dd>
+                <dd id="AssessorTaskListMetadata.get_attribute" class="function">get_attribute</dd>
+                <dd id="AssessorTaskListMetadata.dump" class="function">dump</dd>
+                <dd id="AssessorTaskListMetadata.dumps" class="function">dumps</dd>
+                <dd id="AssessorTaskListMetadata.loads" class="function">loads</dd>
+                <dd id="AssessorTaskListMetadata.on_bind_field" class="function">on_bind_field</dd>
+
+            </div>
+                                </dl>
                             </div>
                 </section>
     </main>
