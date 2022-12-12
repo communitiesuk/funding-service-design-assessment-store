@@ -115,7 +115,7 @@ def test_get_false_sub_criteria(request, client):
     assert response.json["detail"] == "sub_criteria: 'does-not-exist' not found."
 
 
-def test_get_sub_criteria_theme_answers(request, client):
+def test_get_sub_criteria_theme_answers_field_id(request, client):
     """ Test to check field_id with given application_id and 
     theme_id"""
     
