@@ -1,9 +1,13 @@
 import pytest
+import random
+
 from db.models.assessment_record.assessment_records import AssessmentRecord
 from tests._expected_responses import APPLICATION_METADATA_RESPONSE
 from tests._helpers import get_random_row
 from tests._helpers import get_rows_by_filters
 from api.routes.subcriterias.get_sub_criteria import SubCriteriaThemes
+from ._expected_responses import subcriteria_themes_and_expected_response
+
 
 
 def test_gets_all_apps_for_fund_round(request, client):
@@ -145,19 +149,16 @@ def test_get_sub_criteria_theme_answers_presentation_type(request, client):
     assert response.json[3]['presentation_type'] == "amount"
     
 
-def test_map_application_with_sub_criteria_themes():
-    """ Test the function that maps the application & subcriteria themes
-    and return subcriteria_themes including an answer from the application
+theme, expected_response = random.choice(list(subcriteria_themes_and_expected_response.items()))
+@pytest.mark.parametrize("app_id, theme_id, expected_response",[
+                            ("a3ec41db-3eac-4220-90db-c92dea049c00", theme, expected_response),])
+def test_random_theme_answer_content(app_id, theme_id, expected_response):
+    """ Test the function with random theme that maps
+    the application & subcriteria theme and
+    returns subcriteria_theme with an answer from the
+    application
     """
-    theme_id = "funding_requested"
-    application_id = "a3ec41db-3eac-4220-90db-c92dea049c00"
-    expected_response = (
-        ('Capital funding', '444'), ('Revenue funding (optional)', '444')
-        )
-    from app import app
-    with app.app_context(): 
-        response = SubCriteriaThemes.map_application_with_sub_criteria_themes(
-            application_id, theme_id)
-        assert response[0]['answer'] == expected_response
-    
 
+    result = SubCriteriaThemes.map_application_with_sub_criteria_themes(
+            app_id,theme_id )
+    assert result [0]['answer'] == expected_response
