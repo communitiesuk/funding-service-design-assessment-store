@@ -50,8 +50,8 @@ def return_subcriteria_from_config(sub_criteria_id):
         {"score_submitted": score_submitted, **sub_criteria}
     )
 
+
 class SubCriteriaThemes:
-    
     @classmethod
     def get_themes_answers(cls, theme_id: str) -> list[dict]:
         """function takes a theme_id arg & returns a list
@@ -73,7 +73,7 @@ class SubCriteriaThemes:
     @classmethod
     def get_application_form(cls, app_json_blob):
         """function return list of all questions from application form"""
-    
+
         return [
             questions
             for forms in app_json_blob["jsonb_blob"]["forms"]
@@ -122,25 +122,18 @@ class SubCriteriaThemes:
                             heading["field_id"] in theme.values()
                             and theme["presentation_type"] == "description"
                         ):
-                            # READY: regex to get words only
-                            description_answer = [re.sub('[^a-zA-Z]+',' ', description) for description in theme['answer']]
-                            
-                            # DELETE: when numbers regex is ready
-                            # description_answer = [
-                            #     description.split(":")[0]
-                            #     for description in theme["answer"]
-                            # ]
-
+                            description_answer = [
+                                re.sub("[^a-zA-Z]+", " ", description)
+                                for description in theme["answer"]
+                            ]
                             theme["answer"] = description_answer
 
                         if (
                             heading["field_id"] in theme.values()
                             and theme["presentation_type"] == "amount"
                         ):
-                            # TODO: regex to get currency sign (£) & numbers only
-                            # amount_answer = [re.findall(r'\d+', amount) for amount in theme['answer']]
                             amount_answer = [
-                                amount.split(":")[1]
+                                re.sub("[^\d+.]", "", amount)
                                 for amount in theme["answer"]
                             ]
 
@@ -153,12 +146,10 @@ class SubCriteriaThemes:
                 current_app.logger.error("Incorrect field key")
 
     @classmethod
-    def map_grouped_fields_answers(
-        cls, theme: dict, questions: dict
-    ) -> list:
-        """ function takes list of field_ids, map them question keys
+    def map_grouped_fields_answers(cls, theme: dict, questions: dict) -> list:
+        """function takes list of field_ids, map them question keys
         and returns list of answers for given field ids"""
-        
+
         for question in questions:
             answer_list = tuple(
                 (
@@ -170,19 +161,20 @@ class SubCriteriaThemes:
             )
             if answer_list:
                 return answer_list
-                
+
     @classmethod
     def map_single_field_answers(cls, theme: list, questions: dict) -> str:
-       for question in questions:
+        for question in questions:
             for app_fields in question["fields"]:
                 if theme["field_id"] == app_fields["key"]:
                     theme["answer"] = app_fields["answer"]
-                    
 
     @classmethod
-    def map_application_with_sub_criteria_themes(cls, application_id: str, theme_id: str):
+    def map_application_with_sub_criteria_themes(
+        cls, application_id: str, theme_id: str
+    ):
         """function maps answers from application with assessor task list
-        themes through field ids. 
+        themes through field ids.
         Args: application_id, theme_id
         """
 
@@ -193,12 +185,10 @@ class SubCriteriaThemes:
         current_app.logger.info("mapping subcriteria theme contents")
         for theme in themes_answers:
             if isinstance(theme["field_id"], list):
-                answer_list = cls.map_grouped_fields_answers(
-                    theme, questions
-                )
+                answer_list = cls.map_grouped_fields_answers(theme, questions)
                 theme["answer"] = answer_list
             else:
-                cls.map_single_field_answers(theme, questions)    
+                cls.map_single_field_answers(theme, questions)
 
         cls.convert_boolean_values(themes_answers)
         cls.map_add_another_component_contents(themes_answers)
