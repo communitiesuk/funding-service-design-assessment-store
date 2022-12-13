@@ -1,5 +1,3 @@
-import re
-
 from api.models.sub_criteria import SubCriteria
 from config import Config
 from db.queries.assessment_records.queries import get_application_jsonb_blob
@@ -160,7 +158,7 @@ class SubCriteriaThemes:
                 )
             )
             if answer_list:
-                return answer_list
+                theme["answer"] = answer_list
 
     @classmethod
     def map_single_field_answer(cls, theme: list, questions: dict) -> str:
@@ -168,7 +166,10 @@ class SubCriteriaThemes:
         and returns an answer for given field id"""
         for question in questions:
             for app_fields in question["fields"]:
-                if theme["field_id"] == app_fields["key"]:
+                if (
+                    theme["field_id"] == app_fields["key"]
+                    and "answer" in app_fields.keys()
+                ):
                     theme["answer"] = app_fields["answer"]
 
     @classmethod
@@ -190,10 +191,7 @@ class SubCriteriaThemes:
         for theme in themes_answers:
             try:
                 if isinstance(theme["field_id"], list):
-                    answer_list = cls.map_grouped_fields_answers(
-                        theme, questions
-                    )
-                    theme["answer"] = answer_list
+                    cls.map_grouped_fields_answers(theme, questions)
                 else:
                     cls.map_single_field_answer(theme, questions)
             except TypeError:
