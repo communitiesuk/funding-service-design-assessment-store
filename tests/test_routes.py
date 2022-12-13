@@ -179,3 +179,17 @@ def test_random_theme_content():
             app_id,theme_id )
     
     assert result [0]['answer'] == expected_response
+
+
+def test_convert_boolean_values():
+    """ Test the function that convert boolean values to
+    "Yes" and "No".
+    Args: application_id, theme_id. 
+    """
+    
+    theme_id = "local-support"
+    application_id = "a3ec41db-3eac-4220-90db-c92dea049c00"
+    
+    results = SubCriteriaThemes.map_application_with_sub_criteria_themes(application_id, theme_id)
+  
+    assert [value['answer'] for value in results if value['field_id']== "KqoaJL"][0] == "No"
