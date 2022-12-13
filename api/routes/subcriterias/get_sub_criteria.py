@@ -58,7 +58,6 @@ class SubCriteriaThemes:
         of answers with given theme_id.
         """
         sub_criterias = get_all_subcriteria()
-
         try:
             return [
                 theme.get("answers")
@@ -66,10 +65,9 @@ class SubCriteriaThemes:
                 for theme in themes.get("themes")
                 if theme_id == theme.get("id")
             ][0]
-
         except IndexError:
-            current_app.logger.error(f"Incorrect theme ID -> {theme_id}")
-            return f"Incorrect theme ID {theme_id}" 
+            current_app.logger.error(f"Incorrect theme id -> {theme_id}")
+            return f"Incorrect theme id -> {theme_id}"
 
     @classmethod
     def get_application_form(cls, app_json_blob):
@@ -149,9 +147,9 @@ class SubCriteriaThemes:
     @classmethod
     def map_grouped_fields_answers(cls, theme: dict, questions: dict) -> list:
         """function looks for list of grouped field_ids such as ["JzWvhj", "jLIgoi"],
-        maps them  with question keys and returns a list of answers 
+        maps them  with question keys and returns a list of answers
         for given field ids"""
-      
+
         for question in questions:
             answer_list = tuple(
                 (
@@ -163,11 +161,10 @@ class SubCriteriaThemes:
             )
             if answer_list:
                 return answer_list
-        
 
     @classmethod
     def map_single_field_answer(cls, theme: list, questions: dict) -> str:
-        """ function looks for a field_id, maps it with question keys
+        """function looks for a field_id, maps it with question keys
         and returns an answer for given field id"""
         for question in questions:
             for app_fields in question["fields"]:
@@ -193,13 +190,15 @@ class SubCriteriaThemes:
         for theme in themes_answers:
             try:
                 if isinstance(theme["field_id"], list):
-                    answer_list = cls.map_grouped_fields_answers(theme, questions)
+                    answer_list = cls.map_grouped_fields_answers(
+                        theme, questions
+                    )
                     theme["answer"] = answer_list
                 else:
                     cls.map_single_field_answer(theme, questions)
             except TypeError:
-                current_app.logger.error(f"Incorrect theme id -> {theme_id}"  )
-                return f" Incorrect theme id -> {theme_id}. {theme_id}"        
+                current_app.logger.error(f"Incorrect theme id -> {theme_id}")
+                return f"Incorrect theme id -> {theme_id}"
 
         cls.convert_boolean_values(themes_answers)
         cls.sort_add_another_component_contents(themes_answers)
