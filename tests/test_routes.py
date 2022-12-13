@@ -167,16 +167,14 @@ def test_incorrect_theme_id(request, client):
     assert f"Incorrect theme id" in response.json['detail'] 
 
 
-theme, expected_response = random.choice(list(subcriteria_themes_and_expected_response.items()))
-@pytest.mark.parametrize("app_id, theme_id, expected_response",[
-                            ("a3ec41db-3eac-4220-90db-c92dea049c00", theme, expected_response),])
-def test_random_theme_content(app_id, theme_id, expected_response):
+def test_random_theme_content():
     """ Test the function with random theme id that maps
     the application & subcriteria theme and
     returns subcriteria_theme with an answer from
     application
     """
-
+    app_id = "a3ec41db-3eac-4220-90db-c92dea049c00"
+    theme_id, expected_response = random.choice(list(subcriteria_themes_and_expected_response.items()))
     result = SubCriteriaThemes.map_application_with_sub_criteria_themes(
             app_id,theme_id )
     
