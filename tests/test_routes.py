@@ -132,7 +132,8 @@ def test_get_sub_criteria_theme_answers_field_id(request, client):
     )
 
     assert response.json[0]['field_id'] == "ieRCkI"
-    
+
+  
 def test_add_another_presentation_type(request, client):
     """ Test to check presentation_types for add_another component 
     with given application_id and theme_id"""
@@ -143,18 +144,34 @@ def test_add_another_presentation_type(request, client):
     response = client.get(
         f"/sub_criteria_themes/{application_id}/{theme_id}"
     )
+    
     assert response.status_code == 200
     assert response.json[0]['presentation_type'] == "grouped_fields"
     assert response.json[1]['presentation_type'] == "heading"
     assert response.json[2]['presentation_type'] == "description"
     assert response.json[3]['presentation_type'] == "amount"
     
+    
+def test_incorrect_theme_id(request, client):
+    """ Test to check incorrect theme_id that is expected
+    to return custom error along with the openapi validation
+    error."""
+    
+    theme_id = "incorrect-theme-id"
+    application_id = "a3ec41db-3eac-4220-90db-c92dea049c00"
+    
+    response = client.get(
+        f"/sub_criteria_themes/{application_id}/{theme_id}"
+    )
+    
+    assert f"Incorrect theme id" in response.json['detail'] 
+
 
 theme, expected_response = random.choice(list(subcriteria_themes_and_expected_response.items()))
 @pytest.mark.parametrize("app_id, theme_id, expected_response",[
                             ("a3ec41db-3eac-4220-90db-c92dea049c00", theme, expected_response),])
 def test_random_theme_content(app_id, theme_id, expected_response):
-    """ Test the function with random theme that maps
+    """ Test the function with random theme id that maps
     the application & subcriteria theme and
     returns subcriteria_theme with an answer from
     application
@@ -162,4 +179,5 @@ def test_random_theme_content(app_id, theme_id, expected_response):
 
     result = SubCriteriaThemes.map_application_with_sub_criteria_themes(
             app_id,theme_id )
+    
     assert result [0]['answer'] == expected_response
