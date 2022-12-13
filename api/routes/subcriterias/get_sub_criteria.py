@@ -183,11 +183,7 @@ class SubCriteriaThemes:
         """
 
         themes_answers = cls.get_themes_answers(theme_id)
-        # application_json_blob = get_application_jsonb_blob(application_id)
-        
-        from .test_json_blob import test_jsonb_blob
-        application_json_blob = test_jsonb_blob
-       
+        application_json_blob = get_application_jsonb_blob(application_id)
         questions = cls.get_application_form(application_json_blob)
 
         current_app.logger.info("mapping subcriteria theme contents")
