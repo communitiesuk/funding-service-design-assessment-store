@@ -177,7 +177,7 @@ class SubCriteriaThemes:
     ):
         """function maps answers from application with assessor task list
         themes through field ids.
-        Args: application_id, theme_id.
+        Args: application_id, theme_id
         Exceptions: returning custom exception along with openapi
         validation detail.
         """
