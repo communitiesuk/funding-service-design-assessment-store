@@ -122,7 +122,7 @@ class SubCriteriaThemes:
                             and theme["presentation_type"] == "description"
                         ):
                             description_answer = [
-                                description.split(":")[0]
+                                description.rsplit(": ", 1)[0]
                                 for description in theme["answer"]
                             ]
                             theme["answer"] = description_answer
@@ -132,7 +132,7 @@ class SubCriteriaThemes:
                             and theme["presentation_type"] == "amount"
                         ):
                             amount_answer = [
-                                amount.split(":")[1]
+                                amount.split(": ")[1]
                                 for amount in theme["answer"]
                             ]
 
@@ -145,7 +145,7 @@ class SubCriteriaThemes:
                 current_app.logger.error("Incorrect field key")
 
     @classmethod
-    def map_grouped_fields_answers(cls, theme: dict, questions: dict) -> list:
+    def map_grouped_fields_answers(cls, theme: dict, questions: dict) -> tuple:
         """function looks for list of grouped field_ids such as ["JzWvhj", "jLIgoi"],
         maps them  with question keys and returns a list of answers
         for given field ids"""
@@ -183,7 +183,11 @@ class SubCriteriaThemes:
         """
 
         themes_answers = cls.get_themes_answers(theme_id)
-        application_json_blob = get_application_jsonb_blob(application_id)
+        # application_json_blob = get_application_jsonb_blob(application_id)
+        
+        from .test_json_blob import test_jsonb_blob
+        application_json_blob = test_jsonb_blob
+       
         questions = cls.get_application_form(application_json_blob)
 
         current_app.logger.info("mapping subcriteria theme contents")
