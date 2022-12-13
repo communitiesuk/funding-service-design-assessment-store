@@ -122,7 +122,7 @@ class SubCriteriaThemes:
                             and theme["presentation_type"] == "description"
                         ):
                             description_answer = [
-                                re.sub("[^a-zA-Z]+", " ", description)
+                                description.split(":")[0]
                                 for description in theme["answer"]
                             ]
                             theme["answer"] = description_answer
@@ -132,7 +132,7 @@ class SubCriteriaThemes:
                             and theme["presentation_type"] == "amount"
                         ):
                             amount_answer = [
-                                re.sub("[^\d+.]", "", amount)
+                                amount.split(":")[1]
                                 for amount in theme["answer"]
                             ]
 
