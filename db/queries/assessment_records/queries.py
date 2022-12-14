@@ -10,8 +10,8 @@ from db import db
 from db.models.assessment_record import AssessmentRecord
 from db.queries.assessment_records._helpers import derive_values_from_json
 from db.schemas import AssessmentRecordMetadata
-from db.schemas import AssessorTaskListMetadata
 from db.schemas import AssessorSubCriteriaMetadata
+from db.schemas import AssessorTaskListMetadata
 from sqlalchemy import func
 from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert as postgres_insert
@@ -104,7 +104,9 @@ def bulk_insert_application_record(
 
     stmt = postgres_insert(AssessmentRecord).values(rows)
 
-    upsert_rows_stmt = stmt.on_conflict_do_nothing(index_elements=[AssessmentRecord.application_id])
+    upsert_rows_stmt = stmt.on_conflict_do_nothing(
+        index_elements=[AssessmentRecord.application_id]
+    )
 
     db.session.execute(upsert_rows_stmt)
 
@@ -178,6 +180,7 @@ def find_assessor_task_list_state(application_id: str) -> dict:
 
     return assessment_record_json
 
+
 def find_assessor_sub_critera_state(application_id: str) -> dict:
     """find_assessment Given an application id `application_id` we return the
     relevant information from the `assessment_records` table.
@@ -196,7 +199,8 @@ def find_assessor_sub_critera_state(application_id: str) -> dict:
                 "funding_amount_requested",
                 "project_name",
                 "fund_id",
-                "workflow_status"
+                "workflow_status",
+                "short_id",
             )
         )
     )
@@ -208,7 +212,8 @@ def find_assessor_sub_critera_state(application_id: str) -> dict:
             "funding_amount_requested",
             "project_name",
             "fund_id",
-            "workflow_status"
+            "workflow_status",
+            "short_id",
         )
     ).dump(assessment_record)
 
