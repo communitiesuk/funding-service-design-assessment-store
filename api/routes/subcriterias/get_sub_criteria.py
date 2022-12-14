@@ -91,6 +91,8 @@ class SubCriteriaThemes:
                     answers.update(answer="No")
                 if answers["answer"] == True:
                     answers.update(answer="Yes")
+                else:
+                    continue    
 
     @classmethod
     def sort_add_another_component_contents(
@@ -136,8 +138,8 @@ class SubCriteriaThemes:
 
                             theme["answer"] = amount_answer
 
-                        else:
-                            continue
+                else:
+                    continue
 
             except (KeyError, IndexError):
                 current_app.logger.error("Incorrect field key")
