@@ -41,8 +41,8 @@ class AssessorTaskListMetadata(AssessmentRecordMetadata):
         data_key="date_submitted", attribute="jsonb_blob.date_submitted"
     )
 
-class AssessorSubCriteriaMetadata(AssessmentRecordMetadata):
-    """AssessorSubcriteriaMetadata The marshmallow class used to turn SQLAlchemy
+class AssessmentSubCriteriaMetadata(AssessmentRecordMetadata):
+    """AssessmentSubCriteriaMetadata The marshmallow class used to turn SQLAlchemy
     rows into json for return in http responses.
     """
 

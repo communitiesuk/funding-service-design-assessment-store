@@ -10,7 +10,7 @@ from db import db
 from db.models.assessment_record import AssessmentRecord
 from db.queries.assessment_records._helpers import derive_values_from_json
 from db.schemas import AssessmentRecordMetadata
-from db.schemas import AssessorSubCriteriaMetadata
+from db.schemas import AssessmentSubCriteriaMetadata
 from db.schemas import AssessorTaskListMetadata
 from sqlalchemy import func
 from sqlalchemy import select
@@ -208,7 +208,7 @@ def get_assessment_sub_critera_state(application_id: str) -> dict:
 
     assessment_record = db.session.scalar(stmt)
 
-    assessment_record_json = AssessorSubCriteriaMetadata(
+    assessment_record_json = AssessmentSubCriteriaMetadata(
         only=(
             "funding_amount_requested",
             "project_name",
