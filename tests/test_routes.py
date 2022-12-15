@@ -98,6 +98,7 @@ def test_get_sub_criteria(client):
     for theme in response_json["themes"]:
         actual_theme_order.append(theme["id"])
     assert expected_theme_order == actual_theme_order
+    assert "short_id" in response_json
     assert "id" in response_json
 
 def test_get_sub_criteria_metadata_for_false_sub_criteria_id(client):

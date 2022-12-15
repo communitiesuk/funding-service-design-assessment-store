@@ -192,6 +192,9 @@ components:
         id:
           type: string
           example: "engagement"
+        short_id:
+          type: string
+          example: "FUNDX_R2"
         name:
           type: string
           example: "Engagement"
