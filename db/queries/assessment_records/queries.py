@@ -218,3 +218,14 @@ def find_assessor_sub_critera_state(application_id: str) -> dict:
     ).dump(assessment_record)
 
     return assessment_record_json
+
+
+def get_application_jsonb_blob(application_id: str) -> dict:
+
+    stmt = (
+        select(AssessmentRecord)
+        .where(AssessmentRecord.application_id == application_id)
+        .options(load_only("jsonb_blob")))
+    application_jsonb_blob = db.session.scalar(stmt)
+    application_json = AssessorTaskListMetadata().dump(application_jsonb_blob)
+    return application_json

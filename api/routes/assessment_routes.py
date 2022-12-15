@@ -1,4 +1,5 @@
 # flake8: noqa
+from pprint import pprint
 from typing import Dict
 from typing import List
 
@@ -8,9 +9,13 @@ from api.routes.subcriterias.get_sub_criteria import (
     return_subcriteria_from_mapping,
 )
 from db.queries.assessment_records.queries import find_assessor_task_list_state, find_assessor_sub_critera_state
+from api.routes.subcriterias.get_sub_criteria import SubCriteriaThemes
 from db.queries import get_metadata_for_fund_round_id
 
+from db.queries.assessment_records.queries import find_assessor_task_list_state
+from db.queries.assessment_records.queries import get_application_jsonb_blob
 from flask import current_app
+
 
 def all_assessments_for_fund_round_id(
     fund_id: str,
@@ -81,3 +86,12 @@ def get_assessor_task_list_state(application_id: str) -> dict:
     metadata["criterias"] = criterias
 
     return metadata
+
+
+def get_sub_criteria_theme_answers(application_id: str, theme_id: str):
+    """Function returns mapped answers from application & Sub_criteria_themes
+    with given application_id and theme_id"""
+
+    return SubCriteriaThemes.map_application_with_sub_criteria_themes(
+        application_id, theme_id
+    )
