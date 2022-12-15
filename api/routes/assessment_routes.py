@@ -8,7 +8,7 @@ from api.routes._helpers import transform_to_assessor_task_list_metadata
 from api.routes.subcriterias.get_sub_criteria import (
     return_subcriteria_from_mapping,
 )
-from db.queries.assessment_records.queries import find_assessor_task_list_state, find_assessor_sub_critera_state
+from db.queries.assessment_records.queries import find_assessor_task_list_state, get_assessment_sub_critera_state
 from api.routes.subcriterias.get_sub_criteria import SubCriteriaThemes
 from db.queries import get_metadata_for_fund_round_id
 
@@ -57,7 +57,7 @@ def sub_criteria(
     current_app.logger.info("Searching asessment mapping for sub criteria: {sub_criteria_id}.")
     sub_criteria_config_from_mapping = return_subcriteria_from_mapping(sub_criteria_id)
     current_app.logger.info("Getting application subcriteria metadata for application: {sub_criteria_id}.")
-    application_metadata_for_subcriteria = find_assessor_sub_critera_state(application_id)
+    application_metadata_for_subcriteria = get_assessment_sub_critera_state(application_id)
     sub_criteria = SubCriteria.from_filtered_dict(
         {**sub_criteria_config_from_mapping, **application_metadata_for_subcriteria}
     )

@@ -181,9 +181,10 @@ def find_assessor_task_list_state(application_id: str) -> dict:
     return assessment_record_json
 
 
-def find_assessor_sub_critera_state(application_id: str) -> dict:
-    """find_assessment Given an application id `application_id` we return the
-    relevant information from the `assessment_records` table.
+def get_assessment_sub_critera_state(application_id: str) -> dict:
+    """Given an application id `application_id` we return the
+    relevant record from the `assessment_records` table with 
+    state related to the assessments sub_criteria context.
 
     :param application_id: The application id of the queried row.
     :type application_id: str

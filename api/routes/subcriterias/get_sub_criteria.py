@@ -14,7 +14,7 @@ def get_all_subcriteria():
             sub_criterias.append(sub_criteria)
     return sub_criterias
 
-def get_matching_sub_criteria(sub_criteria_id):
+def return_subcriteria_from_mapping(sub_criteria_id):
     current_app.logger.info(
         f"Finding sub criteria data in config for: {sub_criteria_id}"
     )
@@ -35,11 +35,6 @@ def get_matching_sub_criteria(sub_criteria_id):
         msg = f"sub_criteria: '{sub_criteria_id}' not found."
         current_app.logger.warn(msg)
         abort(404, description=msg)
-
-
-def return_subcriteria_from_mapping(sub_criteria_id):
-    return get_matching_sub_criteria(sub_criteria_id)
-
 
 
 class SubCriteriaThemes:
