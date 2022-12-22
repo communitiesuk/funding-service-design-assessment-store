@@ -2,7 +2,9 @@ import json
 
 import requests
 
-local_workspace = "/Users/sarahsloan/dev/CommunitiesUkWorkspace/"
+# File locations used by the functions in this script
+
+local_workspace = "/path/to/workspace/"
 file_raw_forms_data = (
     local_workspace
     + "funding-service-design-assessment-store/scripts/dev_forms_raw.txt"
@@ -19,6 +21,13 @@ file_locations_result = (
     local_workspace
     + "funding-service-design-assessment-store/data/locations_dev.json"
 )
+
+
+"""
+    Goes through form jsons to find the address of asset field, extracts the
+    postcode and writes the resulting json array of postcodes to the specified
+    file
+"""
 
 
 def extract_postcodes_from_forms():
@@ -49,6 +58,13 @@ def extract_postcodes_from_forms():
             json.dump(json_out, f)
 
 
+"""
+    Takes the json array of postcodes from previous function, sends it to
+    postcodes.io bulk postcode lookup api and then writes the result to the
+    specified file
+"""
+
+
 def retrieve_data_from_postcodes_io():
     with open(file_just_postcodes) as f:
         json_in = json.load(f)
@@ -58,6 +74,13 @@ def retrieve_data_from_postcodes_io():
 
     with open(file_raw_postcode_data, "w") as f:
         json.dump(result.json(), f)
+
+
+"""
+    Takes the result of the previous function, extracts the fields we need
+    and writes them to the specified file as a json array with a key of
+    postcode.
+"""
 
 
 def process_postcode_data():
