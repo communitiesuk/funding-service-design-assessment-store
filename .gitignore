@@ -145,3 +145,4 @@ flask_session
 # Sqlite
 sqlite.db
 test_sqlite.db
+scripts/prod_forms_raw.json
