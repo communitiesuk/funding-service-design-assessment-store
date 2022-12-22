@@ -49,9 +49,6 @@ def extract_postcodes_from_forms():
             json.dump(json_out, f)
 
 
-# extract_postcodes_from_forms()
-
-
 def retrieve_data_from_postcodes_io():
     with open(file_just_postcodes) as f:
         json_in = json.load(f)
@@ -61,9 +58,6 @@ def retrieve_data_from_postcodes_io():
 
     with open(file_raw_postcode_data, "w") as f:
         json.dump(result.json(), f)
-
-
-# retrieve_data_from_postcodes_io()
 
 
 def process_postcode_data():
@@ -103,4 +97,8 @@ def process_postcode_data():
         json.dump(postcode_data, f)
 
 
-process_postcode_data()
+# extract_postcodes_from_forms()
+
+# retrieve_data_from_postcodes_io()
+
+# process_postcode_data()
