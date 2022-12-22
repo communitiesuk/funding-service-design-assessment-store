@@ -1,0 +1,1056 @@
+[
+    {
+        "DL116BW": {
+            "error": false,
+            "country": "England",
+            "constituency": "Richmond (Yorks)",
+            "region": "Yorkshire and The Humber",
+            "county": "North Yorkshire"
+        }
+    },
+    {
+        "G211YL": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Glasgow North East",
+            "region": "Scotland",
+            "county": "Glasgow City"
+        }
+    },
+    {
+        "WA53NH": {
+            "error": false,
+            "country": "England",
+            "constituency": "Warrington South",
+            "region": "North West",
+            "county": "Warrington"
+        }
+    },
+    {
+        "BT934ER": {
+            "error": false,
+            "country": "Northern Ireland",
+            "constituency": "Fermanagh and South Tyrone",
+            "region": "Northern Ireland",
+            "county": "Fermanagh and Omagh"
+        }
+    },
+    {
+        "IV361PB": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Moray",
+            "region": "Scotland",
+            "county": "Moray"
+        }
+    },
+    {
+        "BT621NL": {
+            "error": false,
+            "country": "Northern Ireland",
+            "constituency": "Newry and Armagh",
+            "region": "Northern Ireland",
+            "county": "Armagh City, Banbridge and Craigavon"
+        }
+    },
+    {
+        "LA11QW": {
+            "error": false,
+            "country": "England",
+            "constituency": "Lancaster and Fleetwood",
+            "region": "North West",
+            "county": "Lancashire"
+        }
+    },
+    {
+        "CH52GG": {
+            "error": false,
+            "country": "Wales",
+            "constituency": "Alyn and Deeside",
+            "region": "Wales",
+            "county": "Flintshire"
+        }
+    },
+    {
+        "IV408EJ": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Ross, Skye and Lochaber",
+            "region": "Scotland",
+            "county": "Highland"
+        }
+    },
+    {
+        "G459HU": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Glasgow South",
+            "region": "Scotland",
+            "county": "Glasgow City"
+        }
+    },
+    {
+        "CM219BD": {
+            "error": false,
+            "country": "England",
+            "constituency": "Hertford and Stortford",
+            "region": "East of England",
+            "county": "Hertfordshire"
+        }
+    },
+    {
+        "SO427WD": {
+            "error": false,
+            "country": "England",
+            "constituency": "New Forest East",
+            "region": "South East",
+            "county": "Hampshire"
+        }
+    },
+    {
+        "KW14YR": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Caithness, Sutherland and Easter Ross",
+            "region": "Scotland",
+            "county": "Highland"
+        }
+    },
+    {
+        "CA145UX": {
+            "error": false,
+            "country": "England",
+            "constituency": "Copeland",
+            "region": "North West",
+            "county": "Cumbria"
+        }
+    },
+    {
+        "TS247QS": {
+            "error": false,
+            "country": "England",
+            "constituency": "Hartlepool",
+            "region": "North East",
+            "county": "Hartlepool"
+        }
+    },
+    {
+        "M457NF": {
+            "error": false,
+            "country": "England",
+            "constituency": "Bury South",
+            "region": "North West",
+            "county": "Bury"
+        }
+    },
+    {
+        "CH52GG": {
+            "error": false,
+            "country": "Wales",
+            "constituency": "Alyn and Deeside",
+            "region": "Wales",
+            "county": "Flintshire"
+        }
+    },
+    {
+        "HS20DY": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Na h-Eileanan an Iar",
+            "region": "Scotland",
+            "county": "Na h-Eileanan Siar"
+        }
+    },
+    {
+        "SE38ND": {
+            "error": false,
+            "country": "England",
+            "constituency": "Eltham",
+            "region": "London",
+            "county": "Greenwich"
+        }
+    },
+    {
+        "TS159LB": {
+            "error": false,
+            "country": "England",
+            "constituency": "Stockton South",
+            "region": "North East",
+            "county": "Stockton-on-Tees"
+        }
+    },
+    {
+        "PO200QL": {
+            "error": false,
+            "country": "England",
+            "constituency": "Chichester",
+            "region": "South East",
+            "county": "West Sussex"
+        }
+    },
+    {
+        "TN30PN": {
+            "error": false,
+            "country": "England",
+            "constituency": "Tunbridge Wells",
+            "region": "South East",
+            "county": "Kent"
+        }
+    },
+    {
+        "PA328UY": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Argyll and Bute",
+            "region": "Scotland",
+            "county": "Argyll and Bute"
+        }
+    },
+    {
+        "IP224LB": {
+            "error": false,
+            "country": "England",
+            "constituency": "South Norfolk",
+            "region": "East of England",
+            "county": "Norfolk"
+        }
+    },
+    {
+        "AL22AJ": {
+            "error": false,
+            "country": "England",
+            "constituency": "St Albans",
+            "region": "East of England",
+            "county": "Hertfordshire"
+        }
+    },
+    {
+        "KY86BT": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "North East Fife",
+            "region": "Scotland",
+            "county": "Fife"
+        }
+    },
+    {
+        "BT578QB": {
+            "error": false,
+            "country": "Northern Ireland",
+            "constituency": "North Antrim",
+            "region": "Northern Ireland",
+            "county": "Causeway Coast and Glens"
+        }
+    },
+    {
+        "CV370JH": {
+            "error": false,
+            "country": "England",
+            "constituency": "Stratford-on-Avon",
+            "region": "West Midlands",
+            "county": "Warwickshire"
+        }
+    },
+    {
+        "DN320EQ": {
+            "error": false,
+            "country": "England",
+            "constituency": "Great Grimsby",
+            "region": "Yorkshire and The Humber",
+            "county": "North East Lincolnshire"
+        }
+    },
+    {
+        "TD152XW": {
+            "error": false,
+            "country": "England",
+            "constituency": "Berwick-upon-Tweed",
+            "region": "North East",
+            "county": "Northumberland"
+        }
+    },
+    {
+        "B249NF": {
+            "error": false,
+            "country": "England",
+            "constituency": "Birmingham, Erdington",
+            "region": "West Midlands",
+            "county": "Birmingham"
+        }
+    },
+    {
+        "CT118HE": {
+            "error": false,
+            "country": "England",
+            "constituency": "South Thanet",
+            "region": "South East",
+            "county": "Kent"
+        }
+    },
+    {
+        "M320LG": {
+            "error": false,
+            "country": "England",
+            "constituency": "Stretford and Urmston",
+            "region": "North West",
+            "county": "Trafford"
+        }
+    },
+    {
+        "B66JD": {
+            "error": false,
+            "country": "England",
+            "constituency": "Birmingham, Ladywood",
+            "region": "West Midlands",
+            "county": "Birmingham"
+        }
+    },
+    {
+        "SO427WP": {
+            "error": false,
+            "country": "England",
+            "constituency": "New Forest East",
+            "region": "South East",
+            "county": "Hampshire"
+        }
+    },
+    {
+        "HA30QQ": {
+            "error": false,
+            "country": "England",
+            "constituency": "Brent North",
+            "region": "London",
+            "county": "Brent"
+        }
+    },
+    {
+        "LS287BL": {
+            "error": false,
+            "country": "England",
+            "constituency": "Pudsey",
+            "region": "Yorkshire and The Humber",
+            "county": "Leeds"
+        }
+    },
+    {
+        "NE97AB": {
+            "error": false,
+            "country": "England",
+            "constituency": "Gateshead",
+            "region": "North East",
+            "county": "Gateshead"
+        }
+    },
+    {
+        "TQ148DD": {
+            "error": false,
+            "country": "England",
+            "constituency": "Newton Abbot",
+            "region": "South West",
+            "county": "Devon"
+        }
+    },
+    {
+        "BD211SW": {
+            "error": false,
+            "country": "England",
+            "constituency": "Keighley",
+            "region": "Yorkshire and The Humber",
+            "county": "Bradford"
+        }
+    },
+    {
+        "L365XW": {
+            "error": false,
+            "country": "England",
+            "constituency": "Knowsley",
+            "region": "North West",
+            "county": "Knowsley"
+        }
+    },
+    {
+        "DD46PP": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Dundee East",
+            "region": "Scotland",
+            "county": "Dundee City"
+        }
+    },
+    {
+        "BT934EA": {
+            "error": false,
+            "country": "Northern Ireland",
+            "constituency": "Fermanagh and South Tyrone",
+            "region": "Northern Ireland",
+            "county": "Fermanagh and Omagh"
+        }
+    },
+    {
+        "PH152BH": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Perth and North Perthshire",
+            "region": "Scotland",
+            "county": "Perth and Kinross"
+        }
+    },
+    {
+        "GL88DS": {
+            "error": false,
+            "country": "England",
+            "constituency": "The Cotswolds",
+            "region": "South West",
+            "county": "Gloucestershire"
+        }
+    },
+    {
+        "PE127LL": {
+            "error": false,
+            "country": "England",
+            "constituency": "South Holland and The Deepings",
+            "region": "East Midlands",
+            "county": "Lincolnshire"
+        }
+    },
+    {
+        "KW96LN": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Caithness, Sutherland and Easter Ross",
+            "region": "Scotland",
+            "county": "Highland"
+        }
+    },
+    {
+        "SA68BR": {
+            "error": false,
+            "country": "Wales",
+            "constituency": "Swansea East",
+            "region": "Wales",
+            "county": "Swansea"
+        }
+    },
+    {
+        "LE158EB": {
+            "error": false,
+            "country": "England",
+            "constituency": "Rutland and Melton",
+            "region": "East Midlands",
+            "county": "Rutland"
+        }
+    },
+    {
+        "WN25EG": {
+            "error": false,
+            "country": "England",
+            "constituency": "Makerfield",
+            "region": "North West",
+            "county": "Wigan"
+        }
+    },
+    {
+        "GL46DX": {
+            "error": false,
+            "country": "England",
+            "constituency": "Gloucester",
+            "region": "South West",
+            "county": "Gloucestershire"
+        }
+    },
+    {
+        "B496DA": {
+            "error": false,
+            "country": "England",
+            "constituency": "Stratford-on-Avon",
+            "region": "West Midlands",
+            "county": "Warwickshire"
+        }
+    },
+    {
+        "OX42RR": {
+            "error": false,
+            "country": "England",
+            "constituency": "Henley",
+            "region": "South East",
+            "county": "Oxfordshire"
+        }
+    },
+    {
+        "IP130RA": {
+            "error": false,
+            "country": "England",
+            "constituency": "Central Suffolk and North Ipswich",
+            "region": "East of England",
+            "county": "Suffolk"
+        }
+    },
+    {
+        "PO13BS": {
+            "error": false,
+            "country": "England",
+            "constituency": "Portsmouth South",
+            "region": "South East",
+            "county": "Portsmouth"
+        }
+    },
+    {
+        "E138HT": {
+            "error": false,
+            "country": "England",
+            "constituency": "West Ham",
+            "region": "London",
+            "county": "Newham"
+        }
+    },
+    {
+        "G511HJ": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Glasgow Central",
+            "region": "Scotland",
+            "county": "Glasgow City"
+        }
+    },
+    {
+        "BT474TT": {
+            "error": false,
+            "country": "Northern Ireland",
+            "constituency": "East Londonderry",
+            "region": "Northern Ireland",
+            "county": "Causeway Coast and Glens"
+        }
+    },
+    {
+        "SN15BN": {
+            "error": false,
+            "country": "England",
+            "constituency": "South Swindon",
+            "region": "South West",
+            "county": "Swindon"
+        }
+    },
+    {
+        "BT578QB": {
+            "error": false,
+            "country": "Northern Ireland",
+            "constituency": "North Antrim",
+            "region": "Northern Ireland",
+            "county": "Causeway Coast and Glens"
+        }
+    },
+    {
+        "PH211EP": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Inverness, Nairn, Badenoch and Strathspey",
+            "region": "Scotland",
+            "county": "Highland"
+        }
+    },
+    {
+        "LL170UN": {
+            "error": false,
+            "country": "Wales",
+            "constituency": "Vale of Clwyd",
+            "region": "Wales",
+            "county": "Denbighshire"
+        }
+    },
+    {
+        "IO215PT": {
+            "error": true
+        }
+    },
+    {
+        "BL33AS": {
+            "error": false,
+            "country": "England",
+            "constituency": "Bolton South East",
+            "region": "North West",
+            "county": "Bolton"
+        }
+    },
+    {
+        "LL208PW": {
+            "error": false,
+            "country": "Wales",
+            "constituency": "Clwyd South",
+            "region": "Wales",
+            "county": "Denbighshire"
+        }
+    },
+    {
+        "NP131EF": {
+            "error": false,
+            "country": "Wales",
+            "constituency": "Blaenau Gwent",
+            "region": "Wales",
+            "county": "Blaenau Gwent"
+        }
+    },
+    {
+        "LS121HH": {
+            "error": false,
+            "country": "England",
+            "constituency": "Leeds West",
+            "region": "Yorkshire and The Humber",
+            "county": "Leeds"
+        }
+    },
+    {
+        "E59HQ": {
+            "error": false,
+            "country": "England",
+            "constituency": "Hackney North and Stoke Newington",
+            "region": "London",
+            "county": "Hackney"
+        }
+    },
+    {
+        "TS247SE": {
+            "error": false,
+            "country": "England",
+            "constituency": "Hartlepool",
+            "region": "North East",
+            "county": "Hartlepool"
+        }
+    },
+    {
+        "PL276BU": {
+            "error": false,
+            "country": "England",
+            "constituency": "North Cornwall",
+            "region": "South West",
+            "county": "Cornwall"
+        }
+    },
+    {
+        "ST15HZ": {
+            "error": false,
+            "country": "England",
+            "constituency": "Stoke-on-Trent North",
+            "region": "West Midlands",
+            "county": "Stoke-on-Trent"
+        }
+    },
+    {
+        "NG94AT": {
+            "error": false,
+            "country": "England",
+            "constituency": "Broxtowe",
+            "region": "East Midlands",
+            "county": "Nottinghamshire"
+        }
+    },
+    {
+        "B476JX": {
+            "error": false,
+            "country": "England",
+            "constituency": "Bromsgrove",
+            "region": "West Midlands",
+            "county": "Worcestershire"
+        }
+    },
+    {
+        "BT488NN": {
+            "error": false,
+            "country": "Northern Ireland",
+            "constituency": "Foyle",
+            "region": "Northern Ireland",
+            "county": "Derry City and Strabane"
+        }
+    },
+    {
+        "NR133JG": {
+            "error": false,
+            "country": "England",
+            "constituency": "Broadland",
+            "region": "East of England",
+            "county": "Norfolk"
+        }
+    },
+    {
+        "B677NL": {
+            "error": false,
+            "country": "England",
+            "constituency": "Warley",
+            "region": "West Midlands",
+            "county": "Sandwell"
+        }
+    },
+    {
+        "NR322HF": {
+            "error": false,
+            "country": "England",
+            "constituency": "Waveney",
+            "region": "East of England",
+            "county": "Suffolk"
+        }
+    },
+    {
+        "KA89RW": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Ayr, Carrick and Cumnock",
+            "region": "Scotland",
+            "county": "South Ayrshire"
+        }
+    },
+    {
+        "PL305LB": {
+            "error": false,
+            "country": "England",
+            "constituency": "North Cornwall",
+            "region": "South West",
+            "county": "Cornwall"
+        }
+    },
+    {
+        "NP201FW": {
+            "error": false,
+            "country": "Wales",
+            "constituency": "Newport West",
+            "region": "Wales",
+            "county": "Newport"
+        }
+    },
+    {
+        "M188PE": {
+            "error": false,
+            "country": "England",
+            "constituency": "Manchester, Gorton",
+            "region": "North West",
+            "county": "Manchester"
+        }
+    },
+    {
+        "LE113BJ": {
+            "error": false,
+            "country": "England",
+            "constituency": "Loughborough",
+            "region": "East Midlands",
+            "county": "Leicestershire"
+        }
+    },
+    {
+        "GL48HP": {
+            "error": false,
+            "country": "England",
+            "constituency": "Stroud",
+            "region": "South West",
+            "county": "Gloucestershire"
+        }
+    },
+    {
+        "TR25JA": {
+            "error": false,
+            "country": "England",
+            "constituency": "Truro and Falmouth",
+            "region": "South West",
+            "county": "Cornwall"
+        }
+    },
+    {
+        "G49HZ": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Glasgow North",
+            "region": "Scotland",
+            "county": "Glasgow City"
+        }
+    },
+    {
+        "EH44TZ": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Edinburgh West",
+            "region": "Scotland",
+            "county": "City of Edinburgh"
+        }
+    },
+    {
+        "BA32HQ": {
+            "error": false,
+            "country": "England",
+            "constituency": "North East Somerset",
+            "region": "South West",
+            "county": "Bath and North East Somerset"
+        }
+    },
+    {
+        "IP215RA": {
+            "error": false,
+            "country": "England",
+            "constituency": "Central Suffolk and North Ipswich",
+            "region": "East of England",
+            "county": "Suffolk"
+        }
+    },
+    {
+        "NP40AH": {
+            "error": false,
+            "country": "Wales",
+            "constituency": "Monmouth",
+            "region": "Wales",
+            "county": "Monmouthshire"
+        }
+    },
+    {
+        "KY112PS": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Dunfermline and West Fife",
+            "region": "Scotland",
+            "county": "Fife"
+        }
+    },
+    {
+        "MK125BG": {
+            "error": false,
+            "country": "England",
+            "constituency": "Milton Keynes North",
+            "region": "South East",
+            "county": "Milton Keynes"
+        }
+    },
+    {
+        "GL103UB": {
+            "error": false,
+            "country": "England",
+            "constituency": "Stroud",
+            "region": "South West",
+            "county": "Gloucestershire"
+        }
+    },
+    {
+        "NG138PG": {
+            "error": false,
+            "country": "England",
+            "constituency": "Newark",
+            "region": "East Midlands",
+            "county": "Nottinghamshire"
+        }
+    },
+    {
+        "OX39JJ": {
+            "error": false,
+            "country": "England",
+            "constituency": "Oxford East",
+            "region": "South East",
+            "county": "Oxfordshire"
+        }
+    },
+    {
+        "SN58SX": {
+            "error": false,
+            "country": "England",
+            "constituency": "South Swindon",
+            "region": "South West",
+            "county": "Swindon"
+        }
+    },
+    {
+        "KA37PH": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Kilmarnock and Loudoun",
+            "region": "Scotland",
+            "county": "East Ayrshire"
+        }
+    },
+    {
+        "IV363TZ": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Moray",
+            "region": "Scotland",
+            "county": "Moray"
+        }
+    },
+    {
+        "WR142YH": {
+            "error": false,
+            "country": "England",
+            "constituency": "West Worcestershire",
+            "region": "West Midlands",
+            "county": "Worcestershire"
+        }
+    },
+    {
+        "BD213HU": {
+            "error": false,
+            "country": "England",
+            "constituency": "Keighley",
+            "region": "Yorkshire and The Humber",
+            "county": "Bradford"
+        }
+    },
+    {
+        "DD111HL": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Angus",
+            "region": "Scotland",
+            "county": "Angus"
+        }
+    },
+    {
+        "CF336BU": {
+            "error": false,
+            "country": "Wales",
+            "constituency": "Bridgend",
+            "region": "Wales",
+            "county": "Bridgend"
+        }
+    },
+    {
+        "BH63QU": {
+            "error": false,
+            "country": "England",
+            "constituency": "Bournemouth East",
+            "region": "South West",
+            "county": "Bournemouth, Christchurch and Poole"
+        }
+    },
+    {
+        "WS13BS": {
+            "error": false,
+            "country": "England",
+            "constituency": "Walsall South",
+            "region": "West Midlands",
+            "county": "Walsall"
+        }
+    },
+    {
+        "TS12DP": {
+            "error": false,
+            "country": "England",
+            "constituency": "Middlesbrough",
+            "region": "North East",
+            "county": "Middlesbrough"
+        }
+    },
+    {
+        "FK103LT": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Ochil and South Perthshire",
+            "region": "Scotland",
+            "county": "Clackmannanshire"
+        }
+    },
+    {
+        "DL85PR": {
+            "error": false,
+            "country": "England",
+            "constituency": "Richmond (Yorks)",
+            "region": "Yorkshire and The Humber",
+            "county": "North Yorkshire"
+        }
+    },
+    {
+        "OL159HF": {
+            "error": true
+        }
+    },
+    {
+        "TR184AW": {
+            "error": false,
+            "country": "England",
+            "constituency": "St Ives",
+            "region": "South West",
+            "county": "Cornwall"
+        }
+    },
+    {
+        "RG208LP": {
+            "error": false,
+            "country": "England",
+            "constituency": "Newbury",
+            "region": "South East",
+            "county": "West Berkshire"
+        }
+    },
+    {
+        "SY113JS": {
+            "error": false,
+            "country": "England",
+            "constituency": "North Shropshire",
+            "region": "West Midlands",
+            "county": "Shropshire"
+        }
+    },
+    {
+        "KA14SQ": {
+            "error": false,
+            "country": "Scotland",
+            "constituency": "Kilmarnock and Loudoun",
+            "region": "Scotland",
+            "county": "East Ayrshire"
+        }
+    },
+    {
+        "PL14NE": {
+            "error": false,
+            "country": "England",
+            "constituency": "Plymouth, Sutton and Devonport",
+            "region": "South West",
+            "county": "Devon"
+        }
+    },
+    {
+        "HD88JZ": {
+            "error": false,
+            "country": "England",
+            "constituency": "Dewsbury",
+            "region": "Yorkshire and The Humber",
+            "county": "Kirklees"
+        }
+    },
+    {
+        "TS57RA": {
+            "error": false,
+            "country": "England",
+            "constituency": "Middlesbrough",
+            "region": "North East",
+            "county": "Middlesbrough"
+        }
+    },
+    {
+        "OX284AR": {
+            "error": false,
+            "country": "England",
+            "constituency": "Witney",
+            "region": "South East",
+            "county": "Oxfordshire"
+        }
+    },
+    {
+        "PO54LP": {
+            "error": false,
+            "country": "England",
+            "constituency": "Portsmouth South",
+            "region": "South East",
+            "county": "Portsmouth"
+        }
+    },
+    {
+        "TA245AP": {
+            "error": false,
+            "country": "England",
+            "constituency": "Bridgwater and West Somerset",
+            "region": "South West",
+            "county": "Somerset"
+        }
+    },
+    {
+        "NW95XA": {
+            "error": false,
+            "country": "England",
+            "constituency": "Hendon",
+            "region": "London",
+            "county": "Barnet"
+        }
+    }
+]
