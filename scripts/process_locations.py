@@ -2,14 +2,28 @@ import json
 
 import requests
 
+local_workspace = "/Users/sarahsloan/dev/CommunitiesUkWorkspace/"
+file_raw_forms_data = (
+    local_workspace
+    + "funding-service-design-assessment-store/scripts/dev_forms_raw.txt"
+)
+file_just_postcodes = (
+    local_workspace
+    + "funding-service-design-assessment-store/scripts/postcodes.json"
+)
+file_raw_postcode_data = (
+    local_workspace
+    + "funding-service-design-assessment-store/scripts/postcode_data_raw.json"
+)
+file_locations_result = (
+    local_workspace
+    + "funding-service-design-assessment-store/data/locations_dev.json"
+)
+
 
 def extract_postcodes_from_forms():
-    raw_path = (
-        "/Users/sarahsloan/dev/CommunitiesUkWorkspace/"
-        + "funding-service-design-assessment-store/scripts/dev_forms_raw.txt"
-    )
     address_key = "yEmHpp"
-    with open(raw_path) as f:
+    with open(file_raw_forms_data) as f:
         lines = f.readlines()
         results = []
         for line in lines:
@@ -30,9 +44,7 @@ def extract_postcodes_from_forms():
                                 results.append(postcode)
 
         print(f"found {len(results)} postcodes")
-        out_file = "/Users/sarahsloan/dev/CommunitiesUkWorkspace/"
-        +"funding-service-design-assessment-store/scripts/postcodes.json"
-        with open(out_file, "w") as f:
+        with open(file_just_postcodes.json, "w") as f:
             json_out = {"postcodes": results}
             json.dump(json_out, f)
 
@@ -41,19 +53,13 @@ def extract_postcodes_from_forms():
 
 
 def retrieve_data_from_postcodes_io():
-    in_file = (
-        "/Users/sarahsloan/dev/CommunitiesUkWorkspace/"
-        + "funding-service-design-assessment-store/scripts/postcodes.json"
-    )
-    postcode_data_file = "/Users/sarahsloan/dev/CommunitiesUkWorkspace/"
-    +"funding-service-design-assessment-store/scripts/postcode_data_raw.json"
-    with open(in_file) as f:
+    with open(file_just_postcodes) as f:
         json_in = json.load(f)
         result = requests.post(
             url="http://api.postcodes.io/postcodes", data=json_in
         )
 
-    with open(postcode_data_file, "w") as f:
+    with open(file_raw_postcode_data, "w") as f:
         json.dump(result.json(), f)
 
 
@@ -61,11 +67,9 @@ def retrieve_data_from_postcodes_io():
 
 
 def process_postcode_data():
-    postcode_data_file = "/Users/sarahsloan/dev/CommunitiesUkWorkspace/"
-    +"funding-service-design-assessment-store/scripts/postcode_data_raw.json"
 
     postcode_data = []
-    with open(postcode_data_file) as f:
+    with open(file_raw_postcode_data) as f:
         json_data = json.load(f)
         for item in json_data["result"]:
             details = item["result"]
@@ -95,11 +99,7 @@ def process_postcode_data():
             postcode_data.append(result)
         print(len(postcode_data))
 
-    out_file = (
-        "/Users/sarahsloan/dev/CommunitiesUkWorkspace/"
-        + "funding-service-design-assessment-store/data/locations_dev.json"
-    )
-    with open(out_file, "w") as f:
+    with open(file_locations_result, "w") as f:
         json.dump(postcode_data, f)
 
 

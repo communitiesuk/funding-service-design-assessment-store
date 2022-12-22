@@ -146,3 +146,5 @@ flask_session
 sqlite.db
 test_sqlite.db
 scripts/prod_forms_raw.json
+scripts/postcode_data_raw.json
+scripts/postcodes.json
