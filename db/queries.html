@@ -49,6 +49,12 @@
             <li>
                     <a class="function" href="#create_score_for_app_sub_crit">create_score_for_app_sub_crit</a>
             </li>
+            <li>
+                    <a class="function" href="#get_comments_for_application_sub_crit">get_comments_for_application_sub_crit</a>
+            </li>
+            <li>
+                    <a class="function" href="#create_comment_for_application_sub_crit">create_comment_for_application_sub_crit</a>
+            </li>
     </ul>
 
 
@@ -75,13 +81,18 @@
 </span><span id="L-3"><a href="#L-3"><span class="linenos"> 3</span></a><span class="kn">from</span> <span class="nn">.assessment_records.queries</span> <span class="kn">import</span> <span class="n">get_metadata_for_fund_round_id</span>
 </span><span id="L-4"><a href="#L-4"><span class="linenos"> 4</span></a><span class="kn">from</span> <span class="nn">.scores.queries</span> <span class="kn">import</span> <span class="n">get_scores_for_app_sub_crit</span>
 </span><span id="L-5"><a href="#L-5"><span class="linenos"> 5</span></a><span class="kn">from</span> <span class="nn">.scores.queries</span> <span class="kn">import</span> <span class="n">create_score_for_app_sub_crit</span>
-</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
-</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a>    <span class="s2">&quot;get_metadata_for_fund_round_id&quot;</span><span class="p">,</span>
-</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>    <span class="s2">&quot;bulk_insert_application_record&quot;</span><span class="p">,</span>
-</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a>    <span class="s2">&quot;find_answer_by_key_runner&quot;</span><span class="p">,</span>
-</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>    <span class="s2">&quot;get_scores_for_app_sub_crit&quot;</span><span class="p">,</span>
-</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>    <span class="s2">&quot;create_score_for_app_sub_crit&quot;</span><span class="p">,</span>
-</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a><span class="p">]</span>
+</span><span id="L-6"><a href="#L-6"><span class="linenos"> 6</span></a><span class="kn">from</span> <span class="nn">.comments.queries</span> <span class="kn">import</span> <span class="n">get_comments_for_application_sub_crit</span> 
+</span><span id="L-7"><a href="#L-7"><span class="linenos"> 7</span></a><span class="kn">from</span> <span class="nn">.comments.queries</span> <span class="kn">import</span> <span class="n">create_comment_for_application_sub_crit</span>
+</span><span id="L-8"><a href="#L-8"><span class="linenos"> 8</span></a>
+</span><span id="L-9"><a href="#L-9"><span class="linenos"> 9</span></a><span class="n">__all__</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="L-10"><a href="#L-10"><span class="linenos">10</span></a>    <span class="s2">&quot;get_metadata_for_fund_round_id&quot;</span><span class="p">,</span>
+</span><span id="L-11"><a href="#L-11"><span class="linenos">11</span></a>    <span class="s2">&quot;bulk_insert_application_record&quot;</span><span class="p">,</span>
+</span><span id="L-12"><a href="#L-12"><span class="linenos">12</span></a>    <span class="s2">&quot;find_answer_by_key_runner&quot;</span><span class="p">,</span>
+</span><span id="L-13"><a href="#L-13"><span class="linenos">13</span></a>    <span class="s2">&quot;get_scores_for_app_sub_crit&quot;</span><span class="p">,</span>
+</span><span id="L-14"><a href="#L-14"><span class="linenos">14</span></a>    <span class="s2">&quot;create_score_for_app_sub_crit&quot;</span><span class="p">,</span>
+</span><span id="L-15"><a href="#L-15"><span class="linenos">15</span></a>    <span class="s2">&quot;get_comments_for_application_sub_crit&quot;</span><span class="p">,</span>
+</span><span id="L-16"><a href="#L-16"><span class="linenos">16</span></a>    <span class="s2">&quot;create_comment_for_application_sub_crit&quot;</span><span class="p">,</span>
+</span><span id="L-17"><a href="#L-17"><span class="linenos">17</span></a><span class="p">]</span>
 </span></pre></div>
 
 
@@ -306,45 +317,45 @@ keys {key, answer, title, type}) within an SQLAlchemy result.</p>
 <div class="attr function">
             
         <span class="def">def</span>
-        <span class="name">get_scores_for_app_sub_crit</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">application_id</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">sub_criteria_id</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">score_history</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span></span><span class="return-annotation">) -> <span class="n">Dict</span>:</span></span>
+        <span class="name">get_scores_for_app_sub_crit</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">application_id</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">sub_criteria_id</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">score_history</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span></span><span class="return-annotation">) -> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]</span>:</span></span>
 
                 <label class="view-source-button" for="get_scores_for_app_sub_crit-view-source"><span>View Source</span></label>
 
     </div>
     <a class="headerlink" href="#get_scores_for_app_sub_crit"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="get_scores_for_app_sub_crit-20"><a href="#get_scores_for_app_sub_crit-20"><span class="linenos">20</span></a><span class="k">def</span> <span class="nf">get_scores_for_app_sub_crit</span><span class="p">(</span>
-</span><span id="get_scores_for_app_sub_crit-21"><a href="#get_scores_for_app_sub_crit-21"><span class="linenos">21</span></a>    <span class="n">application_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sub_criteria_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">score_history</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
-</span><span id="get_scores_for_app_sub_crit-22"><a href="#get_scores_for_app_sub_crit-22"><span class="linenos">22</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-</span><span id="get_scores_for_app_sub_crit-23"><a href="#get_scores_for_app_sub_crit-23"><span class="linenos">23</span></a>    <span class="sd">&quot;&quot;&quot;get_scores_for_app_sub_crit executes a query on scores</span>
-</span><span id="get_scores_for_app_sub_crit-24"><a href="#get_scores_for_app_sub_crit-24"><span class="linenos">24</span></a><span class="sd">    which returns the most recent score or all scores for the </span>
-</span><span id="get_scores_for_app_sub_crit-25"><a href="#get_scores_for_app_sub_crit-25"><span class="linenos">25</span></a><span class="sd">    given application_id and sub_criteria_id.</span>
-</span><span id="get_scores_for_app_sub_crit-26"><a href="#get_scores_for_app_sub_crit-26"><span class="linenos">26</span></a>
-</span><span id="get_scores_for_app_sub_crit-27"><a href="#get_scores_for_app_sub_crit-27"><span class="linenos">27</span></a><span class="sd">    :param application_id: The stringified application UUID.</span>
-</span><span id="get_scores_for_app_sub_crit-28"><a href="#get_scores_for_app_sub_crit-28"><span class="linenos">28</span></a><span class="sd">    :param sub_criteria_id: The stringified sub_criteria UUID.</span>
-</span><span id="get_scores_for_app_sub_crit-29"><a href="#get_scores_for_app_sub_crit-29"><span class="linenos">29</span></a><span class="sd">    :param score_history: Boolean value that reurns all scores if true</span>
-</span><span id="get_scores_for_app_sub_crit-30"><a href="#get_scores_for_app_sub_crit-30"><span class="linenos">30</span></a><span class="sd">    :return: dictionary.</span>
-</span><span id="get_scores_for_app_sub_crit-31"><a href="#get_scores_for_app_sub_crit-31"><span class="linenos">31</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="get_scores_for_app_sub_crit-32"><a href="#get_scores_for_app_sub_crit-32"><span class="linenos">32</span></a>    <span class="k">if</span> <span class="n">score_history</span><span class="p">:</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="get_scores_for_app_sub_crit-15"><a href="#get_scores_for_app_sub_crit-15"><span class="linenos">15</span></a><span class="k">def</span> <span class="nf">get_scores_for_app_sub_crit</span><span class="p">(</span>
+</span><span id="get_scores_for_app_sub_crit-16"><a href="#get_scores_for_app_sub_crit-16"><span class="linenos">16</span></a>    <span class="n">application_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sub_criteria_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">score_history</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span>
+</span><span id="get_scores_for_app_sub_crit-17"><a href="#get_scores_for_app_sub_crit-17"><span class="linenos">17</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">dict</span><span class="p">]:</span>
+</span><span id="get_scores_for_app_sub_crit-18"><a href="#get_scores_for_app_sub_crit-18"><span class="linenos">18</span></a>    <span class="sd">&quot;&quot;&quot;get_scores_for_app_sub_crit executes a query on scores</span>
+</span><span id="get_scores_for_app_sub_crit-19"><a href="#get_scores_for_app_sub_crit-19"><span class="linenos">19</span></a><span class="sd">    which returns the most recent score or all scores for the </span>
+</span><span id="get_scores_for_app_sub_crit-20"><a href="#get_scores_for_app_sub_crit-20"><span class="linenos">20</span></a><span class="sd">    given application_id and sub_criteria_id.</span>
+</span><span id="get_scores_for_app_sub_crit-21"><a href="#get_scores_for_app_sub_crit-21"><span class="linenos">21</span></a>
+</span><span id="get_scores_for_app_sub_crit-22"><a href="#get_scores_for_app_sub_crit-22"><span class="linenos">22</span></a><span class="sd">    :param application_id: The stringified application UUID.</span>
+</span><span id="get_scores_for_app_sub_crit-23"><a href="#get_scores_for_app_sub_crit-23"><span class="linenos">23</span></a><span class="sd">    :param sub_criteria_id: The stringified sub_criteria UUID.</span>
+</span><span id="get_scores_for_app_sub_crit-24"><a href="#get_scores_for_app_sub_crit-24"><span class="linenos">24</span></a><span class="sd">    :param score_history: Boolean value that reurns all scores if true</span>
+</span><span id="get_scores_for_app_sub_crit-25"><a href="#get_scores_for_app_sub_crit-25"><span class="linenos">25</span></a><span class="sd">    :return: dictionary.</span>
+</span><span id="get_scores_for_app_sub_crit-26"><a href="#get_scores_for_app_sub_crit-26"><span class="linenos">26</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="get_scores_for_app_sub_crit-27"><a href="#get_scores_for_app_sub_crit-27"><span class="linenos">27</span></a>    <span class="k">if</span> <span class="n">score_history</span><span class="p">:</span>
+</span><span id="get_scores_for_app_sub_crit-28"><a href="#get_scores_for_app_sub_crit-28"><span class="linenos">28</span></a>        <span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Score</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+</span><span id="get_scores_for_app_sub_crit-29"><a href="#get_scores_for_app_sub_crit-29"><span class="linenos">29</span></a>            <span class="n">Score</span><span class="o">.</span><span class="n">application_id</span> <span class="o">==</span> <span class="n">application_id</span><span class="p">,</span>
+</span><span id="get_scores_for_app_sub_crit-30"><a href="#get_scores_for_app_sub_crit-30"><span class="linenos">30</span></a>            <span class="n">Score</span><span class="o">.</span><span class="n">sub_criteria_id</span> <span class="o">==</span> <span class="n">sub_criteria_id</span>
+</span><span id="get_scores_for_app_sub_crit-31"><a href="#get_scores_for_app_sub_crit-31"><span class="linenos">31</span></a>            <span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Score</span><span class="o">.</span><span class="n">date_created</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span>
+</span><span id="get_scores_for_app_sub_crit-32"><a href="#get_scores_for_app_sub_crit-32"><span class="linenos">32</span></a>    <span class="k">else</span><span class="p">:</span>
 </span><span id="get_scores_for_app_sub_crit-33"><a href="#get_scores_for_app_sub_crit-33"><span class="linenos">33</span></a>        <span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Score</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
 </span><span id="get_scores_for_app_sub_crit-34"><a href="#get_scores_for_app_sub_crit-34"><span class="linenos">34</span></a>            <span class="n">Score</span><span class="o">.</span><span class="n">application_id</span> <span class="o">==</span> <span class="n">application_id</span><span class="p">,</span>
 </span><span id="get_scores_for_app_sub_crit-35"><a href="#get_scores_for_app_sub_crit-35"><span class="linenos">35</span></a>            <span class="n">Score</span><span class="o">.</span><span class="n">sub_criteria_id</span> <span class="o">==</span> <span class="n">sub_criteria_id</span>
-</span><span id="get_scores_for_app_sub_crit-36"><a href="#get_scores_for_app_sub_crit-36"><span class="linenos">36</span></a>            <span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Score</span><span class="o">.</span><span class="n">date_created</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span>
-</span><span id="get_scores_for_app_sub_crit-37"><a href="#get_scores_for_app_sub_crit-37"><span class="linenos">37</span></a>    <span class="k">else</span><span class="p">:</span>
-</span><span id="get_scores_for_app_sub_crit-38"><a href="#get_scores_for_app_sub_crit-38"><span class="linenos">38</span></a>        <span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Score</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
-</span><span id="get_scores_for_app_sub_crit-39"><a href="#get_scores_for_app_sub_crit-39"><span class="linenos">39</span></a>            <span class="n">Score</span><span class="o">.</span><span class="n">application_id</span> <span class="o">==</span> <span class="n">application_id</span><span class="p">,</span>
-</span><span id="get_scores_for_app_sub_crit-40"><a href="#get_scores_for_app_sub_crit-40"><span class="linenos">40</span></a>            <span class="n">Score</span><span class="o">.</span><span class="n">sub_criteria_id</span> <span class="o">==</span> <span class="n">sub_criteria_id</span>
-</span><span id="get_scores_for_app_sub_crit-41"><a href="#get_scores_for_app_sub_crit-41"><span class="linenos">41</span></a>            <span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Score</span><span class="o">.</span><span class="n">date_created</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
-</span><span id="get_scores_for_app_sub_crit-42"><a href="#get_scores_for_app_sub_crit-42"><span class="linenos">42</span></a>
-</span><span id="get_scores_for_app_sub_crit-43"><a href="#get_scores_for_app_sub_crit-43"><span class="linenos">43</span></a>    <span class="n">score_rows</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
-</span><span id="get_scores_for_app_sub_crit-44"><a href="#get_scores_for_app_sub_crit-44"><span class="linenos">44</span></a>
-</span><span id="get_scores_for_app_sub_crit-45"><a href="#get_scores_for_app_sub_crit-45"><span class="linenos">45</span></a>    <span class="n">metadata_serialiser</span> <span class="o">=</span> <span class="n">ScoreMetadata</span><span class="p">()</span>
-</span><span id="get_scores_for_app_sub_crit-46"><a href="#get_scores_for_app_sub_crit-46"><span class="linenos">46</span></a>    
-</span><span id="get_scores_for_app_sub_crit-47"><a href="#get_scores_for_app_sub_crit-47"><span class="linenos">47</span></a>    <span class="n">score_metadatas</span> <span class="o">=</span> <span class="p">[</span>
-</span><span id="get_scores_for_app_sub_crit-48"><a href="#get_scores_for_app_sub_crit-48"><span class="linenos">48</span></a>        <span class="n">metadata_serialiser</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">score_row</span><span class="p">)</span> 
-</span><span id="get_scores_for_app_sub_crit-49"><a href="#get_scores_for_app_sub_crit-49"><span class="linenos">49</span></a>        <span class="k">for</span> <span class="n">score_row</span> <span class="ow">in</span> <span class="n">score_rows</span>
-</span><span id="get_scores_for_app_sub_crit-50"><a href="#get_scores_for_app_sub_crit-50"><span class="linenos">50</span></a>    <span class="p">]</span>
-</span><span id="get_scores_for_app_sub_crit-51"><a href="#get_scores_for_app_sub_crit-51"><span class="linenos">51</span></a>
-</span><span id="get_scores_for_app_sub_crit-52"><a href="#get_scores_for_app_sub_crit-52"><span class="linenos">52</span></a>    <span class="k">return</span> <span class="n">score_metadatas</span>
+</span><span id="get_scores_for_app_sub_crit-36"><a href="#get_scores_for_app_sub_crit-36"><span class="linenos">36</span></a>            <span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Score</span><span class="o">.</span><span class="n">date_created</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span><span class="o">.</span><span class="n">limit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+</span><span id="get_scores_for_app_sub_crit-37"><a href="#get_scores_for_app_sub_crit-37"><span class="linenos">37</span></a>
+</span><span id="get_scores_for_app_sub_crit-38"><a href="#get_scores_for_app_sub_crit-38"><span class="linenos">38</span></a>    <span class="n">score_rows</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+</span><span id="get_scores_for_app_sub_crit-39"><a href="#get_scores_for_app_sub_crit-39"><span class="linenos">39</span></a>
+</span><span id="get_scores_for_app_sub_crit-40"><a href="#get_scores_for_app_sub_crit-40"><span class="linenos">40</span></a>    <span class="n">metadata_serialiser</span> <span class="o">=</span> <span class="n">ScoreMetadata</span><span class="p">()</span>
+</span><span id="get_scores_for_app_sub_crit-41"><a href="#get_scores_for_app_sub_crit-41"><span class="linenos">41</span></a>    
+</span><span id="get_scores_for_app_sub_crit-42"><a href="#get_scores_for_app_sub_crit-42"><span class="linenos">42</span></a>    <span class="n">score_metadatas</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="get_scores_for_app_sub_crit-43"><a href="#get_scores_for_app_sub_crit-43"><span class="linenos">43</span></a>        <span class="n">metadata_serialiser</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">score_row</span><span class="p">)</span> 
+</span><span id="get_scores_for_app_sub_crit-44"><a href="#get_scores_for_app_sub_crit-44"><span class="linenos">44</span></a>        <span class="k">for</span> <span class="n">score_row</span> <span class="ow">in</span> <span class="n">score_rows</span>
+</span><span id="get_scores_for_app_sub_crit-45"><a href="#get_scores_for_app_sub_crit-45"><span class="linenos">45</span></a>    <span class="p">]</span>
+</span><span id="get_scores_for_app_sub_crit-46"><a href="#get_scores_for_app_sub_crit-46"><span class="linenos">46</span></a>
+</span><span id="get_scores_for_app_sub_crit-47"><a href="#get_scores_for_app_sub_crit-47"><span class="linenos">47</span></a>    <span class="k">return</span> <span class="n">score_metadatas</span>
 </span></pre></div>
 
 
@@ -380,33 +391,33 @@ given application_id and sub_criteria_id.</p>
 
     </div>
     <a class="headerlink" href="#create_score_for_app_sub_crit"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="create_score_for_app_sub_crit-55"><a href="#create_score_for_app_sub_crit-55"><span class="linenos">55</span></a><span class="k">def</span> <span class="nf">create_score_for_app_sub_crit</span><span class="p">(</span>
-</span><span id="create_score_for_app_sub_crit-56"><a href="#create_score_for_app_sub_crit-56"><span class="linenos">56</span></a>    <span class="n">score</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">justification</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">application_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
-</span><span id="create_score_for_app_sub_crit-57"><a href="#create_score_for_app_sub_crit-57"><span class="linenos">57</span></a>    <span class="n">sub_criteria_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span>
-</span><span id="create_score_for_app_sub_crit-58"><a href="#create_score_for_app_sub_crit-58"><span class="linenos">58</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
-</span><span id="create_score_for_app_sub_crit-59"><a href="#create_score_for_app_sub_crit-59"><span class="linenos">59</span></a>    <span class="sd">&quot;&quot;&quot;create_score_for_app_sub_crit executes a query on scores</span>
-</span><span id="create_score_for_app_sub_crit-60"><a href="#create_score_for_app_sub_crit-60"><span class="linenos">60</span></a><span class="sd">    which creates a justified score for the given application_id and </span>
-</span><span id="create_score_for_app_sub_crit-61"><a href="#create_score_for_app_sub_crit-61"><span class="linenos">61</span></a><span class="sd">    sub_criteria_id.</span>
-</span><span id="create_score_for_app_sub_crit-62"><a href="#create_score_for_app_sub_crit-62"><span class="linenos">62</span></a>
-</span><span id="create_score_for_app_sub_crit-63"><a href="#create_score_for_app_sub_crit-63"><span class="linenos">63</span></a><span class="sd">    :param application_id: The stringified application UUID.</span>
-</span><span id="create_score_for_app_sub_crit-64"><a href="#create_score_for_app_sub_crit-64"><span class="linenos">64</span></a><span class="sd">    :param sub_criteria_id: The stringified sub_criteria UUID.</span>
-</span><span id="create_score_for_app_sub_crit-65"><a href="#create_score_for_app_sub_crit-65"><span class="linenos">65</span></a><span class="sd">    :param score: The score integer.</span>
-</span><span id="create_score_for_app_sub_crit-66"><a href="#create_score_for_app_sub_crit-66"><span class="linenos">66</span></a><span class="sd">    :param justification: The justification text.</span>
-</span><span id="create_score_for_app_sub_crit-67"><a href="#create_score_for_app_sub_crit-67"><span class="linenos">67</span></a><span class="sd">    :param date_created: The date_created.</span>
-</span><span id="create_score_for_app_sub_crit-68"><a href="#create_score_for_app_sub_crit-68"><span class="linenos">68</span></a><span class="sd">    :param user_id: The stringified user_id.</span>
-</span><span id="create_score_for_app_sub_crit-69"><a href="#create_score_for_app_sub_crit-69"><span class="linenos">69</span></a><span class="sd">    :return: dictionary.</span>
-</span><span id="create_score_for_app_sub_crit-70"><a href="#create_score_for_app_sub_crit-70"><span class="linenos">70</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="create_score_for_app_sub_crit-71"><a href="#create_score_for_app_sub_crit-71"><span class="linenos">71</span></a>    <span class="n">score</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span>
-</span><span id="create_score_for_app_sub_crit-72"><a href="#create_score_for_app_sub_crit-72"><span class="linenos">72</span></a>        <span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">,</span> <span class="n">justification</span><span class="o">=</span><span class="n">justification</span><span class="p">,</span> <span class="n">application_id</span><span class="o">=</span><span class="n">application_id</span><span class="p">,</span> 
-</span><span id="create_score_for_app_sub_crit-73"><a href="#create_score_for_app_sub_crit-73"><span class="linenos">73</span></a>        <span class="n">sub_criteria_id</span><span class="o">=</span><span class="n">sub_criteria_id</span><span class="p">,</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span>
-</span><span id="create_score_for_app_sub_crit-74"><a href="#create_score_for_app_sub_crit-74"><span class="linenos">74</span></a>    <span class="p">)</span>
-</span><span id="create_score_for_app_sub_crit-75"><a href="#create_score_for_app_sub_crit-75"><span class="linenos">75</span></a>    <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
-</span><span id="create_score_for_app_sub_crit-76"><a href="#create_score_for_app_sub_crit-76"><span class="linenos">76</span></a>    <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
-</span><span id="create_score_for_app_sub_crit-77"><a href="#create_score_for_app_sub_crit-77"><span class="linenos">77</span></a>    
-</span><span id="create_score_for_app_sub_crit-78"><a href="#create_score_for_app_sub_crit-78"><span class="linenos">78</span></a>    <span class="n">metadata_serialiser</span> <span class="o">=</span> <span class="n">ScoreMetadata</span><span class="p">()</span>
-</span><span id="create_score_for_app_sub_crit-79"><a href="#create_score_for_app_sub_crit-79"><span class="linenos">79</span></a>    <span class="n">score_metadata</span> <span class="o">=</span> <span class="n">metadata_serialiser</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
-</span><span id="create_score_for_app_sub_crit-80"><a href="#create_score_for_app_sub_crit-80"><span class="linenos">80</span></a>    
-</span><span id="create_score_for_app_sub_crit-81"><a href="#create_score_for_app_sub_crit-81"><span class="linenos">81</span></a>    <span class="k">return</span> <span class="n">score_metadata</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="create_score_for_app_sub_crit-50"><a href="#create_score_for_app_sub_crit-50"><span class="linenos">50</span></a><span class="k">def</span> <span class="nf">create_score_for_app_sub_crit</span><span class="p">(</span>
+</span><span id="create_score_for_app_sub_crit-51"><a href="#create_score_for_app_sub_crit-51"><span class="linenos">51</span></a>    <span class="n">score</span><span class="p">:</span> <span class="nb">int</span><span class="p">,</span> <span class="n">justification</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">application_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+</span><span id="create_score_for_app_sub_crit-52"><a href="#create_score_for_app_sub_crit-52"><span class="linenos">52</span></a>    <span class="n">sub_criteria_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span>
+</span><span id="create_score_for_app_sub_crit-53"><a href="#create_score_for_app_sub_crit-53"><span class="linenos">53</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+</span><span id="create_score_for_app_sub_crit-54"><a href="#create_score_for_app_sub_crit-54"><span class="linenos">54</span></a>    <span class="sd">&quot;&quot;&quot;create_score_for_app_sub_crit executes a query on scores</span>
+</span><span id="create_score_for_app_sub_crit-55"><a href="#create_score_for_app_sub_crit-55"><span class="linenos">55</span></a><span class="sd">    which creates a justified score for the given application_id and </span>
+</span><span id="create_score_for_app_sub_crit-56"><a href="#create_score_for_app_sub_crit-56"><span class="linenos">56</span></a><span class="sd">    sub_criteria_id.</span>
+</span><span id="create_score_for_app_sub_crit-57"><a href="#create_score_for_app_sub_crit-57"><span class="linenos">57</span></a>
+</span><span id="create_score_for_app_sub_crit-58"><a href="#create_score_for_app_sub_crit-58"><span class="linenos">58</span></a><span class="sd">    :param application_id: The stringified application UUID.</span>
+</span><span id="create_score_for_app_sub_crit-59"><a href="#create_score_for_app_sub_crit-59"><span class="linenos">59</span></a><span class="sd">    :param sub_criteria_id: The stringified sub_criteria UUID.</span>
+</span><span id="create_score_for_app_sub_crit-60"><a href="#create_score_for_app_sub_crit-60"><span class="linenos">60</span></a><span class="sd">    :param score: The score integer.</span>
+</span><span id="create_score_for_app_sub_crit-61"><a href="#create_score_for_app_sub_crit-61"><span class="linenos">61</span></a><span class="sd">    :param justification: The justification text.</span>
+</span><span id="create_score_for_app_sub_crit-62"><a href="#create_score_for_app_sub_crit-62"><span class="linenos">62</span></a><span class="sd">    :param date_created: The date_created.</span>
+</span><span id="create_score_for_app_sub_crit-63"><a href="#create_score_for_app_sub_crit-63"><span class="linenos">63</span></a><span class="sd">    :param user_id: The stringified user_id.</span>
+</span><span id="create_score_for_app_sub_crit-64"><a href="#create_score_for_app_sub_crit-64"><span class="linenos">64</span></a><span class="sd">    :return: dictionary.</span>
+</span><span id="create_score_for_app_sub_crit-65"><a href="#create_score_for_app_sub_crit-65"><span class="linenos">65</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="create_score_for_app_sub_crit-66"><a href="#create_score_for_app_sub_crit-66"><span class="linenos">66</span></a>    <span class="n">score</span> <span class="o">=</span> <span class="n">Score</span><span class="p">(</span>
+</span><span id="create_score_for_app_sub_crit-67"><a href="#create_score_for_app_sub_crit-67"><span class="linenos">67</span></a>        <span class="n">score</span><span class="o">=</span><span class="n">score</span><span class="p">,</span> <span class="n">justification</span><span class="o">=</span><span class="n">justification</span><span class="p">,</span> <span class="n">application_id</span><span class="o">=</span><span class="n">application_id</span><span class="p">,</span> 
+</span><span id="create_score_for_app_sub_crit-68"><a href="#create_score_for_app_sub_crit-68"><span class="linenos">68</span></a>        <span class="n">sub_criteria_id</span><span class="o">=</span><span class="n">sub_criteria_id</span><span class="p">,</span><span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span>
+</span><span id="create_score_for_app_sub_crit-69"><a href="#create_score_for_app_sub_crit-69"><span class="linenos">69</span></a>    <span class="p">)</span>
+</span><span id="create_score_for_app_sub_crit-70"><a href="#create_score_for_app_sub_crit-70"><span class="linenos">70</span></a>    <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+</span><span id="create_score_for_app_sub_crit-71"><a href="#create_score_for_app_sub_crit-71"><span class="linenos">71</span></a>    <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</span><span id="create_score_for_app_sub_crit-72"><a href="#create_score_for_app_sub_crit-72"><span class="linenos">72</span></a>    
+</span><span id="create_score_for_app_sub_crit-73"><a href="#create_score_for_app_sub_crit-73"><span class="linenos">73</span></a>    <span class="n">metadata_serialiser</span> <span class="o">=</span> <span class="n">ScoreMetadata</span><span class="p">()</span>
+</span><span id="create_score_for_app_sub_crit-74"><a href="#create_score_for_app_sub_crit-74"><span class="linenos">74</span></a>    <span class="n">score_metadata</span> <span class="o">=</span> <span class="n">metadata_serialiser</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">score</span><span class="p">)</span>
+</span><span id="create_score_for_app_sub_crit-75"><a href="#create_score_for_app_sub_crit-75"><span class="linenos">75</span></a>    
+</span><span id="create_score_for_app_sub_crit-76"><a href="#create_score_for_app_sub_crit-76"><span class="linenos">76</span></a>    <span class="k">return</span> <span class="n">score_metadata</span>
 </span></pre></div>
 
 
@@ -421,6 +432,143 @@ sub_criteria_id.</p>
 <li><strong>sub_criteria_id</strong>:  The stringified sub_criteria UUID.</li>
 <li><strong>score</strong>:  The score integer.</li>
 <li><strong>justification</strong>:  The justification text.</li>
+<li><strong>date_created</strong>:  The date_created.</li>
+<li><strong>user_id</strong>:  The stringified user_id.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>dictionary.</p>
+</blockquote>
+</div>
+
+
+                </section>
+                <section id="get_comments_for_application_sub_crit">
+                            <input id="get_comments_for_application_sub_crit-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">get_comments_for_application_sub_crit</span><span class="signature pdoc-code condensed">(<span class="param"><span class="n">application_id</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">sub_criteria_id</span><span class="p">:</span> <span class="nb">str</span>, </span><span class="param"><span class="n">theme_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span></span><span class="return-annotation">) -> <span class="n">Dict</span>:</span></span>
+
+                <label class="view-source-button" for="get_comments_for_application_sub_crit-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#get_comments_for_application_sub_crit"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="get_comments_for_application_sub_crit-20"><a href="#get_comments_for_application_sub_crit-20"><span class="linenos">20</span></a><span class="k">def</span> <span class="nf">get_comments_for_application_sub_crit</span><span class="p">(</span>
+</span><span id="get_comments_for_application_sub_crit-21"><a href="#get_comments_for_application_sub_crit-21"><span class="linenos">21</span></a>        <span class="n">application_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">sub_criteria_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">theme_id</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="kc">None</span>
+</span><span id="get_comments_for_application_sub_crit-22"><a href="#get_comments_for_application_sub_crit-22"><span class="linenos">22</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+</span><span id="get_comments_for_application_sub_crit-23"><a href="#get_comments_for_application_sub_crit-23"><span class="linenos">23</span></a>    <span class="sd">&quot;&quot;&quot;get_comments_for_application_sub_crit executes a query on comments</span>
+</span><span id="get_comments_for_application_sub_crit-24"><a href="#get_comments_for_application_sub_crit-24"><span class="linenos">24</span></a><span class="sd">    which returns a list of comments for the given application_id and </span>
+</span><span id="get_comments_for_application_sub_crit-25"><a href="#get_comments_for_application_sub_crit-25"><span class="linenos">25</span></a><span class="sd">    sub_criteria_id.</span>
+</span><span id="get_comments_for_application_sub_crit-26"><a href="#get_comments_for_application_sub_crit-26"><span class="linenos">26</span></a><span class="sd">    :param application_id: The stringified application UUID.</span>
+</span><span id="get_comments_for_application_sub_crit-27"><a href="#get_comments_for_application_sub_crit-27"><span class="linenos">27</span></a><span class="sd">    :param sub_criteria_id: The stringified sub_criteria UUID.</span>
+</span><span id="get_comments_for_application_sub_crit-28"><a href="#get_comments_for_application_sub_crit-28"><span class="linenos">28</span></a><span class="sd">    :return: dictionary.</span>
+</span><span id="get_comments_for_application_sub_crit-29"><a href="#get_comments_for_application_sub_crit-29"><span class="linenos">29</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="get_comments_for_application_sub_crit-30"><a href="#get_comments_for_application_sub_crit-30"><span class="linenos">30</span></a>    <span class="k">if</span> <span class="n">theme_id</span> <span class="o">==</span> <span class="s2">&quot;score&quot;</span><span class="p">:</span>
+</span><span id="get_comments_for_application_sub_crit-31"><a href="#get_comments_for_application_sub_crit-31"><span class="linenos">31</span></a>        <span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Comment</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+</span><span id="get_comments_for_application_sub_crit-32"><a href="#get_comments_for_application_sub_crit-32"><span class="linenos">32</span></a>            <span class="n">Comment</span><span class="o">.</span><span class="n">application_id</span> <span class="o">==</span> <span class="n">application_id</span><span class="p">,</span>
+</span><span id="get_comments_for_application_sub_crit-33"><a href="#get_comments_for_application_sub_crit-33"><span class="linenos">33</span></a>            <span class="n">Comment</span><span class="o">.</span><span class="n">sub_criteria_id</span> <span class="o">==</span> <span class="n">sub_criteria_id</span>
+</span><span id="get_comments_for_application_sub_crit-34"><a href="#get_comments_for_application_sub_crit-34"><span class="linenos">34</span></a>            <span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Comment</span><span class="o">.</span><span class="n">date_created</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span>
+</span><span id="get_comments_for_application_sub_crit-35"><a href="#get_comments_for_application_sub_crit-35"><span class="linenos">35</span></a>    <span class="k">else</span><span class="p">:</span>
+</span><span id="get_comments_for_application_sub_crit-36"><a href="#get_comments_for_application_sub_crit-36"><span class="linenos">36</span></a>        <span class="n">stmt</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">Comment</span><span class="p">)</span><span class="o">.</span><span class="n">where</span><span class="p">(</span>
+</span><span id="get_comments_for_application_sub_crit-37"><a href="#get_comments_for_application_sub_crit-37"><span class="linenos">37</span></a>            <span class="n">Comment</span><span class="o">.</span><span class="n">application_id</span> <span class="o">==</span> <span class="n">application_id</span><span class="p">,</span>
+</span><span id="get_comments_for_application_sub_crit-38"><a href="#get_comments_for_application_sub_crit-38"><span class="linenos">38</span></a>            <span class="n">Comment</span><span class="o">.</span><span class="n">sub_criteria_id</span> <span class="o">==</span> <span class="n">sub_criteria_id</span><span class="p">,</span>
+</span><span id="get_comments_for_application_sub_crit-39"><a href="#get_comments_for_application_sub_crit-39"><span class="linenos">39</span></a>            <span class="n">Comment</span><span class="o">.</span><span class="n">theme_id</span> <span class="o">==</span> <span class="n">theme_id</span>
+</span><span id="get_comments_for_application_sub_crit-40"><a href="#get_comments_for_application_sub_crit-40"><span class="linenos">40</span></a>            <span class="p">)</span><span class="o">.</span><span class="n">order_by</span><span class="p">(</span><span class="n">Comment</span><span class="o">.</span><span class="n">date_created</span><span class="o">.</span><span class="n">desc</span><span class="p">())</span>
+</span><span id="get_comments_for_application_sub_crit-41"><a href="#get_comments_for_application_sub_crit-41"><span class="linenos">41</span></a>
+</span><span id="get_comments_for_application_sub_crit-42"><a href="#get_comments_for_application_sub_crit-42"><span class="linenos">42</span></a>    <span class="n">comment_rows</span> <span class="o">=</span> <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">scalars</span><span class="p">(</span><span class="n">stmt</span><span class="p">)</span>
+</span><span id="get_comments_for_application_sub_crit-43"><a href="#get_comments_for_application_sub_crit-43"><span class="linenos">43</span></a>    <span class="n">metadata_serialiser</span> <span class="o">=</span> <span class="n">CommentMetadata</span><span class="p">()</span>
+</span><span id="get_comments_for_application_sub_crit-44"><a href="#get_comments_for_application_sub_crit-44"><span class="linenos">44</span></a>
+</span><span id="get_comments_for_application_sub_crit-45"><a href="#get_comments_for_application_sub_crit-45"><span class="linenos">45</span></a>    <span class="n">comment_metadatas</span> <span class="o">=</span> <span class="p">[</span>
+</span><span id="get_comments_for_application_sub_crit-46"><a href="#get_comments_for_application_sub_crit-46"><span class="linenos">46</span></a>        <span class="n">metadata_serialiser</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">comment_row</span><span class="p">)</span> 
+</span><span id="get_comments_for_application_sub_crit-47"><a href="#get_comments_for_application_sub_crit-47"><span class="linenos">47</span></a>        <span class="k">for</span> <span class="n">comment_row</span> <span class="ow">in</span> <span class="n">comment_rows</span>
+</span><span id="get_comments_for_application_sub_crit-48"><a href="#get_comments_for_application_sub_crit-48"><span class="linenos">48</span></a>    <span class="p">]</span>
+</span><span id="get_comments_for_application_sub_crit-49"><a href="#get_comments_for_application_sub_crit-49"><span class="linenos">49</span></a>
+</span><span id="get_comments_for_application_sub_crit-50"><a href="#get_comments_for_application_sub_crit-50"><span class="linenos">50</span></a>    <span class="k">return</span> <span class="n">comment_metadatas</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>get_comments_for_application_sub_crit executes a query on comments
+which returns a list of comments for the given application_id and 
+sub_criteria_id.</p>
+
+<h6 id="parameters">Parameters</h6>
+
+<ul>
+<li><strong>application_id</strong>:  The stringified application UUID.</li>
+<li><strong>sub_criteria_id</strong>:  The stringified sub_criteria UUID.</li>
+</ul>
+
+<h6 id="returns">Returns</h6>
+
+<blockquote>
+  <p>dictionary.</p>
+</blockquote>
+</div>
+
+
+                </section>
+                <section id="create_comment_for_application_sub_crit">
+                            <input id="create_comment_for_application_sub_crit-view-source" class="view-source-toggle-state" type="checkbox" aria-hidden="true" tabindex="-1">
+<div class="attr function">
+            
+        <span class="def">def</span>
+        <span class="name">create_comment_for_application_sub_crit</span><span class="signature pdoc-code multiline">(<span class="param">	<span class="n">application_id</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">sub_criteria_id</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">comment</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">comment_type</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span>,</span><span class="param">	<span class="n">theme_id</span><span class="p">:</span> <span class="nb">str</span></span><span class="return-annotation">) -> <span class="n">Dict</span>:</span></span>
+
+                <label class="view-source-button" for="create_comment_for_application_sub_crit-view-source"><span>View Source</span></label>
+
+    </div>
+    <a class="headerlink" href="#create_comment_for_application_sub_crit"></a>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="create_comment_for_application_sub_crit-52"><a href="#create_comment_for_application_sub_crit-52"><span class="linenos">52</span></a><span class="k">def</span> <span class="nf">create_comment_for_application_sub_crit</span><span class="p">(</span>
+</span><span id="create_comment_for_application_sub_crit-53"><a href="#create_comment_for_application_sub_crit-53"><span class="linenos">53</span></a>    <span class="n">application_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> 
+</span><span id="create_comment_for_application_sub_crit-54"><a href="#create_comment_for_application_sub_crit-54"><span class="linenos">54</span></a>    <span class="n">sub_criteria_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="create_comment_for_application_sub_crit-55"><a href="#create_comment_for_application_sub_crit-55"><span class="linenos">55</span></a>    <span class="n">comment</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="create_comment_for_application_sub_crit-56"><a href="#create_comment_for_application_sub_crit-56"><span class="linenos">56</span></a>    <span class="n">comment_type</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="create_comment_for_application_sub_crit-57"><a href="#create_comment_for_application_sub_crit-57"><span class="linenos">57</span></a>    <span class="n">user_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="create_comment_for_application_sub_crit-58"><a href="#create_comment_for_application_sub_crit-58"><span class="linenos">58</span></a>    <span class="n">theme_id</span><span class="p">:</span><span class="nb">str</span>
+</span><span id="create_comment_for_application_sub_crit-59"><a href="#create_comment_for_application_sub_crit-59"><span class="linenos">59</span></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Dict</span><span class="p">:</span>
+</span><span id="create_comment_for_application_sub_crit-60"><a href="#create_comment_for_application_sub_crit-60"><span class="linenos">60</span></a>    <span class="sd">&quot;&quot;&quot;create_comment_for_application_sub_crit executes a query on comments</span>
+</span><span id="create_comment_for_application_sub_crit-61"><a href="#create_comment_for_application_sub_crit-61"><span class="linenos">61</span></a><span class="sd">    which creates a comment for the given application_id and </span>
+</span><span id="create_comment_for_application_sub_crit-62"><a href="#create_comment_for_application_sub_crit-62"><span class="linenos">62</span></a><span class="sd">    sub_criteria_id.</span>
+</span><span id="create_comment_for_application_sub_crit-63"><a href="#create_comment_for_application_sub_crit-63"><span class="linenos">63</span></a><span class="sd">    :param application_id: The stringified application UUID.</span>
+</span><span id="create_comment_for_application_sub_crit-64"><a href="#create_comment_for_application_sub_crit-64"><span class="linenos">64</span></a><span class="sd">    :param sub_criteria_id: The stringified sub_criteria UUID.</span>
+</span><span id="create_comment_for_application_sub_crit-65"><a href="#create_comment_for_application_sub_crit-65"><span class="linenos">65</span></a><span class="sd">    :param comment: The comment string.</span>
+</span><span id="create_comment_for_application_sub_crit-66"><a href="#create_comment_for_application_sub_crit-66"><span class="linenos">66</span></a><span class="sd">    :param comment_type: The type of comment for ENUM.</span>
+</span><span id="create_comment_for_application_sub_crit-67"><a href="#create_comment_for_application_sub_crit-67"><span class="linenos">67</span></a><span class="sd">    :param date_created: The date_created.</span>
+</span><span id="create_comment_for_application_sub_crit-68"><a href="#create_comment_for_application_sub_crit-68"><span class="linenos">68</span></a><span class="sd">    :param user_id: The stringified user_id.</span>
+</span><span id="create_comment_for_application_sub_crit-69"><a href="#create_comment_for_application_sub_crit-69"><span class="linenos">69</span></a><span class="sd">    :return: dictionary.</span>
+</span><span id="create_comment_for_application_sub_crit-70"><a href="#create_comment_for_application_sub_crit-70"><span class="linenos">70</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="create_comment_for_application_sub_crit-71"><a href="#create_comment_for_application_sub_crit-71"><span class="linenos">71</span></a>    <span class="n">comment</span> <span class="o">=</span> <span class="n">Comment</span><span class="p">(</span>
+</span><span id="create_comment_for_application_sub_crit-72"><a href="#create_comment_for_application_sub_crit-72"><span class="linenos">72</span></a>        <span class="n">application_id</span><span class="o">=</span><span class="n">application_id</span><span class="p">,</span> 
+</span><span id="create_comment_for_application_sub_crit-73"><a href="#create_comment_for_application_sub_crit-73"><span class="linenos">73</span></a>        <span class="n">sub_criteria_id</span><span class="o">=</span><span class="n">sub_criteria_id</span><span class="p">,</span>
+</span><span id="create_comment_for_application_sub_crit-74"><a href="#create_comment_for_application_sub_crit-74"><span class="linenos">74</span></a>        <span class="n">comment</span><span class="o">=</span><span class="n">comment</span><span class="p">,</span>
+</span><span id="create_comment_for_application_sub_crit-75"><a href="#create_comment_for_application_sub_crit-75"><span class="linenos">75</span></a>        <span class="n">comment_type</span><span class="o">=</span><span class="n">comment_type</span><span class="p">,</span>
+</span><span id="create_comment_for_application_sub_crit-76"><a href="#create_comment_for_application_sub_crit-76"><span class="linenos">76</span></a>        <span class="n">user_id</span><span class="o">=</span><span class="n">user_id</span><span class="p">,</span>
+</span><span id="create_comment_for_application_sub_crit-77"><a href="#create_comment_for_application_sub_crit-77"><span class="linenos">77</span></a>        <span class="n">theme_id</span><span class="o">=</span><span class="n">theme_id</span>
+</span><span id="create_comment_for_application_sub_crit-78"><a href="#create_comment_for_application_sub_crit-78"><span class="linenos">78</span></a>    <span class="p">)</span>
+</span><span id="create_comment_for_application_sub_crit-79"><a href="#create_comment_for_application_sub_crit-79"><span class="linenos">79</span></a>    
+</span><span id="create_comment_for_application_sub_crit-80"><a href="#create_comment_for_application_sub_crit-80"><span class="linenos">80</span></a>    <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+</span><span id="create_comment_for_application_sub_crit-81"><a href="#create_comment_for_application_sub_crit-81"><span class="linenos">81</span></a>    <span class="n">db</span><span class="o">.</span><span class="n">session</span><span class="o">.</span><span class="n">commit</span><span class="p">()</span>
+</span><span id="create_comment_for_application_sub_crit-82"><a href="#create_comment_for_application_sub_crit-82"><span class="linenos">82</span></a>    <span class="n">metadata_serialiser</span> <span class="o">=</span> <span class="n">CommentMetadata</span><span class="p">()</span>
+</span><span id="create_comment_for_application_sub_crit-83"><a href="#create_comment_for_application_sub_crit-83"><span class="linenos">83</span></a>    <span class="n">comment_metadata</span> <span class="o">=</span> <span class="n">metadata_serialiser</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">comment</span><span class="p">)</span>
+</span><span id="create_comment_for_application_sub_crit-84"><a href="#create_comment_for_application_sub_crit-84"><span class="linenos">84</span></a>
+</span><span id="create_comment_for_application_sub_crit-85"><a href="#create_comment_for_application_sub_crit-85"><span class="linenos">85</span></a>    <span class="k">return</span> <span class="n">comment_metadata</span>
+</span></pre></div>
+
+
+            <div class="docstring"><p>create_comment_for_application_sub_crit executes a query on comments
+which creates a comment for the given application_id and 
+sub_criteria_id.</p>
+
+<h6 id="parameters">Parameters</h6>
+
+<ul>
+<li><strong>application_id</strong>:  The stringified application UUID.</li>
+<li><strong>sub_criteria_id</strong>:  The stringified sub_criteria UUID.</li>
+<li><strong>comment</strong>:  The comment string.</li>
+<li><strong>comment_type</strong>:  The type of comment for ENUM.</li>
 <li><strong>date_created</strong>:  The date_created.</li>
 <li><strong>user_id</strong>:  The stringified user_id.</li>
 </ul>
