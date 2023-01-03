@@ -673,86 +673,6 @@
             "status": "COMPLETED"
         },
         {
-            "question": "Management case ",
-            "fields": [
-                {
-                    "key": "JzWvhj",
-                    "title": "Capital funding",
-                    "type": "text",
-                    "answer": "2300"
-                },
-                {
-                    "key": "jLIgoi",
-                    "title": "Revenue funding (optional)",
-                    "type": "text",
-                    "answer": "2300"
-                }
-            ],
-            "status": "COMPLETED"
-        },
-        {
-            "question": "Management case ",
-            "fields": [
-                {
-                    "key": "NdFwgy",
-                    "title": "Capital costs",
-                    "type": "text",
-                    "answer": [
-                        "Capital Funding : \u00a32300"
-                    ]
-                }
-            ],
-            "status": "COMPLETED"
-        },
-        {
-            "question": "Management case ",
-            "fields": [
-                {
-                    "key": "NWTKzQ",
-                    "title": "Are you applying for revenue funding from the Community Ownership Fund? (optional)",
-                    "type": "list",
-                    "answer": false
-                }
-            ],
-            "status": "COMPLETED"
-        },
-        {
-            "question": "Management case",
-            "fields": [
-                {
-                    "key": "DIZZOC",
-                    "title": "Have you secured any match funding yet?",
-                    "type": "list",
-                    "answer": false
-                }
-            ],
-            "status": "COMPLETED"
-        },
-        {
-            "question": "Management case",
-            "fields": [
-                {
-                    "key": "RvbwSX",
-                    "title": "Do you have any match funding identified but not yet secured?",
-                    "type": "list",
-                    "answer": false
-                }
-            ],
-            "status": "COMPLETED"
-        },
-        {
-            "question": "Management case ",
-            "fields": [
-                {
-                    "key": "fnIdkJ",
-                    "title": "Asset value",
-                    "type": "text",
-                    "answer": "2300"
-                }
-            ],
-            "status": "COMPLETED"
-        },
-        {
             "name": "inclusiveness-and-integration",
             "questions": [
                 {
@@ -943,6 +863,92 @@
                 }
             ],
             "status": "COMPLETED"
-        }
+        },
+        {
+        "name": "funding-required",
+        "questions": [
+          {
+            "fields": [
+              {
+                "answer": "2300",
+                "key": "JzWvhj",
+                "title": "Capital funding",
+                "type": "text"
+              },
+              {
+                "answer": "2300",
+                "key": "jLIgoi",
+                "title": "Revenue funding (optional)",
+                "type": "text"
+              }
+            ],
+            "question": "Management case ",
+            "status": "COMPLETED"
+          },
+          {
+            "fields": [
+              {
+                "answer": [
+                  "Capital Funding : \u00a32300"
+                ],
+                "key": "MultiInputField",
+                "title": "Capital costs",
+                "type": "text"
+              }
+            ],
+            "question": "Management case ",
+            "status": "COMPLETED"
+          },
+          {
+            "fields": [
+              {
+                "answer": false,
+                "key": "NWTKzQ",
+                "title": "Are you applying for revenue funding from the Community Ownership Fund? (optional)",
+                "type": "list"
+              }
+            ],
+            "question": "Management case ",
+            "status": "COMPLETED"
+          },
+          {
+            "fields": [
+              {
+                "answer": false,
+                "key": "DIZZOC",
+                "title": "Have you secured any match funding yet?",
+                "type": "list"
+              }
+            ],
+            "question": "Management case",
+            "status": "COMPLETED"
+          },
+          {
+            "fields": [
+              {
+                "answer": false,
+                "key": "RvbwSX",
+                "title": "Do you have any match funding identified but not yet secured?",
+                "type": "list"
+              }
+            ],
+            "question": "Management case",
+            "status": "COMPLETED"
+          },
+          {
+            "fields": [
+              {
+                "answer": "2300",
+                "key": "fnIdkJ",
+                "title": "Asset value",
+                "type": "text"
+              }
+            ],
+            "question": "Management case ",
+            "status": "COMPLETED"
+          }
+        ],
+        "status": "COMPLETED"
+      }
     ]
 }
