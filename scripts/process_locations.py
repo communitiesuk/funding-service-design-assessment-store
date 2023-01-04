@@ -49,12 +49,12 @@ def extract_postcodes_from_forms():
                                 )
                                 results.append(postcode)
 
-        print(f"found {len(results)} postcodes")
+        print(f"Found {len(results)} Postcodes in provided raw data")
         # will consider iterating through and removing duplicates
-        with open('file_just_postcodes.json', 'w') as outfile:
+        with open('file_just_postcodes', 'w') as outfile:
             json_out = {"postcodes": results}
             json.dump(json_out, outfile)
-        print("file_just_postcodes created")
+        print("Extracted list of postcodes from raw data; returned as scripts/postcodes.json")
 
 
 """
@@ -73,13 +73,13 @@ def retrieve_data_from_postcodes_io():
 
     with open('file_raw_postcode_data', 'w') as outfile:
         json.dump(result.json(), outfile)
-    print("file_just_postcodes created")
+    print("Retrieved all postcode data; returned as scripts/file_just_postcodes.json")
 
 
 """
     Takes the result of the previous function, extracts the fields we need
     and writes them to the specified file as a json array with a key of
-    postcode.
+    postcode. Returns country, constituency, region & constituency 
 """
 
 
@@ -113,14 +113,14 @@ def process_postcode_data():
             else:
                 result = {postcode: {"error": True}}
             postcode_data.append(result)
-        print(len(postcode_data))
 
-    with open(file_locations_result, "w") as f:
-        json.dump(postcode_data, f)
+    with open(file_locations_result, "w") as outfile:
+        json.dump(postcode_data, outfile)
+    print("Processed postcode data; returned as data/locations_dev.json")
 
 
 extract_postcodes_from_forms()
 
-# retrieve_data_from_postcodes_io()
+retrieve_data_from_postcodes_io()
 
-# process_postcode_data()
+process_postcode_data()
