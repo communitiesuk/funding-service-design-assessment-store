@@ -4,7 +4,7 @@ import requests
 
 # File locations used by the functions in this script
 
-local_workspace = "/path/to/workspace/"
+local_workspace = "/Users/johno/Development/DLUCH/"
 file_raw_forms_data = (
     local_workspace
     + "funding-service-design-assessment-store/scripts/dev_forms_raw.txt"
@@ -53,10 +53,11 @@ def extract_postcodes_from_forms():
                                 results.append(postcode)
 
         print(f"found {len(results)} postcodes")
-        with open(file_just_postcodes.json, "w") as f:
+        # will consider iterating through and removing duplicates
+        with open('file_just_postcodes.json', 'w') as outfile:
             json_out = {"postcodes": results}
-            json.dump(json_out, f)
-
+            json.dump(json_out, outfile)
+        print("file_just_postcodes created")
 
 """
     Takes the json array of postcodes from previous function, sends it to
@@ -120,7 +121,7 @@ def process_postcode_data():
         json.dump(postcode_data, f)
 
 
-# extract_postcodes_from_forms()
+extract_postcodes_from_forms()
 
 # retrieve_data_from_postcodes_io()
 
