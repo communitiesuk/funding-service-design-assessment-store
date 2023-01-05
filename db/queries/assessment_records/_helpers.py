@@ -18,7 +18,9 @@ cof_json_mapper = {
     ),
     "asset_type": (
         '$.forms[*].questions[*].fields[*] ? (@.key == "yaQoxU")."answer"'
-    ),
+    )
+    # update mapper to include postcode data
+    # update mapper to include country field - looked up from locations.json using the postcode
 }
 
 
