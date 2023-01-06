@@ -8,7 +8,7 @@ from typing import List
 
 from db import db
 from db.models.assessment_record import AssessmentRecord
-from db.queries.assessment_records._helpers import derive_values_from_json
+from db.queries.assessment_records._helpers import map_json
 from db.schemas import AssessmentRecordMetadata
 from db.schemas import AssessmentSubCriteriaMetadata
 from db.schemas import AssessorTaskListMetadata
@@ -91,10 +91,11 @@ def bulk_insert_application_record(
         for single_json in json_strings:
             if not is_json:
                 single_json = json.loads(single_json)
-            derived_values = derive_values_from_json(
-                single_json, application_type
-            )
+            # derived_values = derive_values_from_json(
+            #     single_json, application_type
+            # )
 
+            derived_values = map_json(single_json)
             row = {
                 **derived_values,
                 "jsonb_blob": single_json,
