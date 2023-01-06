@@ -21,11 +21,11 @@ from sqlalchemy.orm import load_only
 
 
 def get_metadata_for_fund_round_id(
-    fund_id: str,
-    round_id: str,
-    search_term: str,
-    asset_type: str,
-    status: str,
+        fund_id: str,
+        round_id: str,
+        search_term: str,
+        asset_type: str,
+        status: str,
 ) -> List[Dict]:
     """get_metadata_for_fund_round_id Executes a query on assessment records
     which returns all rows matching the given fund_id and round_id. Has
@@ -230,12 +230,32 @@ def get_assessment_sub_critera_state(application_id: str) -> dict:
 
 
 def get_application_jsonb_blob(application_id: str) -> dict:
-
     stmt = (
         select(AssessmentRecord)
         .where(AssessmentRecord.application_id == application_id)
         .options(load_only("jsonb_blob"))
     )
+    application_jsonb_blob = db.session.scalar(stmt)
+    application_json = AssessorTaskListMetadata().dump(application_jsonb_blob)
+    return application_json
+
+
+def retrieve_location_data_for_each_application() -> dict:
+    """For each Assessment record, extract postcode, query postcode.io
+    and populate location field with JSON blob of location information
+
+    :return: Each assessment record with Location field populated
+    :rtype: dict
+    """
+
+    # select *
+    # for each
+    # -> postcode.io etc
+    # populate new location field (To be created)
+    # how to set and save it back?
+    stmt = (
+        select(AssessmentRecord)
+        .options(load_only("jsonb_blob")))
     application_jsonb_blob = db.session.scalar(stmt)
     application_json = AssessorTaskListMetadata().dump(application_jsonb_blob)
     return application_json

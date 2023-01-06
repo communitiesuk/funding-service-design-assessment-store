@@ -1,3 +1,5 @@
+from db.queries.assessment_records.queries import get_application_jsonb_blob
+
 import json
 import os
 
@@ -25,6 +27,49 @@ file_locations_result = (
     postcode and writes the resulting json array of postcodes to the specified
     file
 """
+
+"""
+1. input?
+2. DB query to get all applications
+3. for each ->
+    3.1. Call get_application_jsonb_blob() from queries.py
+    3.2. extract_postcode_from_form()
+    3.3. retrieve_data_from_postcodes_io()
+    3.4. process_postcode_data()
+    3.5. Store into newly created "locations_jsonBlob" field in DB
+4. Save data back to DB 
+"""
+
+
+def get_application_form(app_json_blob):
+    """function return list of all questions from application form"""
+
+    return [
+        questions
+        for forms in app_json_blob["jsonb_blob"]["forms"]
+        for questions in forms["questions"]
+    ]
+
+def extractPostCodeData():
+
+    application_id = "test-application-id"
+    application_json_blob = get_application_jsonb_blob(application_id)
+    questions = get_application_form(application_json_blob)
+
+    locationResults = []
+    for question in questions:
+        for field in question["fields"]:
+            if field["key"] == "yEmHpp":
+                answer = field["answer"]
+                raw_postcode = answer.split(",")[-1]
+                if raw_postcode:
+                    postcode = (
+                        raw_postcode.strip()
+                        .replace(" ", "")
+                        .upper()
+                    )
+                    locationResults.append(postcode)
+    print(f"Found {len(locationResults)} Test")
 
 
 def extract_postcodes_from_forms():
@@ -119,8 +164,11 @@ def process_postcode_data():
     print("Processed postcode data; returned as data/locations_dev.json")
 
 
-extract_postcodes_from_forms()
+extractPostCodeData()
+# call this? retrieve_location_data_for_each_application ?
 
-retrieve_data_from_postcodes_io()
+#extract_postcodes_from_forms()
 
-process_postcode_data()
+#retrieve_data_from_postcodes_io()
+
+#process_postcode_data()
