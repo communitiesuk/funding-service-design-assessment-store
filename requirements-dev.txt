@@ -31,7 +31,7 @@ blinker==1.5
     #   sentry-sdk
 build==0.9.0
     # via pip-tools
-certifi==2022.9.24
+certifi==2022.12.7
     # via
     #   -r requirements.txt
     #   requests
@@ -83,8 +83,6 @@ deepdiff==6.2.1
     # via -r requirements-dev.in
 distlib==0.3.6
     # via virtualenv
-exceptiongroup==1.1.0
-    # via pytest
 filelock==3.8.0
     # via virtualenv
 flask==2.2.2
@@ -338,10 +336,6 @@ ruamel-yaml==0.17.21
     # via
     #   -r requirements.txt
     #   prance
-ruamel-yaml-clib==0.2.7
-    # via
-    #   -r requirements.txt
-    #   ruamel-yaml
 semver==2.13.0
     # via
     #   -r requirements.txt
@@ -385,14 +379,6 @@ swagger-ui-bundle==0.0.9
     # via -r requirements.txt
 toml==0.10.2
     # via pre-commit
-tomli==2.0.1
-    # via
-    #   -r requirements.txt
-    #   black
-    #   build
-    #   mypy
-    #   pep517
-    #   pytest
 typing-extensions==4.4.0
     # via
     #   -r requirements.txt
