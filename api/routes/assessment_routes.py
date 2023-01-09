@@ -2,6 +2,8 @@
 from typing import Dict
 from typing import List
 
+from api.routes.progress_routes import get_progress_for_application
+
 from api.models.sub_criteria import SubCriteria
 from api.routes._helpers import transform_to_assessor_task_list_metadata
 from api.routes.subcriterias.get_sub_criteria import (
@@ -40,7 +42,10 @@ def all_assessments_for_fund_round_id(
         asset_type=asset_type,
         status=status,
     )
-
+    for x in app_list:
+        application_progress = get_progress_for_application(x.get('application_id'))
+        x.update({"Percentage": application_progress.get("progress") })
+        
     return app_list
 
 
