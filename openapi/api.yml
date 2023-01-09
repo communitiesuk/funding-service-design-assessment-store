@@ -511,6 +511,12 @@ paths:
                 type: array
                 items:
                   $ref: 'components.yml#/components/schemas/Progress'
+        400:
+          description: "Bad request - Incorrect application_id or application_ids"
+          content:
+            application/json:
+              schema:
+                $ref: 'components.yml#/components/schemas/GeneralError'          
       parameters:
       - name: application_ids
         in: query
