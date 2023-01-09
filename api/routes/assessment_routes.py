@@ -42,10 +42,6 @@ def all_assessments_for_fund_round_id(
         asset_type=asset_type,
         status=status,
     )
-    for x in app_list:
-        application_progress = get_progress_for_application(x.get('application_id'))
-        x.update({"Percentage": application_progress.get("progress") })
-        
     return app_list
 
 
