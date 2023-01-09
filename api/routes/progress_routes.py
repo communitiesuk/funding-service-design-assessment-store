@@ -39,7 +39,7 @@ def get_progress_for_application(
 
 def get_bulk_progress_for_applications(application_ids: List[str]) -> List[Dict]:
     """get_progress_for_application Function 
-    used by the get endpoint `/progress.
+    used by the get endpoint `/bulk_progress.
     :param application_ids: List of stringified applications' UUIDs.
     :return: List of objects containing the progress of the application
     """
