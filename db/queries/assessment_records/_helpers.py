@@ -27,7 +27,7 @@ def derive_application_values(application_json):
             )
             .find(application_json)[0]
             .value["answer"]
-        )
+        ) or 0
     except Exception:
         print(
             f"Could not extract funding_value_one from application: {application_id}."
@@ -40,7 +40,7 @@ def derive_application_values(application_json):
             )
             .find(application_json)[0]
             .value["answer"]
-        )
+        ) or 0
     except Exception:
         print(
             f"Could not extract funding_value_two from application: {application_id}."
