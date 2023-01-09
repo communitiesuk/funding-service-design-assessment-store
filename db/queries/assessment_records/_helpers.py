@@ -2,6 +2,8 @@ import jsonpath_rw_ext
 
 
 def derive_application_values(application_json):
+    # TODO: implement mapping function to match
+    #  fund+round fields to derived values
     derived_values = {}
     application_id = application_json["id"]
     print(f"deriving values for application id: {application_id}.")
