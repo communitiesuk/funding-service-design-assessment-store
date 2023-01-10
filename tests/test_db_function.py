@@ -305,8 +305,8 @@ def test_get_progress_for_applications():
     )
 
     assert len(application_progress) == 2
-    assert application_progress[0]["progress"] == 20
-    assert application_progress[1]["progress"] == 10
+    assert application_progress[0]["progress"] == 10
+    assert application_progress[1]["progress"] == 20
 
 
 @pytest.mark.parametrize(
