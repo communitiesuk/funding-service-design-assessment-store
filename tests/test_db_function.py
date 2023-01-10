@@ -300,13 +300,16 @@ def test_get_progress_for_applications():
     }
     create_score_for_app_sub_crit(**score_payload_3)
 
-    application_progress = get_progress_for_applications(
+    application_progress_list = get_progress_for_applications(
         [application_id_1, application_id_2]
     )
 
-    assert len(application_progress) == 2
-    assert application_progress[0]["progress"] == 10
-    assert application_progress[1]["progress"] == 20
+    assert len(application_progress_list) == 2
+    for application in application_progress_list:
+        if application["application_id"] == application_id_1:
+            assert application["progress"] == 20
+        if application["application_id"] == application_id_2:
+            assert application["progress"] == 10
 
 
 @pytest.mark.parametrize(
