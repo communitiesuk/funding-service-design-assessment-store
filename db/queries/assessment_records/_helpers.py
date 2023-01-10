@@ -58,3 +58,6 @@ def derive_application_values(application_json):
     derived_values["asset_type"] = asset_type
 
     return derived_values
+
+    # update mapper to include postcode data
+    # update mapper to include country field - looked up from locations.json using the postcode
