@@ -2,8 +2,6 @@
 from typing import Dict
 from typing import List
 
-from api.routes.progress_routes import get_progress_for_application
-
 from api.models.sub_criteria import SubCriteria
 from api.routes._helpers import transform_to_assessor_task_list_metadata
 from api.routes.subcriterias.get_sub_criteria import (

@@ -2,7 +2,7 @@ import random
 
 import pytest
 import sqlalchemy
-from api.routes.progress_routes import get_bulk_progress_for_applications
+from api.routes.progress_routes import get_progress_for_applications
 from db.models import Comment
 from db.models import Flag
 from db.models import Score
@@ -263,7 +263,7 @@ def test_get_comments():
     assert len(comment_metadata) == 3
 
 
-def test_get_progress_for_application():
+def test_get_progress_for_applications():
     """test_create_scores_for_application_sub_crit Tests we can create
     score records in the scores table in the appropriate format."""
 
@@ -300,7 +300,7 @@ def test_get_progress_for_application():
     }
     create_score_for_app_sub_crit(**score_payload_3)
 
-    application_progress = get_bulk_progress_for_applications(
+    application_progress = get_progress_for_applications(
         [application_id_1, application_id_2]
     )
 
