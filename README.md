@@ -89,11 +89,11 @@ Enter the virtual environment and install dependencies as described above, then:
 ### Create and seed local DB
 - Make sure your local `DB_URL` env var is set to your local postgres db (this doesn't need to actually exist yet), eg:
 
-    DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/fsd_assess_store
+        DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/fsd_assess_store
 
 - Use `tasks\db_tasks.py` to create and seed this DB (follow command prompts for what data to create):
 
-    invoke create_seeded_db
+        invoke create_seeded_db
 
 ### Run Flask
 
