@@ -1,3 +1,4 @@
+import csv
 import json
 import os
 
@@ -20,6 +21,7 @@ file_raw_forms_data = local_workspace + "/scripts/dev_forms_raw.txt"
 file_just_postcodes = local_workspace + "/scripts/postcodes.json"
 file_raw_postcode_data = local_workspace + "/scripts/postcode_data_raw.json"
 file_locations_result = local_workspace + "/data/locations_dev.json"
+file_locations_csv = local_workspace + "/scripts/locations.csv"
 
 
 """
@@ -98,6 +100,7 @@ def extract_location_data(json_data_item):
         result = {
             postcode: {
                 "error": False,
+                "postcode": postcode,
                 "country": details["country"],
                 "constituency": details["parliamentary_constituency"],
                 "region": region,
@@ -154,6 +157,28 @@ def update_db_with_location_data(
         for application_id, postcode in application_ids_to_postcodes.items()
     ]
     bulk_update_location_jsonb_blob(application_ids_to_location_data)
+
+
+def write_locations_to_csv(
+    application_ids_to_postcodes, postcodes_to_location_data, file_path
+):
+
+    with open(file_path, "w", newline="") as csvfile:
+        fieldnames = [
+            "application_id",
+            "postcode",
+            "error",
+            "county",
+            "country",
+            "region",
+            "constituency",
+        ]
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for k, v in application_ids_to_postcodes.items():
+            writer.writerow(
+                {"application_id": k, **postcodes_to_location_data[v]}
+            )
 
 
 def process_locations():
