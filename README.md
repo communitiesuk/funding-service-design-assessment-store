@@ -63,7 +63,7 @@ Then run:
 
     pip-compile requirements-dev.in
 
-### Initialise and upgrade database
+### Setting up for database development
 This service is designed to use PostgreSQL as a database, via SqlAlchemy
 When running the service (eg. `flask run`) you need to set the DATABASE_URL environment variable to the URL of the database you want to test with.
 
@@ -85,6 +85,17 @@ upgrade the deployed db instances with your changes.
 
 ## How to use
 Enter the virtual environment and setup the db as described above, then:
+## How to run locally
+Enter the virtual environment and install dependencies as described above, then:
+
+### Create and seed local DB
+- Make sure your local `DB_URL` env var is set to your local postgres db (this doesn't need to actually exist yet), eg:
+
+        DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/fsd_assess_store
+
+- Use `tasks\db_tasks.py` to create and seed this DB (follow command prompts for what data to create):
+
+        invoke create_seeded_db
 
 ### Run Flask
 
