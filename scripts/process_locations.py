@@ -85,6 +85,34 @@ def retrieve_data_from_postcodes_io():
     )
 
 
+def extract_location_data(json_data_item):
+    details = json_data_item["result"]
+    postcode = json_data_item["query"]
+    if details:
+        region = (
+            details["region"]
+            if details["region"]
+            else details["european_electoral_region"]
+        )
+        county = (
+            details["admin_county"]
+            if details["admin_county"]
+            else details["admin_district"]
+        )
+        result = {
+            postcode: {
+                "error": False,
+                "country": details["country"],
+                "constituency": details["parliamentary_constituency"],
+                "region": region,
+                "county": county,
+            }
+        }
+    else:
+        result = {postcode: {"error": True}}
+    return result
+
+
 """
     Takes the result of the previous function, extracts the fields we need
     and writes them to the specified file as a json array with a key of
@@ -97,30 +125,7 @@ def process_postcode_data():
     with open(file_raw_postcode_data) as f:
         json_data = json.load(f)
         for item in json_data["result"]:
-            details = item["result"]
-            postcode = item["query"]
-            if details:
-                region = (
-                    details["region"]
-                    if details["region"]
-                    else details["european_electoral_region"]
-                )
-                county = (
-                    details["admin_county"]
-                    if details["admin_county"]
-                    else details["admin_district"]
-                )
-                result = {
-                    postcode: {
-                        "error": False,
-                        "country": details["country"],
-                        "constituency": details["parliamentary_constituency"],
-                        "region": region,
-                        "county": county,
-                    }
-                }
-            else:
-                result = {postcode: {"error": True}}
+            result = extract_location_data(item)
             postcode_data.append(result)
 
     with open(file_locations_result, "w") as outfile:
@@ -132,7 +137,7 @@ with app.app_context():
     application_ids = get_all_application_ids()
     for id in application_ids:
         app_json = get_application_jsonb_blob(id)
-        print(app_json)
+
 # call this? retrieve_location_data_for_each_application ?
 
 # extract_postcodes_from_forms()
