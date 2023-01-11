@@ -1,9 +1,12 @@
+import csv
 import json
+import os
 
 from scripts.process_locations import extract_location_data
 from scripts.process_locations import get_all_location_data
 from scripts.process_locations import get_application_form
 from scripts.process_locations import get_postcode_from_questions
+from scripts.process_locations import write_locations_to_csv
 
 
 def test_get_application_form():
@@ -81,3 +84,33 @@ def test_get_all_location_data():
     assert "England" == result[just_postcodes[1]]["country"]
     assert result[just_postcodes[2]]
     assert result[just_postcodes[2]]["error"]
+
+
+def test_write_csv_file():
+
+    location = {
+        "error": False,
+        "county": "test_county",
+        "country": "test_country",
+        "constituency": "test_constituency",
+        "region": "test_region",
+        "postcode": "QQ121EE",
+    }
+
+    application_ids_to_postcodes = {"abc123": "QQ121EE"}
+
+    postcodes_to_location_data = {"QQ121EE": location}
+
+    target_file = (
+        os.path.abspath(os.path.join(os.getcwd(), os.pardir)) + "/test_csv.csv"
+    )
+    write_locations_to_csv(
+        application_ids_to_postcodes, postcodes_to_location_data, target_file
+    )
+    print("CSV file written to" + target_file)
+
+    with open(target_file, "r", newline="") as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            assert location["postcode"] == row["postcode"]
+            assert "abc123" == row["application_id"]
