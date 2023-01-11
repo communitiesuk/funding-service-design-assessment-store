@@ -1,5 +1,4 @@
 import csv
-import json
 import os
 
 import requests
@@ -17,24 +16,7 @@ from fsd_utils.config.commonconfig import CommonConfig
 
 local_workspace = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 
-file_raw_forms_data = local_workspace + "/scripts/dev_forms_raw.txt"
-file_just_postcodes = local_workspace + "/scripts/postcodes.json"
-file_raw_postcode_data = local_workspace + "/scripts/postcode_data_raw.json"
-file_locations_result = local_workspace + "/data/locations_dev.json"
-file_locations_csv = local_workspace + "/scripts/locations.csv"
-
-
-"""
-1. input?
-2. DB query to get all applications
-3. for each ->
-    3.1. Call get_application_jsonb_blob() from queries.py
-    3.2. extract_postcode_from_form()
-    3.3. retrieve_data_from_postcodes_io()
-    3.4. process_postcode_data()
-    3.5. Store into newly created "locations_jsonBlob" field in DB
-4. Save data back to DB
-"""
+file_locations_csv = local_workspace + "/locations.csv"
 
 
 def get_application_form(app_json_blob):
@@ -69,10 +51,9 @@ def get_all_application_ids() -> list:
 
 
 """
-    Takes the json array of postcodes from previous function, sends it to
+    Takes a list of postcodes andsends it to
     postcodes.io bulk postcode lookup api and then writes the result to the
-    specified file
-"""
+    specified file"""
 
 
 def retrieve_data_from_postcodes_io(postcodes: list):
@@ -110,26 +91,6 @@ def extract_location_data(json_data_item):
     else:
         result = {postcode: {"error": True}}
     return result
-
-
-"""
-    Takes the result of the previous function, extracts the fields we need
-    and writes them to the specified file as a json array with a key of
-    postcode. Returns country, constituency, region & constituency
-"""
-
-
-def process_postcode_data():
-    postcode_data = []
-    with open(file_raw_postcode_data) as f:
-        json_data = json.load(f)
-        for item in json_data["result"]:
-            result = extract_location_data(item)
-            postcode_data.append(result)
-
-    with open(file_locations_result, "w") as outfile:
-        json.dump(postcode_data, outfile)
-    print("Processed postcode data; returned as data/locations_dev.json")
 
 
 def get_all_location_data(just_postcodes) -> dict:
@@ -204,12 +165,11 @@ def process_locations():
         update_db_with_location_data(
             application_ids_to_postcodes, postcodes_to_location_data
         )
+        write_locations_to_csv(
+            application_ids_to_postcodes,
+            postcodes_to_location_data,
+            file_locations_csv,
+        )
 
 
-# call this? retrieve_location_data_for_each_application ?
-
-# extract_postcodes_from_forms()
-
-# retrieve_data_from_postcodes_io()
-
-# process_postcode_data()
+process_locations()
