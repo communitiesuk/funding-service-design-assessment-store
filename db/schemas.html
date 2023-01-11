@@ -134,15 +134,15 @@
 
     </div>
     <a class="headerlink" href="#AssessmentRecordMetadata"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="AssessmentRecordMetadata-17"><a href="#AssessmentRecordMetadata-17"><span class="linenos">17</span></a><span class="k">class</span> <span class="nc">AssessmentRecordMetadata</span><span class="p">(</span><span class="n">SQLAlchemyAutoSchema</span><span class="p">):</span>
-</span><span id="AssessmentRecordMetadata-18"><a href="#AssessmentRecordMetadata-18"><span class="linenos">18</span></a>    <span class="sd">&quot;&quot;&quot;AssessmentRecordMetadata The marshmallow class used to turn SQLAlchemy</span>
-</span><span id="AssessmentRecordMetadata-19"><a href="#AssessmentRecordMetadata-19"><span class="linenos">19</span></a><span class="sd">    rows into json for return in http responses.&quot;&quot;&quot;</span>
-</span><span id="AssessmentRecordMetadata-20"><a href="#AssessmentRecordMetadata-20"><span class="linenos">20</span></a>
-</span><span id="AssessmentRecordMetadata-21"><a href="#AssessmentRecordMetadata-21"><span class="linenos">21</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-</span><span id="AssessmentRecordMetadata-22"><a href="#AssessmentRecordMetadata-22"><span class="linenos">22</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">AssessmentRecord</span>
-</span><span id="AssessmentRecordMetadata-23"><a href="#AssessmentRecordMetadata-23"><span class="linenos">23</span></a>
-</span><span id="AssessmentRecordMetadata-24"><a href="#AssessmentRecordMetadata-24"><span class="linenos">24</span></a>    <span class="n">workflow_status</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="n">Status</span><span class="p">)</span>
-</span><span id="AssessmentRecordMetadata-25"><a href="#AssessmentRecordMetadata-25"><span class="linenos">25</span></a>    <span class="n">language</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="n">Language</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AssessmentRecordMetadata-18"><a href="#AssessmentRecordMetadata-18"><span class="linenos">18</span></a><span class="k">class</span> <span class="nc">AssessmentRecordMetadata</span><span class="p">(</span><span class="n">SQLAlchemyAutoSchema</span><span class="p">):</span>
+</span><span id="AssessmentRecordMetadata-19"><a href="#AssessmentRecordMetadata-19"><span class="linenos">19</span></a>    <span class="sd">&quot;&quot;&quot;AssessmentRecordMetadata The marshmallow class used to turn SQLAlchemy</span>
+</span><span id="AssessmentRecordMetadata-20"><a href="#AssessmentRecordMetadata-20"><span class="linenos">20</span></a><span class="sd">    rows into json for return in http responses.&quot;&quot;&quot;</span>
+</span><span id="AssessmentRecordMetadata-21"><a href="#AssessmentRecordMetadata-21"><span class="linenos">21</span></a>
+</span><span id="AssessmentRecordMetadata-22"><a href="#AssessmentRecordMetadata-22"><span class="linenos">22</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+</span><span id="AssessmentRecordMetadata-23"><a href="#AssessmentRecordMetadata-23"><span class="linenos">23</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">AssessmentRecord</span>
+</span><span id="AssessmentRecordMetadata-24"><a href="#AssessmentRecordMetadata-24"><span class="linenos">24</span></a>
+</span><span id="AssessmentRecordMetadata-25"><a href="#AssessmentRecordMetadata-25"><span class="linenos">25</span></a>    <span class="n">workflow_status</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="n">Status</span><span class="p">)</span>
+</span><span id="AssessmentRecordMetadata-26"><a href="#AssessmentRecordMetadata-26"><span class="linenos">26</span></a>    <span class="n">language</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="n">Language</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -186,8 +186,8 @@ rows into json for return in http responses.</p>
 
     </div>
     <a class="headerlink" href="#AssessmentRecordMetadata.Meta"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="AssessmentRecordMetadata.Meta-21"><a href="#AssessmentRecordMetadata.Meta-21"><span class="linenos">21</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-</span><span id="AssessmentRecordMetadata.Meta-22"><a href="#AssessmentRecordMetadata.Meta-22"><span class="linenos">22</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">AssessmentRecord</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AssessmentRecordMetadata.Meta-22"><a href="#AssessmentRecordMetadata.Meta-22"><span class="linenos">22</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+</span><span id="AssessmentRecordMetadata.Meta-23"><a href="#AssessmentRecordMetadata.Meta-23"><span class="linenos">23</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">AssessmentRecord</span>
 </span></pre></div>
 
 
@@ -217,16 +217,16 @@ rows into json for return in http responses.</p>
 
     </div>
     <a class="headerlink" href="#ScoreMetadata"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ScoreMetadata-28"><a href="#ScoreMetadata-28"><span class="linenos">28</span></a><span class="k">class</span> <span class="nc">ScoreMetadata</span><span class="p">(</span><span class="n">SQLAlchemyAutoSchema</span><span class="p">):</span>
-</span><span id="ScoreMetadata-29"><a href="#ScoreMetadata-29"><span class="linenos">29</span></a>    <span class="sd">&quot;&quot;&quot;ScoreMetadata The marshmallow class used to turn SQLAlchemy</span>
-</span><span id="ScoreMetadata-30"><a href="#ScoreMetadata-30"><span class="linenos">30</span></a><span class="sd">    rows into json for return in http responses.&quot;&quot;&quot;</span>
-</span><span id="ScoreMetadata-31"><a href="#ScoreMetadata-31"><span class="linenos">31</span></a>
-</span><span id="ScoreMetadata-32"><a href="#ScoreMetadata-32"><span class="linenos">32</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-</span><span id="ScoreMetadata-33"><a href="#ScoreMetadata-33"><span class="linenos">33</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Score</span>
-</span><span id="ScoreMetadata-34"><a href="#ScoreMetadata-34"><span class="linenos">34</span></a>        <span class="n">include_relationships</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="ScoreMetadata-35"><a href="#ScoreMetadata-35"><span class="linenos">35</span></a>        <span class="n">load_instance</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="ScoreMetadata-36"><a href="#ScoreMetadata-36"><span class="linenos">36</span></a>
-</span><span id="ScoreMetadata-37"><a href="#ScoreMetadata-37"><span class="linenos">37</span></a>    <span class="n">application_id</span> <span class="o">=</span> <span class="n">auto_field</span><span class="p">(</span><span class="n">dump_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ScoreMetadata-29"><a href="#ScoreMetadata-29"><span class="linenos">29</span></a><span class="k">class</span> <span class="nc">ScoreMetadata</span><span class="p">(</span><span class="n">SQLAlchemyAutoSchema</span><span class="p">):</span>
+</span><span id="ScoreMetadata-30"><a href="#ScoreMetadata-30"><span class="linenos">30</span></a>    <span class="sd">&quot;&quot;&quot;ScoreMetadata The marshmallow class used to turn SQLAlchemy</span>
+</span><span id="ScoreMetadata-31"><a href="#ScoreMetadata-31"><span class="linenos">31</span></a><span class="sd">    rows into json for return in http responses.&quot;&quot;&quot;</span>
+</span><span id="ScoreMetadata-32"><a href="#ScoreMetadata-32"><span class="linenos">32</span></a>
+</span><span id="ScoreMetadata-33"><a href="#ScoreMetadata-33"><span class="linenos">33</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+</span><span id="ScoreMetadata-34"><a href="#ScoreMetadata-34"><span class="linenos">34</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Score</span>
+</span><span id="ScoreMetadata-35"><a href="#ScoreMetadata-35"><span class="linenos">35</span></a>        <span class="n">include_relationships</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="ScoreMetadata-36"><a href="#ScoreMetadata-36"><span class="linenos">36</span></a>        <span class="n">load_instance</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="ScoreMetadata-37"><a href="#ScoreMetadata-37"><span class="linenos">37</span></a>
+</span><span id="ScoreMetadata-38"><a href="#ScoreMetadata-38"><span class="linenos">38</span></a>    <span class="n">application_id</span> <span class="o">=</span> <span class="n">auto_field</span><span class="p">(</span><span class="n">dump_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -270,10 +270,10 @@ rows into json for return in http responses.</p>
 
     </div>
     <a class="headerlink" href="#ScoreMetadata.Meta"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="ScoreMetadata.Meta-32"><a href="#ScoreMetadata.Meta-32"><span class="linenos">32</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-</span><span id="ScoreMetadata.Meta-33"><a href="#ScoreMetadata.Meta-33"><span class="linenos">33</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Score</span>
-</span><span id="ScoreMetadata.Meta-34"><a href="#ScoreMetadata.Meta-34"><span class="linenos">34</span></a>        <span class="n">include_relationships</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="ScoreMetadata.Meta-35"><a href="#ScoreMetadata.Meta-35"><span class="linenos">35</span></a>        <span class="n">load_instance</span> <span class="o">=</span> <span class="kc">True</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="ScoreMetadata.Meta-33"><a href="#ScoreMetadata.Meta-33"><span class="linenos">33</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+</span><span id="ScoreMetadata.Meta-34"><a href="#ScoreMetadata.Meta-34"><span class="linenos">34</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Score</span>
+</span><span id="ScoreMetadata.Meta-35"><a href="#ScoreMetadata.Meta-35"><span class="linenos">35</span></a>        <span class="n">include_relationships</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="ScoreMetadata.Meta-36"><a href="#ScoreMetadata.Meta-36"><span class="linenos">36</span></a>        <span class="n">load_instance</span> <span class="o">=</span> <span class="kc">True</span>
 </span></pre></div>
 
 
@@ -303,15 +303,15 @@ rows into json for return in http responses.</p>
 
     </div>
     <a class="headerlink" href="#AssessorTaskListMetadata"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="AssessorTaskListMetadata-67"><a href="#AssessorTaskListMetadata-67"><span class="linenos">67</span></a><span class="k">class</span> <span class="nc">AssessorTaskListMetadata</span><span class="p">(</span><span class="n">AssessmentRecordMetadata</span><span class="p">):</span>
-</span><span id="AssessorTaskListMetadata-68"><a href="#AssessorTaskListMetadata-68"><span class="linenos">68</span></a>    <span class="sd">&quot;&quot;&quot;AssessorTaskListMetadata The marshmallow class used to turn SQLAlchemy</span>
-</span><span id="AssessorTaskListMetadata-69"><a href="#AssessorTaskListMetadata-69"><span class="linenos">69</span></a><span class="sd">    rows into json for return in http responses.</span>
-</span><span id="AssessorTaskListMetadata-70"><a href="#AssessorTaskListMetadata-70"><span class="linenos">70</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="AssessorTaskListMetadata-71"><a href="#AssessorTaskListMetadata-71"><span class="linenos">71</span></a>
-</span><span id="AssessorTaskListMetadata-72"><a href="#AssessorTaskListMetadata-72"><span class="linenos">72</span></a>    <span class="n">short_id</span> <span class="o">=</span> <span class="n">auto_field</span><span class="p">(</span><span class="n">data_key</span><span class="o">=</span><span class="s2">&quot;short_id&quot;</span><span class="p">)</span>
-</span><span id="AssessorTaskListMetadata-73"><a href="#AssessorTaskListMetadata-73"><span class="linenos">73</span></a>    <span class="n">date_submitted</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
-</span><span id="AssessorTaskListMetadata-74"><a href="#AssessorTaskListMetadata-74"><span class="linenos">74</span></a>        <span class="n">data_key</span><span class="o">=</span><span class="s2">&quot;date_submitted&quot;</span><span class="p">,</span> <span class="n">attribute</span><span class="o">=</span><span class="s2">&quot;jsonb_blob.date_submitted&quot;</span>
-</span><span id="AssessorTaskListMetadata-75"><a href="#AssessorTaskListMetadata-75"><span class="linenos">75</span></a>    <span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AssessorTaskListMetadata-68"><a href="#AssessorTaskListMetadata-68"><span class="linenos">68</span></a><span class="k">class</span> <span class="nc">AssessorTaskListMetadata</span><span class="p">(</span><span class="n">AssessmentRecordMetadata</span><span class="p">):</span>
+</span><span id="AssessorTaskListMetadata-69"><a href="#AssessorTaskListMetadata-69"><span class="linenos">69</span></a>    <span class="sd">&quot;&quot;&quot;AssessorTaskListMetadata The marshmallow class used to turn SQLAlchemy</span>
+</span><span id="AssessorTaskListMetadata-70"><a href="#AssessorTaskListMetadata-70"><span class="linenos">70</span></a><span class="sd">    rows into json for return in http responses.</span>
+</span><span id="AssessorTaskListMetadata-71"><a href="#AssessorTaskListMetadata-71"><span class="linenos">71</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="AssessorTaskListMetadata-72"><a href="#AssessorTaskListMetadata-72"><span class="linenos">72</span></a>
+</span><span id="AssessorTaskListMetadata-73"><a href="#AssessorTaskListMetadata-73"><span class="linenos">73</span></a>    <span class="n">short_id</span> <span class="o">=</span> <span class="n">auto_field</span><span class="p">(</span><span class="n">data_key</span><span class="o">=</span><span class="s2">&quot;short_id&quot;</span><span class="p">)</span>
+</span><span id="AssessorTaskListMetadata-74"><a href="#AssessorTaskListMetadata-74"><span class="linenos">74</span></a>    <span class="n">date_submitted</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span>
+</span><span id="AssessorTaskListMetadata-75"><a href="#AssessorTaskListMetadata-75"><span class="linenos">75</span></a>        <span class="n">data_key</span><span class="o">=</span><span class="s2">&quot;date_submitted&quot;</span><span class="p">,</span> <span class="n">attribute</span><span class="o">=</span><span class="s2">&quot;jsonb_blob.date_submitted&quot;</span>
+</span><span id="AssessorTaskListMetadata-76"><a href="#AssessorTaskListMetadata-76"><span class="linenos">76</span></a>    <span class="p">)</span>
 </span></pre></div>
 
 
@@ -359,15 +359,15 @@ rows into json for return in http responses.</p>
 
     </div>
     <a class="headerlink" href="#AssessmentSubCriteriaMetadata"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="AssessmentSubCriteriaMetadata-78"><a href="#AssessmentSubCriteriaMetadata-78"><span class="linenos">78</span></a><span class="k">class</span> <span class="nc">AssessmentSubCriteriaMetadata</span><span class="p">(</span><span class="n">AssessmentRecordMetadata</span><span class="p">):</span>
-</span><span id="AssessmentSubCriteriaMetadata-79"><a href="#AssessmentSubCriteriaMetadata-79"><span class="linenos">79</span></a>    <span class="sd">&quot;&quot;&quot;AssessmentSubCriteriaMetadata The marshmallow class used to turn SQLAlchemy</span>
-</span><span id="AssessmentSubCriteriaMetadata-80"><a href="#AssessmentSubCriteriaMetadata-80"><span class="linenos">80</span></a><span class="sd">    rows into json for return in http responses.</span>
-</span><span id="AssessmentSubCriteriaMetadata-81"><a href="#AssessmentSubCriteriaMetadata-81"><span class="linenos">81</span></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="AssessmentSubCriteriaMetadata-82"><a href="#AssessmentSubCriteriaMetadata-82"><span class="linenos">82</span></a>
-</span><span id="AssessmentSubCriteriaMetadata-83"><a href="#AssessmentSubCriteriaMetadata-83"><span class="linenos">83</span></a>    <span class="n">funding_amount_requested</span> <span class="o">=</span> <span class="n">auto_field</span><span class="p">(</span><span class="n">data_key</span><span class="o">=</span><span class="s2">&quot;funding_amount_requested&quot;</span><span class="p">)</span>
-</span><span id="AssessmentSubCriteriaMetadata-84"><a href="#AssessmentSubCriteriaMetadata-84"><span class="linenos">84</span></a>    <span class="n">project_name</span> <span class="o">=</span> <span class="n">auto_field</span><span class="p">(</span><span class="n">data_key</span><span class="o">=</span><span class="s2">&quot;project_name&quot;</span><span class="p">)</span>
-</span><span id="AssessmentSubCriteriaMetadata-85"><a href="#AssessmentSubCriteriaMetadata-85"><span class="linenos">85</span></a>    <span class="n">fund_id</span> <span class="o">=</span> <span class="n">auto_field</span><span class="p">(</span><span class="n">data_key</span><span class="o">=</span><span class="s2">&quot;fund_id&quot;</span><span class="p">)</span>
-</span><span id="AssessmentSubCriteriaMetadata-86"><a href="#AssessmentSubCriteriaMetadata-86"><span class="linenos">86</span></a>    <span class="n">workflow_status</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="n">Status</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="AssessmentSubCriteriaMetadata-79"><a href="#AssessmentSubCriteriaMetadata-79"><span class="linenos">79</span></a><span class="k">class</span> <span class="nc">AssessmentSubCriteriaMetadata</span><span class="p">(</span><span class="n">AssessmentRecordMetadata</span><span class="p">):</span>
+</span><span id="AssessmentSubCriteriaMetadata-80"><a href="#AssessmentSubCriteriaMetadata-80"><span class="linenos">80</span></a>    <span class="sd">&quot;&quot;&quot;AssessmentSubCriteriaMetadata The marshmallow class used to turn SQLAlchemy</span>
+</span><span id="AssessmentSubCriteriaMetadata-81"><a href="#AssessmentSubCriteriaMetadata-81"><span class="linenos">81</span></a><span class="sd">    rows into json for return in http responses.</span>
+</span><span id="AssessmentSubCriteriaMetadata-82"><a href="#AssessmentSubCriteriaMetadata-82"><span class="linenos">82</span></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="AssessmentSubCriteriaMetadata-83"><a href="#AssessmentSubCriteriaMetadata-83"><span class="linenos">83</span></a>
+</span><span id="AssessmentSubCriteriaMetadata-84"><a href="#AssessmentSubCriteriaMetadata-84"><span class="linenos">84</span></a>    <span class="n">funding_amount_requested</span> <span class="o">=</span> <span class="n">auto_field</span><span class="p">(</span><span class="n">data_key</span><span class="o">=</span><span class="s2">&quot;funding_amount_requested&quot;</span><span class="p">)</span>
+</span><span id="AssessmentSubCriteriaMetadata-85"><a href="#AssessmentSubCriteriaMetadata-85"><span class="linenos">85</span></a>    <span class="n">project_name</span> <span class="o">=</span> <span class="n">auto_field</span><span class="p">(</span><span class="n">data_key</span><span class="o">=</span><span class="s2">&quot;project_name&quot;</span><span class="p">)</span>
+</span><span id="AssessmentSubCriteriaMetadata-86"><a href="#AssessmentSubCriteriaMetadata-86"><span class="linenos">86</span></a>    <span class="n">fund_id</span> <span class="o">=</span> <span class="n">auto_field</span><span class="p">(</span><span class="n">data_key</span><span class="o">=</span><span class="s2">&quot;fund_id&quot;</span><span class="p">)</span>
+</span><span id="AssessmentSubCriteriaMetadata-87"><a href="#AssessmentSubCriteriaMetadata-87"><span class="linenos">87</span></a>    <span class="n">workflow_status</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="n">Status</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -415,17 +415,17 @@ rows into json for return in http responses.</p>
 
     </div>
     <a class="headerlink" href="#CommentMetadata"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CommentMetadata-40"><a href="#CommentMetadata-40"><span class="linenos">40</span></a><span class="k">class</span> <span class="nc">CommentMetadata</span><span class="p">(</span><span class="n">SQLAlchemyAutoSchema</span><span class="p">):</span>
-</span><span id="CommentMetadata-41"><a href="#CommentMetadata-41"><span class="linenos">41</span></a>    <span class="sd">&quot;&quot;&quot;CommentMetadata The marshmallow class used to turn SQLAlchemy</span>
-</span><span id="CommentMetadata-42"><a href="#CommentMetadata-42"><span class="linenos">42</span></a><span class="sd">    rows into json for return in http responses.&quot;&quot;&quot;</span>
-</span><span id="CommentMetadata-43"><a href="#CommentMetadata-43"><span class="linenos">43</span></a>
-</span><span id="CommentMetadata-44"><a href="#CommentMetadata-44"><span class="linenos">44</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-</span><span id="CommentMetadata-45"><a href="#CommentMetadata-45"><span class="linenos">45</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Comment</span>
-</span><span id="CommentMetadata-46"><a href="#CommentMetadata-46"><span class="linenos">46</span></a>        <span class="n">include_relationships</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="CommentMetadata-47"><a href="#CommentMetadata-47"><span class="linenos">47</span></a>        <span class="n">load_instance</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="CommentMetadata-48"><a href="#CommentMetadata-48"><span class="linenos">48</span></a>
-</span><span id="CommentMetadata-49"><a href="#CommentMetadata-49"><span class="linenos">49</span></a>    <span class="n">comment_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="n">CommentType</span><span class="p">)</span>
-</span><span id="CommentMetadata-50"><a href="#CommentMetadata-50"><span class="linenos">50</span></a>    <span class="n">application_id</span> <span class="o">=</span> <span class="n">auto_field</span><span class="p">(</span><span class="n">dump_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CommentMetadata-41"><a href="#CommentMetadata-41"><span class="linenos">41</span></a><span class="k">class</span> <span class="nc">CommentMetadata</span><span class="p">(</span><span class="n">SQLAlchemyAutoSchema</span><span class="p">):</span>
+</span><span id="CommentMetadata-42"><a href="#CommentMetadata-42"><span class="linenos">42</span></a>    <span class="sd">&quot;&quot;&quot;CommentMetadata The marshmallow class used to turn SQLAlchemy</span>
+</span><span id="CommentMetadata-43"><a href="#CommentMetadata-43"><span class="linenos">43</span></a><span class="sd">    rows into json for return in http responses.&quot;&quot;&quot;</span>
+</span><span id="CommentMetadata-44"><a href="#CommentMetadata-44"><span class="linenos">44</span></a>
+</span><span id="CommentMetadata-45"><a href="#CommentMetadata-45"><span class="linenos">45</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+</span><span id="CommentMetadata-46"><a href="#CommentMetadata-46"><span class="linenos">46</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Comment</span>
+</span><span id="CommentMetadata-47"><a href="#CommentMetadata-47"><span class="linenos">47</span></a>        <span class="n">include_relationships</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="CommentMetadata-48"><a href="#CommentMetadata-48"><span class="linenos">48</span></a>        <span class="n">load_instance</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="CommentMetadata-49"><a href="#CommentMetadata-49"><span class="linenos">49</span></a>
+</span><span id="CommentMetadata-50"><a href="#CommentMetadata-50"><span class="linenos">50</span></a>    <span class="n">comment_type</span> <span class="o">=</span> <span class="n">Enum</span><span class="p">(</span><span class="n">CommentType</span><span class="p">)</span>
+</span><span id="CommentMetadata-51"><a href="#CommentMetadata-51"><span class="linenos">51</span></a>    <span class="n">application_id</span> <span class="o">=</span> <span class="n">auto_field</span><span class="p">(</span><span class="n">dump_only</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span></pre></div>
 
 
@@ -469,10 +469,10 @@ rows into json for return in http responses.</p>
 
     </div>
     <a class="headerlink" href="#CommentMetadata.Meta"></a>
-            <div class="pdoc-code codehilite"><pre><span></span><span id="CommentMetadata.Meta-44"><a href="#CommentMetadata.Meta-44"><span class="linenos">44</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
-</span><span id="CommentMetadata.Meta-45"><a href="#CommentMetadata.Meta-45"><span class="linenos">45</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Comment</span>
-</span><span id="CommentMetadata.Meta-46"><a href="#CommentMetadata.Meta-46"><span class="linenos">46</span></a>        <span class="n">include_relationships</span> <span class="o">=</span> <span class="kc">True</span>
-</span><span id="CommentMetadata.Meta-47"><a href="#CommentMetadata.Meta-47"><span class="linenos">47</span></a>        <span class="n">load_instance</span> <span class="o">=</span> <span class="kc">True</span>
+            <div class="pdoc-code codehilite"><pre><span></span><span id="CommentMetadata.Meta-45"><a href="#CommentMetadata.Meta-45"><span class="linenos">45</span></a>    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+</span><span id="CommentMetadata.Meta-46"><a href="#CommentMetadata.Meta-46"><span class="linenos">46</span></a>        <span class="n">model</span> <span class="o">=</span> <span class="n">Comment</span>
+</span><span id="CommentMetadata.Meta-47"><a href="#CommentMetadata.Meta-47"><span class="linenos">47</span></a>        <span class="n">include_relationships</span> <span class="o">=</span> <span class="kc">True</span>
+</span><span id="CommentMetadata.Meta-48"><a href="#CommentMetadata.Meta-48"><span class="linenos">48</span></a>        <span class="n">load_instance</span> <span class="o">=</span> <span class="kc">True</span>
 </span></pre></div>
 
 
