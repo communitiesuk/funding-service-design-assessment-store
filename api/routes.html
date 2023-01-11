@@ -572,7 +572,7 @@ subcriterias/{subcriteria_id}/scores</code>.</p>
     </div>
     <a class="headerlink" href="#get_flags_for_application"></a>
             <div class="pdoc-code codehilite"><pre><span></span><span id="get_flags_for_application-23"><a href="#get_flags_for_application-23"><span class="linenos">23</span></a><span class="k">def</span> <span class="nf">get_flags_for_application</span><span class="p">(</span><span class="n">application_id</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">:</span>
-</span><span id="get_flags_for_application-24"><a href="#get_flags_for_application-24"><span class="linenos">24</span></a>    <span class="n">flags</span> <span class="o">=</span> <span class="n">retrieve_flags_for_application</span><span class="p">(</span><span class="n">application_id</span><span class="p">)</span>
+</span><span id="get_flags_for_application-24"><a href="#get_flags_for_application-24"><span class="linenos">24</span></a>    <span class="n">flags</span> <span class="o">=</span> <span class="n">retrieve_flags_for_applications</span><span class="p">([</span><span class="n">application_id</span><span class="p">])</span>
 </span><span id="get_flags_for_application-25"><a href="#get_flags_for_application-25"><span class="linenos">25</span></a>    <span class="k">return</span> <span class="n">flags</span>
 </span></pre></div>
 
