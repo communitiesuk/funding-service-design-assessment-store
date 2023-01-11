@@ -13,6 +13,9 @@ from db.models.flags.enums import FlagType
 from db.queries import create_flag_for_application
 from db.queries import find_answer_by_key_runner
 from db.queries import retrieve_flags_for_application
+from db.queries.assessment_records.queries import (
+    bulk_update_location_jsonb_blob,
+)
 from db.queries.assessment_records.queries import find_assessor_task_list_state
 from db.queries.comments.queries import create_comment_for_application_sub_crit
 from db.queries.comments.queries import get_comments_for_application_sub_crit
@@ -389,3 +392,28 @@ def test_retrieve_flags_for_application(flag_fixture):
     assert result[0]["application_id"] == flag_fixture.application_id
     assert result[0]["user_id"] == flag_fixture.user_id
     assert result[0]["flag_type"] == flag_fixture.flag_type.name
+
+
+def test_bulk_update_location_data(db_session):
+    picked_row = get_random_row(AssessmentRecord)
+    application_id = picked_row.application_id
+    assert picked_row.location_json_blob is None
+
+    location = {
+        "error": False,
+        "county": "test_county",
+        "country": "test_country",
+    }
+
+    application_ids_to_location_data = [
+        {"application_id": application_id, "location": location}
+    ]
+
+    bulk_update_location_jsonb_blob(application_ids_to_location_data)
+
+    assessment_record = (
+        db_session.query(AssessmentRecord)
+        .where(AssessmentRecord.application_id == application_id)
+        .first()
+    )
+    assert location == assessment_record.location_json_blob

@@ -145,9 +145,15 @@ def get_all_location_data(just_postcodes) -> dict:
 def update_db_with_location_data(
     application_ids_to_postcodes, postcodes_to_location_data
 ):
-    bulk_update_location_jsonb_blob(
-        application_ids_to_postcodes, postcodes_to_location_data
-    )
+
+    application_ids_to_location_data = [
+        {
+            "application_id": application_id,
+            "location": postcodes_to_location_data[postcode],
+        }
+        for application_id, postcode in application_ids_to_postcodes.items()
+    ]
+    bulk_update_location_jsonb_blob(application_ids_to_location_data)
 
 
 with app.app_context():

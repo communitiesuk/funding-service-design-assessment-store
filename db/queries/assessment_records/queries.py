@@ -243,20 +243,20 @@ def get_application_jsonb_blob(application_id: str) -> dict:
     return application_json
 
 
-def bulk_update_location_jsonb_blob(
-    application_ids_to_postcodes, postcodes_to_location_data
-):
+def bulk_update_location_jsonb_blob(application_ids_to_location_data):
     stmt = (
         update(AssessmentRecord)
         .where(AssessmentRecord.application_id == bindparam("app_id"))
         .values(location_json_blob=bindparam("new_location_data"))
     )
-    update_params = []
-    for application_id, postcode in application_ids_to_postcodes.items():
-        location_data = postcodes_to_location_data[postcode]
-        update_params.append(
-            {"app_id": application_id, "new_location_data": location_data}
-        )
+
+    update_params = [
+        {
+            "app_id": item["application_id"],
+            "new_location_data": item["location"],
+        }
+        for item in application_ids_to_location_data
+    ]
 
     db.session.execute(stmt, update_params)
     db.session.commit()
