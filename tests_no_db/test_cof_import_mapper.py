@@ -2,8 +2,6 @@ import json
 
 from db.queries.assessment_records._helpers import derive_application_values
 
-# from db.queries.assessment_records._helpers import derive_application_values
-
 
 def test_derive_cof_values():
     single_application_json = "tests_no_db/test_data/single_application.json"
