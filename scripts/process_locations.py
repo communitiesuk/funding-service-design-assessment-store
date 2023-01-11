@@ -3,6 +3,9 @@ import os
 
 import requests
 from app import app
+from db.queries.assessment_records.queries import (
+    bulk_update_location_jsonb_blob,
+)
 from db.queries.assessment_records.queries import get_application_jsonb_blob
 from db.queries.assessment_records.queries import (
     get_metadata_for_fund_round_id,
@@ -70,19 +73,12 @@ def get_all_application_ids() -> list:
 """
 
 
-def retrieve_data_from_postcodes_io():
-    with open(file_just_postcodes) as f:
-        json_in = json.load(f)
-        result = requests.post(
-            url="http://api.postcodes.io/postcodes", data=json_in
-        )
-
-    with open("file_raw_postcode_data", "w") as outfile:
-        json.dump(result.json(), outfile)
-    print(
-        "Retrieved all postcode data; returned as "
-        + "scripts/file_just_postcodes.json"
+def retrieve_data_from_postcodes_io(postcodes: list):
+    result = requests.post(
+        url="http://api.postcodes.io/postcodes", data={"postcodes": postcodes}
     )
+
+    return result
 
 
 def extract_location_data(json_data_item):
@@ -133,10 +129,50 @@ def process_postcode_data():
     print("Processed postcode data; returned as data/locations_dev.json")
 
 
+def get_all_location_data(just_postcodes) -> dict:
+
+    raw_location_data = retrieve_data_from_postcodes_io(just_postcodes)
+
+    postcodes_to_location_data = {}
+    for postcode_data_item in raw_location_data.json()["result"]:
+        postcode = postcode_data_item["query"]
+        location_data = extract_location_data(postcode_data_item)
+        postcodes_to_location_data[postcode] = location_data[postcode]
+
+    return postcodes_to_location_data
+
+
+def update_db_with_location_data(
+    application_ids_to_postcodes, postcodes_to_location_data
+):
+    bulk_update_location_jsonb_blob(
+        application_ids_to_postcodes, postcodes_to_location_data
+    )
+
+
 with app.app_context():
     application_ids = get_all_application_ids()
+    just_postcodes = []
+    application_ids_to_postcodes = {}
+
+    # extract the postcode from each application we have
     for id in application_ids:
         app_json = get_application_jsonb_blob(id)
+        questions = get_application_form(app_json)
+        postcode = get_postcode_from_questions(questions)
+        application_ids_to_postcodes[id] = postcode
+        just_postcodes.append(postcode)
+
+    print(just_postcodes)
+    print(application_ids_to_postcodes)
+
+    postcodes_to_location_data = get_all_location_data(just_postcodes)
+
+    print(postcodes_to_location_data)
+    update_db_with_location_data(
+        application_ids_to_postcodes, postcodes_to_location_data
+    )
+
 
 # call this? retrieve_location_data_for_each_application ?
 
