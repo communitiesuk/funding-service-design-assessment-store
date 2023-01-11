@@ -12,9 +12,11 @@ from db.queries.assessment_records._helpers import derive_application_values
 from db.schemas import AssessmentRecordMetadata
 from db.schemas import AssessmentSubCriteriaMetadata
 from db.schemas import AssessorTaskListMetadata
+from sqlalchemy import bindparam
 from sqlalchemy import exc
 from sqlalchemy import func
 from sqlalchemy import select
+from sqlalchemy import update
 from sqlalchemy.dialects.postgresql import insert as postgres_insert
 from sqlalchemy.orm import defer
 from sqlalchemy.orm import load_only
@@ -110,7 +112,7 @@ def bulk_insert_application_record(
         upsert_rows_stmt = stmt.on_conflict_do_nothing(
             index_elements=[AssessmentRecord.application_id]
         )
-        print(f"Attemping bulk insert of all application rows.")
+        print("Attemping bulk insert of all application rows.")
         db.session.execute(upsert_rows_stmt)
     except exc.SQLAlchemyError as e:
         db.session.rollback()
@@ -239,3 +241,22 @@ def get_application_jsonb_blob(application_id: str) -> dict:
     application_jsonb_blob = db.session.scalar(stmt)
     application_json = AssessorTaskListMetadata().dump(application_jsonb_blob)
     return application_json
+
+
+def bulk_update_location_jsonb_blob(
+    application_ids_to_postcodes, postcodes_to_location_data
+):
+    stmt = (
+        update(AssessmentRecord)
+        .where(AssessmentRecord.application_id == bindparam("app_id"))
+        .values(location_json_blob=bindparam("new_location_data"))
+    )
+    update_params = []
+    for application_id, postcode in application_ids_to_postcodes.items():
+        location_data = postcodes_to_location_data[postcode]
+        update_params.append(
+            {"app_id": application_id, "new_location_data": location_data}
+        )
+
+    db.session.execute(stmt, update_params)
+    db.session.commit()

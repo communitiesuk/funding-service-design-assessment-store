@@ -1,6 +1,7 @@
 import json
 
 from scripts.process_locations import extract_location_data
+from scripts.process_locations import get_all_location_data
 from scripts.process_locations import get_application_form
 from scripts.process_locations import get_postcode_from_questions
 
@@ -66,3 +67,17 @@ def test_extract_location_data_error():
     result = extract_location_data(item_under_test)
     assert result[postcode]
     assert result[postcode]["error"] is True
+
+
+def test_get_all_location_data():
+    just_postcodes = ["NP203EB", "PL13RE", "QQ123QQ"]
+    result = get_all_location_data(just_postcodes)
+    assert 3 == len(result)
+    assert result[just_postcodes[0]]
+    assert result[just_postcodes[0]]["error"] is False
+    assert "Wales" == result[just_postcodes[0]]["country"]
+    assert result[just_postcodes[1]]
+    assert result[just_postcodes[1]]["error"] is False
+    assert "England" == result[just_postcodes[1]]["country"]
+    assert result[just_postcodes[2]]
+    assert result[just_postcodes[2]]["error"]
