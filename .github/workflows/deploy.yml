@@ -21,7 +21,7 @@ on:
 jobs:
 
   test_and_deploy_nodev:
-    if: ${{ github.event_name != "workflow_dispatch"}}
+    if: ${{ github.event_name != 'workflow_dispatch'}}
     uses: communitiesuk/funding-design-service-workflows/.github/workflows/deploy.yml@main
     with:
       app_name: ${{ github.event.repository.name }}
@@ -43,7 +43,7 @@ jobs:
       E2E_PAT: ${{secrets.E2E_PAT}}
 
   test_and_deploy_withdev:
-    if: ${{ github.event_name == "workflow_dispatch"}}
+    if: ${{ github.event_name == 'workflow_dispatch'}}
     uses: communitiesuk/funding-design-service-workflows/.github/workflows/deploy.yml@main
     with:
       app_name: ${{ github.event.repository.name }}
