@@ -257,12 +257,6 @@ components:
           type: string
         section_to_flag:
           type: string
-        resolution_reason:
-          type: string
-          nullable: true
-          enum:
-            - 'QUERY_RESOLVED'
-            - 'STOP_ASSESSMENT'
         flag_type:
           type: string
           enum:
