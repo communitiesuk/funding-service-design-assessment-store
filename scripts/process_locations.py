@@ -156,28 +156,29 @@ def update_db_with_location_data(
     bulk_update_location_jsonb_blob(application_ids_to_location_data)
 
 
-with app.app_context():
-    application_ids = get_all_application_ids()
-    just_postcodes = []
-    application_ids_to_postcodes = {}
+def process_locations():
+    with app.app_context():
+        application_ids = get_all_application_ids()
+        just_postcodes = []
+        application_ids_to_postcodes = {}
 
-    # extract the postcode from each application we have
-    for id in application_ids:
-        app_json = get_application_jsonb_blob(id)
-        questions = get_application_form(app_json)
-        postcode = get_postcode_from_questions(questions)
-        application_ids_to_postcodes[id] = postcode
-        just_postcodes.append(postcode)
+        # extract the postcode from each application we have
+        for id in application_ids:
+            app_json = get_application_jsonb_blob(id)
+            questions = get_application_form(app_json)
+            postcode = get_postcode_from_questions(questions)
+            application_ids_to_postcodes[id] = postcode
+            just_postcodes.append(postcode)
 
-    print(just_postcodes)
-    print(application_ids_to_postcodes)
+        print(just_postcodes)
+        print(application_ids_to_postcodes)
 
-    postcodes_to_location_data = get_all_location_data(just_postcodes)
+        postcodes_to_location_data = get_all_location_data(just_postcodes)
 
-    print(postcodes_to_location_data)
-    update_db_with_location_data(
-        application_ids_to_postcodes, postcodes_to_location_data
-    )
+        print(postcodes_to_location_data)
+        update_db_with_location_data(
+            application_ids_to_postcodes, postcodes_to_location_data
+        )
 
 
 # call this? retrieve_location_data_for_each_application ?
