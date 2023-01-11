@@ -4,6 +4,10 @@ import os
 import requests
 from app import app
 from db.queries.assessment_records.queries import get_application_jsonb_blob
+from db.queries.assessment_records.queries import (
+    get_metadata_for_fund_round_id,
+)
+from fsd_utils.config.commonconfig import CommonConfig
 
 # File locations used by the functions in this script
 
@@ -38,63 +42,25 @@ def get_application_form(app_json_blob):
     ]
 
 
-def extractPostCodeData():
+def get_postcode_from_questions(form_questions) -> str:
 
-    application_id = "69fd9ca8-7bc3-471a-acea-8984bcacdd92"
-    application_json_blob = get_application_jsonb_blob(application_id)
-    questions = get_application_form(application_json_blob)
-
-    locationResults = []
-    for question in questions:
+    for question in form_questions:
         for field in question["fields"]:
             if field["key"] == "yEmHpp":
                 answer = field["answer"]
                 raw_postcode = answer.split(",")[-1]
                 if raw_postcode:
                     postcode = raw_postcode.strip().replace(" ", "").upper()
-                    locationResults.append(postcode)
-    print(f"Found {len(locationResults)}")
-    print(locationResults)
+                    return postcode
 
 
-"""
-    Goes through form jsons to find the address of asset field, extracts the
-    postcode and writes the resulting json array of postcodes to the specified
-    file
-"""
-
-
-def extract_postcodes_from_forms():
-    address_key = "yEmHpp"
-    with open(file_raw_forms_data) as f:
-        lines = f.readlines()
-        results = []
-        for line in lines:
-            json_str = '{"form":' + line + "}"
-            json_line = json.loads(json_str)
-            if len(json_line["form"]) > 0:
-                for question in json_line["form"]:
-                    for field in question["fields"]:
-                        if field["key"] == address_key:
-                            answer = field["answer"]
-                            raw_postcode = answer.split(",")[-1]
-                            if raw_postcode:
-                                postcode = (
-                                    raw_postcode.strip()
-                                    .replace(" ", "")
-                                    .upper()
-                                )
-                                results.append(postcode)
-
-        print(f"Found {len(results)} Postcodes in provided raw data")
-        # will consider iterating through and removing duplicates
-        with open("file_just_postcodes", "w") as outfile:
-            json_out = {"postcodes": results}
-            json.dump(json_out, outfile)
-        print(
-            "Extracted list of postcodes from raw data;"
-            + "returned as scripts/postcodes.json"
-        )
+def get_all_application_ids() -> list:
+    metadata = get_metadata_for_fund_round_id(
+        CommonConfig.COF_FUND_ID, CommonConfig.COF_ROUND_2_ID, "", "", ""
+    )
+    application_ids = [item["application_id"] for item in metadata]
+    print(application_ids)
+    return application_ids
 
 
 """
@@ -163,7 +129,10 @@ def process_postcode_data():
 
 
 with app.app_context():
-    extractPostCodeData()
+    application_ids = get_all_application_ids()
+    for id in application_ids:
+        app_json = get_application_jsonb_blob(id)
+        print(app_json)
 # call this? retrieve_location_data_for_each_application ?
 
 # extract_postcodes_from_forms()
