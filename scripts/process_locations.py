@@ -172,4 +172,4 @@ def process_locations():
         )
 
 
-process_locations()
+# process_locations()
