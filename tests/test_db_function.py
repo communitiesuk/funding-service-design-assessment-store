@@ -14,7 +14,7 @@ from db.models.comment.enums import CommentType
 from db.models.flags.enums import FlagType
 from db.queries import create_flag_for_application
 from db.queries import find_answer_by_key_runner
-from db.queries import retrieve_flags_for_application
+from db.queries import retrieve_flag_for_application
 from db.queries.assessment_records.queries import find_assessor_task_list_state
 from db.queries.comments.queries import create_comment_for_application_sub_crit
 from db.queries.comments.queries import get_comments_for_application_sub_crit
@@ -386,8 +386,8 @@ def test_create_flag_for_application(flag_fixture):
     assert result["flag_type"] == flag_fixture.flag_type.name
 
 
-def test_retrieve_flags_for_application(flag_fixture):
-    result = retrieve_flags_for_application(flag_fixture.application_id)
+def test_retrieve_flag_for_application(flag_fixture):
+    result = retrieve_flag_for_application(flag_fixture.application_id)
 
     assert len(result) == 1
     assert result[0]["justification"] == flag_fixture.justification

@@ -33,14 +33,14 @@ def create_flag_for_application(
     return flag_metadata
 
 
-def retrieve_flags_for_application(application_id: str) -> dict:
-    flags = (
+def retrieve_flag_for_application(application_id: str) -> dict:
+    flag = (
         Flag.query.filter(Flag.application_id == application_id)
         .order_by(Flag.date_created.desc())
-        .all()
+        .first()
     )
 
     metadata_serialiser = FlagMetadata()
-    flag_metadatas = [metadata_serialiser.dump(flag) for flag in flags]
+    flag_metadata = metadata_serialiser.dump(flag)
 
-    return flag_metadatas
+    return flag_metadata

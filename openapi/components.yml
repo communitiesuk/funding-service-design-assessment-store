@@ -263,6 +263,7 @@ components:
             - 'FLAGGED'
             - 'STOPPED'
             - 'QA_COMPLETED'
+            - 'RESOLVED'
         application_id:
           type: string
         date_created:
@@ -282,6 +283,7 @@ components:
             - 'FLAGGED'
             - 'STOPPED'
             - 'QA_COMPLETED'
+            - 'RESOLVED'
         application_id:
           type: string
         user_id:
