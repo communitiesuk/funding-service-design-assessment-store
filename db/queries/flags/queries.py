@@ -44,3 +44,15 @@ def retrieve_flag_for_application(application_id: str) -> dict:
     flag_metadata = metadata_serialiser.dump(flag)
 
     return flag_metadata
+
+def retrieve_flags_for_applications(application_ids: list[str]) -> dict:
+    flags = (
+        Flag.query.filter(Flag.application_id.in_(application_ids))
+        .order_by(Flag.date_created.desc())
+        .all()
+    )
+
+    metadata_serialiser = FlagMetadata()
+    flag_metadatas = [metadata_serialiser.dump(flag) for flag in flags]
+
+    return flag_metadatas
