@@ -1,22 +1,12 @@
 import csv
-import os
 
 import requests
-from app import app
 from db.queries.assessment_records.queries import (
     bulk_update_location_jsonb_blob,
 )
-from db.queries.assessment_records.queries import get_application_jsonb_blob
 from db.queries.assessment_records.queries import (
     get_metadata_for_fund_round_id,
 )
-from fsd_utils.config.commonconfig import CommonConfig
-
-# File locations used by the functions in this script
-
-local_workspace = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
-
-file_locations_csv = local_workspace + "/locations.csv"
 
 
 def get_application_form(app_json_blob):
@@ -41,10 +31,8 @@ def get_postcode_from_questions(form_questions) -> str:
                     return postcode
 
 
-def get_all_application_ids() -> list:
-    metadata = get_metadata_for_fund_round_id(
-        CommonConfig.COF_FUND_ID, CommonConfig.COF_ROUND_2_ID, "", "", ""
-    )
+def get_all_application_ids_for_fund_round(fund_id, round_id) -> list:
+    metadata = get_metadata_for_fund_round_id(fund_id, round_id, "", "", "")
     application_ids = [item["application_id"] for item in metadata]
     print(application_ids)
     return application_ids
@@ -140,36 +128,3 @@ def write_locations_to_csv(
             writer.writerow(
                 {"application_id": k, **postcodes_to_location_data[v]}
             )
-
-
-def process_locations():
-    with app.app_context():
-        application_ids = get_all_application_ids()
-        just_postcodes = []
-        application_ids_to_postcodes = {}
-
-        # extract the postcode from each application we have
-        for id in application_ids:
-            app_json = get_application_jsonb_blob(id)
-            questions = get_application_form(app_json)
-            postcode = get_postcode_from_questions(questions)
-            application_ids_to_postcodes[id] = postcode
-            just_postcodes.append(postcode)
-
-        print(just_postcodes)
-        print(application_ids_to_postcodes)
-
-        postcodes_to_location_data = get_all_location_data(just_postcodes)
-
-        print(postcodes_to_location_data)
-        update_db_with_location_data(
-            application_ids_to_postcodes, postcodes_to_location_data
-        )
-        write_locations_to_csv(
-            application_ids_to_postcodes,
-            postcodes_to_location_data,
-            file_locations_csv,
-        )
-
-
-# process_locations()
