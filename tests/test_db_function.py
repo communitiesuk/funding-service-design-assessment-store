@@ -7,12 +7,10 @@ import pytest
 import sqlalchemy
 from api.routes.progress_routes import get_progress_for_applications
 from db.models import Comment
-from db.models import Flag
 from db.models import Score
 from db.models.assessment_record.assessment_records import AssessmentRecord
 from db.models.assessment_record.enums import Status
 from db.models.comment.enums import CommentType
-from db.models.flags.enums import FlagType
 from db.queries import create_flag_for_application
 from db.queries import find_answer_by_key_runner
 from db.queries import retrieve_flag_for_application
@@ -24,6 +22,7 @@ from db.queries.scores.queries import create_score_for_app_sub_crit
 from db.queries.scores.queries import get_scores_for_app_sub_crit
 from db.queries.scores.queries import get_sub_criteria_to_latest_score_map
 from tests._helpers import get_random_row
+from tests.test_data.flags import flags
 
 
 def test_select_field_by_id():
@@ -361,60 +360,54 @@ def test_update_workflow_status_on_insert(db_session, insertion_object):
     assert assessment_record.workflow_status == Status.IN_PROGRESS
 
 
-@pytest.fixture
-def flag_fixture(db_session):
-    flag = Flag(
-        justification="Test justification",
-        section_to_flag="Test section",
-        application_id="a3ec41db-3eac-4220-90db-c92dea049c01",
-        user_id="test-user-id",
-        flag_type=FlagType.FLAGGED,
-    )
-    db_session.add(flag)
-    db_session.commit()
+@pytest.mark.parametrize("flag", flags)
+def test_create_flag_for_application(flag):
 
-    yield flag
-
-    db_session.delete(flag)
-    db_session.commit()
-
-
-def test_create_flag_for_application(flag_fixture):
     result = create_flag_for_application(
-        justification=flag_fixture.justification,
-        section_to_flag=flag_fixture.section_to_flag,
-        application_id=flag_fixture.application_id,
-        user_id=flag_fixture.user_id,
-        flag_type=flag_fixture.flag_type,
+        justification=flag.justification,
+        section_to_flag=flag.section_to_flag,
+        application_id=flag.application_id,
+        user_id=flag.user_id,
+        flag_type=flag.flag_type,
     )
 
-    assert result["justification"] == flag_fixture.justification
-    assert result["section_to_flag"] == flag_fixture.section_to_flag
-    assert result["application_id"] == flag_fixture.application_id
-    assert result["user_id"] == flag_fixture.user_id
-    assert result["flag_type"] == flag_fixture.flag_type.name
+    assert result["justification"] == flag.justification
+    assert result["section_to_flag"] == flag.section_to_flag
+    assert result["application_id"] == flag.application_id
+    assert result["user_id"] == flag.user_id
+    assert result["flag_type"] == flag.flag_type.name
 
 
-def test_retrieve_flag_for_application(flag_fixture):
-    result = retrieve_flag_for_application(flag_fixture.application_id)
-    
-    assert len(result) == 1
-    assert result[0]["justification"] == flag_fixture.justification
-    assert result[0]["section_to_flag"] == flag_fixture.section_to_flag
-    assert result[0]["application_id"] == flag_fixture.application_id
-    assert result[0]["user_id"] == flag_fixture.user_id
-    assert result[0]["flag_type"] == flag_fixture.flag_type.name
+@pytest.mark.parametrize("flag", flags)
+def test_retrieve_flag_for_application(flag):
+    create_flag_for_application(
+        justification=flag.justification,
+        section_to_flag=flag.section_to_flag,
+        application_id=flag.application_id,
+        user_id=flag.user_id,
+        flag_type=flag.flag_type,
+    )
+    result = retrieve_flag_for_application(flag.application_id)
 
-    
-def test_retrieve_flags_for_application(flag_fixture):
-    result = retrieve_flags_for_applications([flag_fixture.application_id])
+    assert result["justification"] == flag.justification
+    assert result["section_to_flag"] == flag.section_to_flag
+    assert result["application_id"] == flag.application_id
+    assert result["user_id"] == flag.user_id
+    assert result["flag_type"] == flag.flag_type.name
 
-    assert len(result) == 1
-    assert result[0]["justification"] == flag_fixture.justification
-    assert result[0]["section_to_flag"] == flag_fixture.section_to_flag
-    assert result[0]["application_id"] == flag_fixture.application_id
-    assert result[0]["user_id"] == flag_fixture.user_id
-    assert result[0]["flag_type"] == flag_fixture.flag_type.name
+
+def test_retrieve_flags_for_application():
+    for flag in flags:
+        create_flag_for_application(
+            justification=flag.justification,
+            section_to_flag=flag.section_to_flag,
+            application_id=flag.application_id,
+            user_id=flag.user_id,
+            flag_type=flag.flag_type,
+        )
+    result = retrieve_flags_for_applications([flags[0].application_id])
+
+    assert len(result) == 4
 
 
 def test_get_sub_criteria_to_latest_score_map(db_session):
