@@ -12,7 +12,9 @@ from scripts.location_utils import (  # noqa: E402
 )  # noqa: E402
 from scripts.location_utils import get_all_location_data  # noqa: E402
 from scripts.location_utils import get_application_form  # noqa: E402
-from scripts.location_utils import get_application_jsonb_blob  # noqa: E402
+from db.queries.assessment_records.queries import (  # noqa: E402
+    get_application_jsonb_blob,  # noqa: E402
+)  # noqa: E402
 from scripts.location_utils import get_postcode_from_questions  # noqa: E402
 from scripts.location_utils import update_db_with_location_data  # noqa: E402
 from scripts.location_utils import write_locations_to_csv  # noqa: E402
