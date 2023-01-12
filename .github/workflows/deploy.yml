@@ -15,7 +15,6 @@ on:
 jobs:
 
   test_and_deploy:
-    if: ${{ github.event_name != 'workflow_dispatch'}}
     uses: communitiesuk/funding-design-service-workflows/.github/workflows/deploy.yml@bau-remove-upgrade-db
     with:
       app_name: ${{ github.event.repository.name }}
