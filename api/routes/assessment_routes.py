@@ -12,7 +12,9 @@ from api.routes.subcriterias.get_sub_criteria import (
 )
 from db.queries import get_metadata_for_fund_round_id
 from db.queries.assessment_records.queries import find_assessor_task_list_state, update_status_to_completed
-from db.queries.assessment_records.queries import (
+from db.queries.flags.queries import get_latest_flags_for_each
+from db.queries.assessment_records.queries import find_assessor_task_list_state
+from db.queries.assessment_records.queries import ( 
     get_assessment_sub_critera_state,
 )
 from db.queries.comments.queries import get_sub_criteria_to_has_comment_map
@@ -118,3 +120,88 @@ def get_sub_criteria_theme_answers(application_id: str, theme_id: str):
 
 def update_ar_status_to_completed(application_id: str):
     update_status_to_completed(application_id)
+    
+    
+def assessment_stats_for_fund_round_id(
+    fund_id: str,
+    round_id: str
+) -> List[Dict]:
+    """
+    Function used by the endpoint
+    `/assessments/get-stats/{fund_id}/{round_id}`
+    that returns a dictionary of metrics about
+    assessments for a given fund_id and round_id.
+
+    :param fund_id: The stringified fund UUID.
+    :param round_id: The stringified round UUID.
+    :return: A list of dictionaries.
+    """
+    stats = {}
+    assessments = get_metadata_for_fund_round_id(
+        fund_id=fund_id,
+        round_id=round_id
+    )
+    qa_completed_assessments = [
+        flag["application_id"] for flag in get_latest_flags_for_each(
+        "QA_COMPLETED"
+    )
+    ]
+    stopped_assessments = [
+        flag["application_id"] for flag in get_latest_flags_for_each(
+            "STOPPED"
+        )
+    ]
+    flagged_assessments = [
+        flag["application_id"] for flag in get_latest_flags_for_each(
+            "FLAGGED"
+        )
+    ]
+    stats.update(
+        {
+            "completed": len(
+                [
+                    1
+                    for assessment in assessments
+                    if assessment["workflow_status"] == "COMPLETED"
+                ]
+            ),
+            "assessing": len(
+                [
+                    1
+                    for assessment in assessments
+                    if assessment["workflow_status"] == "ASSESSING"
+                ]
+            ),
+            "not_started": len(
+                [
+                    1
+                    for assessment in assessments
+                    if assessment["workflow_status"] == "NOT_STARTED"
+                ]
+            ),
+            "qa_completed": len(
+                [
+                    1
+                    for assessment in assessments
+                    if assessment["application_id"] in qa_completed_assessments
+                ]
+            ),
+            "stopped": len(
+                [
+                    1
+                    for assessment in assessments
+                    if assessment["application_id"] in stopped_assessments
+                ]
+            ),
+            "flagged": len(
+                [
+                    1
+                    for assessment in assessments
+                    if assessment["application_id"] in flagged_assessments
+                ]
+            ),
+            "total": len(assessments),
+        }
+    )
+
+    return stats
