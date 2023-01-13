@@ -492,4 +492,3 @@ def test_get_sub_criteria_to_latest_score_map(db_session):
 
     assert result[sub_criteria_1_id] == 2
     assert result[sub_criteria_2_id] == 5
-
