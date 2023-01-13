@@ -288,7 +288,7 @@ paths:
       description: Update application status to completed
       operationId: api.routes.update_ar_status_to_completed
       responses:
-       200:
+       204:
           description: Successfully updated application status to completed.
 
   '/sub_criteria_overview/banner_state/{application_id}':
