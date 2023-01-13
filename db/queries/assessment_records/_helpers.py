@@ -57,7 +57,10 @@ def derive_application_values(application_json):
     )
     derived_values["asset_type"] = asset_type
 
-    return derived_values
+    if application_json["location_json_blob"] is not None:
+        derived_values["location_json_blob"] = application_json["location_json_blob"]
 
-    # update mapper to include postcode data
-    # update mapper to include country field - looked up from locations.json using the postcode
+    if derived_values["location_json_blob"].get('country') is None:
+        derived_values["country"] = "Not Available."
+
+    return derived_values

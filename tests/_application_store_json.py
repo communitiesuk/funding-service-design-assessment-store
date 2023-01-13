@@ -916,7 +916,13 @@ application_store_json_template = Template(
     "round_id": "$round_id",
     "round_name": "Round 2 Window 2",
     "started_at": "2022-10-27T08:28:55.699864",
-    "status": "SUBMITTED"
+    "status": "SUBMITTED",
+    "location_json_blob": {
+      "error": false,
+      "county": "Newport",
+      "region": "Wales",
+      "country": "Wales",
+      "constituency": "Newport West"
 }
 """
 )
