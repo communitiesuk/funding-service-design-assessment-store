@@ -119,6 +119,7 @@ def get_sub_criteria_theme_answers(application_id: str, theme_id: str):
 
 
 def update_ar_status_to_completed(application_id: str):
+    """ Function updates the status to complete for given application_id"""
     update_status_to_completed(application_id)
     
     
