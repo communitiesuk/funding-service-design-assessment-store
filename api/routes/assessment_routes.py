@@ -11,7 +11,7 @@ from api.routes.subcriterias.get_sub_criteria import (
     return_subcriteria_from_mapping,
 )
 from db.queries import get_metadata_for_fund_round_id
-from db.queries.assessment_records.queries import find_assessor_task_list_state
+from db.queries.assessment_records.queries import find_assessor_task_list_state, update_status_to_completed
 from db.queries.assessment_records.queries import (
     get_assessment_sub_critera_state,
 )
@@ -114,3 +114,7 @@ def get_sub_criteria_theme_answers(application_id: str, theme_id: str):
     with given application_id and theme_id"""
 
     return map_application_with_sub_criteria_themes(application_id, theme_id)
+
+
+def update_ar_status_to_completed(application_id: str):
+    update_status_to_completed(application_id)
