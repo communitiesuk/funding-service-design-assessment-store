@@ -18,13 +18,13 @@ from db.queries import retrieve_flags_for_applications
 from db.queries.assessment_records.queries import find_assessor_task_list_state
 from db.queries.comments.queries import create_comment_for_application_sub_crit
 from db.queries.comments.queries import get_comments_for_application_sub_crit
+from db.queries.flags.queries import get_latest_flags_for_each
 from db.queries.scores.queries import create_score_for_app_sub_crit
 from db.queries.scores.queries import get_scores_for_app_sub_crit
 from db.queries.scores.queries import get_sub_criteria_to_latest_score_map
 from tests._helpers import get_random_row
-from tests.test_data.flags import flags
-
-
+from tests.test_data.flags import flag_config
+from db.models import Flag
 def test_select_field_by_id():
     """test_select_field_by_id Tests that the correct field is picked from the
     corresponding application."""
@@ -360,9 +360,25 @@ def test_update_workflow_status_on_insert(db_session, insertion_object):
     assert assessment_record.workflow_status == Status.IN_PROGRESS
 
 
-@pytest.mark.parametrize("flag", flags)
-def test_create_flag_for_application(flag):
+@pytest.fixture
+def sample_flags(db_session):
+    flags = []
+    for config in flag_config:
+        flag = Flag(**config)
+        flags.append(flag)
+        db_session.add(flag)
+    db_session.commit()
 
+    yield (flags)
+    
+    for flag in flags:
+        db_session.delete(flag)
+    db_session.commit()
+
+
+@pytest.mark.parametrize("flag_config", flag_config)
+def test_create_flag_for_application(flag_config):
+    flag = Flag(**flag_config)
     result = create_flag_for_application(
         justification=flag.justification,
         section_to_flag=flag.section_to_flag,
@@ -378,37 +394,36 @@ def test_create_flag_for_application(flag):
     assert result["flag_type"] == flag.flag_type.name
 
 
-@pytest.mark.parametrize("flag", flags)
-def test_retrieve_flag_for_application(flag):
-    create_flag_for_application(
-        justification=flag.justification,
-        section_to_flag=flag.section_to_flag,
-        application_id=flag.application_id,
-        user_id=flag.user_id,
-        flag_type=flag.flag_type,
-    )
-    result = retrieve_flag_for_application(flag.application_id)
+def test_retrieve_flag_for_application(db_session):
+    """ Put two flags for the same application and expect the most
+    recent flag to be retuned for the application."""
+    first_flag=Flag(**flag_config[1])
+    db_session.add(first_flag)
+    second_flag=Flag(**flag_config[0])
+    db_session.add(second_flag)
+    db_session.commit()
+    result = retrieve_flag_for_application(first_flag.application_id)
 
-    assert result["justification"] == flag.justification
-    assert result["section_to_flag"] == flag.section_to_flag
-    assert result["application_id"] == flag.application_id
-    assert result["user_id"] == flag.user_id
-    assert result["flag_type"] == flag.flag_type.name
+    assert result["justification"] == second_flag.justification
+    assert result["section_to_flag"] == second_flag.section_to_flag
+    assert result["application_id"] == second_flag.application_id
+    assert result["user_id"] == second_flag.user_id
+    assert result["flag_type"] == second_flag.flag_type.name
 
 
-def test_retrieve_flags_for_application():
-    for flag in flags:
-        create_flag_for_application(
-            justification=flag.justification,
-            section_to_flag=flag.section_to_flag,
-            application_id=flag.application_id,
-            user_id=flag.user_id,
-            flag_type=flag.flag_type,
-        )
-    result = retrieve_flags_for_applications([flags[0].application_id])
+def test_get_latest_flags_for_each(sample_flags):
+    result_list = get_latest_flags_for_each()
 
-    assert len(result) == 4
+    assert len(result_list) == 3
+    assert result_list[0]["justification"] == "Latest 1"
+    assert result_list[1]["justification"] == "Latest 2"
+    assert result_list[2]["justification"] == "Latest 3"
 
+def test_get_latest_flags_for_each_with_type_filter(sample_flags):
+    result_list = get_latest_flags_for_each("QA_COMPLETED")
+
+    assert len(result_list) == 1
+    assert result_list[0]["flag_type"] == "QA_COMPLETED"
 
 def test_get_sub_criteria_to_latest_score_map(db_session):
     application_id = "a3ec41db-3eac-4220-90db-c92dea049c01"
@@ -477,3 +492,4 @@ def test_get_sub_criteria_to_latest_score_map(db_session):
 
     assert result[sub_criteria_1_id] == 2
     assert result[sub_criteria_2_id] == 5
+
