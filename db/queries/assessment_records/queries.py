@@ -275,7 +275,7 @@ def get_application_jsonb_blob(application_id: str) -> dict:
 
 def update_status_to_completed(application_id):
     from flask import current_app
-    current_app.logger.error(
+    current_app.logger.info(
              f"Updating application status to COMPLETED")
     db.session.query(AssessmentRecord)\
         .filter(AssessmentRecord.application_id == application_id)\
