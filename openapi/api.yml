@@ -256,7 +256,7 @@ paths:
           format: path
     post:
       tags:
-        - assessment
+        - assessments
       summary: Update application status to completed
       description: Update application status to completed
       operationId: api.routes.update_ar_status_to_completed
