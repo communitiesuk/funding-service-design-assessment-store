@@ -30,8 +30,8 @@ def derive_application_values(application_json):
         ) or 0
     except Exception:
         print(
-            "Could not extract funding_value_one"
-            f" from application: {application_id}."
+            "Could not extract funding_value_one from application: "
+            + f"{application_id}."
         )
         funding_one = 0
     try:

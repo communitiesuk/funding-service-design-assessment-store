@@ -391,7 +391,7 @@ def test_create_flag_for_application(flag_config):
         flag_type=flag.flag_type,
     )
 
-    assert result["justification"] == flag.justification 
+    assert result["justification"] == flag.justification
     assert result["section_to_flag"] == flag.section_to_flag
     assert result["application_id"] == flag.application_id
     assert result["user_id"] == flag.user_id
@@ -515,7 +515,7 @@ def test_bulk_update_location_data(db_session):
 
     application_ids_to_location_data = [
         {"application_id": application_id, "location": location}
-    ] 
+    ]
 
     bulk_update_location_jsonb_blob(application_ids_to_location_data)
 
@@ -525,5 +525,3 @@ def test_bulk_update_location_data(db_session):
         .first()
     )
     assert location == assessment_record.location_json_blob
-
- 
