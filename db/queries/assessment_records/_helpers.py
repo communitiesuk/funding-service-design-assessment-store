@@ -30,7 +30,8 @@ def derive_application_values(application_json):
         ) or 0
     except Exception:
         print(
-            f"Could not extract funding_value_one from application: {application_id}."
+            "Could not extract funding_value_one from application: "
+            + f"{application_id}."
         )
         funding_one = 0
     try:
@@ -43,7 +44,8 @@ def derive_application_values(application_json):
         ) or 0
     except Exception:
         print(
-            f"Could not extract funding_value_two from application: {application_id}."
+            "Could not extract funding_value_two from application: "
+            + f"{application_id}."
         )
         funding_two = 0
     derived_values["application_id"] = application_id
@@ -51,10 +53,13 @@ def derive_application_values(application_json):
     derived_values["short_id"] = application_json["reference"]
     derived_values["fund_id"] = application_json["fund_id"]
     derived_values["round_id"] = application_json["round_id"]
-    derived_values["funding_amount_requested"] = (
-        int(float(funding_one))
-        + int(float(funding_two))
+    derived_values["funding_amount_requested"] = int(float(funding_one)) + int(
+        float(funding_two)
     )
     derived_values["asset_type"] = asset_type
+    if "location_json_blob" in application_json.keys():
+        derived_values["location_json_blob"] = application_json[
+            "location_json_blob"
+        ]
 
     return derived_values
