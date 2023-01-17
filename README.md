@@ -148,7 +148,9 @@ Running the above command will prompt you to enter the number applications, fund
 
 NB : pytest will create a database with a unique name to use just for unit tests. Changes to this db from tests does not persist. Caching is enable so that sequential pytest invocations will reuse the database with the test data. **Again, only the seeded data is reused since changes due to unit tests are not persisted.**
 
-To rerun the unit test database creation/seeding process run `pytest --cache-clear`.
+To rerun the unit test database creation/seeding process run `pytest --cache-clear`. This is the same as deleting the `.pytest_cache` directory.
+
+If you have deleted the unit test database and then get errors where no rows exist, you need to clear the cache as above before running the unit tests again.
 
 ## Transactional tests
 These rely on the module `pytest-flask-sqlalchemy` which has good docs on its github page: https://github.com/jeancochrane/pytest-flask-sqlalchemy

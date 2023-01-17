@@ -502,13 +502,15 @@ def test_get_sub_criteria_to_latest_score_map(db_session):
 
 def test_bulk_update_location_data(db_session):
     picked_row = get_random_row(AssessmentRecord)
+    assert picked_row, "Picked row not returned"
     application_id = picked_row.application_id
-    assert picked_row.location_json_blob is None
+
+    test_random_append = random.randint(999, 99999)
 
     location = {
         "error": False,
-        "county": "test_county",
-        "country": "test_country",
+        "county": f"test_county_{test_random_append}",
+        "country": f"test_country_{test_random_append}",
     }
 
     application_ids_to_location_data = [
