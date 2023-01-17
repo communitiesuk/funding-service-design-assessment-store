@@ -84,9 +84,9 @@ def convert_boolean_values(themes_answers: list[dict]) -> list[dict]:
     current_app.logger.info("Converting boolean values to strings")
     for answers in themes_answers:
         if "answer" in answers.keys():
-            if answers["answer"] == False:
+            if answers["answer"] is False:
                 answers.update(answer="No")
-            if answers["answer"] == True:
+            if answers["answer"] is True:
                 answers.update(answer="Yes")
             else:
                 continue
@@ -129,7 +129,8 @@ def sort_add_another_component_contents(
                         and theme["presentation_type"] == "amount"
                     ):
                         amount_answer = [
-                            amount.split(": ")[1] for amount in theme["answer"]
+                            amount.rsplit(": ", 1)[1]
+                            for amount in theme["answer"]
                         ]
 
                         theme["answer"] = amount_answer

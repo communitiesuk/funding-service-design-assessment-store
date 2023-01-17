@@ -1,4 +1,5 @@
 from .assessment_routes import all_assessments_for_fund_round_id
+from .assessment_routes import assessment_stats_for_fund_round_id
 from .assessment_routes import get_assessor_task_list_state
 from .assessment_routes import get_banner_state
 from .assessment_routes import get_sub_criteria_theme_answers

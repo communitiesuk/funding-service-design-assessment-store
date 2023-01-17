@@ -18,6 +18,7 @@ from db.queries.assessment_records.queries import (
     get_assessment_sub_critera_state,
 )
 from db.queries.comments.queries import get_sub_criteria_to_has_comment_map
+from db.queries.flags.queries import get_latest_flags_for_each
 from db.queries.scores.queries import get_sub_criteria_to_latest_score_map
 from flask import current_app
 
@@ -122,10 +123,9 @@ def update_ar_status_to_completed(application_id: str):
     """ Function updates the status to COMPLETE for the given application_id"""
     update_status_to_completed(application_id)
     
-    
+
 def assessment_stats_for_fund_round_id(
-    fund_id: str,
-    round_id: str
+    fund_id: str, round_id: str
 ) -> List[Dict]:
     """
     Function used by the endpoint
@@ -139,23 +139,17 @@ def assessment_stats_for_fund_round_id(
     """
     stats = {}
     assessments = get_metadata_for_fund_round_id(
-        fund_id=fund_id,
-        round_id=round_id
+        fund_id=fund_id, round_id=round_id
     )
     qa_completed_assessments = [
-        flag["application_id"] for flag in get_latest_flags_for_each(
-        "QA_COMPLETED"
-    )
+        flag["application_id"]
+        for flag in get_latest_flags_for_each("QA_COMPLETED")
     ]
     stopped_assessments = [
-        flag["application_id"] for flag in get_latest_flags_for_each(
-            "STOPPED"
-        )
+        flag["application_id"] for flag in get_latest_flags_for_each("STOPPED")
     ]
     flagged_assessments = [
-        flag["application_id"] for flag in get_latest_flags_for_each(
-            "FLAGGED"
-        )
+        flag["application_id"] for flag in get_latest_flags_for_each("FLAGGED")
     ]
     stats.update(
         {
