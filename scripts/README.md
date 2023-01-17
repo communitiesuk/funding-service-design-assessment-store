@@ -23,3 +23,7 @@ To run on paas, execute the following (starts a task using the app context etc)
         cf run-task funding-service-design-assessment-store-dev --command "./scripts/populate_location_data.py --fund_id 47aef2f5-3fcb-4d45-acb5-f0152b5f03c4 --round_id c603d114-5364-4474-a0c4-c41cbf4d3bbd --update_db True --write_csv True --csv_location /tmp/locations.csv && cat /tmp/locations.csv" --name populate_location
 
 The `cat /tmp/locations.csv` prints out the csv to the logs so we can copy/paste to send to the assessors if needed (we cannot access the file system of the container spun up to run this on paas).
+
+If there is data in your docker DB, you can also execute this script locally in the container:
+
+        docker exec -it db6f6f6a2ee0 ./scripts/populate_location_data.py --fund_id 47aef2f5-3fcb-4d45-acb5-f0152b5f03c4 --round_id c603d114-5364-4474-a0c4-c41cbf4d3bbd --update_db True --write_csv False

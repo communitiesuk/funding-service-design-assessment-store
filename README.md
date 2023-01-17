@@ -138,6 +138,10 @@ These are the current pipelines running on the repo:
 
 Running the above command will prompt you to enter the number applications, funds & rounds you would like to create as mock data within the database.
 
+This will also work for the DB within the docker runner. Find the ID of the docker container running assessment-store (`docker ps`) then execute:
+
+        docker exec -it <container_id> invoke seed_dev_db
+
 ## Unit & Accessibility Testing
 
 1. Ensure you have a local postgres instance setup and running with a user `postgres` created.
