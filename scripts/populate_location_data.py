@@ -27,6 +27,11 @@ file_locations_csv = local_workspace + "/locations.csv"
 def process_locations(
     fund_id, round_id, update_db: bool, write_csv: bool, csv_location
 ):
+    """
+    Runs within the app context to have access to DB etc. Uses the functions
+    in `location_utils.py` to extract postcodes, retrieve location details,
+    then update the DB with this information
+    """
     with app.app_context():
         application_ids = get_all_application_ids_for_fund_round(
             fund_id, round_id

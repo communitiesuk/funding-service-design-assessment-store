@@ -132,6 +132,8 @@ These are the current pipelines running on the repo:
 
 # Testing
 
+The tests within /tests are designed to connect to a real database to run tests that use the DB layer, details below. This takes a long time to setup on a test run, so if your tests don't need a DB put them in /tests_no_db. This folder doesn't pickup /tests/conftest.py so therefore doesn't do the DB setup work and these tests can run in isolation much faster.
+
 ## Seed Postgres DB with mock data
 
 `invoke seed_dev_db`
