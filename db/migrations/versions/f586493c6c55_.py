@@ -30,7 +30,7 @@ def downgrade():
     op.execute("ALTER TYPE status RENAME TO status_old")
     op.execute("CREATE TYPE status AS ENUM('NOT_STARTED', 'IN_PROGRESS', 'SUBMITTED', 'COMPLETED')")
     op.execute((
-        "ALTER TABLE transactions ALTER COLUMN status TYPE status USING "
+        "ALTER TABLE assessment_records ALTER COLUMN status TYPE status USING "
         "status::text::status"
     ))
     op.execute("DROP TYPE status_old")
