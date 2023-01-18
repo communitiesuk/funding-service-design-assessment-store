@@ -57,10 +57,12 @@ def derive_application_values(application_json):
     )
     derived_values["asset_type"] = asset_type
 
-    if application_json["location_json_blob"] is not None:
-        derived_values["location_json_blob"] = application_json["location_json_blob"]
+    derived_values["location_json_blob"] = application_json["location_json_blob"]
 
-    if derived_values["location_json_blob"].get('country') is None:
+    if derived_values["location_json_blob"].get('error') is 'true':
+        derived_values["county"] = "Not Available."
+        derived_values["region"] = "Not Available."
         derived_values["country"] = "Not Available."
+        derived_values["constituency"] = "Not Available."
 
     return derived_values
