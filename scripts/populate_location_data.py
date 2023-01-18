@@ -43,7 +43,6 @@ def process_locations(
             postcode = get_postcode_from_questions(questions)
             application_ids_to_postcodes[id] = postcode
             just_postcodes.append(postcode)
-        print(just_postcodes)
         postcodes_to_location_data = get_all_location_data(just_postcodes)
 
         if update_db:
