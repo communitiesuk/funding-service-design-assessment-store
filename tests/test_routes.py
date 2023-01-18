@@ -158,6 +158,7 @@ def test_update_ar_status(request, client):
     status = "QA_COMPLETE"
     response = client.post(f"/application/{application_id}/status/{status}")
 
+    assert response.status_code == 204
     assert picked_row.workflow_status == Status.QA_COMPLETE
 
 
