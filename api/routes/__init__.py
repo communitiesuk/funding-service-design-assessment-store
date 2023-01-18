@@ -4,8 +4,7 @@ from .assessment_routes import get_assessor_task_list_state
 from .assessment_routes import get_banner_state
 from .assessment_routes import get_sub_criteria_theme_answers
 from .assessment_routes import sub_criteria
-from .assessment_routes import update_ar_status_to_completed
-from .assessment_routes import update_ar_status_to_qa_complete
+from .assessment_routes import update_ar_status
 from .assessment_routes import assessment_stats_for_fund_round_id
 from .comment_routes import comments_for_application_sub_criteria
 from .comment_routes import post_comments_for_application_sub_criteria
@@ -32,6 +31,5 @@ __all__ = [
     "get_progress_for_applications",
     "assessment_stats_for_fund_round_id",
     "post_progress_for_applications",
-    "update_ar_status_to_completed",
-    "update_ar_status_to_qa_complete",
+    "update_ar_status",
 ]

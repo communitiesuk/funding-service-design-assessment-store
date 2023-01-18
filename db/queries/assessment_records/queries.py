@@ -19,6 +19,7 @@ from sqlalchemy import select
 from sqlalchemy.dialects.postgresql import insert as postgres_insert
 from sqlalchemy.orm import defer
 from sqlalchemy.orm import load_only
+from flask import abort, current_app
 
 
 def get_metadata_for_fund_round_id(
@@ -273,24 +274,20 @@ def get_application_jsonb_blob(application_id: str) -> dict:
     return application_json
 
 
-def update_status_to_completed(application_id):
-    from flask import current_app
-    current_app.logger.info(
-             f"Updating application status to COMPLETED")
-    db.session.query(AssessmentRecord)\
+def update_status(application_id, status):
+    if status == "COMPLETED":
+        current_app.logger.info("Updating application status to COMPLETED")
+        db.session.query(AssessmentRecord)\
         .filter(AssessmentRecord.application_id == application_id)\
         .update(
         {AssessmentRecord.workflow_status: Status.COMPLETED}, synchronize_session=False)
-
-    db.session.commit()
-
-def update_status_to_qa_complete(application_id):
-    from flask import current_app
-    current_app.logger.info(
-             f"Updating application status to QA_COMPLETE")
-    db.session.query(AssessmentRecord)\
+    elif status == "QA_COMPLETE":
+        current_app.logger.info("Updating application status to QA_COMPLETE")
+        db.session.query(AssessmentRecord)\
         .filter(AssessmentRecord.application_id == application_id)\
         .update(
         {AssessmentRecord.workflow_status: Status.QA_COMPLETE}, synchronize_session=False)
-
+    else:
+        current_app.logger.error("Wrong status provided, status not updated!")
+        abort(400, "Incorrect Status given")
     db.session.commit()

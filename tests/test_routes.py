@@ -141,15 +141,16 @@ def test_get_sub_criteria_theme_answers_field_id(request, client):
     assert response.json[0]["field_id"] == "ieRCkI"
 
 
-def test_update_ar_status_to_completed(request, client):
+def test_update_ar_status(request, client):
     """ Test checks that the status code returned by the POST request is 204, 
     which indicates that the request was successful and 
     that the application status was updated to COMPLETED. """
 
 
     application_id = "a3ec41db-3eac-4220-90db-c92dea049c00"
+    status = "COMPLETED"
 
-    response = client.post(f"/application/{application_id}/status/complete")
+    response = client.post(f"/application/{application_id}/status/{status}")
 
     assert response.status_code == 204
 
