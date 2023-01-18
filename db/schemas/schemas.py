@@ -5,8 +5,9 @@ from db.models.assessment_record.enums import Status
 from db.models.comment import Comment
 from db.models.comment.enums import CommentType
 from db.models.flags.enums import FlagType
-from db.models.flags.enums import ResolutionType
 from db.models.score import Score
+from marshmallow import fields
+from marshmallow import Schema
 from marshmallow.fields import Enum
 from marshmallow.fields import Field
 from marshmallow_sqlalchemy import auto_field
@@ -59,7 +60,6 @@ class FlagMetadata(SQLAlchemyAutoSchema):
         load_instance = True
 
     flag_type = Enum(FlagType)
-    resolution_reason = Enum(ResolutionType, allow_none=True)
     application_id = auto_field(dump_only=True)
 
 
@@ -83,3 +83,8 @@ class AssessmentSubCriteriaMetadata(AssessmentRecordMetadata):
     project_name = auto_field(data_key="project_name")
     fund_id = auto_field(data_key="fund_id")
     workflow_status = Enum(Status)
+
+
+class ProgressSchema(Schema):
+    application_id = fields.Str()
+    scored_sub_criterias = fields.Int()

@@ -65,7 +65,34 @@ paths:
                 type: array
                 items:
                   $ref: 'components.yml#/components/schemas/Assessment'
-
+  '/assessments/get-stats/{fund_id}/{round_id}':
+    parameters:
+      - name: fund_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: path
+      - name: round_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: path
+    get:
+      tags:
+        - assessments
+      summary: Get assessment stats
+      description: Get a selection of required metrics
+      operationId: api.routes.assessment_stats_for_fund_round_id
+      responses:
+        200:
+          description: SUCCESS - A collection of assessment metrics
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: 'components.yml#/components/schemas/AssessmentsStats'
   '/score':
     get:
       tags:
@@ -161,18 +188,16 @@ paths:
     get:
       tags:
         - flags
-      summary: get flags for an application
-      description: get flags for an application
-      operationId: api.routes.get_flags_for_application
+      summary: get latest flag for an application
+      description: get latest flag for an application
+      operationId: api.routes.get_latest_flag_for_application
       responses:
         200:
           description: SUCCESS - Flags for an Application
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: 'components.yml#/components/schemas/Flag'
+                $ref: 'components.yml#/components/schemas/Flag'
       parameters:
       - name: application_id
         in: query
@@ -245,6 +270,24 @@ paths:
             application/json:
               schema:
                 $ref: 'components.yml#/components/schemas/SubCriteria'
+
+  '/application/{application_id}/status/complete':
+    parameters:
+      - name: application_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: path
+    post:
+      tags:
+        - assessments
+      summary: Update application status to completed
+      description: Update application status to completed
+      operationId: api.routes.update_ar_status_to_completed
+      responses:
+       204:
+          description: Successfully updated application status to completed.
 
   '/sub_criteria_overview/banner_state/{application_id}':
     parameters:
@@ -473,35 +516,12 @@ paths:
                   $ref: 'components.yml#/components/schemas/Comment'
 
   '/progress':
-    get:
+    post:
       tags:
         - progress
       summary: get % progress for an application
       description: get % progress for an application
-      operationId: api.routes.get_progress_for_application
-      responses:
-        200:
-          description: SUCCESS - % progress for an application
-          content:
-            application/json:
-              schema:
-                type: object
-                items:
-                  $ref: 'components.yml#/components/schemas/Progress'
-      parameters:
-      - name: application_id
-        in: query
-        schema:
-          type: string
-        required: true
-
-  '/bulk-progress':
-    get:
-      tags:
-        - progress
-      summary: get % progress for an application
-      description: get % progress for an application
-      operationId: api.routes.get_bulk_progress_for_applications
+      operationId: api.routes.post_progress_for_applications
       responses:
         200:
           description: SUCCESS - % progress for an application
@@ -511,6 +531,44 @@ paths:
                 type: array
                 items:
                   $ref: 'components.yml#/components/schemas/Progress'
+        400:
+          description: "Bad request - Incorrect application_id or application_ids"
+          content:
+            application/json:
+              schema:
+                $ref: 'components.yml#/components/schemas/GeneralError'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                application_ids:
+                  type: array
+                  items:
+                    type: string
+    get:
+      tags:
+        - progress
+      summary: get % progress for an application
+      description: get % progress for an application
+      operationId: api.routes.get_progress_for_applications
+      responses:
+        200:
+          description: SUCCESS - % progress for an application
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'components.yml#/components/schemas/Progress'
+        400:
+          description: "Bad request - Incorrect application_id or application_ids"
+          content:
+            application/json:
+              schema:
+                $ref: 'components.yml#/components/schemas/GeneralError'
       parameters:
       - name: application_ids
         in: query

@@ -5,7 +5,10 @@ from api.routes.subcriterias.get_sub_criteria import (
     map_application_with_sub_criteria_themes,
 )
 from db.models.assessment_record.assessment_records import AssessmentRecord
+from db.models.flags.enums import FlagType
+from db.queries.flags.queries import create_flag_for_application
 from tests._expected_responses import APPLICATION_METADATA_RESPONSE
+from tests._expected_responses import ASSESSMENTS_STATS_RESPONSE
 from tests._helpers import get_random_row
 from tests._helpers import get_rows_by_filters
 
@@ -85,7 +88,7 @@ def test_search(client):
 @pytest.mark.skip(reason="used for tdd only")
 def test_get_application_metadata_for_application_id(client):
     response_json = client.get(
-        f"/application_overviews/a3ec41db-3eac-4220-90db-c92dea049c00"
+        "/application_overviews/a3ec41db-3eac-4220-90db-c92dea049c00"
     ).json
 
     assert response_json == APPLICATION_METADATA_RESPONSE
@@ -100,7 +103,8 @@ def test_get_sub_criteria(client):
     response_json = client.get(
         f"/sub_criteria_overview/{picked_row.application_id}/{sub_criteria_id}"
     ).json
-    # The order of themes within a sub_criteria is important, ensure it is preserved
+    # The order of themes within a sub_criteria is important,
+    # ensure it is preserved
     expected_theme_order = ["community_use", "risk_loss_impact"]
     actual_theme_order = []
     for theme in response_json["themes"]:
@@ -111,7 +115,8 @@ def test_get_sub_criteria(client):
 
 
 def test_get_sub_criteria_metadata_for_false_sub_criteria_id(client):
-    """Test to check that sub criteria metadata is not retuned for false sub criteria"""
+    """Test to check that sub criteria metadata is
+    not retuned for false sub criteria"""
 
     sub_criteria_id = "does-not-exist"
     picked_row = get_random_row(AssessmentRecord)
@@ -134,6 +139,19 @@ def test_get_sub_criteria_theme_answers_field_id(request, client):
     response = client.get(f"/sub_criteria_themes/{application_id}/{theme_id}")
 
     assert response.json[0]["field_id"] == "ieRCkI"
+
+
+def test_update_ar_status_to_completed(request, client):
+    """ Test checks that the status code returned by the POST request is 204, 
+    which indicates that the request was successful and 
+    that the application status was updated to COMPLETED. """
+
+
+    application_id = "a3ec41db-3eac-4220-90db-c92dea049c00"
+
+    response = client.post(f"/application/{application_id}/status/complete")
+
+    assert response.status_code == 204
 
 
 def test_add_another_presentation_type(request, client):
@@ -162,7 +180,7 @@ def test_incorrect_theme_id(request, client):
 
     response = client.get(f"/sub_criteria_themes/{application_id}/{theme_id}")
 
-    assert f"Incorrect theme id" in response.json["detail"]
+    assert "Incorrect theme id" in response.json["detail"]
 
 
 def test_random_theme_content():
@@ -196,3 +214,29 @@ def test_convert_boolean_values():
     assert [
         value["answer"] for value in results if value["field_id"] == "KqoaJL"
     ][0] == "No"
+
+
+def test_get_assessments_stats(client):
+    fund_id = "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4"
+    round_id = "c603d114-5364-4474-a0c4-c41cbf4d3bbd"
+
+    # Get test applications
+    applications = client.get(
+        f"/application_overviews/{fund_id}/{round_id}"
+    ).json
+
+    # Add a QA_COMPLETED flag for the first application
+    # so that one result from the set is flagged as QA_COMPLETED
+    create_flag_for_application(
+        justification="bob",
+        section_to_flag="Overview",
+        application_id=applications[0]["application_id"],
+        user_id="abc",
+        flag_type=FlagType.QA_COMPLETED,
+    )
+
+    response_json = client.get(
+        f"/assessments/get-stats/{fund_id}/{round_id}"
+    ).json
+
+    assert response_json == ASSESSMENTS_STATS_RESPONSE

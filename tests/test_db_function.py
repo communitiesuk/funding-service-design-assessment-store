@@ -1,24 +1,32 @@
+import datetime
 import random
+import uuid
+from unittest.mock import MagicMock
 
 import pytest
 import sqlalchemy
-from api.routes.progress_routes import get_bulk_progress_for_applications
+from api.routes.progress_routes import get_progress_for_applications
 from db.models import Comment
 from db.models import Flag
 from db.models import Score
 from db.models.assessment_record.assessment_records import AssessmentRecord
 from db.models.assessment_record.enums import Status
 from db.models.comment.enums import CommentType
-from db.models.flags.enums import FlagType
 from db.queries import create_flag_for_application
 from db.queries import find_answer_by_key_runner
-from db.queries import retrieve_flags_for_application
+from db.queries import retrieve_flag_for_application
+from db.queries.assessment_records.queries import (
+    bulk_update_location_jsonb_blob,
+)
 from db.queries.assessment_records.queries import find_assessor_task_list_state
 from db.queries.comments.queries import create_comment_for_application_sub_crit
 from db.queries.comments.queries import get_comments_for_application_sub_crit
+from db.queries.flags.queries import get_latest_flags_for_each
 from db.queries.scores.queries import create_score_for_app_sub_crit
 from db.queries.scores.queries import get_scores_for_app_sub_crit
+from db.queries.scores.queries import get_sub_criteria_to_latest_score_map
 from tests._helpers import get_random_row
+from tests.test_data.flags import flag_config
 
 
 def test_select_field_by_id():
@@ -263,7 +271,7 @@ def test_get_comments():
     assert len(comment_metadata) == 3
 
 
-def test_get_progress_for_application():
+def test_get_progress_for_applications(monkeypatch):
     """test_create_scores_for_application_sub_crit Tests we can create
     score records in the scores table in the appropriate format."""
 
@@ -300,13 +308,23 @@ def test_get_progress_for_application():
     }
     create_score_for_app_sub_crit(**score_payload_3)
 
-    application_progress = get_bulk_progress_for_applications(
+    request = MagicMock()
+    request.get_json.return_value = {
+        "application_ids": [
+            application_id_1,
+            application_id_2,
+        ]
+    }
+    application_progress_list = get_progress_for_applications(
         [application_id_1, application_id_2]
     )
 
-    assert len(application_progress) == 2
-    assert application_progress[0]["progress"] == 20
-    assert application_progress[1]["progress"] == 10
+    assert len(application_progress_list) == 2
+    for application in application_progress_list:
+        if application["application_id"] == application_id_1:
+            assert application["progress"] == 20
+        if application["application_id"] == application_id_2:
+            assert application["progress"] == 10
 
 
 @pytest.mark.parametrize(
@@ -347,45 +365,163 @@ def test_update_workflow_status_on_insert(db_session, insertion_object):
 
 
 @pytest.fixture
-def flag_fixture(db_session):
-    flag = Flag(
-        justification="Test justification",
-        section_to_flag="Test section",
-        application_id="a3ec41db-3eac-4220-90db-c92dea049c01",
-        user_id="test-user-id",
-        flag_type=FlagType.FLAGGED,
-    )
-    db_session.add(flag)
+def sample_flags(db_session):
+    flags = []
+    for config in flag_config:
+        flag = Flag(**config)
+        flags.append(flag)
+        db_session.add(flag)
     db_session.commit()
 
-    yield flag
+    yield (flags)
 
-    db_session.delete(flag)
+    for flag in flags:
+        db_session.delete(flag)
     db_session.commit()
 
 
-def test_create_flag_for_application(flag_fixture):
+@pytest.mark.parametrize("flag_config", flag_config)
+def test_create_flag_for_application(flag_config):
+    flag = Flag(**flag_config)
     result = create_flag_for_application(
-        justification=flag_fixture.justification,
-        section_to_flag=flag_fixture.section_to_flag,
-        application_id=flag_fixture.application_id,
-        user_id=flag_fixture.user_id,
-        flag_type=flag_fixture.flag_type,
+        justification=flag.justification,
+        section_to_flag=flag.section_to_flag,
+        application_id=flag.application_id,
+        user_id=flag.user_id,
+        flag_type=flag.flag_type,
     )
 
-    assert result["justification"] == flag_fixture.justification
-    assert result["section_to_flag"] == flag_fixture.section_to_flag
-    assert result["application_id"] == flag_fixture.application_id
-    assert result["user_id"] == flag_fixture.user_id
-    assert result["flag_type"] == flag_fixture.flag_type.name
+    assert result["justification"] == flag.justification
+    assert result["section_to_flag"] == flag.section_to_flag
+    assert result["application_id"] == flag.application_id
+    assert result["user_id"] == flag.user_id
+    assert result["flag_type"] == flag.flag_type.name
 
 
-def test_retrieve_flags_for_application(flag_fixture):
-    result = retrieve_flags_for_application(flag_fixture.application_id)
+def test_retrieve_flag_for_application(db_session):
+    """Put two flags for the same application and expect the most
+    recent flag to be retuned for the application."""
+    first_flag = Flag(**flag_config[1])
+    db_session.add(first_flag)
+    second_flag = Flag(**flag_config[0])
+    db_session.add(second_flag)
+    db_session.commit()
+    result = retrieve_flag_for_application(first_flag.application_id)
 
-    assert len(result) == 1
-    assert result[0]["justification"] == flag_fixture.justification
-    assert result[0]["section_to_flag"] == flag_fixture.section_to_flag
-    assert result[0]["application_id"] == flag_fixture.application_id
-    assert result[0]["user_id"] == flag_fixture.user_id
-    assert result[0]["flag_type"] == flag_fixture.flag_type.name
+    assert result["justification"] == second_flag.justification
+    assert result["section_to_flag"] == second_flag.section_to_flag
+    assert result["application_id"] == second_flag.application_id
+    assert result["user_id"] == second_flag.user_id
+    assert result["flag_type"] == second_flag.flag_type.name
+
+
+def test_get_latest_flags_for_each(sample_flags):
+    result_list = get_latest_flags_for_each()
+
+    assert len(result_list) == 3
+    assert result_list[0]["justification"] == "Latest 1"
+    assert result_list[1]["justification"] == "Latest 2"
+    assert result_list[2]["justification"] == "Latest 3"
+
+
+def test_get_latest_flags_for_each_with_type_filter(sample_flags):
+    result_list = get_latest_flags_for_each("QA_COMPLETED")
+
+    assert len(result_list) == 1
+    assert result_list[0]["flag_type"] == "QA_COMPLETED"
+
+
+def test_get_sub_criteria_to_latest_score_map(db_session):
+    application_id = "a3ec41db-3eac-4220-90db-c92dea049c01"
+    sub_criteria_1_id = str(uuid.uuid4())
+    sub_criteria_2_id = str(uuid.uuid4())
+    user_id = str(uuid.uuid4())
+
+    now = datetime.datetime.now()
+    earlier = now - datetime.timedelta(days=1)
+    latest = now + datetime.timedelta(days=1)
+
+    scores = [
+        Score(
+            application_id=application_id,
+            sub_criteria_id=sub_criteria_1_id,
+            score=2,
+            justification="test",
+            date_created=earlier,
+            user_id=user_id,
+        ),
+        Score(
+            application_id=application_id,
+            sub_criteria_id=sub_criteria_1_id,
+            score=5,
+            justification="test",
+            date_created=now,
+            user_id=user_id,
+        ),
+        Score(
+            application_id=application_id,
+            sub_criteria_id=sub_criteria_1_id,
+            score=2,
+            justification="test",
+            date_created=latest,
+            user_id=user_id,
+        ),
+        Score(
+            application_id=application_id,
+            sub_criteria_id=sub_criteria_2_id,
+            score=1,
+            justification="test",
+            date_created=earlier,
+            user_id=user_id,
+        ),
+        Score(
+            application_id=application_id,
+            sub_criteria_id=sub_criteria_2_id,
+            score=3,
+            justification="test",
+            date_created=now,
+            user_id=user_id,
+        ),
+        Score(
+            application_id=application_id,
+            sub_criteria_id=sub_criteria_2_id,
+            score=5,
+            justification="test",
+            date_created=latest,
+            user_id=user_id,
+        ),
+    ]
+    db_session.add_all(scores)
+    db_session.commit()
+
+    result = get_sub_criteria_to_latest_score_map(str(application_id))
+
+    assert result[sub_criteria_1_id] == 2
+    assert result[sub_criteria_2_id] == 5
+
+
+def test_bulk_update_location_data(db_session):
+    picked_row = get_random_row(AssessmentRecord)
+    assert picked_row, "Picked row not returned"
+    application_id = picked_row.application_id
+
+    test_random_append = random.randint(999, 99999)
+
+    location = {
+        "error": False,
+        "county": f"test_county_{test_random_append}",
+        "country": f"test_country_{test_random_append}",
+    }
+
+    application_ids_to_location_data = [
+        {"application_id": application_id, "location": location}
+    ]
+
+    bulk_update_location_jsonb_blob(application_ids_to_location_data)
+
+    assessment_record = (
+        db_session.query(AssessmentRecord)
+        .where(AssessmentRecord.application_id == application_id)
+        .first()
+    )
+    assert location == assessment_record.location_json_blob

@@ -237,7 +237,7 @@ application_store_json_template = Template(
                 {
                     "fields": [
                         {
-                            "answer": "Test Address, null, Test Town Or City, null, QQ12 7QQ",
+                            "answer": "Test Address, null, Test Town Or City, null, $location_postcode",
                             "key": "yEmHpp",
                             "title": "Address of the community asset",
                             "type": "text"
@@ -363,7 +363,7 @@ application_store_json_template = Template(
                 {
                     "fields": [
                         {
-                            "answer": "Test Address, null, Test Town Or City, null, QQ12 7QQ",
+                            "answer": "Test Address, null, Test Town Or City, null, $location_postcode",
                             "key": "ZQolYb",
                             "title": "Organisation address",
                             "type": "text"
@@ -918,11 +918,13 @@ application_store_json_template = Template(
     "started_at": "2022-10-27T08:28:55.699864",
     "status": "SUBMITTED",
     "location_json_blob": {
-      "error": false,
-      "county": "Newport",
-      "region": "Wales",
-      "country": "Wales",
-      "constituency": "Newport West"
+        "error": $location_error,
+        "county": "$location_county",
+        "region": "$location_region",
+        "country": "$location_country",
+        "postcode": "$location_postcode",
+        "constituency": "$location_constituency"
+    }
 }
 """
 )

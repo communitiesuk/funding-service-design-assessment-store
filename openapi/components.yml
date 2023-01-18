@@ -84,6 +84,23 @@ components:
         weighted_score:
           type: number
           format: float
+    AssessmentsStats:
+      type: object
+      properties:
+        completed:
+          type: integer
+        assessing:
+          type: integer
+        not_started:
+          type: integer
+        qa_completed:
+          type: integer
+        stopped:
+          type: integer
+        flagged:
+          type: integer
+        total:
+          type: integer
     Comment:
       type: object
       properties:
@@ -257,18 +274,13 @@ components:
           type: string
         section_to_flag:
           type: string
-        resolution_reason:
-          type: string
-          nullable: true
-          enum:
-            - 'QUERY_RESOLVED'
-            - 'STOP_ASSESSMENT'
         flag_type:
           type: string
           enum:
             - 'FLAGGED'
             - 'STOPPED'
             - 'QA_COMPLETED'
+            - 'RESOLVED'
         application_id:
           type: string
         date_created:
@@ -288,6 +300,7 @@ components:
             - 'FLAGGED'
             - 'STOPPED'
             - 'QA_COMPLETED'
+            - 'RESOLVED'
         application_id:
           type: string
         user_id:

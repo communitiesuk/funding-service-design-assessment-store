@@ -8,24 +8,27 @@ from typing import List
 
 from db import db
 from db.models.assessment_record import AssessmentRecord
+from db.models.assessment_record.enums import Status
 from db.queries.assessment_records._helpers import derive_application_values
 from db.schemas import AssessmentRecordMetadata
 from db.schemas import AssessmentSubCriteriaMetadata
 from db.schemas import AssessorTaskListMetadata
+from sqlalchemy import bindparam
 from sqlalchemy import exc
 from sqlalchemy import func
 from sqlalchemy import select
+from sqlalchemy import update
 from sqlalchemy.dialects.postgresql import insert as postgres_insert
 from sqlalchemy.orm import defer
 from sqlalchemy.orm import load_only
 
 
 def get_metadata_for_fund_round_id(
-        fund_id: str,
-        round_id: str,
-        search_term: str,
-        asset_type: str,
-        status: str,
+    fund_id: str,
+    round_id: str,
+    search_term: str = "",
+    asset_type: str = "",
+    status: str = "",
 ) -> List[Dict]:
     """get_metadata_for_fund_round_id Executes a query on assessment records
     which returns all rows matching the given fund_id and round_id. Has
@@ -57,10 +60,38 @@ def get_metadata_for_fund_round_id(
     if asset_type != "ALL" and asset_type != "":
         statement = statement.where(AssessmentRecord.asset_type == asset_type)
 
-    if status != "ALL" and status != "":
-        statement = statement.where(AssessmentRecord.workflow_status == status)
+    match status:
+        case "NOT_STARTED" | "IN_PROGRESS" | "SUBMITTED" | "COMPLETED":
+            statement = statement.where(
+                AssessmentRecord.workflow_status == status
+            )
+        case "INELIGIBLE" | "QA_COMPLETE" | "QA_READY":
+            return []  # TODO: Handle these statuses
 
     assessment_metadatas = db.session.scalars(statement).all()
+
+    application_ids = [a.application_id for a in assessment_metadatas]
+    # added locally to avoid circular import
+    from db.queries import retrieve_flags_for_applications
+
+    flags = retrieve_flags_for_applications(application_ids)
+    flagged_application_ids = [f["application_id"] for f in flags]
+
+    match status:
+        case "FLAGGED":
+            assessment_metadatas = [
+                am
+                for am in assessment_metadatas
+                if am.application_id in flagged_application_ids
+            ]
+        case "ALL" | "":
+            ...
+        case _:
+            assessment_metadatas = [
+                am
+                for am in assessment_metadatas
+                if am.application_id not in flagged_application_ids
+            ]
 
     metadata_serialiser = AssessmentRecordMetadata(
         exclude=("jsonb_blob", "application_json_md5")
@@ -70,6 +101,10 @@ def get_metadata_for_fund_round_id(
         metadata_serialiser.dump(app_metadata)
         for app_metadata in assessment_metadatas
     ]
+
+    for am in assessment_metadatas:
+        if am["application_id"] in flagged_application_ids:
+            am["workflow_status"] = "FLAGGED"
 
     return assessment_metadatas
 
@@ -110,7 +145,7 @@ def bulk_insert_application_record(
         upsert_rows_stmt = stmt.on_conflict_do_nothing(
             index_elements=[AssessmentRecord.application_id]
         )
-        print(f"Attemping bulk insert of all application rows.")
+        print("Attemping bulk insert of all application rows.")
         db.session.execute(upsert_rows_stmt)
     except exc.SQLAlchemyError as e:
         db.session.rollback()
@@ -239,23 +274,31 @@ def get_application_jsonb_blob(application_id: str) -> dict:
     application_json = AssessorTaskListMetadata().dump(application_jsonb_blob)
     return application_json
 
-
-def retrieve_location_data_for_each_application() -> dict:
-    """For each Assessment record, extract postcode, query postcode.io
-    and populate location field with JSON blob of location information
-
-    :return: Each assessment record with Location field populated
-    :rtype: dict
-    """
-
-    # select *
-    # for each
-    # -> postcode.io etc
-    # populate new location field (To be created)
-    # how to set and save it back?
+def bulk_update_location_jsonb_blob(application_ids_to_location_data):
     stmt = (
-        select(AssessmentRecord)
-        .options(load_only("jsonb_blob")))
-    application_jsonb_blob = db.session.scalar(stmt)
-    application_json = AssessorTaskListMetadata().dump(application_jsonb_blob)
-    return application_json
+        update(AssessmentRecord)
+        .where(AssessmentRecord.application_id == bindparam("app_id"))
+        .values(location_json_blob=bindparam("location_data"))
+    )
+
+    update_params = [
+        {
+            "app_id": item["application_id"],
+            "location_data": item["location"],
+        }
+        for item in application_ids_to_location_data
+    ]
+
+    db.session.execute(stmt, update_params)
+    db.session.commit()
+
+def update_status_to_completed(application_id):
+    from flask import current_app
+    current_app.logger.info(
+             f"Updating application status to COMPLETED")
+    db.session.query(AssessmentRecord)\
+        .filter(AssessmentRecord.application_id == application_id)\
+        .update(
+        {AssessmentRecord.workflow_status: Status.COMPLETED}, synchronize_session=False)
+
+    db.session.commit()
