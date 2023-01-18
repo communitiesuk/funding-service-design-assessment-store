@@ -237,7 +237,7 @@ application_store_json_template = Template(
                 {
                     "fields": [
                         {
-                            "answer": "Test Address, null, Test Town Or City, null, QQ12 7QQ",
+                            "answer": "Test Address, null, Test Town Or City, null, $location_postcode",
                             "key": "yEmHpp",
                             "title": "Address of the community asset",
                             "type": "text"
@@ -363,7 +363,7 @@ application_store_json_template = Template(
                 {
                     "fields": [
                         {
-                            "answer": "Test Address, null, Test Town Or City, null, QQ12 7QQ",
+                            "answer": "Test Address, null, Test Town Or City, null, $location_postcode",
                             "key": "ZQolYb",
                             "title": "Organisation address",
                             "type": "text"
@@ -916,7 +916,16 @@ application_store_json_template = Template(
     "round_id": "$round_id",
     "round_name": "Round 2 Window 2",
     "started_at": "2022-10-27T08:28:55.699864",
-    "status": "SUBMITTED"
+    "status": "SUBMITTED",
+    "location_json_blob": {
+        "error": $location_error,
+        "county": "$location_county",
+        "region": "$location_region",
+        "country": "$location_country",
+        "postcode": "$location_postcode",
+        "constituency": "$location_constituency"
+    }
+
 }
 """
 )
