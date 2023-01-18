@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
 import argparse
-import sys
 
 import requests
-
-sys.path.insert(1, ".")
-
 from app import app  # noqa: E402
 from config import Config  # noqa: E402
 from db.queries import bulk_insert_application_record  # noqa: E402
