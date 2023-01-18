@@ -288,6 +288,24 @@ paths:
       responses:
        204:
           description: Successfully updated application status to completed.
+    
+  '/application/{application_id}/status/qa_complete':
+    parameters:
+      - name: application_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: path
+    post:
+      tags:
+        - assessments
+      summary: Update application status to qa_complete
+      description: Update application status to qa_complete
+      operationId: api.routes.update_ar_status_to_qa_complete
+      responses:
+       204:
+          description: Successfully updated application status to QA complete.
 
   '/sub_criteria_overview/banner_state/{application_id}':
     parameters:

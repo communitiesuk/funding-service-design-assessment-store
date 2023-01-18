@@ -11,7 +11,7 @@ from api.routes.subcriterias.get_sub_criteria import (
     return_subcriteria_from_mapping,
 )
 from db.queries import get_metadata_for_fund_round_id
-from db.queries.assessment_records.queries import find_assessor_task_list_state, update_status_to_completed
+from db.queries.assessment_records.queries import find_assessor_task_list_state, update_status_to_completed, update_status_to_qa_complete
 from db.queries.flags.queries import get_latest_flags_for_each
 from db.queries.assessment_records.queries import find_assessor_task_list_state
 from db.queries.assessment_records.queries import ( 
@@ -120,8 +120,13 @@ def get_sub_criteria_theme_answers(application_id: str, theme_id: str):
 
 
 def update_ar_status_to_completed(application_id: str):
-    """ Function updates the status to COMPLETE for the given application_id"""
+    """ Function updates the status to COMPLETED for the given application_id"""
     update_status_to_completed(application_id)
+
+
+def update_ar_status_to_qa_complete(application_id: str):
+    """ Function updates the status to QA_COMPLETE for the given application_id"""
+    update_status_to_qa_complete(application_id)
     
 
 def assessment_stats_for_fund_round_id(

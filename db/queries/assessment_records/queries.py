@@ -283,4 +283,14 @@ def update_status_to_completed(application_id):
         {AssessmentRecord.workflow_status: Status.COMPLETED}, synchronize_session=False)
 
     db.session.commit()
-    
+
+def update_status_to_qa_complete(application_id):
+    from flask import current_app
+    current_app.logger.info(
+             f"Updating application status to QA_COMPLETE")
+    db.session.query(AssessmentRecord)\
+        .filter(AssessmentRecord.application_id == application_id)\
+        .update(
+        {AssessmentRecord.workflow_status: Status.QA_COMPLETE}, synchronize_session=False)
+
+    db.session.commit()
