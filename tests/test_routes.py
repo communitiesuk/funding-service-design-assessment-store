@@ -146,7 +146,6 @@ def test_update_ar_status(request, client):
     which indicates that the request was successful and 
     that the application status was updated to COMPLETED. """
 
-
     application_id = "a3ec41db-3eac-4220-90db-c92dea049c00"
     status = "COMPLETED"
 

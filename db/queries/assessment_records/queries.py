@@ -275,19 +275,12 @@ def get_application_jsonb_blob(application_id: str) -> dict:
 
 
 def update_status(application_id, status):
-    if status == "COMPLETED":
-        current_app.logger.info("Updating application status to COMPLETED")
-        db.session.query(AssessmentRecord)\
-        .filter(AssessmentRecord.application_id == application_id)\
-        .update(
-        {AssessmentRecord.workflow_status: Status.COMPLETED}, synchronize_session=False)
-    elif status == "QA_COMPLETE":
-        current_app.logger.info("Updating application status to QA_COMPLETE")
-        db.session.query(AssessmentRecord)\
-        .filter(AssessmentRecord.application_id == application_id)\
-        .update(
-        {AssessmentRecord.workflow_status: Status.QA_COMPLETE}, synchronize_session=False)
-    else:
+    if status not in Status.__members__:
         current_app.logger.error("Wrong status provided, status not updated!")
         abort(400, "Incorrect Status given")
+    current_app.logger.info(f"Updating application status to {status}")
+    db.session.query(AssessmentRecord)\
+        .filter(AssessmentRecord.application_id == application_id)\
+        .update(
+        {AssessmentRecord.workflow_status: Status[status]}, synchronize_session=False)
     db.session.commit()
