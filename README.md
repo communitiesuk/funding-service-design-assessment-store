@@ -138,7 +138,7 @@ The tests within /tests are designed to connect to a real database to run tests 
 
 `invoke seed_dev_db`
 
-Running the above command will prompt you to enter the number applications, funds & rounds you would like to create as mock data within the database.
+Running the above command will prompt you to enter the number of applications, funds & rounds you would like to create as mock data within the database.
 
 This will also work for the DB within the docker runner. Find the ID of the docker container running assessment-store (`docker ps`) then execute:
 
