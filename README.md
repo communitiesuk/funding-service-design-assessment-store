@@ -89,7 +89,7 @@ Enter the virtual environment and setup the db as described above, then:
 Enter the virtual environment and install dependencies as described above, then:
 
 ### Create and seed local DB
-- Make sure your local `DB_URL` env var is set to your local postgres db (this doesn't need to actually exist yet), eg:
+- Make sure your local `DATABASE_URL` env var is set to your local postgres db (this doesn't need to actually exist yet), eg:
 
         DATABASE_URL=postgresql://postgres:postgres@127.0.0.1:5432/fsd_assess_store
 

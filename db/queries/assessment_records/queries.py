@@ -278,13 +278,13 @@ def bulk_update_location_jsonb_blob(application_ids_to_location_data):
     stmt = (
         update(AssessmentRecord)
         .where(AssessmentRecord.application_id == bindparam("app_id"))
-        .values(location_json_blob=bindparam("new_location_data"))
+        .values(location_json_blob=bindparam("location_data"))
     )
 
     update_params = [
         {
             "app_id": item["application_id"],
-            "new_location_data": item["location"],
+            "location_data": item["location"],
         }
         for item in application_ids_to_location_data
     ]
