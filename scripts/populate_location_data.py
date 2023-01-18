@@ -1,20 +1,17 @@
 #!/usr/bin/env python3
 import argparse
 import os
-import sys
-
-sys.path.insert(1, ".")
 
 from app import app  # noqa: E402
+from db.queries.assessment_records.queries import (  # noqa: E402
+    get_application_jsonb_blob,  # noqa: E402
+)  # noqa: E402
 from distutils.util import strtobool  # noqa: E402
 from scripts.location_utils import (  # noqa: E402
     get_all_application_ids_for_fund_round,  # noqa: E402
 )  # noqa: E402
 from scripts.location_utils import get_all_location_data  # noqa: E402
 from scripts.location_utils import get_application_form  # noqa: E402
-from db.queries.assessment_records.queries import (  # noqa: E402
-    get_application_jsonb_blob,  # noqa: E402
-)  # noqa: E402
 from scripts.location_utils import get_postcode_from_questions  # noqa: E402
 from scripts.location_utils import update_db_with_location_data  # noqa: E402
 from scripts.location_utils import write_locations_to_csv  # noqa: E402
@@ -46,7 +43,7 @@ def process_locations(
             postcode = get_postcode_from_questions(questions)
             application_ids_to_postcodes[id] = postcode
             just_postcodes.append(postcode)
-
+        print(just_postcodes)
         postcodes_to_location_data = get_all_location_data(just_postcodes)
 
         if update_db:
