@@ -11,6 +11,7 @@ from tests._expected_responses import APPLICATION_METADATA_RESPONSE
 from tests._expected_responses import ASSESSMENTS_STATS_RESPONSE
 from tests._helpers import get_random_row
 from tests._helpers import get_rows_by_filters
+from db.models.assessment_record.enums import Status
 
 from ._expected_responses import subcriteria_themes_and_expected_response
 
@@ -145,13 +146,19 @@ def test_update_ar_status(request, client):
     """ Test checks that the status code returned by the POST request is 204, 
     which indicates that the request was successful and 
     that the application status was updated to COMPLETED. """
+    picked_row = get_random_row(AssessmentRecord)
 
-    application_id = "a3ec41db-3eac-4220-90db-c92dea049c00"
+    application_id = picked_row.application_id
     status = "COMPLETED"
-
     response = client.post(f"/application/{application_id}/status/{status}")
 
     assert response.status_code == 204
+    assert picked_row.workflow_status == Status.COMPLETED
+
+    status = "QA_COMPLETE"
+    response = client.post(f"/application/{application_id}/status/{status}")
+
+    assert picked_row.workflow_status == Status.QA_COMPLETE
 
 
 def test_add_another_presentation_type(request, client):
