@@ -21,3 +21,6 @@ def post_flag_for_application() -> dict:
 def get_latest_flag_for_application(application_id: str) -> list:
     flag = retrieve_flag_for_application(application_id)
     return flag
+
+def get_bulk_flags_for_applications():
+    pass
