@@ -10,6 +10,7 @@ from flask import current_app
 
 from db import db
 from db.models.assessment_record import AssessmentRecord
+from db.models.flags import Flag
 from db.models.assessment_record.enums import Status
 from db.queries.assessment_records._helpers import derive_application_values
 from db.queries.flags.queries import find_qa_complete_flag
@@ -64,12 +65,19 @@ def get_metadata_for_fund_round_id(
         statement = statement.where(AssessmentRecord.asset_type == asset_type)
 
     match status:
-        case "NOT_STARTED" | "IN_PROGRESS" | "SUBMITTED" | "COMPLETED":
+        case "NOT_STARTED" | "IN_PROGRESS" | "COMPLETED" | "SUBMITTED":
             statement = statement.where(
                 AssessmentRecord.workflow_status == status
             )
-        case "INELIGIBLE" | "QA_COMPLETE" | "QA_READY":
-            return []  # TODO: Handle these statuses
+        case "STOPPED" | "FLAGGED" | "QA_COMPLETE":
+            # search based on a flag
+            # most recent flag instead of any
+            statement = statement.filter(
+                AssessmentRecord.flags.any(
+                    Flag.flag_type==status
+                ).join(AssessmentRecord, Flag.application_id).order_by(Flag.date_created.desc())
+            )
+                    
 
     assessment_metadatas = db.session.scalars(statement).all()
 
