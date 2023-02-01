@@ -77,16 +77,19 @@ def seed_dev_db(c):
             while choosing:
 
                 from fsd_utils import CommonConfig
+                from uuid import uuid4
+
                 config = {
                     "COFR2W2": {
                         "fund_id": CommonConfig.COF_FUND_ID,
                         "round_id": CommonConfig.COF_ROUND_2_ID
                     },
-                    "TESTR1": {
-                        "fund_id": None,
-                        "round_id": None
+                    "RANDOM_FUND_ROUND": {
+                        "fund_id": uuid4(),
+                        "round_id": uuid4()
                     }
                 }
+
                 new_line = '\n'
                 _echo_print(
                     f"fund-rounds available to seed: {new_line} - {f' {new_line} - '.join(config.keys())}",
