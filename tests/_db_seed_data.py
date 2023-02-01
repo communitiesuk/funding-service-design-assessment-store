@@ -14,7 +14,6 @@ def load_json_strings_from_file(filename: str) -> list[str]:
 def get_dynamic_rows(
     number_of_apps_per_round, number_of_funds, number_of_rounds
 ):
-
     from random import choice, sample
     from string import ascii_uppercase
     from uuid import uuid4
@@ -60,15 +59,17 @@ def get_dynamic_rows(
     ]
 
     for count, fund_id in enumerate(funds):
+        print("fund id:", fund_id)
 
         rounds = [uuid4() for _ in range(number_of_rounds)]
 
         for round_id in rounds:
+            print("round id:", round_id)
 
             app_ids = [uuid4() for _ in range(number_of_apps_per_round)]
 
             for app_id in app_ids:
-
+                print("application id:", app_id)
                 picked_place = choice(places)
                 picked_city = choice(cities)
 
@@ -94,8 +95,8 @@ def get_dynamic_rows(
                     app_id=app_id,
                     project_name=project_name,
                     short_ref=short_ref,
-                    round_id="c603d114-5364-4474-a0c4-c41cbf4d3bbd",
-                    fund_id="47aef2f5-3fcb-4d45-acb5-f0152b5f03c4",
+                    round_id=round_id,
+                    fund_id=fund_id,
                     asset_type=picked_place[1],
                     **location_json_blob,
                 )

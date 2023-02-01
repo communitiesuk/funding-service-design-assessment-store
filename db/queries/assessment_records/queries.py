@@ -74,9 +74,13 @@ def get_metadata_for_fund_round_id(
     match status:
         case FlagType.QA_COMPLETED.name:
             current_app.logger.info(
-                f"Performing search on assessments with flag: {status}."
+                f"Performing search for assessments with flag: {status}."
             )
-            statement = statement.join(Flag).filter(Flag.flag_type == status)
+            statement = (
+                statement.join(Flag)
+                .group_by(AssessmentRecord.application_id)
+                .filter(Flag.flag_type == status)
+            )
 
         case (  # noqa
             Status.NOT_STARTED.name
@@ -84,7 +88,7 @@ def get_metadata_for_fund_round_id(
             | Status.COMPLETED.name
         ):
             current_app.logger.info(
-                f"Performing assessment search on status: {status}."
+                f"Performing search for assessments with status: {status}."
             )
             statement = statement.where(
                 AssessmentRecord.workflow_status == status
@@ -94,7 +98,8 @@ def get_metadata_for_fund_round_id(
             # Only keep assessment records whoms most recent
             #  flag matches the status parameter.
             current_app.logger.info(
-                f"Performing search on assessments with latest flag: {status}."
+                "Performing search for assessments with"
+                f" latest flag: {status}."
             )
             subq = (
                 db.session.query(

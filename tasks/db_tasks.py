@@ -50,7 +50,7 @@ def generate_test_data(c):
     import json
 
     _echo_print("Generating data.")
-    rows = [json.loads(row) for row in get_dynamic_rows(100, 5, 3)]
+    rows = [json.loads(row) for row in get_dynamic_rows(3, 3, 10)]
 
     _echo_print("Writing data to apps.json")
     with open("apps.json", "w") as f:
