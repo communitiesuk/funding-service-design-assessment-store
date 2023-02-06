@@ -27,3 +27,20 @@ The `cat /tmp/locations.csv` prints out the csv to the logs so we can copy/paste
 If there is data in your docker DB, you can also execute this script locally in the container:
 
         docker exec -it db6f6f6a2ee0 ./scripts/populate_location_data.py --fund_id 47aef2f5-3fcb-4d45-acb5-f0152b5f03c4 --round_id c603d114-5364-4474-a0c4-c41cbf4d3bbd --update_db True --write_csv False
+
+# SQL Scripts
+SQL scripts to be run against a single environment
+
+## How to run
+* Ensure you have Conduit plugin installed `cf install-plugin conduit`
+* Ensure you have psql installed locally and in your PATH
+* Run script through Conduit e.g
+```
+cf conduit SERVICE_NAME -- psql -f ./scripts/<<FILENAME>>.sql
+```
+
+### Assessment COF Reporting
+The purpose of this script is to extract specific fields used for COF Reporting. 
+
+This is not to automate the reporting but to assist us in getting some reports for the business.
+There is still some manual involvement required here to combine the comments & scores in the way the business require. 
