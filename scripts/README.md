@@ -31,10 +31,16 @@ If there is data in your docker DB, you can also execute this script locally in 
 # SQL Scripts
 SQL scripts to be run against a single environment
 
-### How to run
+## How to run
 * Ensure you have Conduit plugin installed `cf install-plugin conduit`
 * Ensure you have psql installed locally and in your PATH
 * Run script through Conduit e.g
 ```
 cf conduit SERVICE_NAME -- psql -f ./scripts/<<FILENAME>>.sql
 ```
+
+### Assessment COF Reporting
+The purpose of this script is to extract specific fields used for COF Reporting. 
+
+This is not to automate the reporting but to assist us in getting some reports for the business.
+There is still some manual involvement required here to combine the comments & scores in the way the business require. 
