@@ -142,7 +142,7 @@ def assessment_stats_for_fund_round_id(
     stats = {}
     assessments = get_metadata_for_fund_round_id(
         fund_id=fund_id, round_id=round_id
-    )s
+    )
     assessment_ids = [application['application_id'] for application in assessments ]
 
     qa_completed_assessments = [    
