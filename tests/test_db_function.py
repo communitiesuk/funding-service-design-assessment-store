@@ -15,6 +15,7 @@ from db.models.comment.enums import CommentType
 from db.queries import create_flag_for_application
 from db.queries import find_answer_by_key_runner
 from db.queries import retrieve_flag_for_application
+from db.queries import find_qa_complete_flag_for_applications
 from db.queries.assessment_records.queries import (
     bulk_update_location_jsonb_blob,
 )
@@ -413,6 +414,26 @@ def test_retrieve_flag_for_application(db_session):
     assert result["application_id"] == second_flag.application_id
     assert result["user_id"] == second_flag.user_id
     assert result["flag_type"] == second_flag.flag_type.name
+
+def test_find_qa_complete_flag_for_applications(db_session):
+    """Put QA_COMPLETED flags in 1 out of 2 applications and
+    only retrieve the metadata for the 1 with QA_COMPLETED"""
+
+    first_flag = Flag(**flag_config[2])
+    db_session.add(first_flag)
+    second_flag = Flag(**flag_config[3])
+
+    db_session.add(second_flag)
+    third_flag = Flag(**flag_config[0])
+    db_session.add(third_flag)
+
+    db_session.commit()
+
+    result = find_qa_complete_flag_for_applications([first_flag.application_id, third_flag.application_id])
+
+    assert result[0]['application_id'] == first_flag.application_id
+    assert result[0]['flag_type'] == first_flag.flag_type.name
+    assert len(result) == 1
 
 
 def test_get_latest_flags_for_each(sample_flags):
