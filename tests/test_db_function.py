@@ -422,8 +422,8 @@ def test_find_qa_complete_flag_for_applications(db_session):
     first_application_flagged_flag = Flag(**flag_config[2])
     db_session.add(first_application_flagged_flag)
     
-    first_application_flagged_qa_complete_flag = Flag(**flag_config[3])
-    db_session.add(first_application_flagged_qa_complete_flag)
+    first_application_qa_complete_flag = Flag(**flag_config[3])
+    db_session.add(first_application__qa_complete_flag)
     
     second_application_qa_complete_flag = Flag(**flag_config[4])
     db_session.add(second_application_qa_complete_flag)
