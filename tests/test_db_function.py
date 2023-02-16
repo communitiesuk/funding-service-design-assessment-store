@@ -416,14 +416,14 @@ def test_retrieve_flag_for_application(db_session):
     assert result["flag_type"] == second_flag.flag_type.name
 
 def test_find_qa_complete_flag_for_applications(db_session):
-    """Put QA_COMPLETED flags in 1 out of 2 applications and
+    """Put QA_COMPLETED flags in 2 out of 3 applications and
     only retrieve the metadata for the 1 with QA_COMPLETED"""
 
     first_application_flagged_flag = Flag(**flag_config[2])
     db_session.add(first_application_flagged_flag)
     
     first_application_qa_complete_flag = Flag(**flag_config[3])
-    db_session.add(first_application__qa_complete_flag)
+    db_session.add(first_application_qa_complete_flag)
     
     second_application_qa_complete_flag = Flag(**flag_config[4])
     db_session.add(second_application_qa_complete_flag)
