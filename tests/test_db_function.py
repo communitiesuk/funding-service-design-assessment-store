@@ -445,10 +445,6 @@ def test_find_qa_complete_flag_for_applications(db_session):
     assert result[1]['flag_type'] == second_application_qa_complete_flag.flag_type.name
     assert len(result) == 2
 
-    import sys
-    sys.stdout.write("{}".format(result))
-
-
 def test_get_latest_flags_for_each(sample_flags):
     result_list = get_latest_flags_for_each()
 
