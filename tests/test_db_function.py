@@ -261,13 +261,24 @@ def test_get_comments():
         application_id, sub_criteria_id, theme_id
     )
     comment_metadata = get_comments_for_application_sub_crit(
-        application_id, sub_criteria_id, theme_id="score"
+        application_id, sub_criteria_id, theme_id=None
     )
 
     assert len(comment_metadata_for_theme) == 2
     assert (
         comment_metadata_for_theme[0]["theme_id"]
         == comment_metadata_for_theme[1]["theme_id"]
+    )
+    assert len(comment_metadata) == 3
+    # TODO: remove this once frontend is updated not to use 'theme_id=score'
+    comment_metadata_score_theme_id = get_comments_for_application_sub_crit(
+        application_id, sub_criteria_id, theme_id="score"
+    )
+
+    assert len(comment_metadata_for_theme) == 2
+    assert (
+        comment_metadata_score_theme_id[0]["theme_id"]
+        == comment_metadata_score_theme_id[1]["theme_id"]
     )
     assert len(comment_metadata) == 3
 
@@ -402,9 +413,9 @@ def test_create_flag_for_application(flag_config):
 def test_retrieve_flag_for_application(db_session):
     """Put two flags for the same application and expect the most
     recent flag to be retuned for the application."""
-    first_flag = Flag(**flag_config[1])
+    first_flag = Flag(**flag_config[0])
     db_session.add(first_flag)
-    second_flag = Flag(**flag_config[0])
+    second_flag = Flag(**flag_config[1])
     db_session.add(second_flag)
     db_session.commit()
     result = retrieve_flag_for_application(first_flag.application_id)
@@ -555,3 +566,75 @@ def test_bulk_update_location_data(db_session):
         .first()
     )
     assert location == assessment_record.location_json_blob
+
+
+@pytest.mark.parametrize(
+    "status_or_flag, expected_application_count",
+    [
+        (
+            "NOT_STARTED",
+            1,
+        ),
+        (
+            "IN_PROGRESS",
+            1,
+        ),
+        (
+            "COMPLETED",
+            1,
+        ),
+        (
+            "FLAGGED",
+            2,
+        ),
+        (
+            "STOPPED",
+            0,
+        ),
+        (
+            "QA_COMPLETED",
+            2,
+        ),
+        (
+            "UNKNOWN_STATUS_OR_FLAG",
+            3,
+        ),
+    ],
+)
+def test_get_most_recent_metadata_statuses_for_fund_round_id(
+    db_session, sample_flags, status_or_flag, expected_application_count
+):
+    from db.queries.assessment_records.queries import (
+        get_metadata_for_fund_round_id,
+    )
+
+    assessment_record_A = (
+        db_session.query(AssessmentRecord)
+        .where(
+            AssessmentRecord.application_id
+            == "a3ec41db-3eac-4220-90db-c92dea049c01"
+        )
+        .first()
+    )
+
+    assessment_record_A.workflow_status = Status.IN_PROGRESS
+
+    assessment_record_B = (
+        db_session.query(AssessmentRecord)
+        .where(
+            AssessmentRecord.application_id
+            == "c3ec41db-3eac-4220-90db-c92dea049c03"
+        )
+        .first()
+    )
+
+    assessment_record_B.workflow_status = Status.COMPLETED
+
+    metadata = get_metadata_for_fund_round_id(
+        "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4",
+        "c603d114-5364-4474-a0c4-c41cbf4d3bbd",
+        "",
+        "",
+        status_or_flag,
+    )
+    assert len(metadata) == expected_application_count
