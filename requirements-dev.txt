@@ -187,7 +187,7 @@ marshmallow==3.19.0
     #   marshmallow-sqlalchemy
 marshmallow-sqlalchemy==0.28.1
     # via -r requirements.txt
-mypy==0.991
+mypy==1.0.1
     # via
     #   -r requirements-dev.in
     #   -r requirements.txt
