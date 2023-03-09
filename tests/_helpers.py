@@ -2,12 +2,14 @@ from contextlib import contextmanager
 
 from db import db
 from db.models.assessment_record import AssessmentRecord
+from db.queries import bulk_insert_application_record
 from sqlalchemy import event
 from sqlalchemy import func
 from sqlalchemy import select
 from sqlalchemy.engine import Engine
 from sqlalchemy.inspection import inspect
 from sqlalchemy.orm import defer
+from tests._db_seed_data import get_dynamic_rows
 
 
 @contextmanager
@@ -84,3 +86,23 @@ def get_assessment_record(application_id):
         )
     )
     return db.session.scalars(stmt).one()
+
+
+def row_data(
+    apps_per_round, rounds_per_fund, number_of_funds, fund_round_config
+):
+    """row_data A fixture which provides the test row data."""
+
+    row_data = list(
+        get_dynamic_rows(
+            apps_per_round, rounds_per_fund, number_of_funds, fund_round_config
+        )
+    )
+
+    return row_data
+
+
+def seed_database_for_fund_round(apps_per_round, fund_round_config):
+    test_input_data = row_data(apps_per_round, 1, 1, fund_round_config)
+
+    bulk_insert_application_record(test_input_data, "COF")
