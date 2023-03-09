@@ -66,3 +66,21 @@ def get_rows_by_filters(fund_id, round_id, filters):
         )
     )
     return db.session.scalars(stmt).all()
+
+
+@no_gather_sql()
+def get_assessment_record(application_id):
+    """get_rows_by_asset_type Uses a database-side where to get rows
+    for provided asset type
+
+    :param table: fund_id, round_id, asset_type
+    :return: rows for given assest type.
+    """
+    stmt = (
+        select(AssessmentRecord)
+        # Dont load json into memory
+        .options(defer(AssessmentRecord.jsonb_blob)).where(
+            AssessmentRecord.application_id == application_id,
+        )
+    )
+    return db.session.scalars(stmt).one()

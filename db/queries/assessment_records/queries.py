@@ -183,9 +183,10 @@ def bulk_insert_application_record(
         db.session.execute(upsert_rows_stmt)
     except exc.SQLAlchemyError as e:
         db.session.rollback()
-        print(f"Error running bulk insert: '{e.message}'.")
+        print(f"Error running bulk insert: '{e}'.")
         raise (e)
     db.session.commit()
+    return rows
 
 
 def find_answer_by_key_runner(field_key: str, app_id: str) -> List[tuple]:

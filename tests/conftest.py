@@ -1,41 +1,28 @@
+import copy
+import json
+from uuid import uuid4
+
 import pytest
 from app import create_app
-from config import Config
 from db.queries import bulk_insert_application_record
-from flask_migrate import upgrade
-from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy_utils.functions import create_database
-from sqlalchemy_utils.functions import database_exists
-from sqlalchemy_utils.functions import drop_database
+from fsd_utils.fixtures.db_fixtures import prep_db
 from tests._db_seed_data import get_dynamic_rows
 from tests._db_seed_data import load_json_strings_from_file
 from tests._sql_infos import attach_listeners
 from tests._sql_infos import pytest_terminal_summary  # noqa
 
-
-def prep_db(reuse_db=False):
-    """Provide the transactional fixtures with access to the database via a
-    Flask-SQLAlchemy database connection."""
-    no_db = not database_exists(Config.SQLALCHEMY_DATABASE_URI)
-    refresh_db = not reuse_db
-
-    if no_db:
-
-        create_database(Config.SQLALCHEMY_DATABASE_URI)
-
-    elif refresh_db:
-
-        drop_database(Config.SQLALCHEMY_DATABASE_URI)
-        create_database(Config.SQLALCHEMY_DATABASE_URI)
-
-    upgrade()
+pytest_plugins = ["fsd_utils.fixtures.db_fixtures"]
 
 
-def row_data(apps_per_round, rounds_per_fund, number_of_funds, fund_round_config):
+def row_data(
+    apps_per_round, rounds_per_fund, number_of_funds, fund_round_config
+):
     """row_data A fixture which provides the test row data."""
 
     row_data = list(
-        get_dynamic_rows(apps_per_round, rounds_per_fund, number_of_funds, fund_round_config)
+        get_dynamic_rows(
+            apps_per_round, rounds_per_fund, number_of_funds, fund_round_config
+        )
     )
 
     return row_data
@@ -48,10 +35,9 @@ def seed_database_randomly(apps_per_round, rounds_per_fund, number_of_funds):
 
     bulk_insert_application_record(test_input_data, "COF")
 
+
 def seed_database_for_fund_round(apps_per_round, fund_round_config):
-    test_input_data = row_data(
-        apps_per_round, 1, 1, fund_round_config
-    )
+    test_input_data = row_data(apps_per_round, 1, 1, fund_round_config)
 
     bulk_insert_application_record(test_input_data, "COF")
 
@@ -68,6 +54,34 @@ def seed_database_deterministically():
     bulk_insert_application_record(test_input_data, "COF")
 
 
+@pytest.fixture(scope="function")
+def seed_application_records(request, recreate_db, app, clear_test_data):
+    marker = request.node.get_closest_marker("apps_to_insert")
+    if marker is None:
+        apps = 1
+    else:
+        apps = marker.args[0]
+    marker = request.node.get_closest_marker("unique_fund_round")
+    if marker is None:
+        unique_fund_round = False
+    else:
+        unique_fund_round = True
+
+    test_input_data = load_json_strings_from_file("hand-crafted-apps.json")
+    records_to_insert = []
+    if unique_fund_round:
+        random_fund_id = str(uuid4())
+        random_round_id = str(uuid4())
+    for i in range(apps):
+        input_data = json.loads(copy.deepcopy(test_input_data[0]))
+        input_data["id"] = str(uuid4())
+        if unique_fund_round:
+            input_data["fund_id"] = random_fund_id
+            input_data["round_id"] = random_round_id
+        records_to_insert.append(input_data)
+    yield bulk_insert_application_record(records_to_insert, "COF", True)
+
+
 @pytest.fixture(scope="session")
 def app():
     attach_listeners()
@@ -79,53 +93,47 @@ def app():
 
 @pytest.fixture(scope="session")
 def _db(app, request):
-    db = SQLAlchemy(app)
+    yield app.extensions["sqlalchemy"]
 
-    apps_per_round = request.config.getoption("apps_per_round")
-    rounds_per_fund = request.config.getoption("rounds_per_fund")
-    number_of_funds = request.config.getoption("number_of_funds")
-    current_run_is_random = request.config.getoption("randomdata")
 
+@pytest.fixture(scope="session")
+def recreate_db(request, _db, app):
+    reuse_db = bool(request.config.cache.get("reuse_db", False))
+    with app.app_context():
+        prep_db(reuse_db)
+    request.config.cache.set("reuse_db", True)
+    yield
+
+
+@pytest.fixture(scope="module")
+def clear_test_data(app, _db, request):
+    """
+    Fixture to clean up the database after each test.
+
+    This fixture clears the database by deleting all data
+    from tables and disabling foreign key checks before the test,
+    and resetting foreign key checks after the test.
+
+    """
     with app.app_context():
 
-        # Did this and the last run use fixed test data?
-        prev_run_deterministic = request.config.cache.get(
-            "was_deterministic", False
-        )
-        current_run_deterministic = not current_run_is_random
-        request.config.cache.set(
-            "was_deterministic", current_run_deterministic
-        )
-
-        # Did this and the last run have the same db uri?
-        prev_db_uri = request.config.cache.get("db_uri", False)
-        current_db_uri = Config.SQLALCHEMY_DATABASE_URI
-        request.config.cache.set("db_uri", current_db_uri)
-
-        same_db_uri = prev_db_uri == current_db_uri
-        both_determ = prev_run_deterministic and current_run_deterministic
-
-        # If same data and uri then lets reuse the last test db..
-        # NB: Pytest cleans up changes made during tests.
-        reuse_db = same_db_uri and both_determ
-
-        prep_db(reuse_db)
-        if not reuse_db:
-            if current_run_is_random:
-                seed_database_randomly(
-                    apps_per_round, rounds_per_fund, number_of_funds
-                )
-            else:
-                seed_database_deterministically()
-
-            # small number of records for testing
-            seed_handcrafted_data()
-    return db
-
-
-@pytest.fixture(autouse=True)
-def enable_transactional_tests(db_session):
-    yield
+        yield
+        marker = request.node.get_closest_marker("preserve_test_data")
+        if marker is None:
+            # rollback incase of any errors during test session
+            _db.session.rollback()
+            # disable foreign key checks
+            _db.session.execute("SET session_replication_role = replica")
+            # delete all data from tables
+            for table in reversed(_db.metadata.sorted_tables):
+                _db.session.execute(table.delete())
+            # reset foreign key checks
+            _db.session.execute("SET session_replication_role = DEFAULT")
+            _db.session.commit()
+        else:
+            # If test requests 'preserve test data' make sure
+            # on the next run we clear out the DB completely.
+            request.config.cache.set("reuse_db", False)
 
 
 def pytest_addoption(parser):
