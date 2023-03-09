@@ -66,6 +66,9 @@ def seed_application_records(request, recreate_db, app, clear_test_data):
         unique_fund_round = False
     else:
         unique_fund_round = True
+    marker = request.node.get_closest_marker("preserve_test_data")
+    if marker is not None:
+        request.config.cache.set("preserve_test_data", True)
 
     test_input_data = load_json_strings_from_file("hand-crafted-apps.json")
     records_to_insert = []
@@ -118,8 +121,10 @@ def clear_test_data(app, _db, request):
     with app.app_context():
 
         yield
-        marker = request.node.get_closest_marker("preserve_test_data")
-        if marker is None:
+        preserve_test_data = request.config.cache.get(
+            "preserve_test_data", None
+        )
+        if not preserve_test_data:
             # rollback incase of any errors during test session
             _db.session.rollback()
             # disable foreign key checks
@@ -134,6 +139,7 @@ def clear_test_data(app, _db, request):
             # If test requests 'preserve test data' make sure
             # on the next run we clear out the DB completely.
             request.config.cache.set("reuse_db", False)
+            request.config.cache.remove("preserve_test_data")
 
 
 def pytest_addoption(parser):
