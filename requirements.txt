@@ -61,7 +61,7 @@ flask-sqlalchemy==3.0.3
     #   flask-migrate
 flupy==1.2.0
     # via alembic-utils
-funding-service-design-utils==1.0.24
+funding-service-design-utils @ git+https://github.com/communitiesuk/funding-service-design-utils.git@fs-2382-db-unittests
     # via -r requirements.in
 gunicorn==20.1.0
     # via funding-service-design-utils

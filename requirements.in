@@ -1,7 +1,9 @@
 #-----------------------------------
 #   FSD Utils
 #-----------------------------------
-funding-service-design-utils>=1.0.13,<1.1.0
+# funding-service-design-utils>=1.0.13,<1.1.0
+git+https://github.com/communitiesuk/funding-service-design-utils.git@fs-2382-db-unittests
+
 requests
 
 #-----------------------------------
