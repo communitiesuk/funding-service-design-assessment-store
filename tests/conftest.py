@@ -15,7 +15,9 @@ pytest_plugins = ["fsd_utils.fixtures.db_fixtures"]
 
 
 @pytest.fixture(scope="function")
-def seed_application_records(request, recreate_db, app, clear_test_data):
+def seed_application_records(
+    request, recreate_db, app, clear_test_data, enable_preserve_test_data
+):
     marker = request.node.get_closest_marker("apps_to_insert")
     if marker is None:
         apps = 1
@@ -26,9 +28,6 @@ def seed_application_records(request, recreate_db, app, clear_test_data):
         unique_fund_round = False
     else:
         unique_fund_round = True
-    marker = request.node.get_closest_marker("preserve_test_data")
-    if marker is not None:
-        request.config.cache.set("preserve_test_data", True)
 
     test_input_data = load_json_strings_from_file("hand-crafted-apps.json")
     records_to_insert = []
