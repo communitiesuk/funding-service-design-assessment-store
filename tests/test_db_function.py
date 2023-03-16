@@ -27,10 +27,11 @@ from db.queries.scores.queries import create_score_for_app_sub_crit
 from db.queries.scores.queries import get_scores_for_app_sub_crit
 from db.queries.scores.queries import get_sub_criteria_to_latest_score_map
 from tests._helpers import get_assessment_record
+from tests.conftest import test_input_data
 from tests.test_data.flags import flag_config
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_select_field_by_id(seed_application_records):
     """test_select_field_by_id Tests that the correct field is picked from the
     corresponding application."""
@@ -50,7 +51,7 @@ def test_select_field_by_id(seed_application_records):
     assert field_found == picked_field
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_jsonb_blob_immutable(_db, seed_application_records):
     """test_jsonb_blob_immutable Tests that attempting to update a json blob
     though the sqlalchemy interface raises an error.
@@ -72,7 +73,7 @@ def test_jsonb_blob_immutable(_db, seed_application_records):
         _db.session.rollback()
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_non_blob_columns_mutable(_db, seed_application_records):
     """test_non_blob_columns_mutable Tests we haven't made the whole table
     immutable by accident when making the json blob immutable."""
@@ -89,7 +90,7 @@ def test_non_blob_columns_mutable(_db, seed_application_records):
         _db.session.rollback()
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_create_scores_for_application_sub_crit(_db, seed_application_records):
     """test_create_scores_for_application_sub_crit Tests we can create
     score records in the scores table in the appropriate format."""
@@ -114,7 +115,7 @@ def test_create_scores_for_application_sub_crit(_db, seed_application_records):
     assert score_metadata["score"] == 3
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_get_latest_score_for_application_sub_crit(seed_application_records):
     """test_get_latest_score_for_application_sub_crit Tests we can add
     score records in the scores table and return the most recently created."""
@@ -148,7 +149,7 @@ def test_get_latest_score_for_application_sub_crit(seed_application_records):
     )
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_get_score_history(seed_application_records):
     """test_get_score_history Tests we can get all score
     records in the scores table"""
@@ -193,7 +194,7 @@ def test_get_score_history(seed_application_records):
     )
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_find_assessor_task_list_ui_metadata(seed_application_records):
     """test_find_assessor_task_list_ui_metadata Tests that the correct metadata
     is returned for the assessor task list UI."""
@@ -212,7 +213,7 @@ def test_find_assessor_task_list_ui_metadata(seed_application_records):
     }
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_post_comment(seed_application_records):
     """test_post_comment tests we can create
     comment records in the comments table."""
@@ -240,7 +241,7 @@ def test_post_comment(seed_application_records):
     assert comment_metadata["theme_id"] == "something"
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_get_comments(seed_application_records):
     """test_get_comments tests we can get all comment
     records in the comments table filtered by application_id,
@@ -304,8 +305,8 @@ def test_get_comments(seed_application_records):
     assert len(comment_metadata_score_theme_id) == 3
 
 
-@pytest.mark.apps_to_insert(2)
-def test_get_progress_for_applications(monkeypatch, seed_application_records):
+@pytest.mark.apps_to_insert(test_input_data)
+def test_get_progress_for_applications(seed_application_records):
     """test_create_scores_for_application_sub_crit Tests we can create
     score records in the scores table in the appropriate format."""
 
@@ -378,7 +379,7 @@ def test_get_progress_for_applications(monkeypatch, seed_application_records):
         ),
     ],
 )
-@pytest.mark.apps_to_insert(2)
+@pytest.mark.apps_to_insert(test_input_data)
 def test_update_workflow_status_on_insert(
     _db, insertion_object, seed_application_records
 ):
@@ -414,17 +415,20 @@ def sample_flags(_db):
     _db.session.commit()
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 @pytest.mark.parametrize("flag_config", flag_config)
 def test_create_flag_for_application(flag_config, seed_application_records):
     flag = Flag(**flag_config)
     result = create_flag_for_application(
-        justification=flag.justification,
-        section_to_flag=flag.section_to_flag,
         application_id=seed_application_records[0]["application_id"],
-        user_id=flag.user_id,
-        flag_type=flag.flag_type,
+        **flag_config,
     )
+    #     justification=flag.justification,
+    #     section_to_flag=flag.section_to_flag,
+    #     application_id=seed_application_records[0]["application_id"],
+    #     user_id=flag.user_id,
+    #     flag_type=flag.flag_type,
+    # )
 
     assert result["justification"] == flag.justification
     assert result["section_to_flag"] == flag.section_to_flag
@@ -436,22 +440,28 @@ def test_create_flag_for_application(flag_config, seed_application_records):
     assert result["flag_type"] == flag.flag_type.name
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_retrieve_flag_for_application(_db, seed_application_records):
     """Put two flags for the same application and expect the most
     recent flag to be retuned for the application."""
+    now = datetime.datetime.now()
+    earlier = now - datetime.timedelta(days=1)
     first_flag = Flag(
         application_id=seed_application_records[0]["application_id"],
+        date_created=earlier,
         **flag_config[0],
     )
     _db.session.add(first_flag)
     second_flag = Flag(
         application_id=seed_application_records[0]["application_id"],
+        date_created=now,
         **flag_config[1],
     )
     _db.session.add(second_flag)
     _db.session.commit()
-    result = retrieve_flag_for_application(first_flag.application_id)
+    result = retrieve_flag_for_application(
+        seed_application_records[0]["application_id"]
+    )
 
     assert result["justification"] == second_flag.justification
     assert result["section_to_flag"] == second_flag.section_to_flag
@@ -460,7 +470,7 @@ def test_retrieve_flag_for_application(_db, seed_application_records):
     assert result["flag_type"] == second_flag.flag_type.name
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert(test_input_data)
 def test_find_qa_complete_flag_for_applications(_db, seed_application_records):
     """Put QA_COMPLETED flags in 2 out of 3 applications and
     only retrieve the metadata for the 1 with QA_COMPLETED"""
@@ -478,13 +488,13 @@ def test_find_qa_complete_flag_for_applications(_db, seed_application_records):
     _db.session.add(first_application_qa_complete_flag)
 
     second_application_qa_complete_flag = Flag(
-        application_id=seed_application_records[0]["application_id"],
+        application_id=seed_application_records[1]["application_id"],
         **flag_config[4],
     )
     _db.session.add(second_application_qa_complete_flag)
 
     third_application_flagged_flag = Flag(
-        application_id=seed_application_records[0]["application_id"],
+        application_id=seed_application_records[2]["application_id"],
         **flag_config[0],
     )
     _db.session.add(third_application_flagged_flag)
@@ -535,7 +545,7 @@ def test_get_latest_flags_for_each_with_type_filter(sample_flags):
     assert result_list[0]["flag_type"] == "QA_COMPLETED"
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_get_sub_criteria_to_latest_score_map(_db, seed_application_records):
     application_id = seed_application_records[0]["application_id"]
     sub_criteria_1_id = str(uuid.uuid4())
@@ -605,7 +615,7 @@ def test_get_sub_criteria_to_latest_score_map(_db, seed_application_records):
     assert result[sub_criteria_2_id] == 5
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_bulk_update_location_data(_db, seed_application_records):
     application_id = seed_application_records[0]["application_id"]
 
