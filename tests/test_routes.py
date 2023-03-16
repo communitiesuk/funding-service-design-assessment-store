@@ -10,11 +10,12 @@ from db.queries.flags.queries import create_flag_for_application
 from tests._expected_responses import APPLICATION_METADATA_RESPONSE
 from tests._expected_responses import ASSESSMENTS_STATS_RESPONSE
 from tests._helpers import get_rows_by_filters
+from tests.conftest import test_input_data
 
 from ._expected_responses import subcriteria_themes_and_expected_response
 
 
-@pytest.mark.apps_to_insert(3)
+@pytest.mark.apps_to_insert(test_input_data)
 @pytest.mark.unique_fund_round(True)
 def test_get_assessments_stats(client, seed_application_records):
     fund_id = seed_application_records[0]["fund_id"]
@@ -70,7 +71,7 @@ def test_get_assessments_stats(client, seed_application_records):
     assert response_json["qa_completed"] == 2
 
 
-@pytest.mark.apps_to_insert(4)
+@pytest.mark.apps_to_insert([test_input_data[0].copy() for x in range(4)])
 @pytest.mark.unique_fund_round(True)
 def test_gets_all_apps_for_fund_round(
     request, client, seed_application_records
@@ -154,7 +155,7 @@ def test_gets_all_apps_for_fund_round(
         ),
     ],
 )
-@pytest.mark.apps_to_insert(2)
+@pytest.mark.apps_to_insert(test_input_data)
 def test_search(url, filter, client, seed_application_records):
 
     application = seed_application_records[0]
@@ -181,7 +182,7 @@ def test_get_application_metadata_for_application_id(client):
     assert response_json == APPLICATION_METADATA_RESPONSE
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_get_sub_criteria(client, seed_application_records):
     """Test to check that sub criteria metadata and ordered themes are returned for
     a COFR2W2 sub criteria"""
@@ -202,7 +203,7 @@ def test_get_sub_criteria(client, seed_application_records):
     assert "id" in response_json
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_get_sub_criteria_metadata_for_false_sub_criteria_id(
     client, seed_application_records
 ):
@@ -220,7 +221,7 @@ def test_get_sub_criteria_metadata_for_false_sub_criteria_id(
     assert response["detail"] == "sub_criteria: 'does-not-exist' not found."
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_get_sub_criteria_theme_answers_field_id(
     request, client, seed_application_records
 ):
@@ -235,7 +236,7 @@ def test_get_sub_criteria_theme_answers_field_id(
     assert response.json[0]["field_id"] == "ieRCkI"
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_update_ar_status_to_completed(
     request, client, seed_application_records
 ):
@@ -249,7 +250,7 @@ def test_update_ar_status_to_completed(
     assert response.status_code == 204
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_add_another_presentation_type(
     request, client, seed_application_records
 ):
@@ -268,7 +269,7 @@ def test_add_another_presentation_type(
     assert response.json[3]["presentation_type"] == "amount"
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_incorrect_theme_id(request, client, seed_application_records):
     """Test to check incorrect theme_id that is expected
     to return custom error along with the openapi validation
@@ -282,7 +283,7 @@ def test_incorrect_theme_id(request, client, seed_application_records):
     assert "Incorrect theme id" in response.json["detail"]
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_random_theme_content(seed_application_records):
     """Test the function with random theme id that maps
     the application & subcriteria theme and
@@ -298,7 +299,7 @@ def test_random_theme_content(seed_application_records):
     assert result[0]["answer"] == expected_response
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_convert_boolean_values(seed_application_records):
     """Test the function that convert boolean values to
     "Yes" and "No".
@@ -317,7 +318,7 @@ def test_convert_boolean_values(seed_application_records):
     ][0] == "No"
 
 
-@pytest.mark.apps_to_insert(1)
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_get_application_json(client, seed_application_records):
     application_id = seed_application_records[0]["application_id"]
     response = client.get(f"/application/{application_id}/json")
