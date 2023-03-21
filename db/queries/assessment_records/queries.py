@@ -145,7 +145,7 @@ def get_metadata_for_fund_round_id(
 
 def bulk_insert_application_record(
     application_json_strings: List[str], application_type: str, is_json=False
-) -> None:
+) -> List[AssessmentRecord]:
     """bulk_insert_application_record Given a list of json strings
     and an `application_type` we extract key values from the json
     strings before inserting them with the remaining values into

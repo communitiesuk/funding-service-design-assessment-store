@@ -3,6 +3,7 @@ from uuid import uuid4
 
 import pytest
 from app import create_app
+from db.models.flags.flags import Flag
 from db.queries import bulk_insert_application_record
 from tests._sql_infos import attach_listeners
 
@@ -15,7 +16,7 @@ with open("tests/test_data/hand-crafted-apps.json", "r") as f:
 
 @pytest.fixture(scope="function")
 def seed_application_records(
-    request, app, clear_test_data, enable_preserve_test_data
+    request, app, clear_test_data, enable_preserve_test_data, _db
 ):
     marker = request.node.get_closest_marker("apps_to_insert")
     if marker is None:
@@ -28,7 +29,7 @@ def seed_application_records(
     else:
         unique_fund_round = True
 
-    records_to_insert = []
+    inserted_applications = []
 
     if unique_fund_round:
         random_fund_id = str(uuid4())
@@ -39,10 +40,23 @@ def seed_application_records(
         if unique_fund_round:
             app["fund_id"] = random_fund_id
             app["round_id"] = random_round_id
-        records_to_insert.append(app)
+        app_flags = []
+        if "flags" in app:
+            app_flags = app["flags"]
+            app.pop("flags")
+        inserted_application = bulk_insert_application_record(
+            [app], "COF", True
+        )[0]
+        inserted_applications.append(inserted_application)
+        for f in app_flags:
+            flag = Flag(
+                application_id=inserted_application["application_id"], **f
+            )
+            _db.session.add(flag)
+        _db.session.commit()
 
     # Supplied the rows we inserted for tests to use in their actions
-    yield bulk_insert_application_record(records_to_insert, "COF", True)
+    yield inserted_applications
 
 
 @pytest.fixture(scope="session")
