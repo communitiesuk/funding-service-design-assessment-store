@@ -1,11 +1,11 @@
 import pytest
 from db.models import Flag
-from db.models.assessment_record.assessment_records import AssessmentRecord
 from db.models.assessment_record.enums import Status
 from db.queries import create_flag_for_application
 from db.queries import find_qa_complete_flag_for_applications
 from db.queries import retrieve_flag_for_application
 from db.queries.flags.queries import get_latest_flags_for_each
+from tests._helpers import get_assessment_record
 from tests.conftest import test_input_data
 from tests.test_data.flags import flag_config
 
@@ -38,19 +38,6 @@ def test_create_flag_for_application(flag_config, seed_application_records):
 def test_retrieve_flag_for_application(_db, seed_application_records):
     """Put two flags for the same application and expect the most
     recent flag to be retuned for the application."""
-    # now = datetime.datetime.now()
-    # earlier = now - datetime.timedelta(days=1)
-    # first_flag = Flag(
-    #     application_id=seed_application_records[0]["application_id"],
-    #     **flag_config[0],
-    # )
-    # _db.session.add(first_flag)
-    # second_flag = Flag(
-    #     application_id=seed_application_records[0]["application_id"],
-    #     **flag_config[1],
-    # )
-    # _db.session.add(second_flag)
-    # _db.session.commit()
     result = retrieve_flag_for_application(
         seed_application_records[0]["application_id"]
     )
@@ -61,8 +48,6 @@ def test_retrieve_flag_for_application(_db, seed_application_records):
         result["application_id"]
         == seed_application_records[0]["application_id"]
     )
-    # assert result["user_id"] == second_flag.user_id
-    # assert result["flag_type"] == second_flag.flag_type.name
 
 
 @pytest.mark.apps_to_insert(
@@ -130,7 +115,7 @@ def test_get_latest_flags_for_each_with_type_filter(seed_application_records):
     assert result_list[0]["flag_type"] == "QA_COMPLETED"
 
 
-@pytest.mark.skip(reason="integrate flags into seeded data")
+# @pytest.mark.skip(reason="integrate flags into seeded data")
 @pytest.mark.parametrize(
     "status_or_flag, expected_application_count",
     [
@@ -148,7 +133,7 @@ def test_get_latest_flags_for_each_with_type_filter(seed_application_records):
         ),
         (
             "FLAGGED",
-            2,
+            1,
         ),
         (
             "STOPPED",
@@ -156,7 +141,7 @@ def test_get_latest_flags_for_each_with_type_filter(seed_application_records):
         ),
         (
             "QA_COMPLETED",
-            2,
+            1,
         ),
         (
             "UNKNOWN_STATUS_OR_FLAG",
@@ -164,40 +149,37 @@ def test_get_latest_flags_for_each_with_type_filter(seed_application_records):
         ),
     ],
 )
+@pytest.mark.apps_to_insert(
+    [
+        test_input_data[0],
+        {**test_input_data[1], "flags": [flag_config[2]]},
+        {**test_input_data[2], "flags": [flag_config[1]]},
+    ]
+)
+@pytest.mark.unique_fund_round(True)
 def test_get_most_recent_metadata_statuses_for_fund_round_id(
-    _db, sample_flags, status_or_flag, expected_application_count
+    _db, status_or_flag, expected_application_count, seed_application_records
 ):
     from db.queries.assessment_records.queries import (
         get_metadata_for_fund_round_id,
     )
 
-    assessment_record_A = (
-        _db.session.query(AssessmentRecord)
-        .where(
-            AssessmentRecord.application_id
-            == "a3ec41db-3eac-4220-90db-c92dea049c01"
-        )
-        .first()
+    app_1 = get_assessment_record(
+        seed_application_records[0]["application_id"]
     )
-
-    assessment_record_A.workflow_status = Status.IN_PROGRESS
-
-    assessment_record_B = (
-        _db.session.query(AssessmentRecord)
-        .where(
-            AssessmentRecord.application_id
-            == "c3ec41db-3eac-4220-90db-c92dea049c03"
-        )
-        .first()
+    app_2 = get_assessment_record(
+        seed_application_records[1]["application_id"]
     )
-
-    assessment_record_B.workflow_status = Status.COMPLETED
+    app_1.workflow_status = Status.IN_PROGRESS
+    app_2.workflow_status = Status.COMPLETED
+    _db.session.add_all([app_1, app_2])
+    _db.session.commit()
 
     metadata = get_metadata_for_fund_round_id(
-        "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4",
-        "c603d114-5364-4474-a0c4-c41cbf4d3bbd",
+        seed_application_records[0]["fund_id"],
+        seed_application_records[0]["round_id"],
         "",
         "",
         status_or_flag,
     )
-    assert len(metadata) == expected_application_count
+    assert expected_application_count == len(metadata)

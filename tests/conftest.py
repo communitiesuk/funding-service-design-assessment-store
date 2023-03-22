@@ -31,12 +31,13 @@ def seed_application_records(
 
     inserted_applications = []
 
-    if unique_fund_round:
-        random_fund_id = str(uuid4())
-        random_round_id = str(uuid4())
+    random_fund_id = str(uuid4())
+    random_round_id = str(uuid4())
 
     for app in apps:
-        app["id"] = str(uuid4())
+
+        app_id = str(uuid4())
+        app["id"] = app_id
         if unique_fund_round:
             app["fund_id"] = random_fund_id
             app["round_id"] = random_round_id
@@ -47,11 +48,10 @@ def seed_application_records(
         inserted_application = bulk_insert_application_record(
             [app], "COF", True
         )[0]
+        app["flags"] = app_flags
         inserted_applications.append(inserted_application)
         for f in app_flags:
-            flag = Flag(
-                application_id=inserted_application["application_id"], **f
-            )
+            flag = Flag(application_id=app_id, **f)
             _db.session.add(flag)
         _db.session.commit()
 
