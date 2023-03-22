@@ -15,6 +15,10 @@ async-timeout==4.0.2
     # via
     #   -r requirements.txt
     #   redis
+async-timeout==4.0.2
+    # via
+    #   -r requirements.txt
+    #   redis
 attrs==22.1.0
     # via
     #   -r requirements.txt

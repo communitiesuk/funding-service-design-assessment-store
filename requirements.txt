@@ -12,6 +12,8 @@ alembic-utils==0.7.8
     # via -r requirements.in
 async-timeout==4.0.2
     # via redis
+async-timeout==4.0.2
+    # via redis
 attrs==22.1.0
     # via jsonschema
 babel==2.11.0
@@ -195,12 +197,17 @@ requests==2.28.2
     #   funding-service-design-utils
     #   prance
     #   python-consul
+    #   python-consul
 rfc3339-validator==0.1.4
     # via openapi-schema-validator
 rich==12.6.0
     # via funding-service-design-utils
 ruamel-yaml==0.17.21
     # via prance
+ruamel-yaml-clib==0.2.7
+    # via ruamel-yaml
+s3transfer==0.6.0
+    # via boto3
 ruamel-yaml-clib==0.2.7
     # via ruamel-yaml
 s3transfer==0.6.0

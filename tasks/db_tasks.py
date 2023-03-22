@@ -59,8 +59,6 @@ def generate_test_data(c):
 
 @task(
     help={
-@task(
-    help={
         "fundround": "The round and fund to seed applications for assessment.",
         "appcount": "The amount of applications to seed.",
     }
@@ -105,9 +103,11 @@ def seed_dev_db(c, fundround=None, appcount=None):
                     " {f' {new_line} - '.join(config.keys())}",
                 )
                 fund_round_input = str(
-                    _echo_input("Please type the fund-round to seed:")
-                    f"fund-rounds available to seed: "
-                    f"{new_line} - {f' {new_line} - '.join(config.keys())}",
+                    _echo_input(
+                        "Please type the fund-round to seed:"
+                        f"fund-rounds available to seed: "
+                        f"{new_line} - {f' {new_line} - '.join(config.keys())}"
+                    ),
                 )
                 fund_round_input = str(
                     _echo_input("Please type the " "fund-round to seed:")
@@ -118,8 +118,6 @@ def seed_dev_db(c, fundround=None, appcount=None):
                     not _echo_input(
                         f"Would you like to insert {apps} applications"
                         " for {fund_round_input}? y/n \n"
-                        f"Would you like to insert {apps} applications for "
-                        f"{fund_round_input}? y/n \n"
                     ).lower()
                     == "y"
                 )
