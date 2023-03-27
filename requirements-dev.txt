@@ -11,10 +11,6 @@ alembic==1.9.4
     #   flask-migrate
 alembic-utils==0.7.8
     # via -r requirements.txt
-async-timeout==4.0.2
-    # via
-    #   -r requirements.txt
-    #   redis
 attrs==22.1.0
     # via
     #   -r requirements.txt
@@ -99,8 +95,6 @@ deepdiff==6.2.3
     # via -r requirements-dev.in
 distlib==0.3.6
     # via virtualenv
-exceptiongroup==1.1.0
-    # via pytest
 filelock==3.8.0
     # via virtualenv
 flask==2.2.3
@@ -145,6 +139,10 @@ gitdb==4.0.9
     # via gitpython
 gitpython==3.1.29
     # via bandit
+greenlet==2.0.2
+    # via
+    #   -r requirements.txt
+    #   sqlalchemy
 gunicorn==20.1.0
     # via
     #   -r requirements.txt
@@ -353,7 +351,7 @@ pyyaml==6.0
     #   funding-service-design-utils
     #   jsonschema-spec
     #   pre-commit
-redis==4.5.2
+redis==4.5.3
     # via
     #   -r requirements.txt
     #   flask-redis
@@ -377,10 +375,6 @@ ruamel-yaml==0.17.21
     # via
     #   -r requirements.txt
     #   prance
-ruamel-yaml-clib==0.2.7
-    # via
-    #   -r requirements.txt
-    #   ruamel-yaml
 s3transfer==0.6.0
     # via
     #   -r requirements.txt
@@ -434,14 +428,6 @@ thrift==0.16.0
     # via
     #   -r requirements.txt
     #   flipper-client
-tomli==2.0.1
-    # via
-    #   -r requirements.txt
-    #   black
-    #   build
-    #   mypy
-    #   pep517
-    #   pytest
 typing-extensions==4.4.0
     # via
     #   -r requirements.txt
