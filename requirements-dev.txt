@@ -11,6 +11,8 @@ alembic==1.9.4
     #   flask-migrate
 alembic-utils==0.8.1
     # via -r requirements.txt
+async-timeout==4.0.2
+    # via redis
 attrs==22.1.0
     # via
     #   -r requirements.txt
@@ -307,7 +309,7 @@ pyrsistent==0.19.2
     # via
     #   -r requirements.txt
     #   jsonschema
-pytest==7.2.1
+pytest==7.2.2
     # via
     #   -r requirements-dev.in
     #   pytest-env
