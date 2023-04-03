@@ -10,6 +10,8 @@ alembic==1.9.4
     #   flask-migrate
 alembic-utils==0.8.1
     # via -r requirements.in
+async-timeout==4.0.2
+    # via redis
 attrs==22.1.0
     # via jsonschema
 babel==2.11.0
@@ -125,9 +127,9 @@ marshmallow==3.19.0
     # via marshmallow-sqlalchemy
 marshmallow-sqlalchemy==0.28.1
     # via -r requirements.in
-mypy==0.991
+mypy==1.1.1
     # via sqlalchemy
-mypy-extensions==0.4.3
+mypy-extensions==1.0.0
     # via mypy
 openapi-schema-validator==0.4.3
     # via openapi-spec-validator

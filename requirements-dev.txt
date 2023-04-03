@@ -11,6 +11,10 @@ alembic==1.9.4
     #   flask-migrate
 alembic-utils==0.8.1
     # via -r requirements.txt
+async-timeout==4.0.2
+    # via
+    #   -r requirements.txt
+    #   redis
 attrs==22.1.0
     # via
     #   -r requirements.txt
@@ -216,13 +220,13 @@ marshmallow==3.19.0
     #   marshmallow-sqlalchemy
 marshmallow-sqlalchemy==0.28.1
     # via -r requirements.txt
-mypy==0.991
+mypy==1.1.1
     # via
     #   -r requirements-dev.in
     #   -r requirements.txt
     #   sqlalchemy
     #   sqlalchemy-stubs
-mypy-extensions==0.4.3
+mypy-extensions==1.0.0
     # via
     #   -r requirements.txt
     #   black
