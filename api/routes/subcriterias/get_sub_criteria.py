@@ -6,21 +6,23 @@ from flask import abort
 from flask import current_app
 
 
-def get_all_subcriteria():
+def get_all_subcriteria(fund_id, round_id):
     sub_criterias = []
+    display_config = Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"]
     for section in copy.deepcopy(
-        Config.COF_R2W2_ASSESSMENT_MAPPING["scored_criteria"]
-    ) + copy.deepcopy(Config.COF_R2W2_ASSESSMENT_MAPPING["unscored_sections"]):
+        display_config["scored_criteria"]
+    ) + copy.deepcopy(display_config["unscored_sections"]):
         for sub_criteria in section["sub_criteria"]:
             sub_criterias.append(sub_criteria)
     return sub_criterias
 
 
-def return_subcriteria_from_mapping(sub_criteria_id):
+def return_subcriteria_from_mapping(sub_criteria_id, fund_id, round_id):
     current_app.logger.info(
         f"Finding sub criteria data in config for: {sub_criteria_id}"
     )
-    sub_criterias = get_all_subcriteria()
+    display_config = Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"]
+    sub_criterias = get_all_subcriteria(fund_id, round_id)
     matching_sub_criteria = list(
         filter(
             lambda sub_criteria: sub_criteria["id"] == sub_criteria_id,
@@ -31,7 +33,7 @@ def return_subcriteria_from_mapping(sub_criteria_id):
         sub_crit = matching_sub_criteria[0]
 
         is_scored = False
-        for criteria in Config.COF_R2W2_ASSESSMENT_MAPPING["scored_criteria"]:
+        for criteria in display_config["scored_criteria"]:
             for sub_criteria in criteria["sub_criteria"]:
                 if sub_criteria_id == sub_criteria["id"]:
                     is_scored = True
@@ -48,11 +50,11 @@ def return_subcriteria_from_mapping(sub_criteria_id):
         abort(404, description=msg)
 
 
-def get_themes_answers(theme_id: str) -> list[dict]:
+def get_themes_answers(theme_id: str, fund_id: str, round_id: str) -> list[dict]:
     """function takes a theme_id arg & returns a list
     of answers with given theme_id.
     """
-    sub_criterias = get_all_subcriteria()
+    sub_criterias = get_all_subcriteria(fund_id, round_id)
     try:
         return [
             theme.get("answers")
@@ -175,16 +177,16 @@ def map_single_field_answer(theme: list, questions: dict) -> str:
 
 
 def map_application_with_sub_criteria_themes(
-    application_id: str, theme_id: str
+    application_id: str, theme_id: str, fund_id: str, round_id: str
 ):
     """function maps answers from application with assessor task list
     themes through field ids.
-    Args: application_id, theme_id
+    Args: application_id, theme_id, fund_id, round_id
     Exceptions: returning custom exception along with openapi
     validation detail.
     """
 
-    themes_answers = get_themes_answers(theme_id)
+    themes_answers = get_themes_answers(theme_id, fund_id, round_id)
     application_json_blob = get_application_jsonb_blob(application_id)
     questions = get_application_form(application_json_blob)
 
