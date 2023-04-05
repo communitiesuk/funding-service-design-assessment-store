@@ -494,8 +494,9 @@ unscored_sections = [
                             {
                                 "field_id": "rFXeZo",
                                 "form_name": "upload-business-plan",
-                                "field_type": "fileUploadField",
-                                "presentation_type": "file",
+                                "path": "management-case-HFDUpa",
+                                "field_type": "clientSideFileUploadField",
+                                "presentation_type": "s3bucketPath",
                                 "question": "Business plan (document upload)",
                             },
                         ],
