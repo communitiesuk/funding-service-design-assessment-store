@@ -9,7 +9,6 @@ from fsd_utils import configclass
 
 @configclass
 class DefaultConfig:
-
     # ---------------
     #  General App Config
     # ---------------

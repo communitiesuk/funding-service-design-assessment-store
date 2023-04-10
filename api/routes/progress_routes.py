@@ -11,7 +11,6 @@ def post_progress_for_applications() -> List[dict]:
 
 
 def get_progress_for_applications(application_ids: List[str]) -> List[dict]:
-
     scored_sub_crit_list = [
         subcrit["id"]
         for crit in scored_criteria

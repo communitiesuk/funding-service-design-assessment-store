@@ -125,7 +125,6 @@ def test_gets_all_apps_for_fund_round(
 
     application_to_check = None
     for application in response_with_flag_json:
-
         if application["application_id"] == application_id:
             application_to_check = application
 
@@ -157,7 +156,6 @@ def test_gets_all_apps_for_fund_round(
 )
 @pytest.mark.apps_to_insert(test_input_data)
 def test_search(url, filter, client, seed_application_records):
-
     application = seed_application_records[0]
 
     filters = [filter(application)]

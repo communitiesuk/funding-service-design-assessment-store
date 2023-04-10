@@ -81,7 +81,6 @@ def retrieve_flags_for_applications(application_ids: list[str]) -> dict:
 
 
 def get_latest_flags_for_each(flag_type: str = None) -> dict:
-
     # Create subquery to select latest flag for applications
     subquery = (
         db.session.query(

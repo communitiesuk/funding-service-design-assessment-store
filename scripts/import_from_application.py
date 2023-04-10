@@ -16,7 +16,6 @@ parser.add_argument("--roundid", type=str)
 args = parser.parse_args()
 
 with app.app_context():
-
     applications_url = (
         CommonConfig.APPLICATION_STORE_API_HOST
         + Config.APPLICATIONS_ENDPOINT

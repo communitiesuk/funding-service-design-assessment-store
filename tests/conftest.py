@@ -40,7 +40,6 @@ def seed_application_records(
     random_round_id = str(uuid4())
 
     for app in apps:
-
         app_id = str(uuid4())
         app["id"] = app_id
         if unique_fund_round:

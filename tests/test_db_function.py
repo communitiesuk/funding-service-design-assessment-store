@@ -53,7 +53,6 @@ def test_jsonb_blob_immutable(_db, seed_application_records):
 
     try:
         with pytest.raises(sqlalchemy.exc.InternalError) as excinfo:
-
             _db.session.commit()
         assert "Cannot mutate application json" in str(excinfo.value)
     finally:
