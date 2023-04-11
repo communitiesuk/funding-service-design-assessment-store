@@ -234,7 +234,7 @@ marshmallow==3.19.0
     # via
     #   -r requirements.txt
     #   marshmallow-sqlalchemy
-marshmallow-sqlalchemy==0.28.1
+marshmallow-sqlalchemy==0.29.0
     # via -r requirements.txt
 mypy==1.4.1
     # via
@@ -459,14 +459,6 @@ thrift==0.16.0
     # via
     #   -r requirements.txt
     #   flipper-client
-tomli==2.0.1
-    # via
-    #   -r requirements.txt
-    #   black
-    #   build
-    #   mypy
-    #   pep517
-    #   pytest
 typing-extensions==4.4.0
     # via
     #   -r requirements.txt
