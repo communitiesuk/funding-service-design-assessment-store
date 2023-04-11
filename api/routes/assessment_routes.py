@@ -118,7 +118,9 @@ def get_sub_criteria_theme_answers(application_id: str, theme_id: str):
     """Function returns mapped answers from application & Sub_criteria_themes
     with given application_id and theme_id"""
     metadata = find_assessor_task_list_state(application_id)
-    return map_application_with_sub_criteria_themes(application_id, theme_id, metadata["fund_id"], metadata["round_id"])
+    return map_application_with_sub_criteria_themes(
+        application_id, theme_id, metadata["fund_id"], metadata["round_id"]
+    )
 
 
 def update_ar_status_to_completed(application_id: str):

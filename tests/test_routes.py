@@ -7,11 +7,12 @@ from api.routes.subcriterias.get_sub_criteria import (
 from db.models.assessment_record.assessment_records import AssessmentRecord
 from db.models.flags.enums import FlagType
 from db.queries.flags.queries import create_flag_for_application
+from fsd_utils import CommonConfig
 from tests._expected_responses import APPLICATION_METADATA_RESPONSE
 from tests._expected_responses import ASSESSMENTS_STATS_RESPONSE
 from tests._helpers import get_rows_by_filters
 from tests.conftest import test_input_data
-from fsd_utils import CommonConfig
+
 from ._expected_responses import subcriteria_themes_and_expected_response
 
 
@@ -280,6 +281,7 @@ def test_incorrect_theme_id(request, client, seed_application_records):
 
     assert "Incorrect theme id" in response.json["detail"]
 
+
 @pytest.mark.apps_to_insert([test_input_data[0]])
 def test_random_theme_content(seed_application_records):
     """Test the function with random theme id that maps
@@ -291,7 +293,12 @@ def test_random_theme_content(seed_application_records):
     theme_id, expected_response = random.choice(
         list(subcriteria_themes_and_expected_response.items())
     )
-    result = map_application_with_sub_criteria_themes(application_id, theme_id, CommonConfig.COF_FUND_ID, CommonConfig.COF_ROUND_2_W3_ID)
+    result = map_application_with_sub_criteria_themes(
+        application_id,
+        theme_id,
+        CommonConfig.COF_FUND_ID,
+        CommonConfig.COF_ROUND_2_W3_ID,
+    )
 
     assert result[0]["answer"] == expected_response
 
@@ -307,7 +314,10 @@ def test_convert_boolean_values(seed_application_records):
     application_id = seed_application_records[0]["application_id"]
 
     results = map_application_with_sub_criteria_themes(
-        application_id, theme_id, CommonConfig.COF_FUND_ID, CommonConfig.COF_ROUND_2_W3_ID
+        application_id,
+        theme_id,
+        CommonConfig.COF_FUND_ID,
+        CommonConfig.COF_ROUND_2_W3_ID,
     )
 
     assert [

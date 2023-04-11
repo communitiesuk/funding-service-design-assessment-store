@@ -188,6 +188,7 @@ def bulk_insert_application_record(
     db.session.commit()
     return rows
 
+
 def delete_assessment_record(app_id):
     """
     Delete the assessment record with the given ID from the database.
@@ -202,6 +203,7 @@ def delete_assessment_record(app_id):
     except Exception as e:
         print(f"Error deleting assessment record: {e}")
     return False
+
 
 def find_answer_by_key_runner(field_key: str, app_id: str) -> List[tuple]:
     """find_answer_by_key_runner Given an application id `app_id` and a field

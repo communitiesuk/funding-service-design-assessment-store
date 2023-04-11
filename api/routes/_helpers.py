@@ -1,6 +1,7 @@
-from db.models.assessment_record.enums import Status
-from config import Config
 import copy
+
+from config import Config
+from db.models.assessment_record.enums import Status
 
 
 def _derive_status(

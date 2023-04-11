@@ -2,11 +2,12 @@
 from os import environ
 from pathlib import Path
 
+from config.mappings.assessment_mapping_fund_round import (
+    fund_round_to_assessment_mapping,
+)
 from fsd_utils import CommonConfig
 from fsd_utils import configclass
-from config.mappings.assessment_mapping_fund_round import (
-    fund_round_to_assessment_mapping
-)
+
 
 @configclass
 class DefaultConfig:

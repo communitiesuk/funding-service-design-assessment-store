@@ -11,7 +11,9 @@ def get_all_subcriteria(fund_id, round_id):
     display_config = copy.deepcopy(
         Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"]
     )
-    for section in display_config["scored_criteria"] + display_config["unscored_sections"]:
+    for section in (
+        display_config["scored_criteria"] + display_config["unscored_sections"]
+    ):
         for sub_criteria in section["sub_criteria"]:
             sub_criterias.append(sub_criteria)
     return sub_criterias
@@ -52,7 +54,9 @@ def return_subcriteria_from_mapping(sub_criteria_id, fund_id, round_id):
         abort(404, description=msg)
 
 
-def get_themes_fields(theme_id: str, fund_id: str, round_id: str) -> list[dict]:
+def get_themes_fields(
+    theme_id: str, fund_id: str, round_id: str
+) -> list[dict]:
     """function takes a theme_id arg & returns a list
     of answers with given theme_id.
     """
