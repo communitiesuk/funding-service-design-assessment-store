@@ -115,10 +115,9 @@ def seed_dev_db(c, fundround=None, appcount=None):
                     ),
                 )
                 fund_round = config[fund_round_input]
-                apps = int(_echo_input(
-                    "How many applications?"
-                    f"{new_line} > "
-                    ))
+                apps = int(
+                    _echo_input("How many applications?" f"{new_line} > ")
+                )
                 choosing = (
                     not _echo_input(
                         f"Would you like to insert {apps} applications"

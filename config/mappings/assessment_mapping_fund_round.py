@@ -1,6 +1,11 @@
+# flake8: noqa
+from config.mappings.mapping_parts.cof_r2_scored_criteria import (
+    scored_criteria,
+)
+from config.mappings.mapping_parts.cof_r2_unscored_sections import (
+    unscored_sections,
+)
 from fsd_utils import CommonConfig
-from config.mappings.mapping_parts.cof_r2_scored_criteria import scored_criteria
-from config.mappings.mapping_parts.cof_r2_unscored_sections import unscored_sections
 
 cof_r2w2_assessment_mapping = {
     "schema_id": "cof_r2w2_assessment",
