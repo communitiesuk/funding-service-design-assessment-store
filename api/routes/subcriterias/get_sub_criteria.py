@@ -8,10 +8,10 @@ from flask import current_app
 
 def get_all_subcriteria(fund_id, round_id):
     sub_criterias = []
-    display_config = Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"]
-    for section in copy.deepcopy(
-        display_config["scored_criteria"]
-    ) + copy.deepcopy(display_config["unscored_sections"]):
+    display_config = copy.deepcopy(
+        Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"]
+    )
+    for section in display_config["scored_criteria"] + display_config["unscored_sections"]:
         for sub_criteria in section["sub_criteria"]:
             sub_criterias.append(sub_criteria)
     return sub_criterias
@@ -21,7 +21,9 @@ def return_subcriteria_from_mapping(sub_criteria_id, fund_id, round_id):
     current_app.logger.info(
         f"Finding sub criteria data in config for: {sub_criteria_id}"
     )
-    display_config = Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"]
+    display_config = copy.deepcopy(
+        Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"]
+    )
     sub_criterias = get_all_subcriteria(fund_id, round_id)
     matching_sub_criteria = list(
         filter(
@@ -50,7 +52,7 @@ def return_subcriteria_from_mapping(sub_criteria_id, fund_id, round_id):
         abort(404, description=msg)
 
 
-def get_themes_answers(theme_id: str, fund_id: str, round_id: str) -> list[dict]:
+def get_themes_fields(theme_id: str, fund_id: str, round_id: str) -> list[dict]:
     """function takes a theme_id arg & returns a list
     of answers with given theme_id.
     """
@@ -77,28 +79,28 @@ def get_application_form(app_json_blob):
     ]
 
 
-def convert_boolean_values(themes_answers: list[dict]) -> list[dict]:
+def convert_boolean_values(themes_fields: list[dict]) -> list[dict]:
     """function checks boolean values in themes_answers & replace
     boolean values to string. (False -> "No", True -> "Yes")
     Args:
-        themes_answers (_type_): array of dict
+        themes_fields (_type_): array of dict
     """
     current_app.logger.info("Converting boolean values to strings")
-    for answers in themes_answers:
-        if "answer" in answers.keys():
-            if answers["answer"] is False:
-                answers.update(answer="No")
-            if answers["answer"] is True:
-                answers.update(answer="Yes")
+    for field in themes_fields:
+        if "answer" in field.keys():
+            if field["answer"] is False:
+                field.update(answer="No")
+            if field["answer"] is True:
+                field.update(answer="Yes")
             else:
                 continue
 
 
 def sort_add_another_component_contents(
-    themes_answers: list[dict],
+    themes_fields: list[dict],
 ) -> list[dict]:
     """function checks for special presentation_type "heading"
-    in array of themes answers, if exists, adds question-value
+    in array of themes fields, if exists, adds question-value
     to an answer key for presentation_type "heading" theme and
     looks for presentation_type of "description" and "amount" with
     same presentation_type "heading"s field_id, retrieve words only
@@ -108,14 +110,14 @@ def sort_add_another_component_contents(
     Args:
         themes_answers (_type_): array of dict
     """
-    for heading in themes_answers:
+    for heading in themes_fields:
         try:
             if heading["presentation_type"] == "heading":
                 current_app.logger.info(
                     "mapping add-another component contents"
                 )
                 heading["answer"] = heading["question"]
-                for theme in themes_answers:
+                for theme in themes_fields:
                     if (
                         heading["field_id"] in theme.values()
                         and theme["presentation_type"] == "description"
@@ -186,12 +188,12 @@ def map_application_with_sub_criteria_themes(
     validation detail.
     """
 
-    themes_answers = get_themes_answers(theme_id, fund_id, round_id)
+    themes_fields = get_themes_fields(theme_id, fund_id, round_id)
     application_json_blob = get_application_jsonb_blob(application_id)
     questions = get_application_form(application_json_blob)
 
     current_app.logger.info("mapping subcriteria theme contents")
-    for theme in themes_answers:
+    for theme in themes_fields:
         try:
             if isinstance(theme["field_id"], list):
                 map_grouped_fields_answers(theme, questions)
@@ -201,7 +203,7 @@ def map_application_with_sub_criteria_themes(
             current_app.logger.error(f"Incorrect theme id -> {theme_id}")
             return f"Incorrect theme id -> {theme_id}"
 
-    convert_boolean_values(themes_answers)
-    sort_add_another_component_contents(themes_answers)
+    convert_boolean_values(themes_fields)
+    sort_add_another_component_contents(themes_fields)
     current_app.logger.info("Successfully mapped subcriteria theme contents")
-    return themes_answers
+    return themes_fields

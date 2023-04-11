@@ -1,5 +1,7 @@
 from db.models.assessment_record.enums import Status
 from config import Config
+import copy
+
 
 def _derive_status(
     score_map: dict, comment_map: dict, sub_criteria_id: str
@@ -18,7 +20,9 @@ def _derive_status(
 def transform_to_assessor_task_list_metadata(
     fund_id: str, round_id: str, score_map: dict, comment_map: dict
 ) -> tuple[dict, dict]:
-    mapping = Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"]
+    mapping = copy.deepcopy(
+        Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"]
+    )
 
     sections = [
         {
