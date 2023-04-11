@@ -71,7 +71,6 @@ def test_get_assessments_stats(client, seed_application_records):
 
 
 @pytest.mark.apps_to_insert([test_input_data[0].copy() for x in range(4)])
-@pytest.mark.unique_fund_round(True)
 def test_gets_all_apps_for_fund_round(
     request, client, seed_application_records
 ):
