@@ -172,7 +172,7 @@ def assessment_stats_for_fund_round_id(
                 [
                     1
                     for assessment in assessments
-                    if assessment["workflow_status"] == "ASSESSING"
+                    if assessment["workflow_status"] == "IN_PROGRESS"
                 ]
             ),
             "not_started": len(
