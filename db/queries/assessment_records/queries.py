@@ -179,21 +179,28 @@ def bulk_insert_application_record(
             index_elements=[AssessmentRecord.application_id]
         ).returning(AssessmentRecord.application_id)
 
-        application_ids_to_insert = [row['application_id'] for row in rows]
+        application_ids_to_insert = [row["application_id"] for row in rows]
         print("\n")
-        print(f'Application_ids (i.e. application rows) to insert: {application_ids_to_insert}')
+        print(
+            f"Application_ids (i.e. application rows) to insert: {application_ids_to_insert}"
+        )
         print("Attempting bulk insert of all application rows.")
         result = db.session.execute(upsert_rows_stmt)
 
-
         # Get the actual inserted application ids
         inserted_application_ids = [row.application_id for row in result]
-        print(f"Inserted application_ids (i.e. application rows) : {inserted_application_ids}")
+        print(
+            f"Inserted application_ids (i.e. application rows) : {inserted_application_ids}"
+        )
 
         # Check for conflicts and print out any pre-existing application ids
-        rejected_application_ids = list(set(application_ids_to_insert) - set(inserted_application_ids))
-        print("The following application ids already exist in the database:", rejected_application_ids)
-
+        rejected_application_ids = list(
+            set(application_ids_to_insert) - set(inserted_application_ids)
+        )
+        print(
+            "The following application ids already exist in the database:",
+            rejected_application_ids,
+        )
 
     except exc.SQLAlchemyError as e:
         db.session.rollback()

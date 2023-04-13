@@ -31,5 +31,7 @@ else:
         )
         app_store_response_json = requests.get(applications_url).json()
         bulk_insert_application_record(
-            app_store_response_json, application_type=args.app_type, is_json=True
+            app_store_response_json,
+            application_type=args.app_type,
+            is_json=True,
         )

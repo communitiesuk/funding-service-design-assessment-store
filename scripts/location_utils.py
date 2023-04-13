@@ -63,7 +63,11 @@ def retrieve_data_from_postcodes_io(postcodes: list):
     headers = {"Content-Type": "application/json"}
 
     # Send a POST request to the API with the JSON object and headers
-    result = requests.post(url="http://api.postcodes.io/postcodes", json=json_data, headers=headers)
+    result = requests.post(
+        url="http://api.postcodes.io/postcodes",
+        json=json_data,
+        headers=headers,
+    )
     if result.status_code == 200:
         return result
     else:
