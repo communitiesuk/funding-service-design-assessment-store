@@ -182,7 +182,8 @@ def bulk_insert_application_record(
         application_ids_to_insert = [row["application_id"] for row in rows]
         print("\n")
         print(
-            f"Application_ids (i.e. application rows) to insert: {application_ids_to_insert}"
+            "Application_ids (i.e. application rows) to insert:"
+            f" {application_ids_to_insert}"
         )
         print("Attempting bulk insert of all application rows.")
         result = db.session.execute(upsert_rows_stmt)
@@ -190,7 +191,8 @@ def bulk_insert_application_record(
         # Get the actual inserted application ids
         inserted_application_ids = [row.application_id for row in result]
         print(
-            f"Inserted application_ids (i.e. application rows) : {inserted_application_ids}"
+            "Inserted application_ids (i.e. application rows) :"
+            f" {inserted_application_ids}"
         )
 
         # Check for conflicts and print out any pre-existing application ids
