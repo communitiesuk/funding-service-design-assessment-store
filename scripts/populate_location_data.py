@@ -38,7 +38,8 @@ def process_locations(
 
         # extract the postcode from each application we have
         print(
-            f"Extracting postcodes from {len(application_ids)} applications for fund_id: {fund_id}, round_id: {round_id}"
+            f"Extracting postcodes from {len(application_ids)}"
+            f" applications for fund_id: {fund_id}, round_id: {round_id}"
         )
         for id in application_ids:
             app_json = get_application_jsonb_blob(id[0])
