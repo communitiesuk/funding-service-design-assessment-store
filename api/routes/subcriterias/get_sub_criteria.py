@@ -107,23 +107,25 @@ def sort_add_another_component_contents(
     in array of themes fields, if exists, adds question-value
     to an answer key for presentation_type "heading" theme and
     looks for presentation_type of "description" and "amount" with
-    same presentation_type "heading"s field_id, retrieve words only
-    from strings of answers for presentation_type "description" theme
-    & numbers only for presentation_type "amount" theme.
+    same presentation_type "heading"s field_id, retrieve words
+    onlyproject-costs from strings of answers for
+    presentation_type "description" theme& numbers only
+    for presentation_type "amount" theme.
 
     Args:
         themes_answers (_type_): array of dict
     """
-    for heading in themes_fields:
+    for field in themes_fields:
         try:
-            if heading["presentation_type"] == "heading":
+            if field["presentation_type"] == "heading":
                 current_app.logger.info(
                     "mapping add-another component contents"
                 )
-                heading["answer"] = heading["question"]
+                field["answer"] = field["question"]
+                # match each add-another answer
                 for theme in themes_fields:
                     if (
-                        heading["field_id"] in theme.values()
+                        field["field_id"] in theme.values()
                         and theme["presentation_type"] == "description"
                     ):
                         description_answer = [
@@ -133,7 +135,7 @@ def sort_add_another_component_contents(
                         theme["answer"] = description_answer
 
                     if (
-                        heading["field_id"] in theme.values()
+                        field["field_id"] in theme.values()
                         and theme["presentation_type"] == "amount"
                     ):
                         amount_answer = [
@@ -148,7 +150,7 @@ def sort_add_another_component_contents(
 
         except (KeyError, IndexError):
             current_app.logger.debug(
-                f"Answer not provided for field_id: {heading['field_id']}"
+                f"Answer not provided for field_id: {field['field_id']}"
             )
 
 
@@ -179,7 +181,20 @@ def map_single_field_answer(theme: list, questions: dict) -> str:
                 theme["field_id"] == app_fields["key"]
                 and "answer" in app_fields.keys()
             ):
-                theme["answer"] = app_fields["answer"]
+                # TODO: Refactor this work-around for the
+                # temporary state of the add-another component
+                # we check if this is of type "add-another"
+                # and convert into a consumable format
+                if (
+                    isinstance(app_fields["answer"], list)
+                    and "type-of-revenue-cost" in app_fields["answer"][0]
+                ):
+                    theme["answer"] = [
+                        f"{item['type-of-revenue-cost']} : £{item['value']}"
+                        for item in app_fields["answer"]
+                    ]
+                else:
+                    theme["answer"] = app_fields["answer"]
 
 
 def map_application_with_sub_criteria_themes(
