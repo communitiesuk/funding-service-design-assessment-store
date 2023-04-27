@@ -100,7 +100,9 @@ def convert_boolean_values(themes_fields: list[dict]) -> list[dict]:
                 continue
 
 
-def sort_add_another_component_contents(
+# supports the olf version of add-another which was
+# not scalable and did not allow the adding of N* fields
+def deprecated_sort_add_another_component_contents(
     themes_fields: list[dict],
 ) -> list[dict]:
     """function checks for special presentation_type "heading"
@@ -223,6 +225,10 @@ def map_application_with_sub_criteria_themes(
             return f"Incorrect theme id -> {theme_id}"
 
     convert_boolean_values(themes_fields)
-    sort_add_another_component_contents(themes_fields)
+    # Does not sort on the new version of add-another
+    # simply pass the object through for display by assessment frontend
+    # the old version of add-another which was not scalable and
+    # did not allow the adding of N* fields
+    deprecated_sort_add_another_component_contents(themes_fields)
     current_app.logger.info("Successfully mapped subcriteria theme contents")
     return themes_fields

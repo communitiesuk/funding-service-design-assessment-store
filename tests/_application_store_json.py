@@ -791,16 +791,19 @@ application_store_json_template = Template(
                         {
                             "answer": [
                                 {
-                                "type-of-revenue-cost": "Test1",
-                                "value": 100
+                                "Example input 1": "Test Data 1",
+                                "Example input 2": "Test Data 1",
+                                "Example input 3": "Test Data 1"
                                 },
                                 {
-                                "type-of-revenue-cost": "Test2",
-                                "value": 200
+                                "Example input 1": "Test Data 2",
+                                "Example input 2": "Test Data 2",
+                                "Example input 3": "Test Data 2"
                                 },
                                 {
-                                "type-of-revenue-cost": "Test3",
-                                "value": 50
+                                "Example input 1": "Test Data 3",
+                                "Example input 2": "Test Data 3",
+                                "Example input 3": "Test Data 3"
                                 }
                             ],
                             "key": "TzOokX",
