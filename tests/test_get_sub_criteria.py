@@ -2,7 +2,7 @@ from unittest.mock import Mock
 
 import pytest
 from api.routes.subcriterias.get_sub_criteria import (
-    sort_add_another_component_contents,
+    deprecated_sort_add_another_component_contents,
 )
 
 
@@ -31,7 +31,7 @@ from api.routes.subcriterias.get_sub_criteria import (
         ),
     ],
 )
-def test_sort_add_another_component_contents(
+def test_deprecated_sort_add_another_component_contents(
     answer_from_form_runner, expected_description, expected_amount, app
 ):
     themes_answers = [
@@ -55,14 +55,16 @@ def test_sort_add_another_component_contents(
         },
     ]
 
-    sort_add_another_component_contents(themes_answers)
+    deprecated_sort_add_another_component_contents(themes_answers)
 
     assert themes_answers[0]["answer"] == "Test Heading"
     assert themes_answers[1]["answer"] == expected_description
     assert themes_answers[2]["answer"] == expected_amount
 
 
-def test_sort_add_another_component_contents_log_when_no_answer(monkeypatch):
+def test_deprecated_sort_add_another_component_contents_log_when_no_answer(
+    monkeypatch,
+):
     current_app = Mock()
     monkeypatch.setattr(
         "api.routes.subcriterias.get_sub_criteria.current_app", current_app
@@ -86,7 +88,7 @@ def test_sort_add_another_component_contents_log_when_no_answer(monkeypatch):
         },
     ]
 
-    sort_add_another_component_contents(themes_answers)
+    deprecated_sort_add_another_component_contents(themes_answers)
 
     current_app.logger.debug.assert_called_with(
         "Answer not provided for field_id: 123"
