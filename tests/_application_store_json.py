@@ -790,23 +790,9 @@ application_store_json_template = Template(
                     "fields": [
                         {
                             "answer": [
-                                {
-                                "Example input 1": "Test Data 1",
-                                "Example input 2": "Test Data 1",
-                                "Example input 3": "Test Data 1"
-                                },
-                                {
-                                "Example input 1": "Test Data 2",
-                                "Example input 2": "Test Data 2",
-                                "Example input 3": "Test Data 2"
-                                },
-                                {
-                                "Example input 1": "Test Data 3",
-                                "Example input 2": "Test Data 3",
-                                "Example input 3": "Test Data 3"
-                                }
+                                "Income Test : £2300"
                             ],
-                            "key": "TzOokX",
+                            "key": "MultiInputField",
                             "title": "Sources of income",
                             "type": "text"
                         }
