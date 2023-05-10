@@ -61,6 +61,10 @@ answer_schema = {
                     "amount",
                     # covers:
                     # "amount (£) for add-another component question"
+                    "table",
+                    # covers:
+                    # new add-another component with children support
+                    # see https://github.com/communitiesuk/digital-form-builder/pull/161
                 ],
             },
             "question": {"type": ["string", "array"]},

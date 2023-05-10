@@ -8,24 +8,16 @@ from flask import current_app
 
 def get_all_subcriteria(fund_id, round_id):
     sub_criterias = []
-    display_config = copy.deepcopy(
-        Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"]
-    )
-    for section in (
-        display_config["scored_criteria"] + display_config["unscored_sections"]
-    ):
+    display_config = copy.deepcopy(Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"])
+    for section in display_config["scored_criteria"] + display_config["unscored_sections"]:
         for sub_criteria in section["sub_criteria"]:
             sub_criterias.append(sub_criteria)
     return sub_criterias
 
 
 def return_subcriteria_from_mapping(sub_criteria_id, fund_id, round_id):
-    current_app.logger.info(
-        f"Finding sub criteria data in config for: {sub_criteria_id}"
-    )
-    display_config = copy.deepcopy(
-        Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"]
-    )
+    current_app.logger.info(f"Finding sub criteria data in config for: {sub_criteria_id}")
+    display_config = copy.deepcopy(Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"])
     sub_criterias = get_all_subcriteria(fund_id, round_id)
     matching_sub_criteria = list(
         filter(
@@ -54,9 +46,7 @@ def return_subcriteria_from_mapping(sub_criteria_id, fund_id, round_id):
         abort(404, description=msg)
 
 
-def get_themes_fields(
-    theme_id: str, fund_id: str, round_id: str
-) -> list[dict]:
+def get_themes_fields(theme_id: str, fund_id: str, round_id: str) -> list[dict]:
     """function takes a theme_id arg & returns a list
     of answers with given theme_id.
     """
@@ -76,14 +66,10 @@ def get_themes_fields(
 def get_application_form(app_json_blob):
     """function return list of all questions from application form"""
 
-    return [
-        questions
-        for forms in app_json_blob["jsonb_blob"]["forms"]
-        for questions in forms["questions"]
-    ]
+    return [questions for forms in app_json_blob["jsonb_blob"]["forms"] for questions in forms["questions"]]
 
 
-def convert_boolean_values(themes_fields: list[dict]) -> list[dict]:
+def convert_boolean_values(themes_fields: list[dict]) -> None:
     """function checks boolean values in themes_answers & replace
     boolean values to string. (False -> "No", True -> "Yes")
     Args:
@@ -91,20 +77,19 @@ def convert_boolean_values(themes_fields: list[dict]) -> list[dict]:
     """
     current_app.logger.info("Converting boolean values to strings")
     for field in themes_fields:
-        if "answer" in field.keys():
-            if field["answer"] is False:
-                field.update(answer="No")
-            if field["answer"] is True:
-                field.update(answer="Yes")
-            else:
-                continue
+        if "answer" not in field.keys():
+            continue
+        elif field["answer"] is False:
+            field.update(answer="No")
+        elif field["answer"] is True:
+            field.update(answer="Yes")
 
 
 # supports the olf version of add-another which was
 # not scalable and did not allow the adding of N* fields
 def deprecated_sort_add_another_component_contents(
     themes_fields: list[dict],
-) -> list[dict]:
+) -> None:
     """function checks for special presentation_type "heading"
     in array of themes fields, if exists, adds question-value
     to an answer key for presentation_type "heading" theme and
@@ -119,41 +104,50 @@ def deprecated_sort_add_another_component_contents(
     """
     for field in themes_fields:
         try:
-            if field["presentation_type"] == "heading":
-                current_app.logger.info(
-                    "mapping add-another component contents"
-                )
-                field["answer"] = field["question"]
-                # match each add-another answer
-                for theme in themes_fields:
-                    if (
-                        field["field_id"] in theme.values()
-                        and theme["presentation_type"] == "description"
-                    ):
-                        description_answer = [
-                            description.rsplit(": ", 1)[0]
-                            for description in theme["answer"]
-                        ]
-                        theme["answer"] = description_answer
-
-                    if (
-                        field["field_id"] in theme.values()
-                        and theme["presentation_type"] == "amount"
-                    ):
-                        amount_answer = [
-                            amount.rsplit(": ", 1)[1]
-                            for amount in theme["answer"]
-                        ]
-
-                        theme["answer"] = amount_answer
-
-            else:
+            if field["presentation_type"] != "heading":
                 continue
 
+            field["answer"] = field["question"]
+            for theme in themes_fields:
+                if not field["field_id"] in theme.values():
+                    continue
+
+                if theme["presentation_type"] == "description":
+                    description_answer = [description.rsplit(": ", 1)[0] for description in theme["answer"]]
+                    theme["answer"] = description_answer
+
+                if theme["presentation_type"] == "amount":
+                    amount_answer = [amount.rsplit(": ", 1)[1] for amount in theme["answer"]]
+                    theme["answer"] = amount_answer
         except (KeyError, IndexError):
-            current_app.logger.debug(
-                f"Answer not provided for field_id: {field['field_id']}"
-            )
+            current_app.logger.debug(f"Answer not provided for field_id: {field['field_id']}")
+
+
+def format_add_another_component_contents(
+    themes_fields: list[dict],
+) -> list[dict]:
+    for field in themes_fields:
+        if field.get("presentation_type") != "table":
+            continue
+
+        title, table_config = field["question"]
+        field["question"] = title
+
+        component_id_to_answer_list = {}
+        for answer_container in field["answer"]:
+            for component_id, answer in answer_container.items():
+                if component_id not in component_id_to_answer_list:
+                    component_id_to_answer_list[component_id] = []
+                component_id_to_answer_list[component_id].append(answer)
+
+        table = []
+        for component_id, column_config in table_config.items():
+            answers = component_id_to_answer_list.get(component_id)
+            if answers:
+                table.append([column_config, answers])
+        field["answer"] = table
+
+    return themes_fields
 
 
 def map_grouped_fields_answers(theme: dict, questions: dict) -> tuple:
@@ -179,29 +173,20 @@ def map_single_field_answer(theme: list, questions: dict) -> str:
     and returns an answer for given field id"""
     for question in questions:
         for app_fields in question["fields"]:
-            if (
-                theme["field_id"] == app_fields["key"]
-                and "answer" in app_fields.keys()
-            ):
+            if theme["field_id"] == app_fields["key"] and "answer" in app_fields.keys():
                 # TODO: Refactor this work-around for the
                 # temporary state of the add-another component
                 # we check if this is of type "add-another"
                 # and convert into a consumable format
-                if (
-                    isinstance(app_fields["answer"], list)
-                    and "type-of-revenue-cost" in app_fields["answer"][0]
-                ):
+                if isinstance(app_fields["answer"], list) and "type-of-revenue-cost" in app_fields["answer"][0]:
                     theme["answer"] = [
-                        f"{item['type-of-revenue-cost']} : £{item['value']}"
-                        for item in app_fields["answer"]
+                        f"{item['type-of-revenue-cost']} : £{item['value']}" for item in app_fields["answer"]
                     ]
                 else:
                     theme["answer"] = app_fields["answer"]
 
 
-def map_application_with_sub_criteria_themes(
-    application_id: str, theme_id: str, fund_id: str, round_id: str
-):
+def map_application_with_sub_criteria_themes(application_id: str, theme_id: str, fund_id: str, round_id: str):
     """function maps answers from application with assessor task list
     themes through field ids.
     Args: application_id, theme_id, fund_id, round_id
@@ -225,10 +210,9 @@ def map_application_with_sub_criteria_themes(
             return f"Incorrect theme id -> {theme_id}"
 
     convert_boolean_values(themes_fields)
-    # Does not sort on the new version of add-another
-    # simply pass the object through for display by assessment frontend
-    # the old version of add-another which was not scalable and
-    # did not allow the adding of N* fields
+
+    # Does not sort on the new version of add-another simply pass the object through for display by assessment frontend
+    # the old version of add-another which was not scalable and did not allow the adding of N* fields
     deprecated_sort_add_another_component_contents(themes_fields)
-    current_app.logger.info("Successfully mapped subcriteria theme contents")
-    return themes_fields
+
+    return format_add_another_component_contents(themes_fields)
