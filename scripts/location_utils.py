@@ -27,14 +27,22 @@ def get_postcode_from_questions(form_questions) -> str:
     supplied list of application form questions.
     Returns the postcode stripped of whitespace and converted to UPPERCASE
     """
+    raw_postcode = ""
     for question in form_questions:
         for field in question["fields"]:
             if field["key"] == "yEmHpp":
                 answer = field["answer"]
                 raw_postcode = answer.split(",")[-1]
                 if raw_postcode:
-                    postcode = raw_postcode.strip().replace(" ", "").upper()
-                    return postcode
+                    raw_postcode = (
+                        raw_postcode.strip().replace(" ", "").upper()
+                    )
+
+    if not raw_postcode:
+        raw_postcode = "Not found"
+        print("The key 'yEmHpp' for Project information form not found")
+
+    return raw_postcode
 
 
 def get_all_application_ids_for_fund_round(fund_id, round_id) -> list:
@@ -76,6 +84,23 @@ def retrieve_data_from_postcodes_io(postcodes: list):
         raise Exception("Unexpected response code from postcodes.io")
 
 
+def location_not_found(error: bool = True):
+    """A function that returns a dictionary with default values
+    indicating that a location was not found.
+    Params:
+    error (bool): A boolean value of False means the location was found,
+    while a value of True means the location was not found."""
+
+    return {
+        "error": error,
+        "postcode": "Not found",
+        "country": "Not found",
+        "constituency": "Not found",
+        "region": "Not found",
+        "county": "Not found",
+    }
+
+
 def extract_location_data(json_data_item):
     """
     Takes in a single result from the postcodes.io response and extracts the f
@@ -114,7 +139,7 @@ def extract_location_data(json_data_item):
             }
         }
     else:
-        result = {postcode: {"error": True}}
+        result = {postcode: location_not_found()}
     return result
 
 
