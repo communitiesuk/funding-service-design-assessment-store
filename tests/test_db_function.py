@@ -228,19 +228,39 @@ def test_update_workflow_status_on_insert(
 
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
-def test_bulk_update_location_data(_db, seed_application_records):
+def test_bulk_update_location_data_with_valid_value(
+    _db, seed_application_records
+):
+
     application_id = seed_application_records[0]["application_id"]
 
-    test_random_append = random.randint(999, 99999)
+    # Update the AssessmentRecord table with valid location data
 
-    location = {
+    test_random_append = random.randint(999, 99999)
+    valid_location_data = {
         "error": False,
         "county": f"test_county_{test_random_append}",
         "country": f"test_country_{test_random_append}",
     }
 
+    _db.session.query(AssessmentRecord).filter_by(
+        application_id=application_id
+    ).update({AssessmentRecord.location_json_blob: valid_location_data})
+    _db.session.commit()
+
+    # Overwrite the existing location data with new location data
+    # using function "bulk_update_location_jsonb_blob" and
+    # Check if the location data has been updated in
+    # the AssessmentRecord table for the given application ID.
+
+    new_location_data = {
+        "error": False,
+        "county": f"test_county_new_{test_random_append}",
+        "country": f"test_country_new_{test_random_append}",
+    }
+
     application_ids_to_location_data = [
-        {"application_id": application_id, "location": location}
+        {"application_id": application_id, "location": new_location_data}
     ]
 
     bulk_update_location_jsonb_blob(application_ids_to_location_data)
@@ -250,4 +270,119 @@ def test_bulk_update_location_data(_db, seed_application_records):
         .where(AssessmentRecord.application_id == application_id)
         .first()
     )
-    assert location == assessment_record.location_json_blob
+
+    assert (
+        new_location_data["country"]
+        != assessment_record.location_json_blob["country"]
+    )
+    assert (
+        valid_location_data["country"]
+        == assessment_record.location_json_blob["country"]
+    )
+
+
+@pytest.mark.apps_to_insert([test_input_data[0]])
+def test_bulk_update_location_data_with_none_value(
+    _db, seed_application_records
+):
+
+    application_id = seed_application_records[0]["application_id"]
+
+    # Update the AssessmentRecord table with location None or "" and
+    # Check if the location data has been set correctly in the AssessmentRecord table.
+
+    none_location_data = random.choice([None, ""])
+    _db.session.query(AssessmentRecord).filter_by(
+        application_id=application_id
+    ).update({AssessmentRecord.location_json_blob: none_location_data})
+    _db.session.commit()
+
+    assessment_record = (
+        _db.session.query(AssessmentRecord)
+        .where(AssessmentRecord.application_id == application_id)
+        .first()
+    )
+    assert none_location_data == assessment_record.location_json_blob
+
+    # Update the AssessmentRecord table with the new location data
+    # using function "bulk_update_location_jsonb_blob" and
+    # Check if the location data has been updated correctly in
+    # the AssessmentRecord table for the given application ID.
+
+    test_random_append = random.randint(999, 99999)
+    new_location_data = {
+        "error": False,
+        "county": f"test_county_{test_random_append}",
+        "country": f"test_country_{test_random_append}",
+    }
+    application_ids_to_location_data = [
+        {"application_id": application_id, "location": new_location_data}
+    ]
+    bulk_update_location_jsonb_blob(application_ids_to_location_data)
+
+    assessment_record = (
+        _db.session.query(AssessmentRecord)
+        .where(AssessmentRecord.application_id == application_id)
+        .first()
+    )
+    assert none_location_data != assessment_record.location_json_blob
+    assert new_location_data == assessment_record.location_json_blob
+
+
+@pytest.mark.apps_to_insert([test_input_data[0]])
+def test_bulk_update_location_data_with_error_true(
+    _db, seed_application_records
+):
+    application_id = seed_application_records[0]["application_id"]
+
+    # Update the AssessmentRecord table with the error=True location data and
+    # Check if the location data has been set correctly in the AssessmentRecord table.
+
+    error_true_location_data = {
+        "error": True,
+        "county": "Not found",
+        "country": "Not found",
+    }
+    _db.session.query(AssessmentRecord).filter_by(
+        application_id=application_id
+    ).update({AssessmentRecord.location_json_blob: error_true_location_data})
+    _db.session.commit()
+    assessment_record = (
+        _db.session.query(AssessmentRecord)
+        .where(AssessmentRecord.application_id == application_id)
+        .first()
+    )
+    assert (
+        error_true_location_data["error"]
+        == assessment_record.location_json_blob["error"]
+    )
+
+    # Update the AssessmentRecord table with error=False location data
+    # using function "bulk_update_location_jsonb_blob" and
+    # Check if the location data has been updated correctly in the
+    # AssessmentRecord table for the given application ID.
+
+    test_random_append = random.randint(999, 99999)
+    new_location_data = {
+        "error": False,
+        "county": f"test_county_{test_random_append}",
+        "country": f"test_country_{test_random_append}",
+    }
+    application_ids_to_location_data = [
+        {"application_id": application_id, "location": new_location_data}
+    ]
+    bulk_update_location_jsonb_blob(application_ids_to_location_data)
+
+    assessment_record = (
+        _db.session.query(AssessmentRecord)
+        .where(AssessmentRecord.application_id == application_id)
+        .first()
+    )
+    assert (
+        error_true_location_data["error"]
+        != assessment_record.location_json_blob["error"]
+    )
+    assert (
+        new_location_data["country"]
+        == assessment_record.location_json_blob["country"]
+    )
