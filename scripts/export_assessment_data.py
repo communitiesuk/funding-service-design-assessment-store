@@ -5,7 +5,9 @@ import sys
 sys.path.insert(1, ".")
 
 from distutils.util import strtobool  # noqa: E402
-from db.queries.assessment_records.queries import get_assessment_records_by_short_id
+from db.queries.assessment_records.queries import (
+    get_assessment_records_by_short_id,
+)
 from scripts.location_utils import export_assessment_data_to_csv
 
 
@@ -29,7 +31,7 @@ def process_assessment_data(
     - Date Created: Date when the score was created.
     - Time Created: Time when the score was created.
     """
-    
+
     assessment_data = get_assessment_records_by_short_id(fund_round_short_name)
     print(f"Extracting requested data for {fund_round_short_name}")
 
@@ -41,7 +43,9 @@ def process_assessment_data(
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--fund_round_short_name", help="Provide fund_round_short_name i.e.(R2W2)", required=True
+        "--fund_round_short_name",
+        help="Provide fund_round_short_name i.e.(R2W2)",
+        required=True,
     )
     parser.add_argument(
         "--write_csv",
