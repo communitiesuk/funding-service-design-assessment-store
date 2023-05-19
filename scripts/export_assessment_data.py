@@ -13,7 +13,7 @@ def process_assessment_data(
     fund_round_short_name, write_csv: bool, csv_location
 ):
     """
-    Processes application data for a given fund round.
+    Processes assessment data for a given fund round.
 
     Parameters:
     - fund_round_short_name: Short name of the fund round i.e.(R2W2).

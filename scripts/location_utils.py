@@ -229,12 +229,12 @@ def write_locations_to_csv(
 
 def export_assessment_data_to_csv(output, filename):
     """
-    Exports application data to a CSV file, splitting the
+    Exports assessment data to a CSV file, splitting the
     'Score Date Created' column into separate 'Date Created' and
     'Time Created' columns for improved readability.
 
     Parameters:
-    - output: List of dictionaries representing the application data.
+    - output: List of dictionaries representing the assessment data.
     - filename: Name of the output CSV file.
     """
     fieldnames = [
