@@ -433,7 +433,7 @@ def get_assessment_records_by_round_id(round_id):
     """
     # Query assessment records and scores
     assessment_records = (
-        AssessmentRecord.query.filter(AssessmentRecord.round_id == round_id)
+        AssessmentRecord.query.filter(AssessmentRecord.round_id == round_id,  AssessmentRecord.workflow_status == "COMPLETED")
         .options(joinedload(AssessmentRecord.scores))
         .all()
     )
