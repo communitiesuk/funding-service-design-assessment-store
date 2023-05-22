@@ -1,24 +1,24 @@
 #!/usr/bin/env python3
-import argparse
 import sys
 
 sys.path.insert(1, ".")
 
+import argparse
 from distutils.util import strtobool  # noqa: E402
 from db.queries.assessment_records.queries import (
-    get_assessment_records_by_short_id,
+    get_assessment_records_by_round_id,
 )
 from scripts.location_utils import export_assessment_data_to_csv
 
 
 def process_assessment_data(
-    fund_round_short_name, write_csv: bool, csv_location
+    round_id, write_csv: bool, csv_location
 ):
     """
     Processes assessment data for a given fund round.
 
     Parameters:
-    - fund_round_short_name: Short name of the fund round i.e.(R2W2).
+    - round_id: UUID round_id for the fund.
     - write_csv: Boolean indicating whether to export the data to a CSV file.
     - csv_location: Location to save the CSV file (optional if write_csv is False).
 
@@ -32,19 +32,19 @@ def process_assessment_data(
     - Time Created: Time when the score was created.
     """
 
-    assessment_data = get_assessment_records_by_short_id(fund_round_short_name)
-    print(f"Extracting requested data for {fund_round_short_name}")
+    assessment_data = get_assessment_records_by_round_id(round_id)
+    print(f"Extracting requested data for {round_id}")
 
     if write_csv:
-        print(f"Writing {fund_round_short_name} data to csv file")
+        print(f"Writing {round_id} data to csv file")
         export_assessment_data_to_csv(assessment_data, csv_location)
 
 
 def init_argparse() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument(
-        "--fund_round_short_name",
-        help="Provide fund_round_short_name i.e.(R2W2)",
+        "--round_id",
+        help="Provide UUID round_id for the fund",
         required=True,
     )
     parser.add_argument(
@@ -65,7 +65,7 @@ def main() -> None:
     parser = init_argparse()
     args = parser.parse_args()
     process_assessment_data(
-        fund_round_short_name=args.fund_round_short_name,
+        round_id=args.round_id,
         csv_location=args.csv_location,
         write_csv=strtobool(args.write_csv),
     )

@@ -413,12 +413,12 @@ def update_status_to_completed(application_id):
     db.session.commit()
 
 
-def get_assessment_records_by_short_id(short_id):
+def get_assessment_records_by_round_id(round_id):
     """
-    Retrieves assessment records and scores based on the provided short ID.
+    Retrieves assessment records and scores based on the provided round ID.
 
     Parameters:
-    - short_id: Short identification code used to query assessment records i.e.(R2W2).
+    - round_id: Short identification code used to query assessment records.
 
     Returns:
     - List of dictionaries containing relevant information extracted from assessment records and scores.
@@ -434,7 +434,7 @@ def get_assessment_records_by_short_id(short_id):
     # Query assessment records and scores
     assessment_records = (
         AssessmentRecord.query.filter(
-            AssessmentRecord.short_id.like(f"%{short_id}%")
+            AssessmentRecord.round_id==round_id
         )
         .options(joinedload(AssessmentRecord.scores))
         .all()
