@@ -3,17 +3,16 @@ import sys
 
 sys.path.insert(1, ".")
 
-import argparse
+import argparse  # noqa: E402
 from distutils.util import strtobool  # noqa: E402
-from db.queries.assessment_records.queries import (
+
+from db.queries.assessment_records.queries import (  # noqa: E402
     get_assessment_records_by_round_id,
 )
-from scripts.location_utils import export_assessment_data_to_csv
+from scripts.location_utils import export_assessment_data_to_csv  # noqa
 
 
-def process_assessment_data(
-    round_id, write_csv: bool, csv_location
-):
+def process_assessment_data(round_id, write_csv: bool, csv_location):
     """
     Processes assessment data for a given fund round.
 
