@@ -39,16 +39,30 @@ The process_assessment_data function performs the processing of assessment data 
 
 During processing, the function retrieves assessment data for the specified round_id using the get_assessment_records_by_round_id function. It then proceeds to extract the requested data for the round.
 
-To run locally:
+To run locally
 
         python -m scripts.export_assessment_data --round_id c603d114-5364-4474-a0c4-c41cbf4d3bbd True --write_csv True --csv_location ./assessment_data.csv
 
-To run on paas, execute the following (starts a task using the app context etc):
+If there is data in your docker DB, you can also execute this script locally in the container
 
-        cf run-task funding-service-design-assessment-store-dev --command "python -m scripts.export_assessment_data --round_id c603d114-5364-4474-a0c4-c41cbf4d3bbd --write_csv True --csv_location /tmp/assessment_data.csv && cat /tmp/assessment_data.csv" --name export_assessment_data
+        docker exec -ti b1afa47afbd5 scripts/export_assessment_data.py --round_id c603d114-5364-4474-a0c4-c41cbf4d3bbd --write_csv True --csv_location file_location.csv        
 
-The `cat /tmp/locations.csv` prints out the csv to the logs so we can copy/paste to send to the assessors if needed (we cannot access the file system of the container spun up to run this on paas).
+**To run on paas, execute the following steps**
+*Note: Choose the app based on your specific environment. The following example pertains to the test environment.*
 
-If there is data in your docker DB, you can also execute this script locally in the container:
+1. Before running the task, make sure you're recording the logs and and DO NOT change the file name `tail.txt`   
 
-        docker exec -ti b1afa47afbd5 scripts/export_assessment_data.py --round_id c603d114-5364-4474-a0c4-c41cbf4d3bbd --write_csv True --csv_location file_location.csv
+        cf logs funding-service-design-assessment-store-test | tee ~/tail.txt
+
+1. In a new terminal window, run task as usual, give it a unique --name and DO NOT change the file name `assessment_data.csv`
+
+        cf run-task funding-service-design-assessment-store-test --command "python -m scripts.export_assessment_data --round_id c603d114-5364-4474-a0c4-c41cbf4d3bbd --write_csv True --csv_location /tmp/assessment_data.csv && cat /tmp/assessment_data.csv" --name export_assessment_data
+
+1. Wait for the logs to finish, ends at `destroying container for instance`, and Ctrl + C command on the terminal window running the cf logs to save the file. 
+1. Next, execute the "sed" command to eliminate unnecessary logs.
+
+        sed -e 's/.*] OUT//' -e '0,/Exit/I!d' -e 's/Exit.*//;/^$/d' -e '/Retrieving/,/\/tmp\/assessment_data.csv/d' ~/tail.txt > ~/final.csv
+
+1. `final.csv` will be located in the /home/<name of user> directory on the local machine, otherwise known as ~/  - alternatively, you can direct `final.csv` wherever you like, as long as you know the directory structure. ~/ will be the easiest to locate for both Macs and PCs.
+
+
