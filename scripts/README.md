@@ -61,7 +61,20 @@ If there is data in your docker DB, you can also execute this script locally in 
 1. Wait for the logs to finish, ends at `destroying container for instance`, and Ctrl + C command on the terminal window running the cf logs to save the file. 
 1. Next, execute the "sed" command to eliminate unnecessary logs.
 
+if you are on Windows sub system for Linux or Linux run the following command:
+
         sed -e 's/.*] OUT//' -e '0,/Exit/I!d' -e 's/Exit.*//;/^$/d' -e '/Retrieving/,/\/tmp\/assessment_data.csv/d' ~/tail.txt > ~/final.csv
+
+If you are on Mac, run the following command:
+
+
+        sed -e 's/.*] OUT//' -e 's/Exit.*//;/^$/d' -e '/Retrieving/,/\/tmp\/assessment_data.csv/d' ~/tail.txt > ~/final.csv
+
+*Please note this command leaves two trailing lines at the end of the file which look like this and they can be deleted manually:*
+
+        Cell 9bc96142-b9d9-435a-8dd0-723da2db27c7 stopping instance a08d8872-3035-44cc-a109-07842236fed6
+        Cell 9bc96142-b9d9-435a-8dd0-723da2db27c7 destroying container for instance a08d8872-3035-44cc-a109-07842236fed6
+        
 
 1. `final.csv` will be located in the /home/<name of user> directory on the local machine, otherwise known as ~/  - alternatively, you can direct `final.csv` wherever you like, as long as you know the directory structure. ~/ will be the easiest to locate for both Macs and PCs.
 
