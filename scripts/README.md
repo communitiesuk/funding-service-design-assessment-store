@@ -45,12 +45,12 @@ To run locally
 
 If there is data in your docker DB, you can also execute this script locally in the container
 
-        docker exec -ti b1afa47afbd5 scripts/export_assessment_data.py --round_id c603d114-5364-4474-a0c4-c41cbf4d3bbd --write_csv True --csv_location file_location.csv        
+        docker exec -ti b1afa47afbd5 scripts/export_assessment_data.py --round_id c603d114-5364-4474-a0c4-c41cbf4d3bbd --write_csv True --csv_location file_location.csv
 
 **To run on paas, execute the following steps**
 *Note: Choose the app based on your specific environment. The following example pertains to the test environment.*
 
-1. Before running the task, make sure you're recording the logs and and DO NOT change the file name `tail.txt`   
+1. Before running the task, make sure you're recording the logs and and DO NOT change the file name `tail.txt`
 
         cf logs funding-service-design-assessment-store-test | tee ~/tail.txt
 
@@ -58,7 +58,7 @@ If there is data in your docker DB, you can also execute this script locally in 
 
         cf run-task funding-service-design-assessment-store-test --command "python -m scripts.export_assessment_data --round_id c603d114-5364-4474-a0c4-c41cbf4d3bbd --write_csv True --csv_location /tmp/assessment_data.csv && cat /tmp/assessment_data.csv" --name export_assessment_data
 
-1. Wait for the logs to finish, ends at `destroying container for instance`, and Ctrl + C command on the terminal window running the cf logs to save the file. 
+1. Wait for the logs to finish, ends at `destroying container for instance`, and Ctrl + C command on the terminal window running the cf logs to save the file.
 1. Next, execute the "sed" command to eliminate unnecessary logs.
 
 if you are on Windows sub system for Linux or Linux run the following command:
@@ -74,8 +74,6 @@ If you are on Mac, run the following command:
 
         Cell 9bc96142-b9d9-435a-8dd0-723da2db27c7 stopping instance a08d8872-3035-44cc-a109-07842236fed6
         Cell 9bc96142-b9d9-435a-8dd0-723da2db27c7 destroying container for instance a08d8872-3035-44cc-a109-07842236fed6
-        
+
 
 1. `final.csv` will be located in the /home/<name of user> directory on the local machine, otherwise known as ~/  - alternatively, you can direct `final.csv` wherever you like, as long as you know the directory structure. ~/ will be the easiest to locate for both Macs and PCs.
-
-
