@@ -99,7 +99,7 @@ def convert_boolean_values(themes_fields: list[dict]) -> None:
             field.update(answer="Yes")
 
 
-# supports the olf version of add-another which was
+# supports the old version of add-another which was
 # not scalable and did not allow the adding of N* fields
 def deprecated_sort_add_another_component_contents(
     themes_fields: list[dict],
