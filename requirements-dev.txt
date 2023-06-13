@@ -93,7 +93,7 @@ commonmark==0.9.1
     #   rich
 connexion==2.14.2
     # via -r requirements.txt
-cryptography==39.0.1
+cryptography==41.0.0
     # via
     #   -r requirements.txt
     #   pyjwt
@@ -459,14 +459,6 @@ thrift==0.16.0
     # via
     #   -r requirements.txt
     #   flipper-client
-tomli==2.0.1
-    # via
-    #   -r requirements.txt
-    #   black
-    #   build
-    #   mypy
-    #   pep517
-    #   pytest
 typing-extensions==4.4.0
     # via
     #   -r requirements.txt
