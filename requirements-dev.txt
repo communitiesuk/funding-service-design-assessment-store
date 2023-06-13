@@ -253,7 +253,7 @@ openapi-schema-validator==0.4.3
     # via
     #   -r requirements.txt
     #   openapi-spec-validator
-openapi-spec-validator==0.5.5
+openapi-spec-validator==0.5.7
     # via -r requirements.txt
 ordered-set==4.1.0
     # via deepdiff
@@ -459,14 +459,6 @@ thrift==0.16.0
     # via
     #   -r requirements.txt
     #   flipper-client
-tomli==2.0.1
-    # via
-    #   -r requirements.txt
-    #   black
-    #   build
-    #   mypy
-    #   pep517
-    #   pytest
 typing-extensions==4.4.0
     # via
     #   -r requirements.txt

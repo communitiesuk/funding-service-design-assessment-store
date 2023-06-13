@@ -141,7 +141,7 @@ mypy-extensions==1.0.0
     # via mypy
 openapi-schema-validator==0.4.3
     # via openapi-spec-validator
-openapi-spec-validator==0.5.5
+openapi-spec-validator==0.5.7
     # via -r requirements.in
 packaging==21.3
     # via
@@ -252,8 +252,6 @@ swagger-ui-bundle==0.0.9
     # via -r requirements.in
 thrift==0.16.0
     # via flipper-client
-tomli==2.0.1
-    # via mypy
 typing-extensions==4.4.0
     # via
     #   alembic-utils
