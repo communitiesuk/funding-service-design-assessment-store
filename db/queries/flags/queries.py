@@ -48,6 +48,13 @@ def retrieve_flag_for_application(application_id: str) -> dict:
     return flag_metadata
 
 
+def retrieve_all_flags_for_application(application_id: str) -> list[dict]:
+    flags = Flag.query.filter(Flag.application_id == application_id).all()
+    metadata_serialiser = FlagMetadata()
+    flag_metadata_list = [metadata_serialiser.dump(flag) for flag in flags]
+    return flag_metadata_list
+
+
 def find_qa_complete_flags(application_ids: Iterable[str]) -> dict[str, bool]:
     flags = Flag.query.filter(
         Flag.application_id.in_(application_ids),
