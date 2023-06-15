@@ -16,12 +16,17 @@ from db.queries.assessment_records.queries import get_application_jsonb_blob
 from db.queries.assessment_records.queries import (
     get_assessment_sub_critera_state,
 )
+from db.queries.assessment_records.queries import get_metadata_for_application
 from db.queries.assessment_records.queries import update_status_to_completed
 from db.queries.comments.queries import get_sub_criteria_to_has_comment_map
 from db.queries.flags.queries import find_qa_complete_flag_for_applications
 from db.queries.flags.queries import get_latest_flags_for_each
 from db.queries.scores.queries import get_sub_criteria_to_latest_score_map
 from flask import current_app
+
+
+def assessment_metadata_for_application_id(application_id: str) -> Dict:
+    return get_metadata_for_application(application_id)
 
 
 def all_assessments_for_fund_round_id(

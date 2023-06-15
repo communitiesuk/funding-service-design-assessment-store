@@ -29,6 +29,22 @@ from sqlalchemy.orm import joinedload
 from sqlalchemy.orm import load_only
 
 
+def get_metadata_for_application(
+    application_id: str,
+) -> List[Dict]:
+    statement = (
+        select(AssessmentRecord)
+        .options(defer(AssessmentRecord.jsonb_blob))
+        .where(AssessmentRecord.application_id == application_id)
+    )
+
+    result = db.session.scalar(statement)
+    metadata_serializer = AssessmentRecordMetadata(
+        exclude=("jsonb_blob", "application_json_md5")
+    )
+    return metadata_serializer.dump(result)
+
+
 def get_metadata_for_fund_round_id(
     fund_id: str,
     round_id: str,
