@@ -5,6 +5,12 @@ from config.mappings.cof_mapping_parts.cof_r2_scored_criteria import (
 from config.mappings.cof_mapping_parts.cof_r2_unscored_sections import (
     unscored_sections as cof_unscored_sections,
 )
+from config.mappings.nstf_mapping_parts.nstf_r2_scored_criteria import (
+    scored_criteria as nstf_scored_criteria,
+)
+from config.mappings.nstf_mapping_parts.nstf_r2_unscored_sections import (
+    unscored_sections as nstf_unscored_sections,
+)
 
 cof_r2w2_assessment_mapping = {
     "schema_id": "cof_r2w2_assessment",
@@ -20,8 +26,8 @@ cof_r2w3_assessment_mapping = {
 
 nstf_r2_assessment_mapping = {
     "schema_id": "nstf_r2_assessment",
-    "unscored_sections": cof_unscored_sections,
-    "scored_criteria": cof_scored_criteria,
+    "unscored_sections": nstf_unscored_sections,
+    "scored_criteria": nstf_scored_criteria,
 }
 
 COF_FUND_ID = "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4"
