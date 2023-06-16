@@ -212,8 +212,14 @@ scored_criteria = [
                             #     "question": [
                             #         "Capital costs",
                             #         {
-                            #             "kSZqfv": "Describe the cost",
-                            #             "zJAnwc": "Amount in pounds",
+                            #             "kSZqfv": {
+                            #                 "column_title": "Describe the cost",
+                            #                 "type": "TextField",
+                            #             },
+                            #             "zJAnwc": {
+                            #                 "column_title": "Amount in pounds",
+                            #                 "type": "NumberField",
+                            #             },
                             #         }
                             #     ],
                             # },
@@ -253,9 +259,15 @@ scored_criteria = [
                             #     "question": [
                             #         "Revenue costs",
                             #         {
-                            #             "kSZqfv": "Describe the cost",
-                            #             "zJAnwc": "Amount in pounds",
-                            #         }
+                            #             "TkDxmD": {
+                            #                 "column_title": "Describe the cost",
+                            #                 "type": "TextField",
+                            #             },
+                            #             "zbqnvm": {
+                            #                 "column_title": "Amount in pounds",
+                            #                 "type": "NumberField",
+                            #             },
+                            #         },
                             #     ],
                             # },
                             {
@@ -294,9 +306,15 @@ scored_criteria = [
                             #     "question": [
                             #         "Secured match funding",
                             #         {
-                            #             "kietnW": "Source of secured funding",
-                            #             "lwrCQz": "Amount in pounds",
-                            #         }
+                            #             "kietnW": {
+                            #                 "column_title": "Source of secured funding",
+                            #                 "type": "TextField",
+                            #             },
+                            #             "lwrCQz": {
+                            #                 "column_title": "Amount in pounds",
+                            #                 "type": "NumberField",
+                            #             },
+                            #         },
                             #     ],
                             # },
                             {
@@ -335,9 +353,15 @@ scored_criteria = [
                             #     "question": [
                             #         "Unsecured match funding",
                             #         {
-                            #             "FwPOFx": "Source of unsecured match funding",
-                            #             "SPGORz": "Amount in pounds",
-                            #         }
+                            #             "FwPOFx": {
+                            #                 "column_title": "Source of unsecured match funding",
+                            #                 "type": "TextField",
+                            #             },
+                            #             "SPGORz": {
+                            #                 "column_title": "Amount in pounds",
+                            #                 "type": "NumberField",
+                            #             },
+                            #         },
                             #     ],
                             # },
                             {
@@ -435,9 +459,15 @@ scored_criteria = [
                             #     "question": [
                             #         "Sources of income",
                             #         {
-                            #             "GpLJDu": "Source",
-                            #             "RRzTlc": "Amount in pounds",
-                            #         }
+                            #             "GpLJDu": {
+                            #                 "column_title": "Source",
+                            #                 "type": "TextField",
+                            #             },
+                            #             "RRzTlc": {
+                            #                 "column_title": "Amount in pounds",
+                            #                 "type": "NumberField",
+                            #             },
+                            #         },
                             #     ],
                             # },
                             {
@@ -469,9 +499,15 @@ scored_criteria = [
                             #     "question": [
                             #         "Running costs",
                             #         {
-                            #             "BZIEKw": "Running cost",
-                            #             "XbgRGb": "Amount in pounds",
-                            #         }
+                            #             "BZIEKw": {
+                            #                 "column_title": "Running cost",
+                            #                 "type": "TextField",
+                            #             },
+                            #             "XbgRGb": {
+                            #                 "column_title": "Amount in pounds",
+                            #                 "type": "NumberField",
+                            #             },
+                            #         },
                             #     ],
                             # },
                         ],
