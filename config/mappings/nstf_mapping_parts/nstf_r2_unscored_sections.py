@@ -31,21 +31,21 @@ unscored_sections = [
                             {
                                 "field_id": "AVShTf",
                                 "form_name": "organisation-information-ns",
-                                "field_type": "TextField",
+                                "field_type": "textField",
                                 "presentation_type": "text",
                                 "question": "Which region of England do you work in?",
                             },
                             {
                                 "field_id": "BwbIlM",
                                 "form_name": "organisation-information-ns",
-                                "field_type": "FreeTextField",
+                                "field_type": "freeTextField",
                                 "presentation_type": "free_text",
                                 "question": "What is your organisation's main purpose?",
                             },
                             {
                                 "field_id": "RxbebZ",
                                 "form_name": "organisation-information-ns",
-                                "field_type": "FreeTextField",
+                                "field_type": "freeTextField",
                                 "presentation_type": "free_text",
                                 "question": "What are your organisation's charitable objects?",
                             },
@@ -59,7 +59,7 @@ unscored_sections = [
                             {
                                 "field_id": "NENGMj",
                                 "form_name": "organisation-information-ns",
-                                "field_type": "RadiosField",
+                                "field_type": "radiosField",
                                 "presentation_type": "text",
                                 "question": "Which membership organisations are you a member of?",
                             },
