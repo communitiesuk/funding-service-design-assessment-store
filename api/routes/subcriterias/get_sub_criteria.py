@@ -1,4 +1,5 @@
 import copy
+from collections import defaultdict
 
 from config import Config
 from db.queries.assessment_records.queries import get_application_jsonb_blob
@@ -144,6 +145,27 @@ def deprecated_sort_add_another_component_contents(
             )
 
 
+# All in use children of MultiInputField in cofr3/nstfr2
+# If we use or add new children, we may need to add support
+_MULTI_INPUT_FORMAT_FRONTEND = defaultdict(
+    lambda: "text",
+    {
+        "NumberField": "currency",
+        "MultilineTextField": "html",
+        # the default should handle these, but let's be explicit
+        "RadioField": "text",
+        "TextField": "text",
+        "MonthYearField": "text",
+        "YesNoField": "text",
+    },
+)
+
+_MULTI_INPUT_FRE_FRONTEND_FORMATTERS = {
+    "RadioField": lambda x: x.capitalize(),
+    "YesNoField": lambda x: "Yes" if bool(x) else "No",
+}
+
+
 def format_add_another_component_contents(
     themes_fields: list[dict],
 ) -> list[dict]:
@@ -163,9 +185,21 @@ def format_add_another_component_contents(
 
         table = []
         for component_id, column_config in table_config.items():
+            title = column_config["column_title"]
             answers = component_id_to_answer_list.get(component_id)
-            if answers:
-                table.append([column_config, answers])
+
+            frontend_format = _MULTI_INPUT_FORMAT_FRONTEND.get(
+                column_config["type"], "text"
+            )
+            pre_frontend_formatter = _MULTI_INPUT_FRE_FRONTEND_FORMATTERS.get(
+                column_config["type"], lambda x: x
+            )
+            formatted_answers = [
+                pre_frontend_formatter(answer) for answer in answers
+            ]
+
+            if formatted_answers:
+                table.append([title, formatted_answers, frontend_format])
         field["answer"] = table
 
     return themes_fields

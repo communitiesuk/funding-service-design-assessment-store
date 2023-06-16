@@ -66,44 +66,90 @@ def test_deprecated_sort_add_another_component_contents(
 
 
 @pytest.mark.parametrize(
-    "answer_from_form_runner, expected_nested_table_tuple",
+    "pre_question, post_question, answer_from_form_runner, expected_nested_table_tuple",
     [
         (
-            [
-                {"FwPOFx": "test", "SPGORz": 12},
-                {"FwPOFx": "323", "SPGORz": 42442},
+            [  # pre_question
+                "Question title",
+                {
+                    "aaaaaa": {
+                        "column_title": "Example text child",
+                        "type": "TextField",
+                    },
+                    "bbbbbb": {
+                        "column_title": "Example currency child",
+                        "type": "NumberField",
+                    },
+                    "cccccc": {
+                        "column_title": "Example month year child",
+                        "type": "MonthYearField",
+                    },
+                    "dddddd": {
+                        "column_title": "Example yes no child",
+                        "type": "YesNoField",
+                    },
+                    "eeeeee": {
+                        "column_title": "Example radio child",
+                        "type": "RadioField",
+                    },
+                    "ffffff": {
+                        "column_title": "Example multiline text child",
+                        "type": "MultilineTextField",
+                    },
+                },
             ],
-            [
-                ["Description", ["test", "323"]],
-                ["Amount", [12, 42442]],
+            "Question title",  # post_question
+            [  # answer_from_form_runner
+                {
+                    "aaaaaa": "test1",
+                    "bbbbbb": 1,
+                    "cccccc": "2020-01",
+                    "dddddd": True,
+                    "eeeeee": "low",
+                    "ffffff": "test\r\n1",
+                },
+                {
+                    "aaaaaa": "test2",
+                    "bbbbbb": 2,
+                    "cccccc": "2020-02",
+                    "dddddd": False,
+                    "eeeeee": "high",
+                    "ffffff": "test\r\n2",
+                },
             ],
-        ),
-        (
-            [],
-            [],
+            [  # expected_nested_table_tuple
+                ["Example text child", ["test1", "test2"], "text"],
+                ["Example currency child", [1, 2], "currency"],
+                ["Example month year child", ["2020-01", "2020-02"], "text"],
+                ["Example yes no child", ["Yes", "No"], "text"],
+                ["Example radio child", ["Low", "High"], "text"],
+                [
+                    "Example multiline text child",
+                    ["test\r\n1", "test\r\n2"],
+                    "html",
+                ],
+            ],
         ),
     ],
 )
 def test_format_add_another_component_contents(
-    answer_from_form_runner, expected_nested_table_tuple, app
+    pre_question,
+    post_question,
+    answer_from_form_runner,
+    expected_nested_table_tuple,
+    app,
 ):
     themes_answer = {
         "field_id": "NdFwgy",
         "field_type": "multiInputField",
         "presentation_type": "table",
-        "question": [
-            "Capital costs",
-            {
-                "FwPOFx": "Description",
-                "SPGORz": "Amount",
-            },
-        ],
+        "question": pre_question,
         "answer": answer_from_form_runner,
     }
 
     (theme_answer,) = format_add_another_component_contents([themes_answer])
 
-    assert theme_answer["question"] == "Capital costs"
+    assert theme_answer["question"] == post_question
     assert theme_answer["answer"] == expected_nested_table_tuple
 
 
