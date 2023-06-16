@@ -107,8 +107,13 @@ unscored_sections = [
                                 "field_id": "ILVEOG",
                                 "form_name": "organisation-type-ns",
                                 "field_type": "multiInputField",
-                                "presentation_type": "list",
-                                "question": "Names of trustees or committee members",
+                                "presentation_type": "table",
+                                "question": [
+                                    "Names of trustees or committee members",
+                                    {
+                                        "mrCotx": "Full name",
+                                    },
+                                ],
                             },
                             {
                                 "field_id": "TgBzyM",
@@ -243,8 +248,14 @@ unscored_sections = [
                                 "field_id": "oxMLrb",
                                 "form_name": "joint-applications-ns",
                                 "field_type": "multiInputField",
-                                "presentation_type": "list",
-                                "question": "Partner organisation details",
+                                "presentation_type": "table",
+                                "question": [
+                                    "Partner organisation details",
+                                    {
+                                        "EFlBMr": "Partner organisation name",
+                                        "JFEJVf": "Tell us about your partnership and how you plan to work together",
+                                    },
+                                ],
                             },
                         ],
                     }

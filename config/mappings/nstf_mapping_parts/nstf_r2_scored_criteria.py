@@ -203,8 +203,14 @@ scored_criteria = [
                                 "field_id": "kRxOHF",
                                 "form_name": "objectives-and-activities-ns",
                                 "field_type": "multiInputField",
-                                "presentation_type": "list",
-                                "question": "Objectives and activities",
+                                "presentation_type": "table",
+                                "question": [
+                                    "Objectives and activities",
+                                    {
+                                        "FbWEBY": "Objective",
+                                        "RXrpzV": "Activities that will help you achieve the objective",
+                                    },
+                                ],
                             },
                         ],
                     },
@@ -216,8 +222,14 @@ scored_criteria = [
                                 "field_id": "sXlkAm",
                                 "form_name": "project-milestones-ns",
                                 "field_type": "multiInputField",
-                                "presentation_type": "list",
-                                "question": "Proposal milestones",
+                                "presentation_type": "table",
+                                "question": [
+                                    "Proposal milestones",
+                                    {
+                                        "fFIuPP": "Milestone",
+                                        "PrulfI": "When will you reach this milestone?",
+                                    },
+                                ],
                             }
                         ],
                     },
@@ -480,8 +492,15 @@ scored_criteria = [
                                 "field_id": "xDpgOK",
                                 "form_name": "risk-and-deliverability-ns",
                                 "field_type": "multiInputField",
-                                "presentation_type": "list",
-                                "question": "Risks to the proposal",
+                                "presentation_type": "table",
+                                "question": [
+                                    "Risks to the proposal",
+                                    {
+                                        "dmKRCF": "Risk",
+                                        "GVoNOE": "Likelihood",
+                                        "SRHsAx": "Proposed mitigation",
+                                    },
+                                ],
                             },
                         ],
                     },
@@ -527,8 +546,16 @@ scored_criteria = [
                                 "field_id": "mCbbyN",
                                 "form_name": "funding-required-ns",
                                 "field_type": "multiInputField",
-                                "presentation_type": "list",
-                                "question": "Revenue funding (add another)",
+                                "presentation_type": "table",
+                                "question": [
+                                    "Revenue funding (add another)",
+                                    {
+                                        "dpDFgB": "Item of expenditure",
+                                        "iZdZrr": "Amount",
+                                        "leIxEX": "Financial year",
+                                        "TrTaZQ": "How the expenditure is calculated (optional)",
+                                    },
+                                ],
                             },
                             {
                                 "field_id": "SGjmSM",
@@ -548,8 +575,16 @@ scored_criteria = [
                                 "field_id": "XsAoTv",
                                 "form_name": "funding-required-ns",
                                 "field_type": "multiInputField",
-                                "presentation_type": "list",
-                                "question": "Capital costs (add another)",
+                                "presentation_type": "table",
+                                "question": [
+                                    "Capital costs (add another)",
+                                    {
+                                        "cpFthG": "Item of expenditure",
+                                        "JtBjFp": "Amount",
+                                        "mmwzGc": "Financial year",
+                                        "pMffVz": "How the expenditure is calculated (optional)",
+                                    },
+                                ],
                             },
                         ],
                     },
@@ -624,8 +659,14 @@ scored_criteria = [
                                 "field_id": "SQEpBt",
                                 "form_name": "building-works-ns",
                                 "field_type": "multiInputField",
-                                "presentation_type": "list",
-                                "question": "Details of professional advisors",
+                                "presentation_type": "table",
+                                "question": [
+                                    "Details of professional advisors",
+                                    {
+                                        "cbYcqS": "What is their job role?",
+                                        "muRwiL": "Organisation name",
+                                    },
+                                ],
                             },
                             {
                                 "field_id": "rYAgMN",
@@ -645,8 +686,13 @@ scored_criteria = [
                                 "field_id": "UDhjLS",
                                 "form_name": "building-works-ns",
                                 "field_type": "multiInputField",
-                                "presentation_type": "list",
-                                "question": "Which contractors will you use to carry out this work?",
+                                "presentation_type": "table",
+                                "question": [
+                                    "Which contractors will you use to carry out this work?",
+                                    {
+                                        "CZZYvE": "Which contractors will you use to carry out this work?",
+                                    },
+                                ],
                             },
                             {
                                 "field_id": "NOMwBb",
@@ -742,8 +788,17 @@ scored_criteria = [
                                 "field_id": "uuyBff",
                                 "form_name": "match-funding-ns",
                                 "field_type": "multiInputField",
-                                "presentation_type": "list",
-                                "question": "Match funding (add another)",
+                                "presentation_type": "table",
+                                "question": [
+                                    "Match funding (add another)",
+                                    {
+                                        "AfAKxk": "Funding source",
+                                        "CrcLtW": "Amount",
+                                        "ndySbC": "Financial year",
+                                        "pATWyM": "Which type of funding is it?",
+                                        "sIFBGc": "Is the funding secured?",
+                                    },
+                                ],
                             },
                         ],
                     },
