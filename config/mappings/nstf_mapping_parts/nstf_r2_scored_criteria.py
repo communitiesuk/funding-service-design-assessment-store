@@ -207,8 +207,14 @@ scored_criteria = [
                                 "question": [
                                     "Objectives and activities",
                                     {
-                                        "FbWEBY": "Objective",
-                                        "RXrpzV": "Activities that will help you achieve the objective",
+                                        "FbWEBY": {
+                                            "column_title": "Objective",
+                                            "type": "TextField",
+                                        },
+                                        "RXrpzV": {
+                                            "column_title": "Activities that will help you achieve the objective",
+                                            "type": "MultilineTextField",
+                                        },
                                     },
                                 ],
                             },
@@ -226,8 +232,14 @@ scored_criteria = [
                                 "question": [
                                     "Proposal milestones",
                                     {
-                                        "fFIuPP": "Milestone",
-                                        "PrulfI": "When will you reach this milestone?",
+                                        "fFIuPP": {
+                                            "column_title": "Milestone",
+                                            "type": "MultilineTextField",
+                                        },
+                                        "PrulfI": {
+                                            "column_title": "When will you reach this milestone?",
+                                            "type": "MonthYearField",
+                                        },
                                     },
                                 ],
                             }
@@ -496,9 +508,18 @@ scored_criteria = [
                                 "question": [
                                     "Risks to the proposal",
                                     {
-                                        "dmKRCF": "Risk",
-                                        "GVoNOE": "Likelihood",
-                                        "SRHsAx": "Proposed mitigation",
+                                        "dmKRCF": {
+                                            "column_title": "Risk",
+                                            "type": "MultilineTextField",
+                                        },
+                                        "GVoNOE": {
+                                            "column_title": "Likelihood",
+                                            "type": "RadiosField",
+                                        },
+                                        "SRHsAx": {
+                                            "column_title": "Proposed mitigation",
+                                            "type": "MultilineTextField",
+                                        },
                                     },
                                 ],
                             },
@@ -550,10 +571,22 @@ scored_criteria = [
                                 "question": [
                                     "Revenue funding (add another)",
                                     {
-                                        "dpDFgB": "Item of expenditure",
-                                        "iZdZrr": "Amount",
-                                        "leIxEX": "Financial year",
-                                        "TrTaZQ": "How the expenditure is calculated (optional)",
+                                        "dpDFgB": {
+                                            "column_title": "Item of expenditure",
+                                            "type": "TextField",
+                                        },
+                                        "iZdZrr": {
+                                            "column_title": "Amount",
+                                            "type": "NumberField",
+                                        },
+                                        "leIxEX": {
+                                            "column_title": "Financial year",
+                                            "type": "RadiosField",
+                                        },
+                                        "TrTaZQ": {
+                                            "column_title": "How the expenditure is calculated (optional)",
+                                            "type": "TextField",
+                                        },
                                     },
                                 ],
                             },
@@ -579,10 +612,22 @@ scored_criteria = [
                                 "question": [
                                     "Capital costs (add another)",
                                     {
-                                        "cpFthG": "Item of expenditure",
-                                        "JtBjFp": "Amount",
-                                        "mmwzGc": "Financial year",
-                                        "pMffVz": "How the expenditure is calculated (optional)",
+                                        "cpFthG": {
+                                            "column_title": "Item of expenditure",
+                                            "type": "TextField",
+                                        },
+                                        "JtBjFp": {
+                                            "column_title": "Amount",
+                                            "type": "NumberField",
+                                        },
+                                        "mmwzGc": {
+                                            "column_title": "Financial year",
+                                            "type": "RadiosField",
+                                        },
+                                        "pMffVz": {
+                                            "column_title": "How the expenditure is calculated (optional)",
+                                            "type": "TextField",
+                                        },
                                     },
                                 ],
                             },
@@ -663,8 +708,14 @@ scored_criteria = [
                                 "question": [
                                     "Details of professional advisors",
                                     {
-                                        "cbYcqS": "What is their job role?",
-                                        "muRwiL": "Organisation name",
+                                        "cbYcqS": {
+                                            "column_title": "What is their job role?",
+                                            "type": "TextField",
+                                        },
+                                        "muRwiL": {
+                                            "column_title": "Organisation name",
+                                            "type": "TextField",
+                                        },
                                     },
                                 ],
                             },
@@ -690,7 +741,10 @@ scored_criteria = [
                                 "question": [
                                     "Which contractors will you use to carry out this work?",
                                     {
-                                        "CZZYvE": "Which contractors will you use to carry out this work?",
+                                        "CZZYvE": {
+                                            "column_title": "Which contractors will you use to carry out this work?",
+                                            "type": "TextField",
+                                        },
                                     },
                                 ],
                             },
@@ -792,11 +846,26 @@ scored_criteria = [
                                 "question": [
                                     "Match funding (add another)",
                                     {
-                                        "AfAKxk": "Funding source",
-                                        "CrcLtW": "Amount",
-                                        "ndySbC": "Financial year",
-                                        "pATWyM": "Which type of funding is it?",
-                                        "sIFBGc": "Is the funding secured?",
+                                        "AfAKxk": {
+                                            "column_title": "Funding source",
+                                            "type": "TextField",
+                                        },
+                                        "CrcLtW": {
+                                            "column_title": "Amount",
+                                            "type": "NumberField",
+                                        },
+                                        "ndySbC": {
+                                            "column_title": "Financial year",
+                                            "type": "RadiosField",
+                                        },
+                                        "pATWyM": {
+                                            "column_title": "Which type of funding is it?",
+                                            "type": "RadiosField",
+                                        },
+                                        "sIFBGc": {
+                                            "column_title": "Is the funding secured?",
+                                            "type": "YesNoField",
+                                        },
                                     },
                                 ],
                             },

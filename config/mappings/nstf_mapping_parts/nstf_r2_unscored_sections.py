@@ -111,7 +111,10 @@ unscored_sections = [
                                 "question": [
                                     "Names of trustees or committee members",
                                     {
-                                        "mrCotx": "Full name",
+                                        "mrCotx": {
+                                            "column_title": "Full name",
+                                            "type": "TextField",
+                                        },
                                     },
                                 ],
                             },
@@ -252,8 +255,14 @@ unscored_sections = [
                                 "question": [
                                     "Partner organisation details",
                                     {
-                                        "EFlBMr": "Partner organisation name",
-                                        "JFEJVf": "Tell us about your partnership and how you plan to work together",
+                                        "EFlBMr": {
+                                            "column_title": "Partner organisation name",
+                                            "type": "TextField",
+                                        },
+                                        "JFEJVf": {
+                                            "column_title": "Tell us about your partnership and how you plan to work together",
+                                            "type": "MultilineTextField",
+                                        },
                                     },
                                 ],
                             },
