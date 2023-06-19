@@ -51,6 +51,7 @@ def get_metadata_for_fund_round_id(
     search_term: str = "",
     asset_type: str = "",
     status: str = "",
+    countries: List[str] = [],
 ) -> List[Dict]:
     """get_metadata_for_fund_round_id Executes a query on assessment records
     which returns all rows matching the given fund_id and round_id. Has
@@ -80,6 +81,16 @@ def get_metadata_for_fund_round_id(
         statement = statement.where(
             AssessmentRecord.short_id.like(f"%{search_term}%")
             | AssessmentRecord.project_name.ilike(f"%{search_term}%")
+        )
+
+    if "ALL" not in countries and countries:
+        current_app.logger.info(
+            f"Performing assessment search on countries: {countries}."
+        )
+        statement = statement.where(
+            AssessmentRecord.location_json_blob["country"].astext.ilike(
+                func.any_(countries)
+            )
         )
 
     if asset_type != "ALL" and asset_type != "":
