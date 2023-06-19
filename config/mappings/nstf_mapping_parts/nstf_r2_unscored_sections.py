@@ -131,6 +131,7 @@ unscored_sections = [
                                 "field_type": "clientSideFileUploadField",
                                 "presentation_type": "s3bucketPath",
                                 "question": "Upload your organisation's annual accounts from the last 3 years",
+                                "path": "upload-your-organisations-annual-accounts-from-the-last-3-years",
                             },
                             {
                                 "field_id": "sVlFcN",
@@ -138,6 +139,7 @@ unscored_sections = [
                                 "field_type": "clientSideFileUploadField",
                                 "presentation_type": "s3bucketPath",
                                 "question": "Upload your organisation's annual accounts that you have available",
+                                "path": "upload-your-organisations-annual-accounts-that-you-have-available",
                             },
                             {
                                 "field_id": "OrWSBk",
@@ -145,6 +147,7 @@ unscored_sections = [
                                 "field_type": "clientSideFileUploadField",
                                 "presentation_type": "s3bucketPath",
                                 "question": "Upload a current bank statement which is less than 2 months old",
+                                "path": "upload-a-current-bank-statement-which-is-less-than-2-months-old",
                             },
                             {
                                 "field_id": "bgHVXX",
@@ -152,6 +155,7 @@ unscored_sections = [
                                 "field_type": "clientSideFileUploadField",
                                 "presentation_type": "s3bucketPath",
                                 "question": "Upload an annual budget for your organisation",
+                                "path": "upload-an-annual-budget-for-your-organisation",
                             },
                         ],
                     }

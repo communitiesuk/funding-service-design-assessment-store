@@ -232,7 +232,8 @@ def map_single_field_answer(theme: list, questions: dict) -> str:
                 theme["field_id"] == app_fields["key"]
                 and "answer" in app_fields.keys()
             ):
-                theme["answer"] = app_fields["answer"]
+                # Some fields are optional so will have no answers
+                theme["answer"] = app_fields.get("answer", None)
 
 
 def map_application_with_sub_criteria_themes(

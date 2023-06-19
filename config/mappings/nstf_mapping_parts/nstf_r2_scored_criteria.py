@@ -145,7 +145,7 @@ scored_criteria = [
                 ],
             },
             {
-                "id": "targeted_criteria",
+                "id": "targeted_criteria-current",
                 "name": "Targeted criteria",
                 "themes": [
                     {
@@ -282,6 +282,7 @@ scored_criteria = [
                                 "field_type": "clientSideFileUploadField",
                                 "presentation_type": "s3bucketPath",
                                 "question": "Upload letter of endorsement from your local authority (optional)",
+                                "path": "local-authority-support",
                             },
                         ],
                     },
@@ -356,7 +357,7 @@ scored_criteria = [
                 ],
             },
             {
-                "id": "targeted_criteria",
+                "id": "targeted_criteria-proposed",
                 "name": "Targeted criteria",
                 "themes": [
                     {
@@ -754,6 +755,7 @@ scored_criteria = [
                                 "field_type": "clientSideFileUploadField",
                                 "presentation_type": "s3bucketPath",
                                 "question": "Upload cost estimate",
+                                "path": "upload-cost-estimate",
                             },
                             {
                                 "field_id": "aTxAPP",
@@ -761,6 +763,7 @@ scored_criteria = [
                                 "field_type": "clientSideFileUploadField",
                                 "presentation_type": "s3bucketPath",
                                 "question": "Upload a condition survey",
+                                "path": "upload-a-condition-survey",
                             },
                             {
                                 "field_id": "NlDVCg",
@@ -768,6 +771,7 @@ scored_criteria = [
                                 "field_type": "clientSideFileUploadField",
                                 "presentation_type": "s3bucketPath",
                                 "question": "Upload buildings and contents insurance certificate",
+                                "path": "upload-buildings-and-contents-insurance-certificate",
                             },
                             {
                                 "field_id": "RXIYZY",
@@ -782,6 +786,7 @@ scored_criteria = [
                                 "field_type": "clientSideFileUploadField",
                                 "presentation_type": "s3bucketPath",
                                 "question": "Upload a copy of the land registry title",
+                                "path": "upload-a-copy-of-the-land-registry-title",
                             },
                             {
                                 "field_id": "rMvZDG",
@@ -789,6 +794,7 @@ scored_criteria = [
                                 "field_type": "clientSideFileUploadField",
                                 "presentation_type": "s3bucketPath",
                                 "question": "Upload the land owner's consent",
+                                "path": "upload-the-land-owners-consent",
                             },
                             {
                                 "field_id": "wQqPSZ",
@@ -796,6 +802,7 @@ scored_criteria = [
                                 "field_type": "clientSideFileUploadField",
                                 "presentation_type": "s3bucketPath",
                                 "question": "Upload a copy of the lease agreement",
+                                "path": "upload-a-copy-of-the-lease-agreement",
                             },
                             {
                                 "field_id": "GLOpmu",
@@ -803,6 +810,7 @@ scored_criteria = [
                                 "field_type": "clientSideFileUploadField",
                                 "presentation_type": "s3bucketPath",
                                 "question": "Upload correspondence from your landlord to show that lease renewal discussions have started",
+                                "path": "upload-correspondence-from-your-landlord-to-show-that-lease-renewal-discussions-have-started",
                             },
                             {
                                 "field_id": "kQJIbS",
@@ -810,6 +818,7 @@ scored_criteria = [
                                 "field_type": "clientSideFileUploadField",
                                 "presentation_type": "s3bucketPath",
                                 "question": "Upload heads of terms outlining new lease agreement",
+                                "path": "upload-heads-of-terms-outlining-new-lease-agreement",
                             },
                             {
                                 "field_id": "skBfqS",
@@ -824,6 +833,7 @@ scored_criteria = [
                                 "field_type": "clientSideFileUploadField",
                                 "presentation_type": "s3bucketPath",
                                 "question": "Upload listed building consent",
+                                "path": "upload-listed-building-consent",
                             },
                         ],
                     },
