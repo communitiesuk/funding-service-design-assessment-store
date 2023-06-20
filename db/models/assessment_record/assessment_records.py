@@ -4,6 +4,7 @@ within the Postgres db.
 Tangential structures such as triggers and ENUMS are kept in other
 files.
 """
+import jsonpath_rw_ext
 from db import db
 from db.models.assessment_record.enums import Language
 from db.models.assessment_record.enums import Status
@@ -17,6 +18,7 @@ from sqlalchemy.dialects.postgresql import ENUM
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.dialects.postgresql import TEXT
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import relationship
 
 BaseModel: DefaultMeta = db.Model
@@ -73,6 +75,16 @@ class AssessmentRecord(BaseModel):
     flags = relationship("Flag")
 
     location_json_blob = Column("location_json_blob", JSONB, nullable=True)
+
+    @hybrid_property
+    def local_authority(self):
+        la_question = jsonpath_rw_ext.parse(
+            "$.forms[*].questions[*].fields[?(@.key == 'nURkuc')]"
+        ).find(self.jsonb_blob)
+        if la_question:
+            return la_question[0].value["answer"]
+        else:
+            return "Not Available"
 
 
 Index(
