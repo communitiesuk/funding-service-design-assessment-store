@@ -4,8 +4,8 @@ within the Postgres db.
 Tangential structures such as triggers and ENUMS are kept in other
 files.
 """
-import jsonpath_rw_ext
 from db import db
+from db._helpers import get_answer_value
 from db.models.assessment_record.enums import Language
 from db.models.assessment_record.enums import Status
 from flask_sqlalchemy import DefaultMeta
