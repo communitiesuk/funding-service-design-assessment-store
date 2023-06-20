@@ -10,6 +10,7 @@ from marshmallow import fields
 from marshmallow import Schema
 from marshmallow.fields import Enum
 from marshmallow.fields import Field
+from marshmallow.fields import Method
 from marshmallow.fields import Nested
 from marshmallow.fields import String
 from marshmallow_sqlalchemy import auto_field
@@ -23,6 +24,10 @@ class AssessmentRecordMetadata(SQLAlchemyAutoSchema):
     class Meta:
         model = AssessmentRecord
 
+    def get_local_authority(self, obj):
+        return obj.local_authority
+
+    local_authority = Method("get_local_authority")
     workflow_status = Enum(Status)
     language = Enum(Language)
     flags = Nested(
