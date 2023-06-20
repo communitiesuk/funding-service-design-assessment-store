@@ -83,7 +83,7 @@ def get_metadata_for_fund_round_id(
             | AssessmentRecord.project_name.ilike(f"%{search_term}%")
         )
 
-    if "ALL" not in countries and countries:
+    if "all" not in countries and countries:
         current_app.logger.info(
             f"Performing assessment search on countries: {countries}."
         )
