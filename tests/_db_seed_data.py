@@ -64,6 +64,13 @@ def get_dynamic_rows(
         "Vale of White Horse District Council",
         "Wakefield Metropolitan District Council",
     ]
+    org_names = [
+        "Friendly housing foundation",
+        "Salvation army",
+        "Local shelter org",
+        "Action for Homelessness",
+    ]
+    funding_types = ["revenue", "capital", "both-revenue-and-capital"]
     places = [
         ("skatepark", "sporting"),
         ("pub", "pub"),
@@ -128,6 +135,8 @@ def get_dynamic_rows(
                 picked_city = choice(cities)
                 picked_funding = choice(funding)
                 picked_la = choice(local_authorities)
+                funding_type = choice(funding_types)
+                org_name = choice(org_names)
 
                 project_name = (
                     f"{choice(verbs)} the"
@@ -161,5 +170,7 @@ def get_dynamic_rows(
                     revenue_funding=picked_funding[1],
                     asset_type=picked_place[1],
                     local_authority=picked_la,
+                    org_name=org_name,
+                    funding_type=funding_type,
                     **location_json_blob,
                 )
