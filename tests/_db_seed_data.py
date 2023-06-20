@@ -51,6 +51,19 @@ def get_dynamic_rows(
 
     adjects = ["old", "humble", "derelict", "vintage", "loved", "beautiful"]
 
+    local_authorities = [
+        "Gravesham Borough Council",
+        "Great Yarmouth Borough Council",
+        "Guildford Borough Council",
+        "Gwynedd County Council",
+        "Halton Borough Council",
+        "Hambleton District Council",
+        "Hampshire County Council",
+        "Uttlesford District Council",
+        "Vale of Glamorgan Council",
+        "Vale of White Horse District Council",
+        "Wakefield Metropolitan District Council",
+    ]
     places = [
         ("skatepark", "sporting"),
         ("pub", "pub"),
@@ -90,6 +103,9 @@ def get_dynamic_rows(
         ("3000", "1500"),
         ("5000", "4000"),
         ("1000", "1000"),
+        ("2345", "450"),
+        ("1230", "4020"),
+        ("3050", "850"),
     ]
 
     for count, fund_id in enumerate(funds):
@@ -111,6 +127,7 @@ def get_dynamic_rows(
                 picked_place = choice(places)
                 picked_city = choice(cities)
                 picked_funding = choice(funding)
+                picked_la = choice(local_authorities)
 
                 project_name = (
                     f"{choice(verbs)} the"
@@ -143,5 +160,6 @@ def get_dynamic_rows(
                     capital_funding=picked_funding[0],
                     revenue_funding=picked_funding[1],
                     asset_type=picked_place[1],
+                    local_authority=picked_la,
                     **location_json_blob,
                 )
