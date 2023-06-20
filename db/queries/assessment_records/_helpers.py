@@ -1,14 +1,4 @@
-import jsonpath_rw_ext
-
-
-def get_answer_value(application_json, answer_key):
-    return (
-        jsonpath_rw_ext.parse(
-            f"$.forms[*].questions[*].fields[?(@.key == '{answer_key}')]"
-        )
-        .find(application_json)[0]
-        .value["answer"]
-    )
+from db._helpers import get_answer_value
 
 
 def derive_application_values(application_json):
