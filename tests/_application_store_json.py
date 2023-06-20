@@ -2398,7 +2398,7 @@ nstfr2_application_store_json_template = Template(
                             "key": "nURkuc",
                             "type": "text",
                             "title": "What is the name of the local authority where your proposal will be based?",
-                            "answer": "Test Local Need And Support NS Form"
+                            "answer": "$local_authority"
                         },
                         {
                             "key": "lFTgWk",
