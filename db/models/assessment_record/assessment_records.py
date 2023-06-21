@@ -5,7 +5,6 @@ Tangential structures such as triggers and ENUMS are kept in other
 files.
 """
 from db import db
-from db._helpers import get_answer_value
 from db.models.assessment_record.enums import Language
 from db.models.assessment_record.enums import Status
 from flask_sqlalchemy import DefaultMeta
@@ -18,7 +17,7 @@ from sqlalchemy.dialects.postgresql import ENUM
 from sqlalchemy.dialects.postgresql import JSONB
 from sqlalchemy.dialects.postgresql import TEXT
 from sqlalchemy.dialects.postgresql import UUID
-from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import column_property
 from sqlalchemy.orm import relationship
 
 BaseModel: DefaultMeta = db.Model
@@ -76,17 +75,26 @@ class AssessmentRecord(BaseModel):
 
     location_json_blob = Column("location_json_blob", JSONB, nullable=True)
 
-    @hybrid_property
-    def local_authority(self):
-        return get_answer_value(self.jsonb_blob, "nURkuc")
-
-    @hybrid_property
-    def organisation_name(self):
-        return get_answer_value(self.jsonb_blob, "opFJRm")
-
-    @hybrid_property
-    def funding_type(self):
-        return get_answer_value(self.jsonb_blob, "NxVqXd")
+    # These are defined as column_properties not as hybrid_property due to performance
+    # Using column_property below forces the json parsing to be done on the DB side which is quicker than in python
+    organisation_name = column_property(
+        func.jsonb_path_query(
+            jsonb_blob,
+            '$.forms[*].questions[*].fields[*] ? (@.key == "opFJRm").answer',
+        )
+    )
+    local_authority = column_property(
+        func.jsonb_path_query(
+            jsonb_blob,
+            '$.forms[*].questions[*].fields[*] ? (@.key == "nURkuc").answer',
+        )
+    )
+    funding_type = column_property(
+        func.jsonb_path_query(
+            jsonb_blob,
+            '$.forms[*].questions[*].fields[*] ? (@.key == "NxVqXd").answer',
+        )
+    )
 
 
 Index(
