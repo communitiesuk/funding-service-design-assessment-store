@@ -10,7 +10,6 @@ from marshmallow import fields
 from marshmallow import Schema
 from marshmallow.fields import Enum
 from marshmallow.fields import Field
-from marshmallow.fields import Method
 from marshmallow.fields import Nested
 from marshmallow.fields import String
 from marshmallow_sqlalchemy import auto_field
@@ -23,19 +22,6 @@ class AssessmentRecordMetadata(SQLAlchemyAutoSchema):
 
     class Meta:
         model = AssessmentRecord
-
-    def get_local_authority(self, obj):
-        return obj.local_authority
-
-    def get_funding_type(self, obj):
-        return obj.funding_type
-
-    def get_organisation_name(self, obj):
-        return obj.organisation_name
-
-    local_authority = Method("get_local_authority")
-    funding_type = Method("get_funding_type")
-    organisation_name = Method("get_organisation_name")
 
     workflow_status = Enum(Status)
     language = Enum(Language)
