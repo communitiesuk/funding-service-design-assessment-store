@@ -8,6 +8,8 @@ from fsd_utils.healthchecks.healthcheck import Healthcheck
 from fsd_utils.logging import logging
 from openapi.utils import get_bundled_specs
 
+# random comment for deploy
+
 
 def create_app() -> Flask:
     init_sentry()
