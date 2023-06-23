@@ -554,7 +554,7 @@ scored_criteria = [
                                 "field_id": ["pVBwci", "GRWtfV"],
                                 "form_name": "funding-required-ns",
                                 "field_type": "numberField",
-                                "duplicated_field": "True",
+                                "branched_field": "1",
                                 "presentation_type": "grouped_fields",
                                 "question": [
                                     "How much revenue are you applying for? 1 April 2023 to 31 March 2024",
@@ -563,7 +563,7 @@ scored_criteria = [
                             },
                             {
                                 "field_id": ["zvPzXN", "WDouQc"],
-                                "duplicated_field": "True",
+                                "branched_field": "1",
                                 "presentation_type": "grouped_fields",
                                 "form_name": "funding-required-ns",
                                 "field_type": "numberField",
@@ -603,7 +603,7 @@ scored_criteria = [
                                 "field_id": ["SGjmSM", "QUCvFy"],
                                 "form_name": "funding-required-ns",
                                 "field_type": "numberField",
-                                "duplicated_field": "True",
+                                "branched_field": "1",
                                 "presentation_type": "grouped_fields",
                                 "question": [
                                     "How much capital are you applying for? 1 April 2023 to 31 March 2024",
@@ -614,7 +614,7 @@ scored_criteria = [
                                 "field_id": ["wTdyhk", "pppiYl"],
                                 "form_name": "funding-required-ns",
                                 "field_type": "numberField",
-                                "duplicated_field": "True",
+                                "branched_field": "1",
                                 "presentation_type": "grouped_fields",
                                 "question": [
                                     "How much capital are you applying for? 1 April 2024 to 31 March 2025",
