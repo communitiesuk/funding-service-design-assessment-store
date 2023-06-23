@@ -145,11 +145,11 @@ scored_criteria = [
                 ],
             },
             {
-                "id": "targeted_criteria-current",
+                "id": "targeted_criteria_current",
                 "name": "Targeted criteria",
                 "themes": [
                     {
-                        "id": "targeted_criteria-current",
+                        "id": "targeted_criteria_current",
                         "name": "Targeted criteria",
                         "answers": [
                             {
@@ -357,11 +357,11 @@ scored_criteria = [
                 ],
             },
             {
-                "id": "targeted_criteria-proposed",
+                "id": "targeted_criteria_proposed",
                 "name": "Targeted criteria",
                 "themes": [
                     {
-                        "id": "targeted_criteria-proposed",
+                        "id": "targeted_criteria_proposed",
                         "name": "Targeted criteria",
                         "answers": [
                             {
