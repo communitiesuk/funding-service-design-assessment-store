@@ -42,7 +42,7 @@ def all_assessments_for_fund_round_id(
     search_term: str = "",
     asset_type: str = "ALL",
     status: str = "ALL",
-    countries: str = "",
+    countries: str = "all",
 ) -> List[Dict]:
     """all_assessments_for_fund_round_id Function used by the endpoint
     `/application_overviews/{fund_id}/{round_id}`.
