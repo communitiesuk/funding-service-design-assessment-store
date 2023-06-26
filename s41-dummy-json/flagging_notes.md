@@ -8,6 +8,10 @@ I've put full flag details for all flags inside each application as I thikn that
 JSON response for new endpoint <assessment_store>/{application_id}/flags GET, for application id ce946e9e-369e-472a-a9c3-c60cd124471b
 I think we will need this endpoint rather than get_latest_flag as the 'flag history' show/hide thing is always present at the top of the application page so we will always want to retrieve all the flags, even tho we only display currently active ones in banners.
 
+## get_avaialble_flag_allocations.json
+JSON response for GET <fund_store>/{fund_id}/{round_id}/available_flag_allocations/
+List the available flag allocations - keys and vlaues - for the create/update flag pages so we can list possible allocations. Can't have the enum values hardcoded anywhere as we need to be able to update these on the fly
+
 ## Still to do
 Haven't yet done any json for create flag, update flag (ie resolve or stop).
 
@@ -50,6 +54,4 @@ Ultimately will be provided by design and hard coded somewhere for now.
 the allocation value is in multiple places at the moment to allow for what I think escalation will be, ie. changing the allocation.
 so this way we have a 'current' allocation at the flag level, and history of where it was allocated at 'update' level.
 
-- TEAM_1: Team 1
-- TEAM_2: Team 2
-- ANOTHER_TEAM: Another Team
+Both key and value need to come from the database to allow for new teams to be added on the fly. See [get_avaialble_flag_allocations](./flagging_notes.md#get_avaialble_flag_allocationsjson)
