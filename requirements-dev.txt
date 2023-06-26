@@ -23,7 +23,6 @@ attrs==22.1.0
     # via
     #   -r requirements.txt
     #   jsonschema
-    #   pytest
 babel==2.11.0
     # via
     #   -r requirements.txt
@@ -327,7 +326,7 @@ pyrsistent==0.19.2
     # via
     #   -r requirements.txt
     #   jsonschema
-pytest==7.2.1
+pytest==7.4.0
     # via
     #   -r requirements-dev.in
     #   pytest-env
@@ -460,13 +459,7 @@ thrift==0.16.0
     #   -r requirements.txt
     #   flipper-client
 tomli==2.0.1
-    # via
-    #   -r requirements.txt
-    #   black
-    #   build
-    #   mypy
-    #   pep517
-    #   pytest
+    # via -r requirements.txt
 typing-extensions==4.4.0
     # via
     #   -r requirements.txt
