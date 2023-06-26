@@ -19,7 +19,6 @@ attrs==22.1.0
     # via
     #   -r requirements.txt
     #   jsonschema
-    #   pytest
 babel==2.11.0
     # via
     #   -r requirements.txt
@@ -101,8 +100,6 @@ deepdiff==6.2.3
     # via -r requirements-dev.in
 distlib==0.3.6
     # via virtualenv
-exceptiongroup==1.1.1
-    # via pytest
 filelock==3.8.0
     # via virtualenv
 flask==2.2.3
@@ -147,6 +144,8 @@ gitdb==4.0.9
     # via gitpython
 gitpython==3.1.29
     # via bandit
+greenlet==2.0.2
+    # via sqlalchemy
 gunicorn==20.1.0
     # via
     #   -r requirements.txt
@@ -311,7 +310,7 @@ pyrsistent==0.19.2
     # via
     #   -r requirements.txt
     #   jsonschema
-pytest==7.2.1
+pytest==7.4.0
     # via
     #   -r requirements-dev.in
     #   pytest-env
@@ -380,9 +379,7 @@ ruamel-yaml==0.17.21
     #   -r requirements.txt
     #   prance
 ruamel-yaml-clib==0.2.7
-    # via
-    #   -r requirements.txt
-    #   ruamel-yaml
+    # via -r requirements.txt
 s3transfer==0.6.0
     # via
     #   -r requirements.txt
@@ -437,13 +434,7 @@ thrift==0.16.0
     #   -r requirements.txt
     #   flipper-client
 tomli==2.0.1
-    # via
-    #   -r requirements.txt
-    #   black
-    #   build
-    #   mypy
-    #   pep517
-    #   pytest
+    # via -r requirements.txt
 typing-extensions==4.4.0
     # via
     #   -r requirements.txt
