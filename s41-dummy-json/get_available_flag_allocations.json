@@ -1,0 +1,14 @@
+[
+    {
+        "key": "TEAM_1",
+        "value": "Team 1"
+    },
+    {
+        "key": "TEAM_2",
+        "value": "Team 2"
+    },
+    {
+        "key": "ANOTHER_TEAM",
+        "value": "Another team"
+    }
+]

@@ -1,0 +1,34 @@
+[
+    {
+        "key": "RECOMMEND_NO",
+        "value": "Recommend no"
+    },
+    {
+        "key": "RECOMMEND_YES",
+        "value": "Recommend yes"
+    },
+    {
+        "key": "RECOMMEND_FURTHER_DISCUSSION",
+        "value": "Recommend further discussion"
+    },
+    {
+        "key": "COMMERCIAL_FAIL",
+        "value": "Commercial fail"
+    },
+    {
+        "key": "COMMERCIAL_PASS",
+        "value": "Commercial pass"
+    },
+    {
+        "key": "BILLY_SOLE",
+        "value": "Billy Sole"
+    },
+    {
+        "key": "ALEX_MURPHY",
+        "value": "Alex Murphy"
+    },
+    {
+        "key": "DAVE_JONES",
+        "value": "Dave Jones"
+    }
+]
