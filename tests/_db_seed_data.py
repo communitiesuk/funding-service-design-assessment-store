@@ -66,7 +66,7 @@ def get_dynamic_rows(
     ]
     org_names = [
         "Friendly housing foundation",
-        "Salvation army",
+        "Night shelters ltd",
         "Local shelter org",
         "Action for Homelessness",
     ]
