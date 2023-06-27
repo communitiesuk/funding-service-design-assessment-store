@@ -59,7 +59,6 @@ def get_metadata_for_fund_round_id(
             AssessmentRecord.round_id == round_id,
         )
     )
-    # where(func.cast(AssessmentRecord.organisation_name, String).like(f"%{search_term.upper()}%"))
     if search_term != "":
         current_app.logger.info(
             f"Performing assessment search on search term: {search_term} in fields {search_in}"
