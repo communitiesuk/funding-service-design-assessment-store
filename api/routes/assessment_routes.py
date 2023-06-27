@@ -1,4 +1,6 @@
 # flake8: noqa
+import json
+from copy import deepcopy
 from typing import Dict
 from typing import List
 
@@ -23,6 +25,13 @@ from db.queries.flags.queries import get_latest_flags_for_each
 from db.queries.scores.queries import get_sub_criteria_to_latest_score_map
 from flask import current_app
 
+with open("s41-dummy-json/all_assessments_for_fund_round.json", "r") as f:
+    static_response_data_s41 = json.load(f)
+COF_FUND_ID = "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4"
+
+NSTF_FUND_ID = "13b95669-ed98-4840-8652-d6b7a19964db"
+NSTF_ROUND_2_ID = "fc7aa604-989e-4364-98a7-d1234271435a"
+
 
 def all_assessments_for_fund_round_id(
     fund_id: str,
@@ -38,6 +47,19 @@ def all_assessments_for_fund_round_id(
     :param round_id: The stringified round UUID.
     :return: A list of dictionaries.
     """
+
+    this_response = deepcopy(static_response_data_s41)
+    if fund_id == NSTF_FUND_ID:
+        for application in this_response:
+            application["fund_id"] = NSTF_FUND_ID
+            application["round_id"] = NSTF_ROUND_2_ID
+            application["type_of_application"] = "NSTF"
+            sr = application["short_id"]
+            application["short_id"] = sr.replace("COF", "NSTF").replace(
+                "R2W3", "R2"
+            )
+
+    return this_response
 
     app_list = get_metadata_for_fund_round_id(
         fund_id=fund_id,
