@@ -1,13 +1,23 @@
+from uuid import uuid4
+
 import pytest
 from db.models import Flag
+from db.models.assessment_record import AssessmentRecord
 from db.models.assessment_record.enums import Status
+from db.models.flags_v2.flag_update import FlagStatus
 from db.queries import create_flag_for_application
 from db.queries import find_qa_complete_flag_for_applications
 from db.queries import retrieve_flag_for_application
 from db.queries.flags.queries import get_latest_flags_for_each
+from db.queries.flags_v2.queries import add_update_to_assessment_flag
+from db.queries.flags_v2.queries import (
+    create_flag_for_application as create_flag_v2,
+)
+from sqlalchemy import select
 from tests._helpers import get_assessment_record
 from tests.conftest import test_input_data
 from tests.test_data.flags import flag_config
+from tests.test_data.flags import flag_config_v2
 
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
@@ -181,3 +191,72 @@ def test_get_most_recent_metadata_statuses_for_fund_round_id(
         status_or_flag,
     )
     assert expected_application_count == len(metadata)
+
+
+@pytest.mark.apps_to_insert([{**test_input_data[0]}])
+def test_create_flag(_db, seed_application_records):
+    app_id = seed_application_records[0]["application_id"]
+
+    stmt = select(AssessmentRecord).where(
+        AssessmentRecord.application_id == app_id
+    )
+    results = _db.session.scalars(stmt).all()
+
+    assert len(results) == 1
+    assert len(results[0].flags_v2) == 0
+
+    user_id = uuid4()
+    flag_data = {
+        "application_id": str(app_id),
+        "sections_to_flag": ["section_1", "section_2"],
+        "justification": "justifying the flag creation",
+        "user_id": str(user_id),
+        "status": FlagStatus.RAISED,
+        "allocation": "TEAM_1",
+    }
+    create_flag_v2(**flag_data)
+
+    stmt = select(AssessmentRecord).where(
+        AssessmentRecord.application_id == app_id
+    )
+    results = _db.session.scalars(stmt).all()
+
+    assert len(results) == 1
+    assert len(results[0].flags_v2) == 1
+
+
+@pytest.mark.apps_to_insert(
+    [{**test_input_data[0], "flags_v2": [flag_config_v2[0]]}]
+)
+def test_add_flag_update(_db, seed_application_records):
+    app_id = seed_application_records[0]["application_id"]
+
+    stmt = select(AssessmentRecord).where(
+        AssessmentRecord.application_id == app_id
+    )
+    results = _db.session.scalars(stmt).all()
+
+    assert len(results) == 1
+    assert len(results[0].flags_v2) == 1
+    assert len(results[0].flags_v2[0].updates) == 1
+
+    user_id = uuid4()
+    flag_data = {
+        "user_id": str(user_id),
+        "status": FlagStatus.STOPPED,
+        "allocation": "TEAM_2",
+        "assessment_flag_id": results[0].flags_v2[0].id,
+        "justification": "stopping assessment",
+    }
+    add_update_to_assessment_flag(**flag_data)
+
+    stmt = select(AssessmentRecord).where(
+        AssessmentRecord.application_id == app_id
+    )
+    results = _db.session.scalars(stmt).all()
+
+    assert len(results) == 1
+    assert len(results[0].flags_v2) == 1
+    assert len(results[0].flags_v2[0].updates) == 2
+    assert results[0].flags_v2[0].current_status == FlagStatus.STOPPED
+    assert results[0].flags_v2[0].current_allocation == "TEAM_2"

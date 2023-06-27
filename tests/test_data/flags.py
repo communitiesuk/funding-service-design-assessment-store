@@ -1,6 +1,8 @@
 import datetime
+from uuid import uuid4
 
 from db.models.flags.enums import FlagType
+from db.models.flags_v2.flag_update import FlagStatus
 
 now = datetime.datetime.now()
 earlier = now - datetime.timedelta(days=1)
@@ -47,5 +49,17 @@ flag_config = [
         "sections_to_flag": ["Test section 4"],
         "date_created": now,
         "user_id": "user4",
+    },
+]
+
+user_id = uuid4()
+flag_config_v2 = [
+    {
+        "status": FlagStatus.RAISED,
+        "justification": "Test justification 2",
+        "sections_to_flag": ["Test section 2"],
+        "date_created": earlier,
+        "user_id": user_id,
+        "allocation": "TEAM_1",
     },
 ]
