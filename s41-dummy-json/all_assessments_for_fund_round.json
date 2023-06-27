@@ -94,6 +94,9 @@
         "round_id": "5cf439bf-ef6f-431e-92c5-a1d90a4dd32f",
         "short_id": "COF-R2W3-FMQHTN",
         "type_of_application": "COF",
+        "organisation_name": "Testing org 2",
+        "funding_type": "revenue",
+        "local_authority": "Something Borough Council",
         "workflow_status": "NOT_STARTED"
     },
     {
@@ -113,6 +116,9 @@
             "region": "England"
         },
         "project_name": "Restore the vintage skatepark in Birmingham",
+        "organisation_name": "Testing org",
+        "funding_type": "capital",
+        "local_authority": "Newport",
         "round_id": "5cf439bf-ef6f-431e-92c5-a1d90a4dd32f",
         "short_id": "COF-R2W3-TILXJS",
         "type_of_application": "COF",
@@ -224,6 +230,9 @@
         "round_id": "5cf439bf-ef6f-431e-92c5-a1d90a4dd32f",
         "short_id": "COF-R2W3-YHPEOS",
         "type_of_application": "COF",
+        "organisation_name": "Testing org 3",
+        "funding_type": "revenue",
+        "local_authority": "Somewhere City Council",
         "workflow_status": "NOT_STARTED"
     },
     {
@@ -293,6 +302,9 @@
         "round_id": "5cf439bf-ef6f-431e-92c5-a1d90a4dd32f",
         "short_id": "COF-R2W3-SAZKDO",
         "type_of_application": "COF",
+        "organisation_name": "Testing org 1",
+        "funding_type": "revenue",
+        "local_authority": "Somewhere City Council",
         "workflow_status": "NOT_STARTED"
     },
     {
@@ -383,6 +395,9 @@
         "round_id": "5cf439bf-ef6f-431e-92c5-a1d90a4dd32f",
         "short_id": "COF-R2W3-BJEZSM",
         "type_of_application": "COF",
+        "organisation_name": "Testing org 3",
+        "funding_type": "revenue",
+        "local_authority": "Somewhere City Council",
         "workflow_status": "NOT_STARTED"
     },
     {
@@ -453,6 +468,9 @@
         "round_id": "5cf439bf-ef6f-431e-92c5-a1d90a4dd32f",
         "short_id": "COF-R2W3-NXRBCK",
         "type_of_application": "COF",
+        "organisation_name": "Testing org 2",
+        "funding_type": "revenue",
+        "local_authority": "Something Borough Council",
         "workflow_status": "NOT_STARTED"
     }
 ]
