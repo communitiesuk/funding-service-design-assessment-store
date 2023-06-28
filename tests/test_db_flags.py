@@ -13,9 +13,11 @@ from db.queries.flags_v2.queries import add_update_to_assessment_flag
 from db.queries.flags_v2.queries import (
     create_flag_for_application as create_flag_v2,
 )
+from db.queries.flags_v2.queries import get_flags_for_application
 from sqlalchemy import select
 from tests._helpers import get_assessment_record
 from tests.conftest import test_input_data
+from tests.test_data.flags import add_flag_update_request_json
 from tests.test_data.flags import flag_config
 from tests.test_data.flags import flag_config_v2
 
@@ -239,16 +241,16 @@ def test_add_flag_update(_db, seed_application_records):
     assert len(results) == 1
     assert len(results[0].flags_v2) == 1
     assert len(results[0].flags_v2[0].updates) == 1
+    assert results[0].flags_v2[0].latest_allocation == "TEAM_1"
 
-    user_id = uuid4()
-    flag_data = {
-        "user_id": str(user_id),
-        "status": FlagStatus.STOPPED,
-        "allocation": "TEAM_2",
-        "assessment_flag_id": results[0].flags_v2[0].id,
-        "justification": "stopping assessment",
-    }
-    add_update_to_assessment_flag(**flag_data)
+    updated_flag = add_update_to_assessment_flag(
+        **add_flag_update_request_json,
+        assessment_flag_id=results[0].flags_v2[0].id,
+    )
+    assert (
+        updated_flag.latest_allocation
+        == add_flag_update_request_json["allocation"]
+    )
 
     stmt = select(AssessmentRecord).where(
         AssessmentRecord.application_id == app_id
@@ -258,5 +260,16 @@ def test_add_flag_update(_db, seed_application_records):
     assert len(results) == 1
     assert len(results[0].flags_v2) == 1
     assert len(results[0].flags_v2[0].updates) == 2
-    assert results[0].flags_v2[0].current_status == FlagStatus.STOPPED
-    assert results[0].flags_v2[0].current_allocation == "TEAM_2"
+    assert results[0].flags_v2[0].latest_status == FlagStatus.STOPPED
+    assert results[0].flags_v2[0].latest_allocation == "TEAM_2"
+
+
+@pytest.mark.apps_to_insert(
+    [{**test_input_data[0], "flags_v2": [flag_config_v2[0]]}]
+)
+def test_get_flags_for_application(_db, seed_application_records):
+    app_id = seed_application_records[0]["application_id"]
+    result = get_flags_for_application(app_id)
+    assert len(result) == 1
+    assert result[0].updates[0].justification == "Test justification 2"
+    assert result[0].sections_to_flag[0] == "Test section 2"

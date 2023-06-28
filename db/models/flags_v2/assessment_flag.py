@@ -16,6 +16,31 @@ BaseModel: DefaultMeta = db.Model
 
 class AssessmentFlag(BaseModel):
 
+    # def __init__(self, id, application_id, latest_status, latest_allocation, sections_to_flag, updates):
+    #     self.id = id
+    #     self.application_id = application_id
+    #     self.latest_allocation = latest_allocation
+    #     self.latest_status = latest_status
+    #     self.sections_to_flag = sections_to_flag
+    #     self.updates = updates
+
+    def __init__(
+        self,
+        application_id,
+        latest_status,
+        latest_allocation,
+        sections_to_flag,
+        updates,
+        **kwargs,
+    ):
+        self.application_id = application_id
+        self.latest_allocation = latest_allocation
+        self.latest_status = latest_status
+        self.sections_to_flag = sections_to_flag
+        self.updates = updates
+        if "id" in kwargs:
+            self.id = kwargs["id"]
+
     __tablename__ = "assessment_flag"
 
     id = Column("id", UUID(as_uuid=True), default=uuid4, primary_key=True)
