@@ -40,8 +40,10 @@ def all_assessments_for_fund_round_id(
     fund_id: str,
     round_id: str,
     search_term: str = "",
+    funding_type: str = "ALL",
     asset_type: str = "ALL",
     status: str = "ALL",
+    search_in: str = "",
     countries: str = "all",
 ) -> List[Dict]:
     """all_assessments_for_fund_round_id Function used by the endpoint
@@ -58,6 +60,8 @@ def all_assessments_for_fund_round_id(
         asset_type=asset_type,
         status=status,
         countries=[_fix_country(c) for c in countries.split(",") if c],
+        search_in=search_in,
+        funding_type=funding_type,
     )
     return app_list
 

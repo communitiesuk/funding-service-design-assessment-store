@@ -74,11 +74,11 @@ def test_deprecated_sort_add_another_component_contents(
                 {
                     "aaaaaa": {
                         "column_title": "Example text child",
-                        "type": "TextField",
+                        "type": "textField",
                     },
                     "bbbbbb": {
                         "column_title": "Example currency child",
-                        "type": "NumberField",
+                        "type": "numberField",
                     },
                     "cccccc": {
                         "column_title": "Example month year child",
@@ -86,7 +86,7 @@ def test_deprecated_sort_add_another_component_contents(
                     },
                     "dddddd": {
                         "column_title": "Example yes no child",
-                        "type": "YesNoField",
+                        "type": "yesNoField",
                     },
                     "eeeeee": {
                         "column_title": "Example radio child",
@@ -94,7 +94,7 @@ def test_deprecated_sort_add_another_component_contents(
                     },
                     "ffffff": {
                         "column_title": "Example multiline text child",
-                        "type": "MultilineTextField",
+                        "type": "multilineTextField",
                     },
                 },
             ],
@@ -103,7 +103,7 @@ def test_deprecated_sort_add_another_component_contents(
                 {
                     "aaaaaa": "test1",
                     "bbbbbb": 1,
-                    "cccccc": "2020-01",
+                    "cccccc": {"cccccc__month": "01", "cccccc__year": "2020"},
                     "dddddd": True,
                     "eeeeee": "low",
                     "ffffff": "test\r\n1",
@@ -111,7 +111,7 @@ def test_deprecated_sort_add_another_component_contents(
                 {
                     "aaaaaa": "test2",
                     "bbbbbb": 2,
-                    "cccccc": "2020-02",
+                    "cccccc": {"cccccc__month": "02", "cccccc__year": "2020"},
                     "dddddd": False,
                     "eeeeee": "high",
                     "ffffff": "test\r\n2",
@@ -120,7 +120,11 @@ def test_deprecated_sort_add_another_component_contents(
             [  # expected_nested_table_tuple
                 ["Example text child", ["test1", "test2"], "text"],
                 ["Example currency child", [1, 2], "currency"],
-                ["Example month year child", ["2020-01", "2020-02"], "text"],
+                [
+                    "Example month year child",
+                    ["01-2020", "02-2020"],
+                    "monthYearField",
+                ],
                 ["Example yes no child", ["Yes", "No"], "text"],
                 ["Example radio child", ["Low", "High"], "text"],
                 [

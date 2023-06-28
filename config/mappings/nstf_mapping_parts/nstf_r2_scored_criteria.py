@@ -145,11 +145,11 @@ scored_criteria = [
                 ],
             },
             {
-                "id": "targeted_criteria-current",
+                "id": "targeted_criteria_current",
                 "name": "Targeted criteria",
                 "themes": [
                     {
-                        "id": "targeted_criteria",
+                        "id": "targeted_criteria_current",
                         "name": "Targeted criteria",
                         "answers": [
                             {
@@ -209,11 +209,11 @@ scored_criteria = [
                                     {
                                         "FbWEBY": {
                                             "column_title": "Objective",
-                                            "type": "TextField",
+                                            "type": "textField",
                                         },
                                         "RXrpzV": {
                                             "column_title": "Activities that will help you achieve the objective",
-                                            "type": "MultilineTextField",
+                                            "type": "multilineTextField",
                                         },
                                     },
                                 ],
@@ -234,7 +234,7 @@ scored_criteria = [
                                     {
                                         "fFIuPP": {
                                             "column_title": "Milestone",
-                                            "type": "MultilineTextField",
+                                            "type": "multilineTextField",
                                         },
                                         "PrulfI": {
                                             "column_title": "When will you reach this milestone?",
@@ -357,11 +357,11 @@ scored_criteria = [
                 ],
             },
             {
-                "id": "targeted_criteria-proposed",
+                "id": "targeted_criteria_proposed",
                 "name": "Targeted criteria",
                 "themes": [
                     {
-                        "id": "targeted_criteria",
+                        "id": "targeted_criteria_proposed",
                         "name": "Targeted criteria",
                         "answers": [
                             {
@@ -511,7 +511,7 @@ scored_criteria = [
                                     {
                                         "dmKRCF": {
                                             "column_title": "Risk",
-                                            "type": "MultilineTextField",
+                                            "type": "multilineTextField",
                                         },
                                         "GVoNOE": {
                                             "column_title": "Likelihood",
@@ -519,7 +519,7 @@ scored_criteria = [
                                         },
                                         "SRHsAx": {
                                             "column_title": "Proposed mitigation",
-                                            "type": "MultilineTextField",
+                                            "type": "multilineTextField",
                                         },
                                     },
                                 ],
@@ -551,18 +551,26 @@ scored_criteria = [
                                 "question": "Which funding are you applying for?",
                             },
                             {
-                                "field_id": "pVBwci",
+                                "field_id": ["pVBwci", "GRWtfV"],
                                 "form_name": "funding-required-ns",
                                 "field_type": "numberField",
-                                "presentation_type": "text",
-                                "question": "How much revenue are you applying for? 1 April 2023 to 31 March 2024",
+                                "branched_field": 1,
+                                "presentation_type": "grouped_fields",
+                                "question": [
+                                    "How much revenue are you applying for? 1 April 2023 to 31 March 2024",
+                                    "How much revenue are you applying for? 1 April 2023 to 31 March 2024",
+                                ],
                             },
                             {
-                                "field_id": "WDouQc",
+                                "field_id": ["zvPzXN", "WDouQc"],
+                                "branched_field": 1,
+                                "presentation_type": "grouped_fields",
                                 "form_name": "funding-required-ns",
                                 "field_type": "numberField",
-                                "presentation_type": "text",
-                                "question": "How much revenue are you applying for? 1 April 2024 to 31 March 2025",
+                                "question": [
+                                    "How much revenue are you applying for? 1 April 2024 to 31 March 2025",
+                                    "How much revenue are you applying for? 1 April 2024 to 31 March 2025",
+                                ],
                             },
                             {
                                 "field_id": "mCbbyN",
@@ -574,11 +582,11 @@ scored_criteria = [
                                     {
                                         "dpDFgB": {
                                             "column_title": "Item of expenditure",
-                                            "type": "TextField",
+                                            "type": "textField",
                                         },
                                         "iZdZrr": {
                                             "column_title": "Amount",
-                                            "type": "NumberField",
+                                            "type": "numberField",
                                         },
                                         "leIxEX": {
                                             "column_title": "Financial year",
@@ -586,24 +594,32 @@ scored_criteria = [
                                         },
                                         "TrTaZQ": {
                                             "column_title": "How the expenditure is calculated (optional)",
-                                            "type": "TextField",
+                                            "type": "textField",
                                         },
                                     },
                                 ],
                             },
                             {
-                                "field_id": "SGjmSM",
+                                "field_id": ["SGjmSM", "QUCvFy"],
                                 "form_name": "funding-required-ns",
                                 "field_type": "numberField",
-                                "presentation_type": "text",
-                                "question": "How much capital are you applying for? 1 April 2023 to 31 March 2024",
+                                "branched_field": 1,
+                                "presentation_type": "grouped_fields",
+                                "question": [
+                                    "How much capital are you applying for? 1 April 2023 to 31 March 2024",
+                                    "How much capital are you applying for? 1 April 2023 to 31 March 2024",
+                                ],
                             },
                             {
-                                "field_id": "wTdyhk",
+                                "field_id": ["wTdyhk", "pppiYl"],
                                 "form_name": "funding-required-ns",
                                 "field_type": "numberField",
-                                "presentation_type": "text",
-                                "question": "How much capital are you applying for? 1 April 2024 to 31 March 2025",
+                                "branched_field": 1,
+                                "presentation_type": "grouped_fields",
+                                "question": [
+                                    "How much capital are you applying for? 1 April 2024 to 31 March 2025",
+                                    "How much capital are you applying for? 1 April 2024 to 31 March 2025",
+                                ],
                             },
                             {
                                 "field_id": "XsAoTv",
@@ -615,11 +631,11 @@ scored_criteria = [
                                     {
                                         "cpFthG": {
                                             "column_title": "Item of expenditure",
-                                            "type": "TextField",
+                                            "type": "textField",
                                         },
                                         "JtBjFp": {
                                             "column_title": "Amount",
-                                            "type": "NumberField",
+                                            "type": "numberField",
                                         },
                                         "mmwzGc": {
                                             "column_title": "Financial year",
@@ -627,7 +643,7 @@ scored_criteria = [
                                         },
                                         "pMffVz": {
                                             "column_title": "How the expenditure is calculated (optional)",
-                                            "type": "TextField",
+                                            "type": "textField",
                                         },
                                     },
                                 ],
@@ -711,11 +727,11 @@ scored_criteria = [
                                     {
                                         "cbYcqS": {
                                             "column_title": "What is their job role?",
-                                            "type": "TextField",
+                                            "type": "textField",
                                         },
                                         "muRwiL": {
                                             "column_title": "Organisation name",
-                                            "type": "TextField",
+                                            "type": "textField",
                                         },
                                     },
                                 ],
@@ -744,7 +760,7 @@ scored_criteria = [
                                     {
                                         "CZZYvE": {
                                             "column_title": "Which contractors will you use to carry out this work?",
-                                            "type": "TextField",
+                                            "type": "textField",
                                         },
                                     },
                                 ],
@@ -858,11 +874,11 @@ scored_criteria = [
                                     {
                                         "AfAKxk": {
                                             "column_title": "Funding source",
-                                            "type": "TextField",
+                                            "type": "textField",
                                         },
                                         "CrcLtW": {
                                             "column_title": "Amount",
-                                            "type": "NumberField",
+                                            "type": "numberField",
                                         },
                                         "ndySbC": {
                                             "column_title": "Financial year",
@@ -874,7 +890,7 @@ scored_criteria = [
                                         },
                                         "sIFBGc": {
                                             "column_title": "Is the funding secured?",
-                                            "type": "YesNoField",
+                                            "type": "yesNoField",
                                         },
                                     },
                                 ],

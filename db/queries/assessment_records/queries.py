@@ -21,7 +21,9 @@ from sqlalchemy import and_
 from sqlalchemy import bindparam
 from sqlalchemy import exc
 from sqlalchemy import func
+from sqlalchemy import or_
 from sqlalchemy import select
+from sqlalchemy import String
 from sqlalchemy import update
 from sqlalchemy.dialects.postgresql import insert as postgres_insert
 from sqlalchemy.orm import defer
@@ -51,6 +53,8 @@ def get_metadata_for_fund_round_id(
     search_term: str = "",
     asset_type: str = "",
     status: str = "",
+    search_in: str = "",
+    funding_type: str = "",
     countries: List[str] = ["all"],
 ) -> List[Dict]:
     """get_metadata_for_fund_round_id Executes a query on assessment records
@@ -72,16 +76,27 @@ def get_metadata_for_fund_round_id(
             AssessmentRecord.round_id == round_id,
         )
     )
-
     if search_term != "":
         current_app.logger.info(
-            f"Performing assessment search on search term: {search_term}."
+            f"Performing assessment search on search term: {search_term} in fields {search_in}"
         )
         search_term = search_term.replace(" ", "%")
-        statement = statement.where(
-            AssessmentRecord.short_id.like(f"%{search_term}%")
-            | AssessmentRecord.project_name.ilike(f"%{search_term}%")
-        )
+
+        filters = []
+        if "short_id" in search_in:
+            filters.append(AssessmentRecord.short_id.ilike(f"%{search_term}%"))
+        if "project_name" in search_in:
+            filters.append(
+                AssessmentRecord.project_name.ilike(f"%{search_term}%")
+            )
+        if "organisation_name" in search_in:
+            filters.append(
+                func.cast(AssessmentRecord.organisation_name, String).ilike(
+                    f"%{search_term}%"
+                )
+            )
+
+        statement = statement.filter(or_(*filters))
 
     if "all" not in countries:
         current_app.logger.info(
@@ -98,6 +113,18 @@ def get_metadata_for_fund_round_id(
             f"Performing assessment search on asset type: {asset_type}."
         )
         statement = statement.where(AssessmentRecord.asset_type == asset_type)
+
+    if funding_type != "ALL" and funding_type != "":
+        current_app.logger.info(
+            f"Performing assessment search on funding type: {funding_type}."
+        )
+        # TODO SS figure out how to stop double quoting this - it works but is ugly
+        # it's because when we retrieve the json element as funding_type, we get it as a json element, not pure text,
+        # so it has the double quotes from the json so we have to include them in the comparison
+        statement = statement.where(
+            func.cast(AssessmentRecord.funding_type, String)
+            == f'"{funding_type}"'
+        )
 
     match status:
         case FlagType.QA_COMPLETED.name:
@@ -206,61 +233,56 @@ def bulk_insert_application_record(
     :param application_json_strings: _description_
     :param application_type: _description_
     """
-    try:
-        print("Beginning bulk application insert.")
-        rows = []
-        # Create a list of application ids to track inserted rows
-        for single_application_json in application_json_strings:
-            if not is_json:
-                single_application_json = json.loads(single_application_json)
+    print("Beginning bulk application insert.")
+    rows = []
+    if len(application_json_strings) < 1:
+        print(
+            f"No new submitted applications found for {application_type}. skipping Import..."
+        )
+        return rows
+    print("\n")
+    # Create a list of application ids to track inserted rows
+    for single_application_json in application_json_strings:
+        if not is_json:
+            single_application_json = json.loads(single_application_json)
 
-            derived_values = derive_application_values(single_application_json)
+        derived_values = derive_application_values(single_application_json)
 
-            row = {
-                **derived_values,
-                "jsonb_blob": single_application_json,
-                "type_of_application": application_type,
-            }
-            print(f"Appending row to insert list, values: '{derived_values}'.")
-            rows.append(row)
+        row = {
+            **derived_values,
+            "jsonb_blob": single_application_json,
+            "type_of_application": application_type,
+        }
+        try:
+            stmt = postgres_insert(AssessmentRecord).values([row])
+
+            upsert_rows_stmt = stmt.on_conflict_do_nothing(
+                index_elements=[AssessmentRecord.application_id]
+            ).returning(AssessmentRecord.application_id)
+
+            print(f"Attempting insert of application {row['application_id']}")
+            result = db.session.execute(upsert_rows_stmt)
+
+            # Check if the inserted application is in result
+            inserted_application_ids = [item.application_id for item in result]
+            if not len(inserted_application_ids):
+                print(
+                    f"Application id already exist in the database: {row['application_id']}"
+                )
+            else:
+                rows.append(row)
+            db.session.commit()
             del single_application_json
+        except exc.SQLAlchemyError as e:
+            db.session.rollback()
+            print(
+                f"Error occurred while inserting application {row['application_id']}, error: {e}"
+            )
 
-        stmt = postgres_insert(AssessmentRecord).values(rows)
-
-        upsert_rows_stmt = stmt.on_conflict_do_nothing(
-            index_elements=[AssessmentRecord.application_id]
-        ).returning(AssessmentRecord.application_id)
-
-        application_ids_to_insert = [row["application_id"] for row in rows]
-        print("\n")
-        print(
-            "Application_ids (i.e. application rows) to insert:"
-            f" {application_ids_to_insert}"
-        )
-        print("Attempting bulk insert of all application rows.")
-        result = db.session.execute(upsert_rows_stmt)
-
-        # Get the actual inserted application ids
-        inserted_application_ids = [row.application_id for row in result]
-        print(
-            "Inserted application_ids (i.e. application rows) :"
-            f" {inserted_application_ids}"
-        )
-
-        # Check for conflicts and print out any pre-existing application ids
-        rejected_application_ids = list(
-            set(application_ids_to_insert) - set(inserted_application_ids)
-        )
-        print(
-            "The following application ids already exist in the database:",
-            rejected_application_ids,
-        )
-
-    except exc.SQLAlchemyError as e:
-        db.session.rollback()
-        print(f"Error running bulk insert: '{e}'.")
-        raise (e)
-    db.session.commit()
+    print(
+        "Inserted application_ids (i.e. application rows) :"
+        f" {[row['application_id'] for row in rows]}"
+    )
     return rows
 
 

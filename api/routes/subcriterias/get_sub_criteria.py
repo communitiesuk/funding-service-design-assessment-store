@@ -145,24 +145,24 @@ def deprecated_sort_add_another_component_contents(
             )
 
 
-# All in use children of MultiInputField in cofr3/nstfr2
+# All in use children of multiInputField in cofr3/nstfr2
 # If we use or add new children, we may need to add support
 _MULTI_INPUT_FORMAT_FRONTEND = defaultdict(
     lambda: "text",
     {
-        "NumberField": "currency",
-        "MultilineTextField": "html",
+        "numberField": "currency",
+        "multilineTextField": "html",
         # the default should handle these, but let's be explicit
         "RadioField": "text",
-        "TextField": "text",
-        "MonthYearField": "text",
-        "YesNoField": "text",
+        "textField": "text",
+        "MonthYearField": "monthYearField",
+        "yesNoField": "text",
     },
 )
 
 _MULTI_INPUT_FRE_FRONTEND_FORMATTERS = {
     "RadioField": lambda x: x.capitalize(),
-    "YesNoField": lambda x: "Yes" if bool(x) else "No",
+    "yesNoField": lambda x: "Yes" if bool(x) else "No",
 }
 
 
@@ -192,6 +192,7 @@ def format_add_another_component_contents(
             frontend_format = _MULTI_INPUT_FORMAT_FRONTEND.get(
                 column_config["type"], "text"
             )
+
             pre_frontend_formatter = _MULTI_INPUT_FRE_FRONTEND_FORMATTERS.get(
                 column_config["type"], lambda x: x
             )
@@ -201,6 +202,17 @@ def format_add_another_component_contents(
                 if answers
                 else None
             )
+
+            if frontend_format == "monthYearField":
+                formatted_answers = (
+                    [
+                        f"{answer[component_id + '__month']}-"
+                        f"{answer[component_id + '__year']}"
+                        for answer in answers
+                    ]
+                    if answers
+                    else None
+                )
 
             if formatted_answers:
                 table.append([title, formatted_answers, frontend_format])
