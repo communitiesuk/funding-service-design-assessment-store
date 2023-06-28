@@ -7,6 +7,14 @@ from db.models.flags_v2.flag_update import FlagUpdate
 from sqlalchemy import select
 
 
+def get_flags_for_application(application_id):
+    stmt = select(AssessmentFlag).where(
+        AssessmentFlag.application_id == application_id
+    )
+    results = db.session.scalars(stmt).all()
+    return results
+
+
 def create_flag_for_application(
     justification: str,
     sections_to_flag: str,
@@ -54,8 +62,9 @@ def add_update_to_assessment_flag(
         assessment_flag_id=assessment_flag_id,
     )
     assessment_flag.updates.append(flag_update)
-    assessment_flag.current_allocation = allocation
-    assessment_flag.current_status = status
+    assessment_flag.latest_allocation = allocation
+    assessment_flag.latest_status = status
 
     db.session.add(assessment_flag)
     db.session.commit()
+    return assessment_flag

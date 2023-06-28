@@ -63,3 +63,18 @@ flag_config_v2 = [
         "allocation": "TEAM_1",
     },
 ]
+
+add_flag_update_request_json = {
+    "user_id": str(user_id),
+    "status": FlagStatus.STOPPED,
+    "allocation": "TEAM_2",
+    "justification": "stopping assessment",
+}
+
+create_flag_request_json = {
+    "justification": "some text",
+    "status": FlagStatus.RAISED,
+    "allocation": "TEAM_1",
+    "sections_to_flag": ["section_1"],
+    "user_id": str(user_id),
+}

@@ -1,4 +1,4 @@
-from enum import Enum
+from enum import IntEnum
 from uuid import uuid4
 
 from db import db
@@ -13,7 +13,7 @@ from sqlalchemy.sql import func
 BaseModel: DefaultMeta = db.Model
 
 
-class FlagStatus(Enum):
+class FlagStatus(IntEnum):
     RAISED = 0
     STOPPED = 1
     RESOLVED = 3
