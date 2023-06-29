@@ -7,7 +7,7 @@ files.
 from db import db
 from db.models.assessment_record.enums import Language
 from db.models.assessment_record.enums import Status
-from flask_sqlalchemy import DefaultMeta
+from flask_sqlalchemy.model import DefaultMeta
 from sqlalchemy import cast
 from sqlalchemy import Column
 from sqlalchemy import Computed
@@ -96,6 +96,8 @@ class AssessmentRecord(BaseModel):
             '$.forms[*].questions[*].fields[*] ? (@.key == "NxVqXd").answer',
         )
     )
+
+    tags = relationship("Tag")
 
 
 Index(

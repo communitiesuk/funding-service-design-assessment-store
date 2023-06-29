@@ -3,6 +3,7 @@ from uuid import uuid4
 
 import pytest
 from app import create_app
+from db.models.assessment_record.tag import Tag
 from db.models.flags.flags import Flag
 from db.models.flags_v2.assessment_flag import AssessmentFlag
 from db.models.flags_v2.flag_update import FlagUpdate
@@ -56,11 +57,15 @@ def seed_application_records(
         app_flags_v2 = []
         if "flags_v2" in app:
             app_flags_v2 = app.pop("flags_v2")
+        app_tags = []
+        if "app_tags" in app:
+            app_tags = app.pop("app_tags")
         inserted_application = bulk_insert_application_record(
             [app], "COF", True
         )[0]
         app["flags"] = app_flags
         app["flags_v2"] = app_flags_v2
+        app["app_tags"] = app_tags
         inserted_applications.append(inserted_application)
         for f in app_flags:
             flag = Flag(application_id=app_id, **f)
@@ -80,6 +85,9 @@ def seed_application_records(
                 updates=[flag_update],
             )
             _db.session.add(assessment_flag)
+        for t in app_tags:
+            tag = Tag(application_id=app_id, tag_value=t)
+            _db.session.add(tag)
         _db.session.commit()
     # Supplied the rows we inserted for tests to use in their actions
     yield inserted_applications
