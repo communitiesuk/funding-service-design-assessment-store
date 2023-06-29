@@ -2,7 +2,7 @@ from uuid import uuid4
 
 from db import db
 from db.models.flags_v2.flag_update import FlagStatus
-from flask_sqlalchemy import DefaultMeta
+from flask_sqlalchemy.model import DefaultMeta
 from sqlalchemy import Column
 from sqlalchemy import ForeignKey
 from sqlalchemy import String
@@ -15,15 +15,6 @@ BaseModel: DefaultMeta = db.Model
 
 
 class AssessmentFlag(BaseModel):
-
-    # def __init__(self, id, application_id, latest_status, latest_allocation, sections_to_flag, updates):
-    #     self.id = id
-    #     self.application_id = application_id
-    #     self.latest_allocation = latest_allocation
-    #     self.latest_status = latest_status
-    #     self.sections_to_flag = sections_to_flag
-    #     self.updates = updates
-
     def __init__(
         self,
         application_id,
