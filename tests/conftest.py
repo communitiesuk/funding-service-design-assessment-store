@@ -52,12 +52,10 @@ def seed_application_records(
         app_flags = []
         app_flags_v2 = []
         if "flags" in app:
-            app_flags = app["flags"]
-            app.pop("flags")
+            app_flags = app.pop("flags")
         app_flags_v2 = []
         if "flags_v2" in app:
-            app_flags_v2 = app["flags_v2"]
-            app.pop("flags_v2")
+            app_flags_v2 = app.pop("flags_v2")
         inserted_application = bulk_insert_application_record(
             [app], "COF", True
         )[0]
