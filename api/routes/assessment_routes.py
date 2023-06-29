@@ -231,7 +231,7 @@ def get_all_flags_v2_for_application(application_id):
     current_app.logger.info(f"Get all flags for application {application_id}")
     flags = get_flags_for_application(application_id)
     flag_schema = AssessmentFlagSchema()
-    return flag_schema._serialize(flags, many=True)
+    return flag_schema.dump(flags, many=True)
 
 
 def create_flag_v2_for_application():
@@ -240,11 +240,11 @@ def create_flag_v2_for_application():
         f"Create flag for application {create_flag_json['application_id']}"
     )
     created_flag = create_flag_for_application(**create_flag_json)
-    return AssessmentFlagSchema()._serialize(created_flag)
+    return AssessmentFlagSchema().dump(created_flag)
 
 
 def update_flag_v2_for_application():
     current_app.logger.info(f"Update flag")
     update_flag_json = request.json
     updated_flag = add_update_to_assessment_flag(**update_flag_json)
-    return AssessmentFlagSchema()._serialize(updated_flag)
+    return AssessmentFlagSchema().dump(updated_flag)
