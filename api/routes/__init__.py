@@ -19,6 +19,7 @@ from .progress_routes import get_progress_for_applications
 from .progress_routes import post_progress_for_applications
 from .score_routes import get_score_for_application_sub_criteria
 from .score_routes import post_score_for_application_sub_criteria
+from .tag_routes import get_tags_for_fund_round
 
 
 __all__ = [
@@ -43,4 +44,5 @@ __all__ = [
     "get_all_flags_v2_for_application",
     "update_flag_v2_for_application",
     "create_flag_v2_for_application",
+    "get_tags_for_fund_round",
 ]

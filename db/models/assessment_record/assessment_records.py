@@ -97,7 +97,7 @@ class AssessmentRecord(BaseModel):
         )
     )
 
-    tags = relationship("Tag")
+    tags = relationship("TagAllocation")
 
 
 Index(

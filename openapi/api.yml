@@ -321,7 +321,6 @@ paths:
         schema:
           type: string
         required: true
-
   '/sub_criteria_overview/{application_id}/{sub_criteria_id}':
     parameters:
     - name: application_id
@@ -349,7 +348,6 @@ paths:
             application/json:
               schema:
                 $ref: 'components.yml#/components/schemas/SubCriteria'
-
   '/application/{application_id}/json':
     parameters:
       - name: application_id
@@ -371,7 +369,6 @@ paths:
             application/json:
               schema:
                 type: object
-
   '/application/{application_id}/status/complete':
     parameters:
       - name: application_id
@@ -427,7 +424,6 @@ paths:
                   workflow_status:
                     type: string
                     example: "COMPLETED"
-
   '/application_overviews/{application_id}':
     parameters:
     - name: application_id
@@ -450,7 +446,6 @@ paths:
               schema:
                 type: object
                 $ref: 'assessor_task_list.yml#/components/schemas/AssessorTaskListState'
-
   '/sub_criteria_themes/{application_id}/{theme_id}':
     parameters:
     - name: application_id
@@ -615,7 +610,6 @@ paths:
                 type: object
                 items:
                   $ref: 'components.yml#/components/schemas/Comment'
-
   '/progress':
     post:
       tags:
@@ -773,3 +767,127 @@ paths:
                 code: 401
                 status: 'error'
                 message: 'Could not save Flag for application'
+
+  '/application/{application_id}/tag':
+    get:
+      tags:
+        - tag management
+      summary: get tags for an assessment
+      description: get tags for an assessment
+      operationId: api.routes.assessment_routes.get_tags_associated_with_assessment
+      parameters:
+        - name: application_id
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: SUCCESS - A list of assessment tags
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'components.yml#/components/schemas/TagAssociation'
+    post:
+      tags:
+        - tag management
+      summary: post a tag association with an assessment
+      description: post a tag association with an assessment
+      operationId: api.routes.assessment_routes.associate_tag_with_assessment
+      parameters:
+        - name: application_id
+          in: path
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: Tag association creation parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'components.yml#/components/schemas/PostTagAssociation'
+            example:
+              id: "uuidv4 of the tags to associate"
+      responses:
+        201:
+          description: SUCCESS - Tag Submitted
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: 'components.yml#/components/schemas/TagAssociation'
+
+  '/funds/{fund_id}/rounds/{round_id}/tags':
+    get:
+      tags:
+        - tag management
+      summary: The tags associated with the provided fund ID and a round ID.
+      description: Returns the tags associated with the provided fund ID and a round ID.
+      operationId: api.routes.tag_routes.get_tags_for_fund_round
+      parameters:
+        - in: path
+          name: fund_id
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: round_id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: A list of tags for the given fund-round.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref : 'components.yml#/components/schemas/Tag'
+        404:
+          description: "Tags not found for fund-round provided."
+          content:
+            application/json:
+              schema:
+                $ref: "components.yml#/components/schemas/Error"
+    post:
+      tags:
+        - tag management
+      summary: add a new tag
+      description: post a new tag for a fund round
+      operationId: api.routes.tag_routes.add_tags_for_fund_round
+      parameters:
+        - in: path
+          name: fund_id
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: round_id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: Tag creation parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 'components.yml#/components/schemas/PostTag'
+            example:
+              value: 'Tag string'
+              colour: 'GREEN'
+              user: 'Test User'
+      responses:
+        201:
+          description: SUCCESS - Tag Submitted
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: 'components.yml#/components/schemas/Tag'

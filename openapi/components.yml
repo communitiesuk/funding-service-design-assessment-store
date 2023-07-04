@@ -316,3 +316,76 @@ components:
           type: string
         user_id:
           type: string
+
+    PostTag:
+      type: object
+      properties:
+        value:
+          type: string
+          nullable: false
+          description: "tag string"
+        colour:
+            type: string
+            nullable: true
+            enum:
+              - 'RED'
+              - 'GREEN'
+              - 'BLUE'
+        user:
+          type: string
+          nullable: false
+    Tag:
+        type: object
+        properties:
+          id:
+            type: string
+            description: uuid of tag.
+            example: uuif7eaf61b-093e-4464-a4da-b36b849f0a1b
+          value:
+            type: string
+            description: inserted tag key
+            example: "Tag 1"
+          user:
+            type: string
+            description: User who associated
+            example: "Tag 1"
+          active:
+            type: boolean
+            description: Is the tag still associated
+          assocaited:
+            type: boolean
+            description: Is the tag associated with an assessment
+          colour:
+            type: string
+            description: colour category of the tag
+    PostTagAssociation:
+      type: object
+      properties:
+        id:
+          type: string
+          nullable: false
+          description: "uuidv4 of the tag"
+    TagAssociation:
+        type: object
+        properties:
+          id:
+            type: string
+            description: uuid of tag.
+            example: uuif7eaf61b-093e-4464-a4da-b36b849f0a1b
+          value:
+            type: string
+            description: inserted tag key
+            example: "Tag 1"
+          user:
+            type: string
+            description: User who associated
+            example: "Tag 1"
+          active:
+            type: boolean
+            description: Is the tag still associated
+          assocaited:
+            type: boolean
+            description: Is the tag associated with an assessment
+          colour:
+            type: string
+            description: colour category of the tag

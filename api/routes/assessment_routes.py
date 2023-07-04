@@ -16,6 +16,7 @@ from db.queries.assessment_records.queries import get_application_jsonb_blob
 from db.queries.assessment_records.queries import (
     get_assessment_sub_critera_state,
 )
+from db.queries.assessment_records.queries import set_tags_for_assessment
 from db.queries.assessment_records.queries import update_status_to_completed
 from db.queries.comments.queries import get_sub_criteria_to_has_comment_map
 from db.queries.flags.queries import find_qa_complete_flag_for_applications
@@ -248,3 +249,13 @@ def update_flag_v2_for_application():
     update_flag_json = request.json
     updated_flag = add_update_to_assessment_flag(**update_flag_json)
     return AssessmentFlagSchema().dump(updated_flag)
+
+
+def associate_tag_with_assessment(application_id, new_tags):
+    current_app.logger.info(f"Associating tag with assessment")
+    associated_tags = set_tags_for_assessment(application_id, new_tags)
+    return associated_tags
+
+
+def get_tags_associated_with_assessment():
+    return True

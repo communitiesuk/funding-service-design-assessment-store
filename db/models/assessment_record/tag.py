@@ -8,9 +8,9 @@ from sqlalchemy.dialects.postgresql import UUID
 BaseModel: DefaultMeta = db.Model
 
 
-class Tag(BaseModel):
+class TagAllocation(BaseModel):
 
-    __tablename__ = "tag"
+    __tablename__ = "tag_allocation"
 
     application_id = Column(
         "application_id",

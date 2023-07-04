@@ -8,7 +8,7 @@ from typing import List
 
 from db import db
 from db.models.assessment_record import AssessmentRecord
-from db.models.assessment_record import Tag
+from db.models.assessment_record import TagAllocation
 from db.models.assessment_record.enums import Status
 from db.models.flags import Flag
 from db.models.flags.enums import FlagType
@@ -496,8 +496,10 @@ def get_assessment_records_by_round_id(round_id):
     return output
 
 
-def set_tags_for_application(application_id, new_tags):
-    stmt = select(Tag).where(Tag.application_id == application_id)
+def set_tags_for_assessment(application_id, new_tags):
+    stmt = select(TagAllocation).where(
+        TagAllocation.application_id == application_id
+    )
     existing_tags = db.session.scalars(stmt).all()
     for tag in existing_tags:
         if tag.tag_value not in new_tags:
@@ -509,6 +511,8 @@ def set_tags_for_application(application_id, new_tags):
             for tag_value in new_tags
         ]
         db.session.execute(
-            postgres_insert(Tag).values(tag_inserts).on_conflict_do_nothing()
+            postgres_insert(TagAllocation)
+            .values(tag_inserts)
+            .on_conflict_do_nothing()
         )
     db.session.commit()

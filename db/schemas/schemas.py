@@ -8,6 +8,7 @@ from db.models.flags.enums import FlagType
 from db.models.flags_v2.assessment_flag import AssessmentFlag
 from db.models.flags_v2.flag_update import FlagUpdate
 from db.models.score import Score
+from db.models.tag.tags import Tag
 from marshmallow import fields
 from marshmallow import Schema
 from marshmallow.fields import Enum
@@ -111,3 +112,14 @@ class AssessmentFlagSchema(SQLAlchemyAutoSchema):
 class FlagUpdateSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = FlagUpdate
+
+
+class TagSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Tag
+
+    # Custom serialization for the Colour enum
+    colour = fields.Method("get_colour")
+
+    def get_colour(self, obj):
+        return obj.colour.name

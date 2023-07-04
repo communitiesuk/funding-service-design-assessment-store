@@ -1,4 +1,4 @@
 # flake8: noqa
 from .assessment_records import AssessmentRecord
 from .db_utils import *
-from .tag import Tag
+from .tag import TagAllocation

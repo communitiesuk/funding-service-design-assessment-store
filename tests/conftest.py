@@ -3,7 +3,7 @@ from uuid import uuid4
 
 import pytest
 from app import create_app
-from db.models.assessment_record.tag import Tag
+from db.models.assessment_record.tag import TagAllocation
 from db.models.flags.flags import Flag
 from db.models.flags_v2.assessment_flag import AssessmentFlag
 from db.models.flags_v2.flag_update import FlagUpdate
@@ -86,7 +86,7 @@ def seed_application_records(
             )
             _db.session.add(assessment_flag)
         for t in app_tags:
-            tag = Tag(application_id=app_id, tag_value=t)
+            tag = TagAllocation(application_id=app_id, tag_value=t)
             _db.session.add(tag)
         _db.session.commit()
     # Supplied the rows we inserted for tests to use in their actions
