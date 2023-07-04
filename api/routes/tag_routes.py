@@ -1,5 +1,5 @@
 # flake8: noqa
-from db.queries.tags.queries import insert_tags_ignore_duplicates
+from db.queries.tags.queries import insert_tags
 from db.queries.tags.queries import select_tags_for_fund_round
 from db.schemas.schemas import TagSchema
 from flask import abort
@@ -26,7 +26,7 @@ def add_tags_for_fund_round(fund_id, round_id):
 
     tags = [{"value": tag_value, "colour": tag_colour, "user": tag_creator}]
 
-    tags = insert_tags_ignore_duplicates(tags, fund_id, round_id)
+    tags = insert_tags(tags, fund_id, round_id)
 
     if tags:
         serialiser = TagSchema()

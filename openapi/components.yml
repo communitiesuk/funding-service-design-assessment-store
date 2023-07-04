@@ -352,9 +352,6 @@ components:
           active:
             type: boolean
             description: Is the tag still associated
-          assocaited:
-            type: boolean
-            description: Is the tag associated with an assessment
           colour:
             type: string
             description: colour category of the tag
@@ -380,9 +377,6 @@ components:
             type: string
             description: User who associated
             example: "Tag 1"
-          active:
-            type: boolean
-            description: Is the tag still associated
           assocaited:
             type: boolean
             description: Is the tag associated with an assessment

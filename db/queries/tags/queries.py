@@ -6,7 +6,7 @@ from flask import current_app
 from sqlalchemy.dialects.postgresql import insert as postgres_insert
 
 
-def insert_tags_ignore_duplicates(tags, fund_id, round_id):
+def insert_tags(tags, fund_id, round_id):
     """
     Inserts tags associated with a round.
 
@@ -29,7 +29,7 @@ def insert_tags_ignore_duplicates(tags, fund_id, round_id):
             "fund_id": fund_id,
             "round_id": round_id,
             "creator": tag["user"],
-            "colour": tag["colour"],
+            "colour": tag.get("colour", "NONE"),
         }
         for tag in tags
     ]
