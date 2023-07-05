@@ -511,7 +511,7 @@ def associate_assessment_tags(application_id, tags: List):
     # Iterate over the provided tags and update the tag associations
     for tag in tags:
         tag_id = tag.get("id")
-        user_id = tag.get("user")
+        user_id = tag.get("user_id")
         associated = True  # Set associated value to True for provided tags
 
         # Check if the tag already exists in the database

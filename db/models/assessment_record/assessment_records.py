@@ -73,6 +73,7 @@ class AssessmentRecord(BaseModel):
 
     flags = relationship("Flag")
     flags_v2 = relationship("AssessmentFlag")
+    tag_associations = relationship("TagAssociation")
 
     location_json_blob = Column("location_json_blob", JSONB, nullable=True)
 
