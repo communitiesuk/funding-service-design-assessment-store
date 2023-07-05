@@ -11,12 +11,15 @@ from api.routes.subcriterias.get_sub_criteria import (
     return_subcriteria_from_mapping,
 )
 from db.queries import get_metadata_for_fund_round_id
+from db.queries.assessment_records.queries import associate_assessment_tags
 from db.queries.assessment_records.queries import find_assessor_task_list_state
 from db.queries.assessment_records.queries import get_application_jsonb_blob
 from db.queries.assessment_records.queries import (
     get_assessment_sub_critera_state,
 )
-from db.queries.assessment_records.queries import set_tags_for_assessment
+from db.queries.assessment_records.queries import (
+    select_tags_associated_with_assessment,
+)
 from db.queries.assessment_records.queries import update_status_to_completed
 from db.queries.comments.queries import get_sub_criteria_to_has_comment_map
 from db.queries.flags.queries import find_qa_complete_flag_for_applications
@@ -26,6 +29,8 @@ from db.queries.flags_v2.queries import create_flag_for_application
 from db.queries.flags_v2.queries import get_flags_for_application
 from db.queries.scores.queries import get_sub_criteria_to_latest_score_map
 from db.schemas.schemas import AssessmentFlagSchema
+from db.schemas.schemas import JoinedTagAssociationSchema
+from db.schemas.schemas import TagAssociationSchema
 from flask import current_app
 from flask import request
 
@@ -251,11 +256,28 @@ def update_flag_v2_for_application():
     return AssessmentFlagSchema().dump(updated_flag)
 
 
-def associate_tag_with_assessment(application_id, new_tags):
+def associate_tags_with_assessment(application_id):
+    args = request.get_json()
+    tags = args
     current_app.logger.info(f"Associating tag with assessment")
-    associated_tags = set_tags_for_assessment(application_id, new_tags)
-    return associated_tags
+    associated_tags = associate_assessment_tags(application_id, tags)
+
+    if associated_tags:
+        serialiser = TagAssociationSchema()
+        serialised_associated_tags = [
+            serialiser.dump(r) for r in associated_tags
+        ]
+        return serialised_associated_tags
 
 
-def get_tags_associated_with_assessment():
-    return True
+def get_tags_associated_with_assessment(application_id):
+    current_app.logger.info(
+        f"Getting tags associated with assessment with application_id: {application_id}."
+    )
+    associated_tags = select_tags_associated_with_assessment(application_id)
+    if associated_tags:
+        serialiser = JoinedTagAssociationSchema()
+        serialised_associated_tags = [
+            serialiser.dump(r) for r in associated_tags
+        ]
+        return serialised_associated_tags

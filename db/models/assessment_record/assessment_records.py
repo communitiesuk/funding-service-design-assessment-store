@@ -97,8 +97,6 @@ class AssessmentRecord(BaseModel):
         )
     )
 
-    tags = relationship("TagAllocation")
-
 
 Index(
     "ix_application_jsonb",

@@ -324,6 +324,7 @@ components:
           type: string
           nullable: false
           description: "tag string"
+          example: 'Tag string'
         colour:
             type: string
             nullable: true
@@ -331,9 +332,11 @@ components:
               - 'RED'
               - 'GREEN'
               - 'BLUE'
-        user:
+            example: 'GREEN'
+        creator_user_id:
           type: string
           nullable: false
+          example: '13b95669-ed98-4840-8652-d6b7a19964db'
     Tag:
         type: object
         properties:
@@ -345,7 +348,7 @@ components:
             type: string
             description: inserted tag key
             example: "Tag 1"
-          user:
+          creator_user_id:
             type: string
             description: User who associated
             example: "Tag 1"
@@ -362,6 +365,12 @@ components:
           type: string
           nullable: false
           description: "uuidv4 of the tag"
+          example: "dfb1a892-b3b7-4531-973f-0ba0c7979580"
+        user_id:
+          type: string
+          nullable: false
+          description: "uuidv4 of the user"
+          example: "4a72b051-459e-48d1-99ec-603d0f3768c2"
     TagAssociation:
         type: object
         properties:
@@ -377,7 +386,7 @@ components:
             type: string
             description: User who associated
             example: "Tag 1"
-          assocaited:
+          associated:
             type: boolean
             description: Is the tag associated with an assessment
           colour:

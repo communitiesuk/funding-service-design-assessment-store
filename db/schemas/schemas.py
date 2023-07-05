@@ -2,21 +2,33 @@ from db.models import Flag
 from db.models.assessment_record import AssessmentRecord
 from db.models.assessment_record.enums import Language
 from db.models.assessment_record.enums import Status
+from db.models.assessment_record.tag_association import TagAssociation
 from db.models.comment import Comment
 from db.models.comment.enums import CommentType
 from db.models.flags.enums import FlagType
 from db.models.flags_v2.assessment_flag import AssessmentFlag
 from db.models.flags_v2.flag_update import FlagUpdate
 from db.models.score import Score
+from db.models.tag.enums import Colour
 from db.models.tag.tags import Tag
 from marshmallow import fields
 from marshmallow import Schema
+from marshmallow.fields import Boolean
 from marshmallow.fields import Enum
 from marshmallow.fields import Field
 from marshmallow.fields import Nested
 from marshmallow.fields import String
+from marshmallow.fields import UUID
 from marshmallow_sqlalchemy import auto_field
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
+
+
+class ColourMixin:
+    # Custom serialization for the Colour enum
+    colour = fields.Method("get_colour")
+
+    def get_colour(self, obj):
+        return obj.colour.name
 
 
 class AssessmentRecordMetadata(SQLAlchemyAutoSchema):
@@ -114,12 +126,24 @@ class FlagUpdateSchema(SQLAlchemyAutoSchema):
         model = FlagUpdate
 
 
-class TagSchema(SQLAlchemyAutoSchema):
+class TagSchema(ColourMixin, SQLAlchemyAutoSchema):
     class Meta:
         model = Tag
 
-    # Custom serialization for the Colour enum
-    colour = fields.Method("get_colour")
 
-    def get_colour(self, obj):
-        return obj.colour.name
+class TagAssociationSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = TagAssociation
+        fields = ("id", "tag_id", "application_id")
+
+
+class JoinedTagAssociationSchema(ColourMixin, SQLAlchemyAutoSchema):
+    tag_id = UUID()
+    colour = Enum(Colour)
+    value = String()
+    associated = Boolean()
+    application_id = UUID()
+    user_id = UUID()
+
+    class Meta:
+        model = None  # Set the model to None since it doesn't directly map to a single model

@@ -14,7 +14,7 @@ def insert_tags(tags, fund_id, round_id):
         tags (list): A list of tag dictionaries [{
                 "value": "",
                 "colour": "",
-                "user": "",
+                "tag_creator_user_id": "",
             }]
         round_id (str): The round to insert tags for.
         fund_id (str): The fund to insert tags for.
@@ -28,7 +28,7 @@ def insert_tags(tags, fund_id, round_id):
             "value": tag["value"],
             "fund_id": fund_id,
             "round_id": round_id,
-            "creator": tag["user"],
+            "creator_user_id": tag["tag_creator_user_id"],
             "colour": tag.get("colour", "NONE"),
         }
         for tag in tags

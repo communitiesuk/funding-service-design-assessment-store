@@ -12,6 +12,7 @@ BaseModel: DefaultMeta = db.Model
 
 
 class Tag(BaseModel):
+    __tablename__ = "tag"
     id = Column(
         UUID(as_uuid=True),
         default=uuid.uuid4,
@@ -30,7 +31,7 @@ class Tag(BaseModel):
         UUID(as_uuid=True),
         nullable=False,
     )
-    creator = db.Column(db.String(255), nullable=True)
+    creator_user_id = db.Column(db.String(255), nullable=True)
     created_at = db.Column(
         db.DateTime(timezone=True), server_default=func.now()
     )

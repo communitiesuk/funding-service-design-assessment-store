@@ -795,7 +795,7 @@ paths:
         - tag management
       summary: post a tag association with an assessment
       description: post a tag association with an assessment
-      operationId: api.routes.assessment_routes.associate_tag_with_assessment
+      operationId: api.routes.assessment_routes.associate_tags_with_assessment
       parameters:
         - name: application_id
           in: path
@@ -808,9 +808,9 @@ paths:
         content:
           application/json:
             schema:
-              $ref: 'components.yml#/components/schemas/PostTagAssociation'
-            example:
-              id: "uuidv4 of the tags to associate"
+              type: array
+              items:
+                $ref: 'components.yml#/components/schemas/PostTagAssociation'
       responses:
         201:
           description: SUCCESS - Tag Submitted
@@ -878,10 +878,6 @@ paths:
           application/json:
             schema:
               $ref: 'components.yml#/components/schemas/PostTag'
-            example:
-              value: 'Tag string'
-              colour: 'GREEN'
-              user: 'Test User'
       responses:
         201:
           description: SUCCESS - Tag Submitted

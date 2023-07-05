@@ -8,10 +8,11 @@ from typing import List
 
 from db import db
 from db.models.assessment_record import AssessmentRecord
-from db.models.assessment_record import TagAllocation
+from db.models.assessment_record import TagAssociation
 from db.models.assessment_record.enums import Status
 from db.models.flags import Flag
 from db.models.flags.enums import FlagType
+from db.models.tag.tags import Tag
 from db.queries.assessment_records._helpers import derive_application_values
 from db.queries.flags.queries import find_qa_complete_flags
 from db.schemas import AssessmentRecordMetadata
@@ -496,23 +497,81 @@ def get_assessment_records_by_round_id(round_id):
     return output
 
 
-def set_tags_for_assessment(application_id, new_tags):
-    stmt = select(TagAllocation).where(
-        TagAllocation.application_id == application_id
-    )
-    existing_tags = db.session.scalars(stmt).all()
-    for tag in existing_tags:
-        if tag.tag_value not in new_tags:
-            db.session.delete(tag)
+def associate_assessment_tags(application_id, tags: List):
+    existing_associated_tags = TagAssociation.query.filter(
+        TagAssociation.application_id == application_id,
+        TagAssociation.associated is True,  # Filter for associated tags only
+    ).all()
 
-    if len(new_tags) > 0:
-        tag_inserts = [
-            {"application_id": application_id, "tag_value": tag_value}
-            for tag_value in new_tags
-        ]
-        db.session.execute(
-            postgres_insert(TagAllocation)
-            .values(tag_inserts)
-            .on_conflict_do_nothing()
-        )
+    # Create a dictionary to quickly lookup existing tags by tag_id
+    existing_associated_tags_dict = {
+        str(tag.tag_id): tag for tag in existing_associated_tags
+    }
+
+    # Iterate over the provided tags and update the tag associations
+    for tag in tags:
+        tag_id = tag.get("id")
+        user_id = tag.get("user")
+        associated = True  # Set associated value to True for provided tags
+
+        # Check if the tag already exists in the database
+        if tag_id in existing_associated_tags_dict.keys():
+            pass
+        else:
+            # Create a new tag association
+            new_tag = TagAssociation(
+                application_id=application_id,
+                tag_id=tag.get("id"),
+                associated=associated,
+                user_id=user_id,
+            )
+            db.session.add(new_tag)
+
+    # Dis-associate any existing tags that are not present in the provided list
+    incoming_tag_ids = {tag["id"] for tag in tags}
+    for tag in existing_associated_tags:
+        if str(tag.tag_id) not in incoming_tag_ids:
+            tag.associated = False
+
     db.session.commit()
+
+    # Return the updated tag associations
+    updated_tags = TagAssociation.query.filter(
+        TagAssociation.application_id == application_id,
+        TagAssociation.associated is True,  # Filter for associated tags only
+    ).all()
+    return updated_tags
+
+
+def select_tags_associated_with_assessment(application_id):
+
+    tags_meta = (
+        db.session.query(
+            Tag.id,
+            Tag.colour,
+            Tag.value,
+            TagAssociation.associated,
+            TagAssociation.user_id,
+            AssessmentRecord.application_id,
+        )
+        .join(
+            AssessmentRecord,
+            TagAssociation.application_id == AssessmentRecord.application_id,
+        )
+        .join(Tag, Tag.id == TagAssociation.tag_id)
+        .filter(AssessmentRecord.application_id == application_id)
+        .filter(TagAssociation.associated is True)
+        .all()
+    )
+
+    column_names = [
+        "tag_id",
+        "colour",
+        "value",
+        "associated",
+        "user_id",
+        "application_id",
+    ]
+    tag_associations = [dict(zip(column_names, row)) for row in tags_meta]
+    db.session.commit()
+    return tag_associations
