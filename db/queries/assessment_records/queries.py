@@ -500,7 +500,7 @@ def get_assessment_records_by_round_id(round_id):
 def associate_assessment_tags(application_id, tags: List):
     existing_associated_tags = TagAssociation.query.filter(
         TagAssociation.application_id == application_id,
-        TagAssociation.associated is True,  # Filter for associated tags only
+        TagAssociation.associated == True,  # noqa: E712
     ).all()
 
     # Create a dictionary to quickly lookup existing tags by tag_id
@@ -538,7 +538,7 @@ def associate_assessment_tags(application_id, tags: List):
     # Return the updated tag associations
     updated_tags = TagAssociation.query.filter(
         TagAssociation.application_id == application_id,
-        TagAssociation.associated is True,  # Filter for associated tags only
+        TagAssociation.associated == True,  # noqa: E712
     ).all()
     return updated_tags
 
@@ -560,7 +560,7 @@ def select_tags_associated_with_assessment(application_id):
         )
         .join(Tag, Tag.id == TagAssociation.tag_id)
         .filter(AssessmentRecord.application_id == application_id)
-        .filter(TagAssociation.associated is True)
+        .filter(TagAssociation.associated == True)  # noqa: E712
         .all()
     )
 
