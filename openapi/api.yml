@@ -66,6 +66,14 @@ paths:
         format: query
       required: false
       explode: true
+    - name: countries
+      in: query
+      style: form
+      schema:
+        type: string
+        format: query
+      required: false
+      explode: true
     get:
       tags:
         - assessments
@@ -81,6 +89,85 @@ paths:
                 type: array
                 items:
                   $ref: 'components.yml#/components/schemas/Assessment'
+
+  '/application_overviews_flags_v2/{fund_id}/{round_id}':
+    parameters:
+    - name: fund_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: path
+    - name: round_id
+      in: path
+      required: true
+      schema:
+        type: string
+        format: path
+    - name: search_in
+      in: query
+      style: form
+      schema:
+        type: string
+        format: query
+      required: false
+      explode: true
+    - name: funding_type
+      in: query
+      style: form
+      schema:
+        type: string
+        format: query
+      required: false
+      explode: true
+    - name: search_term
+      in: query
+      style: form
+      schema:
+        type: string
+        format: query
+      required: false
+      explode: true
+    - name: asset_type
+      in: query
+      style: form
+      schema:
+        type: string
+        format: query
+      required: false
+      explode: true
+    - name: status
+      in: query
+      style: form
+      schema:
+        type: string
+        format: query
+      required: false
+      explode: true
+    - name: countries
+      in: query
+      style: form
+      schema:
+        type: string
+        format: query
+      required: false
+      explode: true
+    get:
+      tags:
+        - assessments
+      summary: Search assessments
+      description: List all assessments
+      operationId: api.routes.all_assessments_flagsv2_for_fund_round_id
+      responses:
+        200:
+          description: SUCCESS - A list of assessments
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'components.yml#/components/schemas/Assessment'
+
   '/assessments/get-stats/{fund_id}/{round_id}':
     parameters:
       - name: fund_id
@@ -321,6 +408,28 @@ paths:
         schema:
           type: string
         required: true
+
+  '/flag_data_v2':
+    get:
+      tags:
+        - flags_v2
+      summary: get assessment flag data by flag id
+      description: get assessment flag data by flag id
+      operationId: api.routes.get_flag_v2
+      responses:
+        200:
+          description: SUCCESS - Flags
+          content:
+            application/json:
+              schema:
+                type: object
+      parameters:
+      - name: flag_id
+        in: query
+        schema:
+          type: string
+        required: true
+
   '/sub_criteria_overview/{application_id}/{sub_criteria_id}':
     parameters:
     - name: application_id
@@ -348,6 +457,29 @@ paths:
             application/json:
               schema:
                 $ref: 'components.yml#/components/schemas/SubCriteria'
+
+  '/application/{application_id}/metadata':
+    parameters:
+      - name: application_id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: path
+    get:
+      tags:
+        - assessments
+      summary: Retrieve the metadata for a specific application ID
+      description: Retrieve the metadata for a specific application ID
+      operationId: api.routes.assessment_metadata_for_application_id
+      responses:
+        200:
+          description: SUCCESS - application metadata
+          content:
+            application/json:
+              schema:
+                type: object
+
   '/application/{application_id}/json':
     parameters:
       - name: application_id

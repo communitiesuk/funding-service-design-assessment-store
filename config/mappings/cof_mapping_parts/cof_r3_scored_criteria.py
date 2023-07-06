@@ -8,8 +8,8 @@ scored_criteria = [
         "weighting": 0.53,
         "sub_criteria": [
             {
-                "id": "benefits",
-                "name": "Benefits",
+                "id": "community_use",
+                "name": "Community use",
                 "themes": [
                     {
                         "id": "community_use",
@@ -63,13 +63,6 @@ scored_criteria = [
                                 "presentation_type": "list",
                                 "question": "Why is the asset at risk of closure?",
                             },
-                            {
-                                "field_id": "TlGjXb",
-                                "form_name": "project-information-cof-r3-w1",
-                                "field_type": "freeTextField",
-                                "presentation_type": "free_text",
-                                "question": "Explain why the asset is at risk of being lost to the community, or why it has already been lost",
-                            },
                         ],
                     },
                 ],
@@ -121,15 +114,8 @@ scored_criteria = [
                                 "form_name": "local-support-cof-r3-w1",
                                 "field_type": "clientSideFileUploadField",
                                 "presentation_type": "s3bucketPath",
-                                "question": "Upload supporting evidence",
-                                "path": "your-support-for-the-project",
-                            },
-                            {
-                                "field_id": "EEBFao",
-                                "form_name": "local-support",
-                                "field_type": "fileUploadField",
-                                "presentation_type": "file",
                                 "question": "Upload supporting evidence (optional)",
+                                "path": "your-support-for-the-project",
                             },
                         ],
                     },
@@ -155,8 +141,8 @@ scored_criteria = [
                 ],
             },
             {
-                "id": "how_the_community_benefits",
-                "name": "How the community benefits",
+                "id": "benefits",
+                "name": "Benefits",
                 "themes": [
                     {
                         "id": "delivering_and_sustaining_benefits",
@@ -185,12 +171,6 @@ scored_criteria = [
                             },
                         ],
                     },
-                ],
-            },
-            {
-                "id": "how_the_asset_will_be_inclusive",
-                "name": "How the asset will be inclusive",
-                "themes": [
                     {
                         "id": "benefitting_the_whole_community",
                         "name": "Benefitting the whole community",
@@ -239,8 +219,20 @@ scored_criteria = [
                                 "field_id": "qQLyXL",
                                 "form_name": "funding-required-cof-r3-w1",
                                 "field_type": "multiInputField",
-                                "presentation_type": "list",
-                                "question": "Capital costs",
+                                "presentation_type": "table",
+                                "question": [
+                                    "Capital costs",
+                                    {
+                                        "GLQlOh": {
+                                            "column_title": "Item of expenditure",
+                                            "type": "textField",
+                                        },
+                                        "JtwkMy": {
+                                            "column_title": "Amount",
+                                            "type": "numberField",
+                                        },
+                                    },
+                                ],
                             },
                             {
                                 "field_id": "DOvZvB",
@@ -356,8 +348,20 @@ scored_criteria = [
                                 "field_id": "NPgwcH",
                                 "form_name": "operational-costs-cof-r3-w1",
                                 "field_type": "multiInputField",
-                                "presentation_type": "list",
-                                "question": "Running costs",
+                                "presentation_type": "table",
+                                "question": [
+                                    "Running costs",
+                                    {
+                                        "IIdfRj": {
+                                            "column_title": "Item of expenditure",
+                                            "type": "textField",
+                                        },
+                                        "wlGQua": {
+                                            "column_title": "Amount",
+                                            "type": "numberField",
+                                        },
+                                    },
+                                ],
                             },
                         ],
                     },
