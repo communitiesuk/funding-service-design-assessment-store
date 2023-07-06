@@ -904,8 +904,8 @@ paths:
     get:
       tags:
         - tag management
-      summary: get tags for an assessment
-      description: get tags for an assessment
+      summary: Get all active tag associations for an assessment
+      description: returns all active tag associations for an assessment
       operationId: api.routes.assessment_routes.get_tags_associated_with_assessment
       parameters:
         - name: application_id
@@ -925,8 +925,8 @@ paths:
     post:
       tags:
         - tag management
-      summary: post a tag association with an assessment
-      description: post a tag association with an assessment
+      summary: Post a list of tags associated with an assessment
+      description: Post a list of tags associated with an assessment
       operationId: api.routes.assessment_routes.associate_tags_with_assessment
       parameters:
         - name: application_id
@@ -957,7 +957,7 @@ paths:
     get:
       tags:
         - tag management
-      summary: The tags associated with the provided fund ID and a round ID.
+      summary: Get all the tags associated with the provided fund ID and a round ID.
       description: Returns the tags associated with the provided fund ID and a round ID.
       operationId: api.routes.tag_routes.get_tags_for_fund_round
       parameters:
@@ -989,8 +989,8 @@ paths:
     post:
       tags:
         - tag management
-      summary: add a new tag
-      description: post a new tag for a fund round
+      summary: Post a new tag for a fund round
+      description: Post a new tag for a fund round
       operationId: api.routes.tag_routes.add_tags_for_fund_round
       parameters:
         - in: path
