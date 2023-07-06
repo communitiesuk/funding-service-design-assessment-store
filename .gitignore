@@ -142,3 +142,6 @@ flask_session
 # Sqlite
 sqlite.db
 test_sqlite.db
+
+# VSCode
+.vscode/settings.json
