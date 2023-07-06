@@ -922,11 +922,11 @@ paths:
                 type: array
                 items:
                   $ref: 'components.yml#/components/schemas/TagAssociation'
-    post:
+    put:
       tags:
         - tag management
-      summary: Post a list of tags associated with an assessment
-      description: Post a list of tags associated with an assessment
+      summary: Put a list of tags associated with an assessment
+      description: Put a list of tags associated with an assessment
       operationId: api.routes.assessment_routes.associate_tags_with_assessment
       parameters:
         - name: application_id
