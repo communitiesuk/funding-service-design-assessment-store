@@ -25,7 +25,7 @@ def upgrade():
         sa.Column("active", sa.Boolean(), nullable=False),
         sa.Column(
             "colour",
-            sa.Enum("NONE", "GREEN", "RED", "BLUE", name="colour"),
+            sa.Enum("NONE", "GREEN", "RED", "YELLOW", "GREY", name="colour"),
             nullable=False,
         ),
         sa.Column("fund_id", postgresql.UUID(as_uuid=True), nullable=False),
