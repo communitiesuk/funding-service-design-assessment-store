@@ -8,7 +8,6 @@ from sqlalchemy import Column
 from sqlalchemy import func
 from sqlalchemy import Index
 from sqlalchemy import text
-from sqlalchemy import UniqueConstraint
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.event import listens_for
 from sqlalchemy.orm import validates
@@ -23,13 +22,13 @@ class Tag(BaseModel):
         default=uuid.uuid4,
         primary_key=True,
     )
-    value = db.Column(
+    value = Column(
         db.String(255),
         nullable=False,
-        unique=True,
+        unique=False,
     )
-    active = db.Column(db.Boolean(), nullable=False, default=True)
-    colour = db.Column(
+    active = Column(db.Boolean(), nullable=False, default=True)
+    colour = Column(
         db.Enum(Colour, name="colour"), nullable=False, default=Colour.NONE
     )
     fund_id = Column(
@@ -40,13 +39,18 @@ class Tag(BaseModel):
         UUID(as_uuid=True),
         nullable=False,
     )
-    creator_user_id = db.Column(db.String(255), nullable=True)
-    created_at = db.Column(
-        db.DateTime(timezone=True), server_default=func.now()
+    creator_user_id = Column(
+        UUID(as_uuid=True),
+        nullable=False,
     )
+    created_at = Column(db.DateTime(timezone=True), server_default=func.now())
     __table_args__ = (
-        UniqueConstraint("value", "round_id", name="uq_tag_value_round_id"),
-        Index("value_unique_idx", text("lower(value)"), unique=True),
+        Index(
+            "tag_value_round_id_ix",
+            text("lower(value)"),
+            "round_id",
+            unique=True,
+        ),
     )
 
     def __repr__(self):

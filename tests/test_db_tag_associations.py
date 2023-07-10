@@ -9,7 +9,10 @@ from tests.conftest import test_input_data
 @pytest.mark.apps_to_insert([{**test_input_data[0]}])
 def test_set_tags_all_new(_db, seed_application_records, seed_tags):
     app_id = seed_application_records[0]["application_id"]
-    new_tags = [{"id": tag["id"], "user_id": "Test user"} for tag in seed_tags]
+    new_tags = [
+        {"id": tag["id"], "user_id": "1d49a41c-a13e-41ab-a89c-240b3de3fbda"}
+        for tag in seed_tags
+    ]
     stmt = select(AssessmentRecord).where(
         AssessmentRecord.application_id == app_id
     )
@@ -31,7 +34,10 @@ def test_that_calling_with_the_same_tags_doesnt_duplicate_association(
     _db, seed_application_records, seed_tags
 ):
     app_id = seed_application_records[0]["application_id"]
-    new_tags = [{"id": tag["id"], "user_id": "Test user"} for tag in seed_tags]
+    new_tags = [
+        {"id": tag["id"], "user_id": "5dd2b7d8-12f0-482f-b64b-8809b19baa93"}
+        for tag in seed_tags
+    ]
     stmt = select(AssessmentRecord).where(
         AssessmentRecord.application_id == app_id
     )
@@ -54,7 +60,10 @@ def test_tag_association_is_working_correctly(
     _db, seed_application_records, seed_tags
 ):
     app_id = seed_application_records[0]["application_id"]
-    new_tags = [{"id": tag["id"], "user_id": "Test user"} for tag in seed_tags]
+    new_tags = [
+        {"id": tag["id"], "user_id": "5dd2b7d8-12f0-482f-b64b-8809b19baa93"}
+        for tag in seed_tags
+    ]
     stmt = select(AssessmentRecord).where(
         AssessmentRecord.application_id == app_id
     )
@@ -98,7 +107,8 @@ def test_tag_association_history_is_retained_for_reassociated_tags(
     """
     app_id = seed_application_records[0]["application_id"]
     new_tags = [
-        {"id": tag["id"], "user_id": "Test user uuidv4"} for tag in seed_tags
+        {"id": tag["id"], "user_id": "5dd2b7d8-12f0-482f-b64b-8809b19baa93"}
+        for tag in seed_tags
     ]
     single_tag = [new_tags[0]]
 
@@ -117,7 +127,7 @@ def test_tag_association_history_is_retained_for_reassociated_tags(
     # check total associated tags
     tags = get_tags_associated_with_assessment(app_id)
     assert len(tags) == 1
-    assert tags[0]["user_id"] == "Test user uuidv4"
+    assert tags[0]["user_id"] == "5dd2b7d8-12f0-482f-b64b-8809b19baa93"
 
     # disassociate the tag
     associate_assessment_tags(app_id, [])
@@ -130,7 +140,7 @@ def test_tag_association_history_is_retained_for_reassociated_tags(
     assert tags == None  # noqa: E711
 
     # associate the single tag again as a different user
-    single_tag[0]["user_id"] = "Test user 2 uuidv4"
+    single_tag[0]["user_id"] = "2d8e6a2e-aa22-417f-a138-90569c8b238f"
     associate_assessment_tags(app_id, single_tag)
     app = _db.session.scalars(stmt).one()
     # check total associated or disassociated tags
@@ -138,7 +148,7 @@ def test_tag_association_history_is_retained_for_reassociated_tags(
     # check total associated tags
     tags = get_tags_associated_with_assessment(app_id)
     assert len(tags) == 1
-    assert tags[0]["user_id"] == "Test user 2 uuidv4"
+    assert tags[0]["user_id"] == "2d8e6a2e-aa22-417f-a138-90569c8b238f"
 
     # disassociate the tag
     associate_assessment_tags(app_id, [])

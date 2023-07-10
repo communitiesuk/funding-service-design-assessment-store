@@ -22,13 +22,13 @@ def add_tags_for_fund_round(fund_id, round_id):
     args = request.get_json()
     tag_value = args["value"]
     tag_colour = args["colour"]
-    tag_creator_user_id = args["creator_user_id"]
+    creator_user_id = args["creator_user_id"]
 
     tags = [
         {
             "value": tag_value,
             "colour": tag_colour,
-            "tag_creator_user_id": tag_creator_user_id,
+            "creator_user_id": creator_user_id,
         }
     ]
 

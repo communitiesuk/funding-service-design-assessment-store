@@ -111,12 +111,12 @@ def seed_tags(request, app, clear_test_data, enable_preserve_test_data, _db):
     tags_correct_format = [
         {
             "value": "Test tag 1 seed",
-            "tag_creator_user_id": "Test User",
+            "creator_user_id": "5dd2b7d8-12f0-482f-b64b-8809b19baa93",
             "colour": "GREEN",
         },
         {
             "value": "Test tag 2 seed",
-            "tag_creator_user_id": "Test User",
+            "creator_user_id": "94fb8637-929b-407d-b7c7-e368b63d93ce",
         },
     ]
 

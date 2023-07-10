@@ -12,7 +12,7 @@ def insert_tags(tags, fund_id, round_id):
         tags (list): A list of tag dictionaries [{
                 "value": "",
                 "colour": "",
-                "tag_creator_user_id": "",
+                "creator_user_id": "",
             }]
         round_id (str): The round to insert tags for.
         fund_id (str): The fund to insert tags for.
@@ -23,7 +23,7 @@ def insert_tags(tags, fund_id, round_id):
     inserted_tags = []
     for tag_data in tags:
         value = tag_data.get("value")
-        creator_user_id = tag_data.get("tag_creator_user_id")
+        creator_user_id = tag_data.get("creator_user_id")
         colour = tag_data.get("colour", "NONE")
 
         # Create a new tag instance and trigger validation
