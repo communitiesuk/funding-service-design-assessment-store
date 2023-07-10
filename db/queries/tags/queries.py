@@ -2,8 +2,6 @@ from typing import List
 
 from db import db
 from db.models.tag.tags import Tag
-from flask import current_app
-from sqlalchemy.dialects.postgresql import insert as postgres_insert
 
 
 def insert_tags(tags, fund_id, round_id):
@@ -22,25 +20,32 @@ def insert_tags(tags, fund_id, round_id):
     Returns:
         inserted_tags (list): This method returns a list of inserted tags (the tag id and key)
     """
-    stmt = postgres_insert(Tag).returning(Tag)
-    values = [
-        {
-            "value": tag["value"],
-            "fund_id": fund_id,
-            "round_id": round_id,
-            "creator_user_id": tag["tag_creator_user_id"],
-            "colour": tag.get("colour", "NONE"),
-        }
-        for tag in tags
-    ]
+    inserted_tags = []
+    for tag_data in tags:
+        value = tag_data.get("value")
+        creator_user_id = tag_data.get("tag_creator_user_id")
+        colour = tag_data.get("colour", "NONE")
 
-    result = db.session.execute(stmt.values(values))
-    inserted_rows = result.fetchall()
-    inserted_tag_values = [row.value for row in inserted_rows]
+        # Create a new tag instance and trigger validation
+        tag = Tag(
+            value=value,
+            fund_id=fund_id,
+            round_id=round_id,
+            creator_user_id=creator_user_id,
+            colour=colour,
+        )
+        db.session.add(tag)
+
+        try:
+            db.session.flush()  # Flush changes to trigger validation
+        except Exception as e:
+            db.session.rollback()
+            raise ValueError(f"Error inserting tag '{value}': {str(e)}")
+
+        inserted_tags.append(tag)
+
     db.session.commit()
-    current_app.logger.info(f"Inserted tags: {inserted_tag_values}.")
-
-    return inserted_rows
+    return inserted_tags
 
 
 def select_tags_for_fund_round(

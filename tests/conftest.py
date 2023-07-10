@@ -110,12 +110,12 @@ def seed_application_records(
 def seed_tags(request, app, clear_test_data, enable_preserve_test_data, _db):
     tags_correct_format = [
         {
-            "value": "Test tag 1",
+            "value": "Test tag 1 seed",
             "tag_creator_user_id": "Test User",
             "colour": "GREEN",
         },
         {
-            "value": "Test tag 2",
+            "value": "Test tag 2 seed",
             "tag_creator_user_id": "Test User",
         },
     ]
