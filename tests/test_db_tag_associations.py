@@ -7,7 +7,7 @@ from tests.conftest import test_input_data
 
 
 @pytest.mark.apps_to_insert([{**test_input_data[0]}])
-def test_set_tags_all_new(_db, seed_application_records, seed_tags):
+def test_associate_tags(_db, seed_application_records, seed_tags):
     app_id = seed_application_records[0]["application_id"]
     new_tags = [
         {"id": tag["id"], "user_id": "1d49a41c-a13e-41ab-a89c-240b3de3fbda"}
@@ -56,7 +56,7 @@ def test_that_calling_with_the_same_tags_doesnt_duplicate_association(
 
 
 @pytest.mark.apps_to_insert([{**test_input_data[0]}])
-def test_tag_association_is_working_correctly(
+def test_tag_association_disassociation_workflow_is_working_correctly(
     _db, seed_application_records, seed_tags
 ):
     app_id = seed_application_records[0]["application_id"]
