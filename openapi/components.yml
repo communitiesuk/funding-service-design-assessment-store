@@ -101,6 +101,15 @@ components:
           type: integer
         total:
           type: integer
+    TeamFlagStats:
+      type: array
+      items:
+        type: object
+        properties:
+          team_name:
+            type: string
+          flagged_count:
+            type: integer
     Comment:
       type: object
       properties:

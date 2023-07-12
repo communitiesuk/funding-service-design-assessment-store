@@ -12,6 +12,7 @@ from .assessment_routes import get_sub_criteria_theme_answers
 from .assessment_routes import sub_criteria
 from .assessment_routes import update_ar_status_to_completed
 from .assessment_routes import update_flag_v2_for_application
+from .assessment_routes import get_team_flag_stats
 from .comment_routes import comments_for_application_sub_criteria
 from .comment_routes import post_comments_for_application_sub_criteria
 from .flag_routes import get_all_flags_for_application
@@ -49,4 +50,5 @@ __all__ = [
     "update_flag_v2_for_application",
     "create_flag_v2_for_application",
     "get_flag_v2",
+    "get_team_flag_stats",
 ]
