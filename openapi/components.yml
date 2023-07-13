@@ -332,6 +332,8 @@ components:
               - 'RED'
               - 'GREEN'
               - 'BLUE'
+              - 'WHITE'
+              - 'YELLOW'
             example: 'GREEN'
         creator_user_id:
           type: string
