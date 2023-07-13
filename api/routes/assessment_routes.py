@@ -3,7 +3,6 @@ from typing import Dict
 from typing import List
 
 from api.models.sub_criteria import SubCriteria
-from db.models.flags_v2.flag_update import FlagStatus
 from api.routes._helpers import transform_to_assessor_task_list_metadata
 from api.routes.subcriterias.get_sub_criteria import (
     map_application_with_sub_criteria_themes,
@@ -11,6 +10,7 @@ from api.routes.subcriterias.get_sub_criteria import (
 from api.routes.subcriterias.get_sub_criteria import (
     return_subcriteria_from_mapping,
 )
+from db.models.flags_v2.flag_update import FlagStatus
 from db.queries import get_metadata_flagsv2_for_fund_round_id
 from db.queries import get_metadata_for_fund_round_id
 from db.queries.assessment_records.queries import find_assessor_task_list_state
@@ -292,12 +292,12 @@ def get_team_flag_stats(
     )
 
     flag_allocations = {}
-    #TODO: Allow for other stats for teams to be retrieved
+    # TODO: Allow for other stats for teams to be retrieved
     for item in assessment_overview_flags_v2:
         for flag in item.get("flags_v2", []):
-            latest_status = flag.get('latest_status')
+            latest_status = flag.get("latest_status")
             if latest_status == FlagStatus.RAISED:
-                allocation = flag.get('latest_allocation')
+                allocation = flag.get("latest_allocation")
                 if allocation in flag_allocations:
                     flag_allocations[allocation] += 1
                 else:
