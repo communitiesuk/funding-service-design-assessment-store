@@ -2,6 +2,7 @@ from typing import List
 
 from db import db
 from db.models.tag.tags import Tag
+from flask import current_app
 
 
 def insert_tags(tags, fund_id, round_id):
@@ -40,6 +41,9 @@ def insert_tags(tags, fund_id, round_id):
             db.session.flush()  # Flush changes to trigger validation
         except Exception as e:
             db.session.rollback()
+            current_app.logger.error(
+                f"Error inserting tag '{value}': {str(e)}"
+            )
             raise ValueError(f"Error inserting tag '{value}': {str(e)}")
 
         inserted_tags.append(tag)

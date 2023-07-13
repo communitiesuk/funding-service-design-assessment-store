@@ -991,7 +991,7 @@ paths:
         - tag management
       summary: Post a new tag for a fund round
       description: Post a new tag for a fund round
-      operationId: api.routes.tag_routes.add_tags_for_fund_round
+      operationId: api.routes.tag_routes.add_tag_for_fund_round
       parameters:
         - in: path
           name: fund_id

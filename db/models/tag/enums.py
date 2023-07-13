@@ -6,4 +6,5 @@ class Colour(Enum):
     GREEN = 1
     RED = 2
     YELLOW = 3
-    GREY = 4
+    BLUE = 4
+    WHITE = 5

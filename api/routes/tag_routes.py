@@ -15,10 +15,10 @@ def get_tags_for_fund_round(fund_id, round_id):
         serialised_tags = [serialiser.dump(r) for r in tags]
         return serialised_tags
 
-    abort(404)
+    abort(404, f"No tags not found for fund__round: {fund_id}__{round_id}.")
 
 
-def add_tags_for_fund_round(fund_id, round_id):
+def add_tag_for_fund_round(fund_id, round_id):
     args = request.get_json()
     tag_value = args["value"]
     tag_colour = args["colour"]

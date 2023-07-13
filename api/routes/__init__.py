@@ -50,6 +50,6 @@ __all__ = [
     "update_flag_v2_for_application",
     "create_flag_v2_for_application",
     "get_tags_for_fund_round",
-    "add_tags_for_fund_round",
+    "add_tag_for_fund_round",
     "get_flag_v2",
 ]
