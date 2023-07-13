@@ -268,6 +268,7 @@ def assessment_stats_for_fund_round_id(
 
     return stats
 
+
 def get_team_flag_stats(
     fund_id: str,
     round_id: str,
@@ -277,7 +278,7 @@ def get_team_flag_stats(
     status: str = "ALL",
     search_in: str = "",
     countries: str = "all",
-    ):
+):
 
     assessment_overview_flags_v2 = get_metadata_flagsv2_for_fund_round_id(
         fund_id=fund_id,
@@ -302,9 +303,13 @@ def get_team_flag_stats(
                 else:
                     flag_allocations[allocation] = 1
 
-    teams_flag_count_output = [{'team_name': team, 'flagged_count': count} for team, count in flag_allocations.items()]
+    teams_flag_count_output = [
+        {"team_name": team, "flagged_count": count}
+        for team, count in flag_allocations.items()
+    ]
 
     return teams_flag_count_output
+
 
 def get_application_json(application_id):
     return get_application_jsonb_blob(application_id)
