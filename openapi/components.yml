@@ -108,8 +108,20 @@ components:
         properties:
           team_name:
             type: string
-          flagged_count:
+            nullable: true
+          raised:
             type: integer
+            nullable: true
+          stopped:
+            type: integer
+            nullable: true
+          resolved:
+            type: integer
+            nullable: true
+          qa_completed:
+            type: integer
+            nullable: true
+
     Comment:
       type: object
       properties:

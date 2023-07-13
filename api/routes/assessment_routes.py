@@ -291,24 +291,37 @@ def get_team_flag_stats(
         funding_type=funding_type,
     )
 
-    flag_allocations = {}
-    #TODO: Allow for other stats for teams to be retrieved
-    for item in assessment_overview_flags_v2:
-        for flag in item.get("flags_v2", []):
+    def create_team_dict(team_name):
+        return {
+            "team_name": team_name,
+            "raised": 0,
+            "resolved": 0,
+            "qa_completed": 0,
+            "stopped": 0
+        }
+
+    team_flag_stats = []
+
+    for assessment in assessment_overview_flags_v2:
+        for flag in assessment.get("flags_v2", []):
             latest_status = flag.get('latest_status')
-            if latest_status == FlagStatus.RAISED:
-                allocation = flag.get('latest_allocation')
-                if allocation in flag_allocations:
-                    flag_allocations[allocation] += 1
-                else:
-                    flag_allocations[allocation] = 1
+            allocated_team = flag.get('latest_allocation')
 
-    teams_flag_count_output = [
-        {"team_name": team, "flagged_count": count}
-        for team, count in flag_allocations.items()
-    ]
+            if allocated_team not in [team["team_name"] for team in team_flag_stats]: 
+                team_flag_stats.append(create_team_dict(allocated_team))
+            
+            for team in team_flag_stats:
+                if team["team_name"] == allocated_team:
+                    if latest_status == FlagStatus.RAISED:
+                        team["raised"] += 1
+                    elif latest_status == FlagStatus.STOPPED:
+                        team["stopped"] += 1
+                    elif latest_status == FlagStatus.RESOLVED:
+                        team["resolved"] += 1
+                    elif latest_status == FlagStatus.QA_COMPLETED:
+                        team["qa_completed"] += 1
 
-    return teams_flag_count_output
+    return team_flag_stats
 
 
 def get_application_json(application_id):
