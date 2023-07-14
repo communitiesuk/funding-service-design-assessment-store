@@ -296,7 +296,6 @@ def get_team_flag_stats(
             "team_name": team_name,
             "raised": 0,
             "resolved": 0,
-            "qa_completed": 0,
             "stopped": 0
         }
 
@@ -318,8 +317,6 @@ def get_team_flag_stats(
                         team["stopped"] += 1
                     elif latest_status == FlagStatus.RESOLVED:
                         team["resolved"] += 1
-                    elif latest_status == FlagStatus.QA_COMPLETED:
-                        team["qa_completed"] += 1
 
     return team_flag_stats
 

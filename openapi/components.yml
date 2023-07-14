@@ -118,10 +118,6 @@ components:
           resolved:
             type: integer
             nullable: true
-          qa_completed:
-            type: integer
-            nullable: true
-
     Comment:
       type: object
       properties:
