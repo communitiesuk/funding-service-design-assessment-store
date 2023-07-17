@@ -14,7 +14,6 @@ from db.models.flags.enums import FlagType
 from db.models.flags_v2.flag_update import FlagStatus
 from db.queries.assessment_records._helpers import derive_application_values
 from db.queries.flags.queries import find_qa_complete_flags
-from db.queries.flags.queries import find_qa_complete_flagsv2
 from db.schemas import AssessmentRecordMetadata
 from db.schemas import AssessmentSubCriteriaMetadata
 from db.schemas import AssessorTaskListMetadata
@@ -308,48 +307,35 @@ def get_metadata_flagsv2_for_fund_round_id(
     if status != "ALL":
         filter_assessments = []
         for assessment in assessment_metadatas:
-            if status == FlagType.QA_COMPLETED.name:
-                for flag in assessment.flags_v2:
-                    if flag.latest_status == FlagStatus.QA_COMPLETED:
-                        filter_assessments.append(assessment)
-            elif status in [
-                Status.NOT_STARTED.name,
-                Status.IN_PROGRESS.name,
-                Status.COMPLETED.name,
-            ]:
-                if assessment.workflow_status in [
-                    Status.NOT_STARTED,
-                    Status.IN_PROGRESS,
-                    Status.COMPLETED,
-                ]:
-                    filter_assessments.append(assessment)
-            elif status in [FlagStatus.STOPPED.name, FlagStatus.RAISED.name]:
-                for flag in assessment.flags_v2:
-                    if flag.latest_status in [
-                        FlagStatus.STOPPED,
-                        FlagStatus.RAISED,
-                    ]:
-                        filter_assessments.append(assessment)
-                        break
 
-        if filter_assessments:
-            assessment_metadatas = filter_assessments
+            all_latest_status = [
+                flag.latest_status for flag in assessment.flags_v2
+            ]
+            is_qa_complete = True if assessment.qa_complete else False
+
+            if FlagStatus.STOPPED in all_latest_status:
+                display_status = "STOPPED"
+            elif all_latest_status.count(FlagStatus.RAISED) > 1:
+                display_status = "MULTIPLE_FLAGS"
+            elif all_latest_status.count(FlagStatus.RAISED) == 1:
+                display_status = "FLAGGED"
+            elif is_qa_complete:
+                display_status = "QA_COMPLETED"
+            else:
+                display_status = assessment.workflow_status.name
+
+            if display_status == status:
+                filter_assessments.append(assessment)
+
+        assessment_metadatas = filter_assessments
 
     metadata_serialiser = AssessmentRecordMetadata(
         exclude=("jsonb_blob", "application_json_md5")
     )
 
-    app_ids = {
-        app_metadata.application_id for app_metadata in assessment_metadatas
-    }
-    app_id_is_qa_complete_dict = find_qa_complete_flagsv2(app_ids)
     assessment_metadatas = [
         metadata_serialiser.dump(app_metadata)
-        | {
-            "is_qa_complete": app_id_is_qa_complete_dict[
-                app_metadata.application_id
-            ]
-        }
+        | {"is_qa_complete": True if app_metadata.qa_complete else False}
         for app_metadata in assessment_metadatas
     ]
 

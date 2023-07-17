@@ -5,11 +5,18 @@ from typing import List
 from api.models.sub_criteria import SubCriteria
 from api.routes._helpers import transform_to_assessor_task_list_metadata
 from api.routes.subcriterias.get_sub_criteria import (
+    get_all_uploaded_document_field_answers,
+)
+from api.routes.subcriterias.get_sub_criteria import (
     map_application_with_sub_criteria_themes,
+)
+from api.routes.subcriterias.get_sub_criteria import (
+    map_application_with_sub_criteria_themes_fields,
 )
 from api.routes.subcriterias.get_sub_criteria import (
     return_subcriteria_from_mapping,
 )
+from db.models.flags_v2.flag_update import FlagStatus
 from db.models.flags_v2.flag_update import FlagStatus
 from db.queries import get_metadata_flagsv2_for_fund_round_id
 from db.queries import get_metadata_for_fund_round_id
@@ -27,6 +34,9 @@ from db.queries.flags_v2.queries import add_update_to_assessment_flag
 from db.queries.flags_v2.queries import create_flag_for_application
 from db.queries.flags_v2.queries import get_flag_by_id
 from db.queries.flags_v2.queries import get_flags_for_application
+from db.queries.qa_complete.queries import (
+    get_qa_complete_record_for_application,
+)
 from db.queries.scores.queries import get_sub_criteria_to_latest_score_map
 from db.schemas.schemas import AssessmentFlagSchema
 from flask import current_app
@@ -158,9 +168,11 @@ def get_assessor_task_list_state(application_id: str) -> dict:
     sections, criterias = transform_to_assessor_task_list_metadata(
         metadata["fund_id"], metadata["round_id"], score_map, comment_map
     )
+    qa_complete = get_qa_complete_record_for_application(application_id)
 
     metadata["sections"] = sections
     metadata["criterias"] = criterias
+    metadata["qa_complete"] = qa_complete
 
     return metadata
 
@@ -171,6 +183,16 @@ def get_sub_criteria_theme_answers(application_id: str, theme_id: str):
     metadata = find_assessor_task_list_state(application_id)
     return map_application_with_sub_criteria_themes(
         application_id, theme_id, metadata["fund_id"], metadata["round_id"]
+    )
+
+
+def get_all_uploaded_document_theme_answers(application_id: str):
+    metadata = find_assessor_task_list_state(application_id)
+    field_answers = get_all_uploaded_document_field_answers(
+        metadata["fund_id"], metadata["round_id"]
+    )
+    return map_application_with_sub_criteria_themes_fields(
+        application_id, "all_uploaded_documents", field_answers
     )
 
 
@@ -320,6 +342,252 @@ def get_team_flag_stats(
 
     return team_flag_stats
 
+
+def assessment_stats_flagsv2_for_fund_round_id(
+    fund_id: str,
+    round_id: str,
+    search_term: str = "",
+    asset_type: str = "ALL",
+    status: str = "ALL",
+) -> List[Dict]:
+    """
+    Function used by the endpoint
+    `/assessments/get-stats/{fund_id}/{round_id}`
+    that returns a dictionary of metrics about
+    assessments for a given fund_id and round_id.
+
+    :param fund_id: The stringified fund UUID.
+    :param round_id: The stringified round UUID.
+    :return: A list of dictionaries.
+    """
+
+    def determine_display_status(assessment):
+        all_latest_status = [
+            flag["latest_status"] for flag in assessment["flags_v2"]
+        ]
+        if FlagStatus.STOPPED.name in all_latest_status:
+            display_status = "STOPPED"
+        elif all_latest_status.count(FlagStatus.RAISED.name) > 1:
+            display_status = "MULTIPLE_FLAGS"
+        elif all_latest_status.count(FlagStatus.RAISED.name) == 1:
+            display_status = "FLAGGED"
+        elif assessment["is_qa_complete"]:
+            display_status = "QA_COMPLETED"
+        else:
+            display_status = assessment["workflow_status"]
+        return display_status
+
+    stats = {}
+    assessments = get_metadata_flagsv2_for_fund_round_id(
+        fund_id=fund_id,
+        round_id=round_id,
+        search_term=search_term,
+        asset_type=asset_type,
+        status=status,
+    )
+    stats.update(
+        {
+            "completed": len(
+                [
+                    1
+                    for assessment in assessments
+                    if determine_display_status(assessment) == "COMPLETED"
+                ]
+            ),
+            "assessing": len(
+                [
+                    1
+                    for assessment in assessments
+                    if determine_display_status(assessment) == "IN_PROGRESS"
+                ]
+            ),
+            "not_started": len(
+                [
+                    1
+                    for assessment in assessments
+                    if determine_display_status(assessment) == "NOT_STARTED"
+                ]
+            ),
+            "qa_completed": len(
+                [
+                    1
+                    for assessment in assessments
+                    if determine_display_status(assessment) == "QA_COMPLETED"
+                ]
+            ),
+            "stopped": len(
+                [
+                    1
+                    for assessment in assessments
+                    if determine_display_status(assessment) == "STOPPED"
+                ]
+            ),
+            "flagged": len(
+                [
+                    1
+                    for assessment in assessments
+                    if determine_display_status(assessment) == "FLAGGED"
+                ]
+            ),
+            "multiple_flagged": len(
+                [
+                    1
+                    for assessment in assessments
+                    if determine_display_status(assessment) == "MULTIPLE_FLAGS"
+                ]
+            ),
+            "total": len(assessments),
+        }
+    )
+
+    return stats
+
+
+def assessment_stats_flagsv2_for_fund_round_id(
+    fund_id: str,
+    round_id: str,
+    search_term: str = "",
+    asset_type: str = "ALL",
+    status: str = "ALL",
+) -> List[Dict]:
+    """
+    Function used by the endpoint
+    `/assessments/get-stats/{fund_id}/{round_id}`
+    that returns a dictionary of metrics about
+    assessments for a given fund_id and round_id.
+
+    :param fund_id: The stringified fund UUID.
+    :param round_id: The stringified round UUID.
+    :return: A list of dictionaries.
+    """
+
+    def determine_display_status(assessment):
+        all_latest_status = [
+            flag["latest_status"] for flag in assessment["flags_v2"]
+        ]
+        if FlagStatus.STOPPED.name in all_latest_status:
+            display_status = "STOPPED"
+        elif all_latest_status.count(FlagStatus.RAISED.name) > 1:
+            display_status = "MULTIPLE_FLAGS"
+        elif all_latest_status.count(FlagStatus.RAISED.name) == 1:
+            display_status = "FLAGGED"
+        elif assessment["is_qa_complete"]:
+            display_status = "QA_COMPLETED"
+        else:
+            display_status = assessment["workflow_status"]
+        return display_status
+
+    stats = {}
+    assessments = get_metadata_flagsv2_for_fund_round_id(
+>>>>>>> origin/main
+        fund_id=fund_id,
+        round_id=round_id,
+        search_term=search_term,
+        asset_type=asset_type,
+        status=status,
+    )
+    stats.update(
+        {
+            "completed": len(
+                [
+                    1
+                    for assessment in assessments
+                    if determine_display_status(assessment) == "COMPLETED"
+                ]
+            ),
+            "assessing": len(
+                [
+                    1
+                    for assessment in assessments
+                    if determine_display_status(assessment) == "IN_PROGRESS"
+                ]
+            ),
+            "not_started": len(
+                [
+                    1
+                    for assessment in assessments
+                    if determine_display_status(assessment) == "NOT_STARTED"
+                ]
+            ),
+            "qa_completed": len(
+                [
+                    1
+                    for assessment in assessments
+                    if determine_display_status(assessment) == "QA_COMPLETED"
+                ]
+            ),
+            "stopped": len(
+                [
+                    1
+                    for assessment in assessments
+                    if determine_display_status(assessment) == "STOPPED"
+                ]
+            ),
+            "flagged": len(
+                [
+                    1
+                    for assessment in assessments
+                    if determine_display_status(assessment) == "FLAGGED"
+                ]
+            ),
+            "multiple_flagged": len(
+                [
+                    1
+                    for assessment in assessments
+                    if determine_display_status(assessment) == "MULTIPLE_FLAGS"
+                ]
+            ),
+            "total": len(assessments),
+        }
+    )
+
+    return stats
+
+def get_team_flag_stats(
+    fund_id: str,
+    round_id: str,
+    search_term: str = "",
+    funding_type: str = "ALL",
+    asset_type: str = "ALL",
+    status: str = "ALL",
+    search_in: str = "",
+    countries: str = "all",
+):
+
+    assessment_overview_flags_v2 = get_metadata_flagsv2_for_fund_round_id(
+        countries=[_fix_country(c) for c in countries.split(",") if c],
+        search_in=search_in,
+        funding_type=funding_type,
+    )
+
+    def create_team_dict(team_name):
+        return {
+            "team_name": team_name,
+            "raised": 0,
+            "resolved": 0,
+            "stopped": 0
+        }
+
+    team_flag_stats = []
+
+    for assessment in assessment_overview_flags_v2:
+        for flag in assessment.get("flags_v2", []):
+            latest_status = flag.get('latest_status')
+            allocated_team = flag.get('latest_allocation')
+
+            if allocated_team not in [team["team_name"] for team in team_flag_stats]: 
+                team_flag_stats.append(create_team_dict(allocated_team))
+            
+            for team in team_flag_stats:
+                if team["team_name"] == allocated_team:
+                    if latest_status == FlagStatus.RAISED:
+                        team["raised"] += 1
+                    elif latest_status == FlagStatus.STOPPED:
+                        team["stopped"] += 1
+                    elif latest_status == FlagStatus.RESOLVED:
+                        team["resolved"] += 1
+
+    return team_flag_stats
 
 def get_application_json(application_id):
     return get_application_jsonb_blob(application_id)
