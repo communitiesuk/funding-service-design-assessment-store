@@ -577,9 +577,9 @@ def get_team_flag_stats(
             latest_status = flag.get('latest_status')
             allocated_team = flag.get('latest_allocation')
 
-            if allocated_team not in [team["team_name"] for team in team_flag_stats]: 
+            if allocated_team not in [team["team_name"] for team in team_flag_stats]:
                 team_flag_stats.append(create_team_dict(allocated_team))
-            
+
             for team in team_flag_stats:
                 if team["team_name"] == allocated_team:
                     if latest_status == FlagStatus.RAISED:
