@@ -417,7 +417,7 @@ def get_team_flag_stats(
             "team_name": team_name,
             "raised": 0,
             "resolved": 0,
-            "stopped": 0
+            "stopped": 0,
         }
 
     team_flag_stats = []
@@ -442,6 +442,7 @@ def get_team_flag_stats(
                         team["resolved"] += 1
 
     return team_flag_stats
+
 
 def get_application_json(application_id):
     return get_application_jsonb_blob(application_id)
