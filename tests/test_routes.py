@@ -11,7 +11,9 @@ from db.models.flags.enums import FlagType
 from db.models.flags_v2.assessment_flag import AssessmentFlag
 from db.models.flags_v2.flag_update import FlagStatus
 from db.queries.flags.queries import create_flag_for_application
-from db.queries.flags_v2.queries import create_flag_for_application as create_flag_for_application_v2
+from db.queries.flags_v2.queries import (
+    create_flag_for_application as create_flag_for_application_v2,
+)
 from tests._expected_responses import APPLICATION_METADATA_RESPONSE
 from tests._expected_responses import ASSESSMENTS_STATS_RESPONSE
 from tests.conftest import test_input_data
@@ -372,6 +374,7 @@ def test_get_flags_v2(client, mocker):
     assert response.status_code == 200
     assert len(response.json) == 1
     assert response.json[0]["id"] == str(expected_flag.id)
+
 
 @pytest.mark.apps_to_insert([test_input_data[0].copy() for x in range(4)])
 def test_get_team_flag_stats(client, seed_application_records):
