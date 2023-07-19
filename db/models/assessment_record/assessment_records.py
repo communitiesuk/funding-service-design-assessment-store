@@ -75,6 +75,8 @@ class AssessmentRecord(BaseModel):
     flags_v2 = relationship("AssessmentFlag")
     tag_associations = relationship("TagAssociation")
 
+    qa_complete = relationship("QaComplete")
+
     location_json_blob = Column("location_json_blob", JSONB, nullable=True)
 
     # These are defined as column_properties not as hybrid_property due to performance
