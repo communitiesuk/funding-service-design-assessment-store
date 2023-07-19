@@ -680,9 +680,7 @@ def associate_assessment_tags(application_id, tags: List):
         associated = True  # Set associated value to True for provided tags
 
         # Check if the tag already exists in the database
-        if tag_id in existing_associated_tags_dict.keys():
-            pass
-        else:
+        if tag_id not in existing_associated_tags_dict:
             # Create a new tag association
             new_tag = TagAssociation(
                 application_id=application_id,
