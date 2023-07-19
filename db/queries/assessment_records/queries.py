@@ -235,6 +235,7 @@ def get_metadata_flagsv2_for_fund_round_id(
     search_in: str = "",
     funding_type: str = "",
     countries: List[str] = ["all"],
+    filter_by_tag: str = "",
 ) -> List[Dict]:
     """get_metadata_for_fund_round_id Executes a query on assessment records
     which returns all rows matching the given fund_id and round_id. Has
@@ -255,6 +256,21 @@ def get_metadata_flagsv2_for_fund_round_id(
             AssessmentRecord.round_id == round_id,
         )
     )
+
+    if filter_by_tag and filter_by_tag.casefold() != "all":
+        assessment_records_by_tag_id = (
+            db.session.query(AssessmentRecord)
+            .join(TagAssociation)
+            .filter(TagAssociation.tag_id == filter_by_tag)
+            .all()
+        )
+        record_ids_with_tag_id = [
+            record.application_id for record in assessment_records_by_tag_id
+        ]
+        statement = statement.where(
+            AssessmentRecord.application_id.in_(record_ids_with_tag_id)
+        )
+
     if search_term != "":
         current_app.logger.info(
             f"Performing assessment search on search term: {search_term} in fields {search_in}"
