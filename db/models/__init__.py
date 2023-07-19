@@ -6,6 +6,8 @@ from db.models.flags import Flag
 from db.models.flags_v2 import AssessmentFlag
 from db.models.flags_v2 import FlagUpdate
 from db.models.score import Score
+from db.models.tag import Tag
+from db.models.tag import TagType
 
 __all__ = [
     "AssessmentRecord",
@@ -15,4 +17,6 @@ __all__ = [
     "FlagUpdate",
     "TagAssociation",
     "AssessmentFlag",
+    "TagType",
+    "Tag",
 ]

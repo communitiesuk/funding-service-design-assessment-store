@@ -21,7 +21,7 @@ class TagAssociation(BaseModel):
         ),
     )
     associated = db.Column(db.Boolean(), nullable=False, default=True)
-    tag_id = Column(UUID(as_uuid=True), ForeignKey("tag.id"))
+    tag_id = Column(UUID(as_uuid=True), ForeignKey("tags.id"))
     user_id = db.Column(db.String(255), nullable=True)
     created_at = db.Column(
         db.DateTime(timezone=True), server_default=func.now()

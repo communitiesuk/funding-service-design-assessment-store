@@ -13,6 +13,7 @@ from db.models.assessment_record.enums import Status
 from db.models.flags import Flag
 from db.models.flags.enums import FlagType
 from db.models.flags_v2.flag_update import FlagStatus
+from db.models.tag.tag_types import TagType
 from db.models.tag.tags import Tag
 from db.queries.assessment_records._helpers import derive_application_values
 from db.queries.flags.queries import find_qa_complete_flags
@@ -723,11 +724,12 @@ def associate_assessment_tags(application_id, tags: List):
 
 def select_tags_associated_with_assessment(application_id):
 
-    tags_meta = (
+    tag_associations = (
         db.session.query(
-            Tag.id,
-            Tag.colour,
+            Tag.id.label("tag_id"),
             Tag.value,
+            TagType.purpose,
+            TagType.description,
             TagAssociation.associated,
             TagAssociation.user_id,
             AssessmentRecord.application_id,
@@ -737,19 +739,11 @@ def select_tags_associated_with_assessment(application_id):
             TagAssociation.application_id == AssessmentRecord.application_id,
         )
         .join(Tag, Tag.id == TagAssociation.tag_id)
+        .join(TagType, Tag.type_id == TagType.id)
         .filter(AssessmentRecord.application_id == application_id)
         .filter(TagAssociation.associated == True)  # noqa: E712
         .all()
     )
 
-    column_names = [
-        "tag_id",
-        "colour",
-        "value",
-        "associated",
-        "user_id",
-        "application_id",
-    ]
-    tag_associations = [dict(zip(column_names, row)) for row in tags_meta]
     db.session.commit()
     return tag_associations

@@ -9,7 +9,7 @@ from db.models.flags.enums import FlagType
 from db.models.flags_v2.assessment_flag import AssessmentFlag
 from db.models.flags_v2.flag_update import FlagUpdate
 from db.models.score import Score
-from db.models.tag.enums import Colour
+from db.models.tag.tag_types import TagType
 from db.models.tag.tags import Tag
 from marshmallow import fields
 from marshmallow import Schema
@@ -21,14 +21,6 @@ from marshmallow.fields import String
 from marshmallow.fields import UUID
 from marshmallow_sqlalchemy import auto_field
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
-
-
-class ColourMixin:
-    # Custom serialization for the Colour enum
-    colour = fields.Method("get_colour")
-
-    def get_colour(self, obj):
-        return obj.colour.name
 
 
 class AssessmentRecordMetadata(SQLAlchemyAutoSchema):
@@ -127,9 +119,9 @@ class FlagUpdateSchema(SQLAlchemyAutoSchema):
         model = FlagUpdate
 
 
-class TagSchema(ColourMixin, SQLAlchemyAutoSchema):
+class TagTypeSchema(SQLAlchemyAutoSchema):
     class Meta:
-        model = Tag
+        model = TagType
 
 
 class TagAssociationSchema(SQLAlchemyAutoSchema):
@@ -138,13 +130,28 @@ class TagAssociationSchema(SQLAlchemyAutoSchema):
         fields = ("id", "tag_id", "application_id")
 
 
-class JoinedTagAssociationSchema(ColourMixin, SQLAlchemyAutoSchema):
+class JoinedTagAssociationSchema(SQLAlchemyAutoSchema):
     tag_id = UUID()
-    colour = Enum(Colour)
+    type_id = UUID()
     value = String()
+    purpose = String()
     associated = Boolean()
     application_id = UUID()
     user_id = UUID()
 
     class Meta:
         model = None  # Set the model to None since it doesn't directly map to a single model
+
+
+class TagSchema(SQLAlchemyAutoSchema):
+    class Meta:
+        model = Tag
+
+
+class JoinedTagSchema(SQLAlchemyAutoSchema):
+
+    purpose = String()
+    description = String()
+
+    class Meta:
+        model = Tag

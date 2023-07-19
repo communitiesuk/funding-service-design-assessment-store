@@ -1019,3 +1019,20 @@ paths:
                 type: object
                 items:
                   $ref: 'components.yml#/components/schemas/Tag'
+
+  '/tag_types':
+    get:
+      tags:
+        - tag management
+      summary: Get all tag types
+      description: returns all tag types
+      operationId: api.routes.tag_routes.seed_and_get_tag_types
+      responses:
+        200:
+          description: SUCCESS - A list of tag types
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: 'components.yml#/components/schemas/TagType'

@@ -2,9 +2,9 @@ import re
 import uuid
 
 from db import db
-from db.models.tag.enums import Colour
 from flask_sqlalchemy.model import DefaultMeta
 from sqlalchemy import Column
+from sqlalchemy import ForeignKey
 from sqlalchemy import func
 from sqlalchemy import Index
 from sqlalchemy import text
@@ -16,7 +16,7 @@ BaseModel: DefaultMeta = db.Model
 
 
 class Tag(BaseModel):
-    __tablename__ = "tag"
+    __tablename__ = "tags"
     id = Column(
         UUID(as_uuid=True),
         default=uuid.uuid4,
@@ -28,8 +28,12 @@ class Tag(BaseModel):
         unique=False,
     )
     active = Column(db.Boolean(), nullable=False, default=True)
-    colour = Column(
-        db.Enum(Colour, name="colour"), nullable=False, default=Colour.NONE
+    type_id = Column(
+        UUID(as_uuid=True),
+        ForeignKey(
+            "tag_types.id",
+        ),
+        nullable=False,
     )
     fund_id = Column(
         UUID(as_uuid=True),

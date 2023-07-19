@@ -323,18 +323,12 @@ components:
         value:
           type: string
           nullable: false
-          description: "tag string"
+          description: 'tag string'
           example: 'Tag string'
-        colour:
+        type:
             type: string
             nullable: true
-            enum:
-              - 'RED'
-              - 'GREEN'
-              - 'BLUE'
-              - 'WHITE'
-              - 'YELLOW'
-            example: 'GREEN'
+            example: uuif7eaf61b-093e-4464-a4da-b36b849f0a1b
         creator_user_id:
           type: string
           nullable: false
@@ -357,9 +351,9 @@ components:
           active:
             type: boolean
             description: Is the tag still associated
-          colour:
+          purpose:
             type: string
-            description: colour category of the tag
+            description: purpose category of the tag
     PostTagAssociation:
       type: object
       properties:
@@ -391,6 +385,21 @@ components:
           associated:
             type: boolean
             description: Is the tag associated with an assessment
-          colour:
+          purpose:
             type: string
-            description: colour category of the tag
+            description: purpose category of the tag
+    TagType:
+        type: object
+        properties:
+          id:
+            type: string
+            description: uuid of tag type.
+            example: uuif7eaf61b-093e-4464-a4da-b36b849f0a1b
+          purpose:
+            type: string
+            description: The tag category
+            example: "People"
+          description:
+            type: string
+            description: A description of the tag type
+            example: "This tag is for these things"

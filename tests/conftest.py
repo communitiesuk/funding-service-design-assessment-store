@@ -1,4 +1,5 @@
 import json
+import random
 from uuid import uuid4
 
 import pytest
@@ -7,12 +8,13 @@ from db.models.assessment_record.tag_association import TagAssociation
 from db.models.flags.flags import Flag
 from db.models.flags_v2.assessment_flag import AssessmentFlag
 from db.models.flags_v2.flag_update import FlagUpdate
+from db.models.tag.tag_types import TagType
 from db.queries import bulk_insert_application_record
 from db.queries import delete_assessment_record
 from db.queries.tags.queries import insert_tags
 from db.schemas.schemas import TagSchema
+from db.schemas.schemas import TagTypeSchema
 from tests._sql_infos import attach_listeners
-
 
 # Loads the fixtures in this module in utils to create and
 # clear the unit test DB
@@ -107,16 +109,25 @@ def seed_application_records(
 
 
 @pytest.fixture(scope="function")
-def seed_tags(request, app, clear_test_data, enable_preserve_test_data, _db):
+def seed_tags(
+    request,
+    app,
+    clear_test_data,
+    enable_preserve_test_data,
+    _db,
+    seed_and_get_tag_types,
+):
+    tag_type_ids = [t["id"] for t in seed_and_get_tag_types]
     tags_correct_format = [
         {
-            "value": "Test tag 1 seed",
+            "value": "Test tag 1",
             "creator_user_id": "5dd2b7d8-12f0-482f-b64b-8809b19baa93",
-            "colour": "GREEN",
+            "tag_type_id": random.choice(tag_type_ids),
         },
         {
-            "value": "Test tag 2 seed",
-            "creator_user_id": "94fb8637-929b-407d-b7c7-e368b63d93ce",
+            "value": "Test tag 2",
+            "creator_user_id": "5dd2b7d8-12f0-482f-b64b-8809b19baa93",
+            "tag_type_id": random.choice(tag_type_ids),
         },
     ]
 
@@ -128,6 +139,27 @@ def seed_tags(request, app, clear_test_data, enable_preserve_test_data, _db):
     serialiser = TagSchema()
     serialised_associated_tags = [serialiser.dump(r) for r in inserted_tags]
     yield serialised_associated_tags
+
+
+@pytest.fixture(scope="function")
+def seed_and_get_tag_types(
+    request, app, clear_test_data, enable_preserve_test_data, _db
+):
+
+    tag_type = TagType(
+        id=uuid4(),
+        purpose=uuid4(),
+        description="Test tag type",
+    )
+
+    _db.session.add(tag_type)
+    _db.session.commit()
+
+    tag_types = _db.session.query(TagType).all()
+    if tag_types:
+        serialiser = TagTypeSchema()
+        serialised_tag_types = [serialiser.dump(r) for r in tag_types]
+        yield serialised_tag_types
 
 
 @pytest.fixture(scope="session")

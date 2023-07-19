@@ -1,6 +1,7 @@
 from typing import List
 
 from db import db
+from db.models.tag.tag_types import TagType
 from db.models.tag.tags import Tag
 from flask import current_app
 
@@ -12,7 +13,7 @@ def insert_tags(tags, fund_id, round_id):
     Args:
         tags (list): A list of tag dictionaries [{
                 "value": "",
-                "colour": "",
+                "purpose": "",
                 "creator_user_id": "",
             }]
         round_id (str): The round to insert tags for.
@@ -25,7 +26,7 @@ def insert_tags(tags, fund_id, round_id):
     for tag_data in tags:
         value = tag_data.get("value")
         creator_user_id = tag_data.get("creator_user_id")
-        colour = tag_data.get("colour", "NONE")
+        tag_type_id = tag_data.get("tag_type_id")
 
         # Create a new tag instance and trigger validation
         tag = Tag(
@@ -33,7 +34,7 @@ def insert_tags(tags, fund_id, round_id):
             fund_id=fund_id,
             round_id=round_id,
             creator_user_id=creator_user_id,
-            colour=colour,
+            type_id=tag_type_id,
         )
         db.session.add(tag)
 
@@ -57,8 +58,25 @@ def select_tags_for_fund_round(
     round_id: str,
 ) -> List[Tag]:
     tags = (
-        db.session.query(Tag)
-        .where(Tag.fund_id == fund_id)
-        .where(Tag.round_id == round_id)
-    ).all()
+        db.session.query(
+            Tag.id,
+            Tag.value,
+            Tag.active,
+            Tag.type_id,
+            Tag.fund_id,
+            Tag.round_id,
+            Tag.creator_user_id,
+            Tag.created_at,
+            TagType.purpose.label("purpose"),
+            TagType.description.label("description"),
+        )
+        .join(TagType, Tag.type_id == TagType.id)
+        .filter(Tag.fund_id == fund_id)
+        .filter(Tag.round_id == round_id)
+        .all()
+    )
     return tags
+
+
+def select_tags_types() -> List[TagType]:
+    return db.session.query(TagType).all()
