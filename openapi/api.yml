@@ -1279,18 +1279,6 @@ paths:
                 type: object
                 items:
                   $ref: 'components.yml#/components/schemas/Tag'
-        400:
-          description: ERROR - Could not save Tag for fund-round
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  status:
-                    type: string
-                  message:
-                    type: string
-
   '/tag_types':
     get:
       tags:

@@ -256,21 +256,6 @@ def get_metadata_flagsv2_for_fund_round_id(
             AssessmentRecord.round_id == round_id,
         )
     )
-
-    if filter_by_tag and filter_by_tag.casefold() != "all":
-        assessment_records_by_tag_id = (
-            db.session.query(AssessmentRecord)
-            .join(TagAssociation)
-            .filter(TagAssociation.tag_id == filter_by_tag)
-            .all()
-        )
-        record_ids_with_tag_id = [
-            record.application_id for record in assessment_records_by_tag_id
-        ]
-        statement = statement.where(
-            AssessmentRecord.application_id.in_(record_ids_with_tag_id)
-        )
-
     if search_term != "":
         current_app.logger.info(
             f"Performing assessment search on search term: {search_term} in fields {search_in}"
@@ -696,9 +681,7 @@ def associate_assessment_tags(application_id, tags: List):
         associated = True  # Set associated value to True for provided tags
 
         # Check if the tag already exists in the database
-        if tag_id in existing_associated_tags_dict.keys():
-            pass
-        else:
+        if tag_id not in existing_associated_tags_dict:
             # Create a new tag association
             new_tag = TagAssociation(
                 application_id=application_id,
