@@ -18,7 +18,7 @@ def get_tags_for_fund_round(fund_id, round_id):
         serialised_tags = [serialiser.dump(r) for r in tags]
         return serialised_tags
 
-    abort(404, f"No tags not found for fund__round: {fund_id}__{round_id}.")
+    abort(404, f"No tags found for fund__round: {fund_id}__{round_id}.")
 
 
 def seed_and_get_tag_types():
