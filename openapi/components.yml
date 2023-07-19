@@ -354,7 +354,7 @@ components:
           nullable: false
           description: 'tag string'
           example: 'Tag string'
-        type:
+        tag_type_id:
             type: string
             nullable: true
             example: uuif7eaf61b-093e-4464-a4da-b36b849f0a1b
