@@ -283,6 +283,7 @@ def get_metadata_flagsv2_for_fund_round_id(
             db.session.query(AssessmentRecord)
             .join(TagAssociation)
             .filter(TagAssociation.tag_id == filter_by_tag)
+            .filter(TagAssociation.associated == True)  # noqa E712
             .all()
         )
         record_ids_with_tag_id = [
