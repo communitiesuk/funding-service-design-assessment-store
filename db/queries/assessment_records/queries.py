@@ -747,3 +747,20 @@ def select_tags_associated_with_assessment(application_id):
 
     db.session.commit()
     return tag_associations
+
+
+def get_export_application_data(
+    fund_id: str,
+    round_id: str
+) -> List[Dict]:
+    statement = (
+        select(AssessmentRecord)
+        # Dont load json into memory
+        .options(defer(AssessmentRecord.jsonb_blob)).where(
+            AssessmentRecord.fund_id == fund_id,
+            AssessmentRecord.round_id == round_id,
+        )
+    )
+
+    assessment_metadatas = db.session.scalars(statement).all()
+    return assessment_metadatas
