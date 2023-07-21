@@ -754,13 +754,15 @@ def get_export_application_data(
     round_id: str
 ) -> List[Dict]:
     statement = (
-        select(AssessmentRecord)
-        # Dont load json into memory
-        .options(defer(AssessmentRecord.jsonb_blob)).where(
+        select([AssessmentRecord.application_id])
+        .where(
             AssessmentRecord.fund_id == fund_id,
             AssessmentRecord.round_id == round_id,
         )
     )
 
     assessment_metadatas = db.session.scalars(statement).all()
+
+    metadata_serialiser = AssessmentRecordMetadata()
+    
     return assessment_metadatas

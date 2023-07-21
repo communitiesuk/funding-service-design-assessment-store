@@ -528,4 +528,5 @@ def get_all_applications_for_export(
         fund_id=fund_id,
         round_id=round_id
     )
+    
     return app_list
