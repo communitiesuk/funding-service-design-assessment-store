@@ -484,9 +484,8 @@ def test_update_flag_v2(client):
 @pytest.mark.apps_to_insert([test_input_data[0].copy() for x in range(4)])
 def test_get_application_export(client, seed_application_records):
     fund_id = seed_application_records[0]["fund_id"]
-    round_id = seed_application_records[0]["round_id"]
+    round_id = seed_application_records[0]["round_id"]   
 
-    # Get test applications
     applications = client.get(
         f"/application_export/{fund_id}/{round_id}"
     ).json

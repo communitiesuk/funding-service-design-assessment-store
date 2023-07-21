@@ -28,6 +28,8 @@ components:
           type: string
         applicationId:
           type: string
+    AssessmentExport:
+      type: object     
     UpdateStatus:
       type: object
       properties:

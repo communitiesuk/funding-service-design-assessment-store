@@ -522,7 +522,7 @@ def get_flag_v2(flag_id: str):
 
 def get_all_applications_for_export(
     fund_id: str,
-    round_id: str
+    round_id: str   
 ) -> List[Dict]:   
     app_list = get_export_application_data(
         fund_id=fund_id,
