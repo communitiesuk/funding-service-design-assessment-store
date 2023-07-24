@@ -1,6 +1,6 @@
 # flake8: noqa
 from db.queries.tags.queries import insert_tags
-from db.queries.tags.queries import select_active_tags_for_fund_round
+from db.queries.tags.queries import select_tags_for_fund_round
 from db.queries.tags.queries import select_tags_types
 from db.queries.tags.queries import update_tags
 from db.schemas.schemas import JoinedTagSchema
@@ -10,9 +10,9 @@ from flask import abort
 from flask import request
 
 
-def get_active_tags_for_fund_round(fund_id, round_id):
+def get_tags_for_fund_round(fund_id, round_id):
 
-    tags = select_active_tags_for_fund_round(fund_id, round_id)
+    tags = select_tags_for_fund_round(fund_id, round_id)
 
     if tags:
         serialiser = JoinedTagSchema()

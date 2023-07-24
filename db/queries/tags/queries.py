@@ -127,7 +127,7 @@ def update_tags(tags, fund_id, round_id):
     return updated_tags
 
 
-def select_active_tags_for_fund_round(
+def select_tags_for_fund_round(
     fund_id: str,
     round_id: str,
 ) -> List[Tag]:
@@ -147,7 +147,6 @@ def select_active_tags_for_fund_round(
         .join(TagType, Tag.type_id == TagType.id)
         .filter(Tag.fund_id == fund_id)
         .filter(Tag.round_id == round_id)
-        .filter(Tag.active is True)
         .all()
     )
     return tags

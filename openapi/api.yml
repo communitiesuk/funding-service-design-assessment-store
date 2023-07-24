@@ -1219,7 +1219,7 @@ paths:
         - tag management
       summary: Get all the tags associated with the provided fund ID and a round ID.
       description: Returns the tags associated with the provided fund ID and a round ID.
-      operationId: api.routes.tag_routes.get_active_tags_for_fund_round
+      operationId: api.routes.tag_routes.get_tags_for_fund_round
       parameters:
         - in: path
           name: fund_id
