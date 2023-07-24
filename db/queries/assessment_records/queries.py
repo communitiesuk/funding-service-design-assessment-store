@@ -33,6 +33,9 @@ from sqlalchemy import update
 from sqlalchemy.dialects.postgresql import insert as postgres_insert
 from sqlalchemy.orm import defer
 from sqlalchemy.orm import load_only
+from config.mappings.assessment_mapping_fund_round import (
+    applicant_info_mapping,
+)
 
 
 def get_metadata_for_application(
@@ -752,17 +755,7 @@ def select_tags_associated_with_assessment(application_id):
 def get_export_application_data(
     fund_id: str,
     round_id: str
-) -> List[Dict]:
-
-    test = {
-        "13b95669-ed98-4840-8652-d6b7a19964db": {
-            "fUMWcd",
-            "CDEwxp"
-        },
-        "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4": {
-             "ZBjDTn"
-        }
-    }
+) -> List[Dict]:   
 
     statement = (
         select(AssessmentRecord)
@@ -774,23 +767,16 @@ def get_export_application_data(
 
     assessment_metadatas = db.session.scalars(statement).all()
 
-    metadata_serialiser = AssessmentRecordMetadata()
-
-    assessment_metadatas = [
-        metadata_serialiser.dump(app_metadata)        
-        for app_metadata in assessment_metadatas
-    ]
     finalList = []
-
-    list_of_fields = test[fund_id]
+    list_of_fields = applicant_info_mapping[fund_id]
 
     for assessment in assessment_metadatas:
-        applicant_info = {"AppId": assessment["application_id"]}
-        forms = assessment["jsonb_blob"].get("forms", [])
+        applicant_info = {"AppId": assessment.application_id}
+        forms = assessment.jsonb_blob["forms"]
         for form in forms:
-            questions = form.get("questions", [])
+            questions = form["questions"]
             for question in questions:
-                fields = question.get("fields", [])
+                fields = question["fields"]
                 for field in fields:
                     if field["key"] in list_of_fields:
                         applicant_info[field["title"]] = field["answer"]

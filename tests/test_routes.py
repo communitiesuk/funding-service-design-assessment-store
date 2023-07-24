@@ -4,6 +4,8 @@ from unittest import mock
 from uuid import uuid4
 
 import pytest
+import timeit
+import cProfile
 from api.routes.subcriterias.get_sub_criteria import (
     map_application_with_sub_criteria_themes,
 )
@@ -481,13 +483,68 @@ def test_update_flag_v2(client):
         assert response.json["id"] == str(expected_flag.id)
 
 
-@pytest.mark.apps_to_insert([test_input_data[0].copy() for x in range(4)])
+@pytest.mark.apps_to_insert([test_input_data[0].copy() for x in range(100)])
 def test_get_application_export(client, seed_application_records):
     fund_id = seed_application_records[0]["fund_id"]
-    round_id = seed_application_records[0]["round_id"]   
+    round_id = seed_application_records[0]["round_id"]
 
-    applications = client.get(
-        f"/application_export/{fund_id}/{round_id}"
-    ).json
+    # execution_time = timeit.timeit(
+    #     lambda: client.get(f"/application_export/{fund_id}/{round_id}").json,
+    #     number=15
+    # )
 
-    assert len(applications) == 4
+    # print(f"Execution time: {execution_time} seconds")
+
+    repeat_count = 5  # Number of repetitions for more accurate results
+    execution_times = timeit.repeat(
+        stmt=lambda: client.get(f"/application_export/{fund_id}/{round_id}"),
+        number=1,
+        repeat=repeat_count
+    )
+
+    for i, time in enumerate(execution_times, 1):
+        print(f"Execution time {i}: {time} seconds")
+
+    result = client.get(f"/application_export/{fund_id}/{round_id}").json
+
+@pytest.mark.apps_to_insert([test_input_data[0].copy() for x in range(500)])
+def test_get_application_export_500(client, seed_application_records):
+    fund_id = seed_application_records[0]["fund_id"]
+    round_id = seed_application_records[0]["round_id"]
+
+    # execution_time = timeit.timeit(
+    #     lambda: client.get(f"/application_export/{fund_id}/{round_id}").json,
+    #     number=15
+    # )
+
+    # print(f"Execution time: {execution_time} seconds")
+
+    repeat_count = 5  # Number of repetitions for more accurate results
+    execution_times = timeit.repeat(
+        stmt=lambda: client.get(f"/application_export/{fund_id}/{round_id}"),
+        number=1,
+        repeat=repeat_count
+    )
+
+    for i, time in enumerate(execution_times, 1):
+        print(f"Execution time {i}: {time} seconds")
+
+    result = client.get(f"/application_export/{fund_id}/{round_id}").json  
+
+
+@pytest.mark.apps_to_insert([test_input_data[0].copy() for x in range(10)])
+def test_get_results_times(client, seed_application_records):
+    fund_id = seed_application_records[0]["fund_id"]
+    round_id = seed_application_records[0]["round_id"]
+
+    profiler = cProfile.Profile()
+    profiler.enable()
+
+    result = client.get(f"/application_export/{fund_id}/{round_id}").json
+
+    profiler.disable()
+
+    profiler.print_stats()
+
+    result = client.get(f"/application_export/{fund_id}/{round_id}").json
+    assert len(result) == 10
