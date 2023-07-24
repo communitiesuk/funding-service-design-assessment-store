@@ -13,10 +13,10 @@ from .progress.queries import get_progress_for_app
 from .scores.queries import create_score_for_app_sub_crit
 from .scores.queries import get_scores_for_app_sub_crit
 from .tags.queries import insert_tags
-from .tags.queries import select_tags_for_fund_round
+from .tags.queries import select_active_tags_for_fund_round
 
 __all__ = [
-    "select_tags_for_fund_round",
+    "select_active_tags_for_fund_round",
     "insert_tags",
     "get_metadata_for_fund_round_id",
     "get_metadata_flagsv2_for_fund_round_id",

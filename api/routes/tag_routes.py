@@ -1,7 +1,8 @@
 # flake8: noqa
 from db.queries.tags.queries import insert_tags
-from db.queries.tags.queries import select_tags_for_fund_round
+from db.queries.tags.queries import select_active_tags_for_fund_round
 from db.queries.tags.queries import select_tags_types
+from db.queries.tags.queries import update_tags
 from db.schemas.schemas import JoinedTagSchema
 from db.schemas.schemas import TagSchema
 from db.schemas.schemas import TagTypeSchema
@@ -9,9 +10,9 @@ from flask import abort
 from flask import request
 
 
-def get_tags_for_fund_round(fund_id, round_id):
+def get_active_tags_for_fund_round(fund_id, round_id):
 
-    tags = select_tags_for_fund_round(fund_id, round_id)
+    tags = select_active_tags_for_fund_round(fund_id, round_id)
 
     if tags:
         serialiser = JoinedTagSchema()
@@ -48,6 +49,30 @@ def add_tag_for_fund_round(fund_id, round_id):
     ]
 
     tags = insert_tags(tags, fund_id, round_id)
+
+    if tags:
+        serialiser = TagSchema()
+        serialised_tags = [serialiser.dump(r) for r in tags]
+        return serialised_tags
+
+    abort(404)
+
+
+def update_tags_for_fund_round(fund_id, round_id):
+    args = request.get_json()
+
+    tags = [
+        {
+            "id": arg.get("id"),
+            "value": arg.get("value"),
+            "tag_type_id": arg.get("tag_type_id"),
+            "creator_user_id": arg.get("creator_user_id"),
+            "active": arg.get("active"),
+        }
+        for arg in args
+    ]
+
+    tags = update_tags(tags, fund_id, round_id)
 
     if tags:
         serialiser = TagSchema()

@@ -2,7 +2,9 @@ import random
 from uuid import uuid4
 
 import pytest
-from api.routes.tag_routes import get_tags_for_fund_round
+from api.routes.tag_routes import get_active_tags_for_fund_round
+from api.routes.tag_routes import update_tags_for_fund_round
+from app import app
 from db.queries.tags.queries import insert_tags
 
 # _db.session.remove()
@@ -209,7 +211,7 @@ def test_get_tags(_db, clear_test_data, seed_and_get_tag_types):
         },
     ]
     insert_tags(tags_correct_format, fund_id_test, round_id_test)
-    result = get_tags_for_fund_round(fund_id_test, round_id_test)
+    result = get_active_tags_for_fund_round(fund_id_test, round_id_test)
     tag_values = [x["value"] for x in tags_correct_format]
     assert len(result) == 2
     assert result[0]["value"] in tag_values
@@ -226,3 +228,45 @@ def test_get_tags(_db, clear_test_data, seed_and_get_tag_types):
             "active",
         ]
     )
+
+
+def test_deactivate_tags(_db, clear_test_data, seed_tags):
+
+    seeded_tag = seed_tags[0]
+    fund_id_test = seeded_tag["fund_id"]
+    round_id_test = seeded_tag["round_id"]
+    result = get_active_tags_for_fund_round(fund_id_test, round_id_test)
+    assert len(result) == 2
+    tags_to_update = [{"active": False, "id": seeded_tag["id"]}]
+    # simulate request body
+    with app.test_request_context(json=tags_to_update):
+        # Now, you can call the `update_tags_for_fund_round` function
+        update_tags_for_fund_round(fund_id_test, round_id_test)
+    result = get_active_tags_for_fund_round(fund_id_test, round_id_test)
+    assert len(result) == 1
+
+
+def test_deactivate_tags_fails_for_non_existent(
+    _db, clear_test_data, seed_tags
+):
+
+    seeded_tag = seed_tags[0]
+    fund_id_test = seeded_tag["fund_id"]
+    round_id_test = seeded_tag["round_id"]
+    result = get_active_tags_for_fund_round(fund_id_test, round_id_test)
+    assert len(result) == 2
+    tags_to_update = [
+        {"active": False, "id": "68d39aee-4f4a-42d2-a2e7-66c5934905a1"}
+    ]
+
+    # simulate request body
+    with app.test_request_context(json=tags_to_update):
+        with pytest.raises(Exception) as e_info:
+            update_tags_for_fund_round(fund_id_test, round_id_test)
+    assert all(
+        text in str(e_info.value)
+        for text in ["Tag with id", "does not exist for fund_id"]
+    )
+
+    result = get_active_tags_for_fund_round(fund_id_test, round_id_test)
+    assert len(result) == 2

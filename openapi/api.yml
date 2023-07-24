@@ -1219,7 +1219,7 @@ paths:
         - tag management
       summary: Get all the tags associated with the provided fund ID and a round ID.
       description: Returns the tags associated with the provided fund ID and a round ID.
-      operationId: api.routes.tag_routes.get_tags_for_fund_round
+      operationId: api.routes.tag_routes.get_active_tags_for_fund_round
       parameters:
         - in: path
           name: fund_id
@@ -1279,6 +1279,42 @@ paths:
                 type: object
                 items:
                   $ref: 'components.yml#/components/schemas/Tag'
+    put:
+      tags:
+        - tag management
+      summary: Update a tag for a fund round
+      description: Update a tag for a fund round
+      operationId: api.routes.tag_routes.update_tags_for_fund_round
+      parameters:
+        - in: path
+          name: fund_id
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: round_id
+          schema:
+            type: string
+          required: true
+      requestBody:
+        description: Tag creation parameters
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+               $ref: 'components.yml#/components/schemas/PutTag'
+      responses:
+        200:
+          description: SUCCESS - Tag Updated
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: 'components.yml#/components/schemas/Tag'
+
   '/tag_types':
     get:
       tags:
