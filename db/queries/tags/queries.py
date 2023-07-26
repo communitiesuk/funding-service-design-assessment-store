@@ -1,10 +1,13 @@
 from typing import List
 
 from db import db
+from db.models.assessment_record.tag_association import TagAssociation
 from db.models.tag.tag_types import TagType
 from db.models.tag.tags import Tag
 from flask import current_app
-from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy import func
+from sqlalchemy import or_
+from sqlalchemy.exc import NoResultFound
 
 
 def insert_tags(tags, fund_id, round_id):
@@ -130,8 +133,12 @@ def update_tags(tags, fund_id, round_id):
 def select_tags_for_fund_round(
     fund_id: str,
     round_id: str,
+    tag_purpose: str,
+    tag_status: bool,
+    search_term: str,
+    search_in: str,
 ) -> List[Tag]:
-    tags = (
+    statement = (
         db.session.query(
             Tag.id,
             Tag.value,
@@ -145,11 +152,68 @@ def select_tags_for_fund_round(
             TagType.description.label("description"),
         )
         .join(TagType, Tag.type_id == TagType.id)
-        .filter(Tag.fund_id == fund_id)
-        .filter(Tag.round_id == round_id)
-        .all()
+        .where(Tag.fund_id == fund_id)
+        .where(Tag.round_id == round_id)
+        .where(Tag.active == tag_status)
     )
+    if search_term != "":
+        current_app.logger.info(
+            f"Performing tag search on search term: {search_term} in fields {search_in}"
+        )
+        # using % for sql LIKE search
+        search_term = search_term.replace(" ", "%")
+
+        filters = []
+        if "value" in search_in:
+            filters.append(Tag.value.ilike(f"%{search_term}%"))
+
+        statement = statement.filter(or_(*filters))
+
+    if tag_purpose.upper() != "ALL":
+        statement = statement.where(TagType.purpose == tag_purpose.upper())
+    tags = statement.all()
+
     return tags
+
+
+def get_tag_by_id(fund_id: str, round_id: str, tag_id: str) -> Tag:
+    try:
+        return (
+            db.session.query(
+                Tag.id,
+                Tag.value,
+                Tag.active,
+                Tag.type_id,
+                Tag.fund_id,
+                Tag.round_id,
+                Tag.creator_user_id,
+                Tag.created_at,
+                TagType.purpose.label("purpose"),
+                TagType.description.label("description"),
+                func.count(TagAssociation.id).label("tag_association_count"),
+            )
+            .join(TagType, Tag.type_id == TagType.id)
+            .outerjoin(TagAssociation, Tag.id == TagAssociation.tag_id)
+            .filter(Tag.fund_id == fund_id)
+            .filter(Tag.round_id == round_id)
+            .filter(Tag.id == tag_id)
+            .group_by(
+                Tag.id,
+                Tag.value,
+                Tag.active,
+                Tag.type_id,
+                Tag.fund_id,
+                Tag.round_id,
+                Tag.creator_user_id,
+                Tag.created_at,
+                TagType.purpose,
+                TagType.description,
+            )
+            .one()
+        )
+    except NoResultFound as e:
+        current_app.log_exception(e)
+        return None
 
 
 def select_tags_types() -> List[TagType]:

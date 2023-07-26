@@ -5,7 +5,10 @@ import pytest
 from api.routes.tag_routes import get_tags_for_fund_round
 from api.routes.tag_routes import update_tags_for_fund_round
 from app import app
+from db.queries.assessment_records.queries import associate_assessment_tags
+from db.queries.tags.queries import get_tag_by_id
 from db.queries.tags.queries import insert_tags
+from tests.conftest import test_input_data
 
 # _db.session.remove()
 # This operation cleans up the session resources and ensures that
@@ -33,10 +36,10 @@ tags_incorrect_format = [
 ]
 
 
-def test_insert_tags(_db, clear_test_data, seed_and_get_tag_types):
+def test_insert_tags(_db, clear_test_data, get_tag_types):
     fund_id_test = str(uuid4())
     round_id_test = str(uuid4())
-    tag_type_ids = [t["id"] for t in seed_and_get_tag_types]
+    tag_type_ids = [t["id"] for t in get_tag_types]
     tags_correct_format = [
         {
             "value": "Test tag 1",
@@ -66,9 +69,9 @@ def test_insert_tags(_db, clear_test_data, seed_and_get_tag_types):
 
 
 def test_insert_tags_fails_for_tag_with_special_chars(
-    _db, clear_test_data, seed_and_get_tag_types
+    _db, clear_test_data, get_tag_types
 ):
-    tag_type_ids = [t["id"] for t in seed_and_get_tag_types]
+    tag_type_ids = [t["id"] for t in get_tag_types]
     tag_special_chars = [
         {
             "value": "Test tag 1 !£",
@@ -88,11 +91,11 @@ def test_insert_tags_fails_for_tag_with_special_chars(
 
 
 def test_insert_tags_for_same_fund_round_twice_fails(
-    _db, clear_test_data, seed_and_get_tag_types
+    _db, clear_test_data, get_tag_types
 ):
     fund_id_test = str(uuid4())
     round_id_test = str(uuid4())
-    tag_type_ids = [t["id"] for t in seed_and_get_tag_types]
+    tag_type_ids = [t["id"] for t in get_tag_types]
     tags_correct_format = [
         {
             "value": "Test tag 1",
@@ -110,11 +113,11 @@ def test_insert_tags_for_same_fund_round_twice_fails(
 
 
 def test_insert_duplicate_tags_same_payload_fails(
-    _db, clear_test_data, seed_and_get_tag_types
+    _db, clear_test_data, get_tag_types
 ):
     fund_id_test = str(uuid4())
     round_id_test = str(uuid4())
-    tag_type_ids = [t["id"] for t in seed_and_get_tag_types]
+    tag_type_ids = [t["id"] for t in get_tag_types]
     same_tags_with_different_cases = [
         {
             "value": "same test tag",
@@ -138,11 +141,11 @@ def test_insert_duplicate_tags_same_payload_fails(
 
 
 def test_insert_duplicate_tags_not_case_sensitive_fails(
-    _db, clear_test_data, seed_and_get_tag_types
+    _db, clear_test_data, get_tag_types
 ):
     fund_id_test = str(uuid4())
     round_id_test = str(uuid4())
-    tag_type_ids = [t["id"] for t in seed_and_get_tag_types]
+    tag_type_ids = [t["id"] for t in get_tag_types]
     same_tags_with_different_cases = [
         {
             "value": "SAME TEST TAG NOT CASE",
@@ -194,10 +197,10 @@ def test_insert_tag_with_unknown_type_id_fails(_db, clear_test_data):
     _db.session.remove()
 
 
-def test_get_tags(_db, clear_test_data, seed_and_get_tag_types):
+def test_get_tags(_db, clear_test_data, get_tag_types):
     fund_id_test = str(uuid4())
     round_id_test = str(uuid4())
-    tag_type_ids = [t["id"] for t in seed_and_get_tag_types]
+    tag_type_ids = [t["id"] for t in get_tag_types]
     tags_correct_format = [
         {
             "value": "Test tag 1",
@@ -237,19 +240,36 @@ def test_deactivate_tags(_db, clear_test_data, seed_tags):
     round_id_test = seeded_tag["round_id"]
     result = get_tags_for_fund_round(fund_id_test, round_id_test)
     assert all(tag["active"] is True for tag in result)
+    # Deactivate tag
     tags_to_update = [{"active": False, "id": seeded_tag["id"]}]
-    # simulate request body
     with app.test_request_context(json=tags_to_update):
-        # Now, you can call the `update_tags_for_fund_round` function
         update_tags_for_fund_round(fund_id_test, round_id_test)
-    result = get_tags_for_fund_round(fund_id_test, round_id_test)
-    assert any(tag["active"] is False for tag in result)
+    result = get_tags_for_fund_round(
+        fund_id_test, round_id_test, tag_status=True
+    )
+    assert len(result) == 1
+    result = get_tags_for_fund_round(
+        fund_id_test, round_id_test, tag_status=False
+    )
+    assert len(result) == 1
+    # Reactivate tag
+    tags_to_update = [{"active": True, "id": seeded_tag["id"]}]
+    with app.test_request_context(json=tags_to_update):
+        update_tags_for_fund_round(fund_id_test, round_id_test)
+    result = get_tags_for_fund_round(
+        fund_id_test, round_id_test, tag_status=True
+    )
+    assert len(result) == 2
+    result = get_tags_for_fund_round(
+        fund_id_test, round_id_test, tag_status=False
+    )
+    assert result.status_code == 204
+    assert "No tags found" in result.data.decode("utf-8")
 
 
 def test_deactivate_tags_fails_for_non_existent(
     _db, clear_test_data, seed_tags
 ):
-
     seeded_tag = seed_tags[0]
     fund_id_test = seeded_tag["fund_id"]
     round_id_test = seeded_tag["round_id"]
@@ -270,3 +290,47 @@ def test_deactivate_tags_fails_for_non_existent(
 
     result = get_tags_for_fund_round(fund_id_test, round_id_test)
     assert all(tag["active"] is True for tag in result)
+
+
+def test_get_tag(seed_tags):
+    tag_id = seed_tags[0]["id"]
+    fund_id = seed_tags[0]["fund_id"]
+    round_id = seed_tags[0]["round_id"]
+    tag = get_tag_by_id(fund_id, round_id, tag_id)
+    assert tag
+    assert str(tag.id) == tag_id
+    assert tag.value == "Test tag 1"
+
+
+@pytest.mark.apps_to_insert([test_input_data[0]])
+def test_get_tag_includes_tag_association_count(
+    seed_application_records, seed_tags
+):
+    tag_id = seed_tags[0]["id"]
+    fund_id = seed_tags[0]["fund_id"]
+    round_id = seed_tags[0]["round_id"]
+    tag = get_tag_by_id(fund_id, round_id, tag_id)
+    assert tag
+    assert str(tag.id) == tag_id
+    assert tag.tag_association_count == 0
+    assert tag.value == "Test tag 1"
+
+    app_id = seed_application_records[0]["application_id"]
+    new_tags = [
+        {"id": tag["id"], "user_id": "1d49a41c-a13e-41ab-a89c-240b3de3fbda"}
+        for tag in seed_tags
+    ]
+    associate_assessment_tags(app_id, new_tags)
+    tag = get_tag_by_id(fund_id, round_id, tag_id)
+    assert tag
+    assert str(tag.id) == tag_id
+    assert tag.tag_association_count == 1
+    assert tag.value == "Test tag 1"
+
+
+def test_get_tag_bad_id(seed_tags):
+    tag_id = str(uuid4())
+    fund_id = seed_tags[0]["fund_id"]
+    round_id = seed_tags[0]["round_id"]
+    tag = get_tag_by_id(fund_id, round_id, tag_id)
+    assert tag is None

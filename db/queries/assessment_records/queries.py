@@ -712,10 +712,9 @@ def associate_assessment_tags(application_id, tags: List):
 
         # Check if the tag already exists in the database
         if tag_id not in existing_associated_tags_dict:
-            # Create a new tag association
             new_tag = TagAssociation(
                 application_id=application_id,
-                tag_id=tag.get("id"),
+                tag_id=tag_id,
                 associated=associated,
                 user_id=user_id,
             )
@@ -737,7 +736,7 @@ def associate_assessment_tags(application_id, tags: List):
     return updated_tags
 
 
-def select_tags_associated_with_assessment(application_id):
+def select_active_tags_associated_with_assessment(application_id):
 
     tag_associations = (
         db.session.query(
@@ -757,6 +756,7 @@ def select_tags_associated_with_assessment(application_id):
         .join(TagType, Tag.type_id == TagType.id)
         .filter(AssessmentRecord.application_id == application_id)
         .filter(TagAssociation.associated == True)  # noqa: E712
+        .filter(Tag.active == True)  # noqa: E712
         .all()
     )
 

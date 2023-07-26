@@ -1,4 +1,5 @@
 # flake8: noqa
+from db.queries.tags.queries import get_tag_by_id
 from db.queries.tags.queries import insert_tags
 from db.queries.tags.queries import select_tags_for_fund_round
 from db.queries.tags.queries import select_tags_types
@@ -8,21 +9,33 @@ from db.schemas.schemas import TagSchema
 from db.schemas.schemas import TagTypeSchema
 from flask import abort
 from flask import request
+from flask import Response
 
 
-def get_tags_for_fund_round(fund_id, round_id):
-
-    tags = select_tags_for_fund_round(fund_id, round_id)
+def get_tags_for_fund_round(
+    fund_id,
+    round_id,
+    tag_purpose: str = "ALL",
+    tag_status: bool = True,
+    search_term: str = "",
+    search_in: str = None,
+):
+    tags = select_tags_for_fund_round(
+        fund_id, round_id, tag_purpose, tag_status, search_term, search_in
+    )
 
     if tags:
         serialiser = JoinedTagSchema()
         serialised_tags = [serialiser.dump(r) for r in tags]
         return serialised_tags
 
-    abort(404, f"No tags found for fund__round: {fund_id}__{round_id}.")
+    return Response(
+        response=f"No tags found for fund__round: {fund_id}__{round_id}.",
+        status=204,
+    )
 
 
-def seed_and_get_tag_types():
+def get_tag_types():
 
     tag_types = select_tags_types()
 
@@ -31,7 +44,7 @@ def seed_and_get_tag_types():
         serialised_tag_types = [serialiser.dump(r) for r in tag_types]
         return serialised_tag_types
 
-    abort(404, f"No tags types.")
+    return Response(response="No tags types.", status=204)
 
 
 def add_tag_for_fund_round(fund_id, round_id):
@@ -80,3 +93,10 @@ def update_tags_for_fund_round(fund_id, round_id):
         return serialised_tags
 
     abort(404)
+
+
+def get_tag(fund_id, round_id, tag_id):
+    tag = get_tag_by_id(fund_id, round_id, tag_id)
+    if not tag:
+        return abort(404)
+    return JoinedTagSchema().dump(tag)
