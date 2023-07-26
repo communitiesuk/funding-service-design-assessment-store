@@ -1,5 +1,6 @@
 import json
 import random
+import string
 from unittest import mock
 from uuid import uuid4
 
@@ -23,6 +24,10 @@ from tests.test_data.flags import add_flag_update_request_json
 from tests.test_data.flags import create_flag_request_json
 
 from ._expected_responses import subcriteria_themes_and_expected_response
+
+from config.mappings.assessment_mapping_fund_round import (
+    applicant_info_mapping
+)
 
 COF_FUND_ID = "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4"
 COF_ROUND_2_ID = "c603d114-5364-4474-a0c4-c41cbf4d3bbd"
@@ -483,17 +488,91 @@ def test_update_flag_v2(client):
         assert response.json["id"] == str(expected_flag.id)
 
 
-@pytest.mark.apps_to_insert([test_input_data[0].copy() for x in range(100)])
-def test_get_application_export(client, seed_application_records):
+def generate_random_string(length):
+    letters = string.ascii_letters + string.digits
+    return ''.join(random.choice(letters) for i in range(length))
+
+
+def test_generate_json(client):
+    modified_json_list = []
+    num_objects = 10
+
+    for _ in range(num_objects):
+        # Generate a new JSON object
+        modified_json = {
+            "account_id": generate_random_string(8),
+            "date_submitted": "2023-07-25T12:00:00.000000",
+            "forms": [],
+            "fund_id": generate_random_string(8),
+            "id": generate_random_string(8),
+            "last_edited": "2023-07-25T12:00:00.000000",
+            "project_name": generate_random_string(20),
+            "reference": generate_random_string(10),
+            "round_id": generate_random_string(8),
+            "round_name": generate_random_string(12),
+            "started_at": "2023-07-25T12:00:00.000000"
+        }
+
+        # Append the modified JSON object to the list
+        modified_json_list.append(modified_json)
+
+    for i, modified_json in enumerate(modified_json_list, 1):
+        print(f"Modified JSON Object {i}:")
+        print(modified_json)
+        print("-" * 40)
+
+
+@pytest.mark.apps_to_insert([test_input_data[0].copy() for x in range(4)])
+@pytest.mark.unique_fund_round(True)
+def test_get_application_export(client, seed_application_records, monkeypatch):
     fund_id = seed_application_records[0]["fund_id"]
     round_id = seed_application_records[0]["round_id"]
 
-    # execution_time = timeit.timeit(
-    #     lambda: client.get(f"/application_export/{fund_id}/{round_id}").json,
-    #     number=15
-    # )
+    monkeypatch.setitem(
+        applicant_info_mapping,
+        f'{fund_id}',
+        {
+            "aHIGbK",
+            "aAeszH",
+            "ozgwXq",
+            "KAgrBz"
+        }
+    )
 
-    # print(f"Execution time: {execution_time} seconds")
+    result = client.get(f"/application_export/{fund_id}/{round_id}")
+
+    assert len(result) == 4
+
+
+data_set1 = [test_input_data[0].copy() for _ in range(500)]
+data_set2 = [test_input_data[1].copy() for _ in range(500)]
+data_set3 = [test_input_data[2].copy() for _ in range(500)]
+data_set4 = [test_input_data[3].copy() for _ in range(500)]
+data_set5 = [test_input_data[4].copy() for _ in range(500)]
+data_set6 = [test_input_data[5].copy() for _ in range(500)]
+data_set7 = [test_input_data[6].copy() for _ in range(500)]
+data_set8 = [test_input_data[7].copy() for _ in range(500)]
+data_set9 = [test_input_data[8].copy() for _ in range(500)]
+data_set10 = [test_input_data[9].copy() for _ in range(500)]
+data_set11 = [test_input_data[10].copy() for _ in range(500)]
+combined_test_data = data_set1 + data_set2 + data_set3 + data_set4 + data_set5 + data_set6 + data_set7 + data_set8 + data_set9 + data_set10 + data_set11
+
+
+@pytest.mark.apps_to_insert(combined_test_data)
+def testthis_get_application_export_500(client, seed_application_records, monkeypatch):
+    fund_id = seed_application_records[0]["fund_id"]
+    round_id = seed_application_records[0]["round_id"]
+
+    monkeypatch.setitem(
+        applicant_info_mapping,
+        "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4",
+        {
+            "ieRCkI",
+            "aAeszH",
+            "ozgwXq",
+            "CDwTrG"
+        }
+    )
 
     repeat_count = 5  # Number of repetitions for more accurate results
     execution_times = timeit.repeat(
@@ -505,21 +584,112 @@ def test_get_application_export(client, seed_application_records):
     for i, time in enumerate(execution_times, 1):
         print(f"Execution time {i}: {time} seconds")
 
-    result = client.get(f"/application_export/{fund_id}/{round_id}").json
 
-@pytest.mark.apps_to_insert([test_input_data[0].copy() for x in range(500)])
-def test_get_application_export_500(client, seed_application_records):
+data_set1 = [test_input_data[0].copy() for _ in range(500)]
+data_set2 = [test_input_data[1].copy() for _ in range(500)]
+data_set3 = [test_input_data[2].copy() for _ in range(500)]
+data_set4 = [test_input_data[3].copy() for _ in range(500)]
+data_set5 = [test_input_data[4].copy() for _ in range(500)]
+data_set6 = [test_input_data[5].copy() for _ in range(500)]
+data_set7 = [test_input_data[6].copy() for _ in range(500)]
+data_set8 = [test_input_data[7].copy() for _ in range(500)]
+data_set9 = [test_input_data[8].copy() for _ in range(500)]
+data_set10 = [test_input_data[9].copy() for _ in range(500)]
+data_set11 = [test_input_data[10].copy() for _ in range(500)]
+combined_test_data = data_set1 + data_set2 + data_set3 + data_set4 + data_set5 + data_set6 + data_set7 + data_set8 + data_set9 + data_set10 + data_set11
+
+
+@pytest.mark.apps_to_insert(combined_test_data)
+def test_thisget_application_export_500_large_data(client, seed_application_records, monkeypatch):
     fund_id = seed_application_records[0]["fund_id"]
     round_id = seed_application_records[0]["round_id"]
 
-    # execution_time = timeit.timeit(
-    #     lambda: client.get(f"/application_export/{fund_id}/{round_id}").json,
-    #     number=15
-    # )
+    monkeypatch.setitem(
+        applicant_info_mapping,
+        "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4",
+        {
+            "ieRCkI",
+            "aAeszH",
+            "ozgwXq",
+            "CDwTrG",
+            "kxgWTy",
+            "GNhrIs",
+            "qsZLjZ",
+            "CvVZJv",
+            "KqoaJL",
+            "HvxXPI",
+            "CBIWnt",
+            "vKnMPG",
+            "rFXeZo",
+            "gScdbf",
+            "KAgrBz",
+            "wudRxx",
+            "TlGjXb",
+            "GCjCse",
+            "yEmHpp",
+            "MGRlEi",
+            "WWWWxy",
+            "YdtlQZ",
+            "iBCGxY",
+            "emVGxS",
+            "btTtIb",
+            "SkocDi",
+            "CNeeiC",
+            "BBlCko",
+            "lajFtB",
+            "aHIGbK",
+            "DwfHtk",
+            "ZQolYb",
+            "zsoLdf",
+            "FhbaEy",
+            "FcdKlB",
+            "BzxgDA",
+            "hnLurH",
+            "ZBjDTn",
+            "lRfhGB",
+            "yaQoxU",
+            "VWkLlk",
+            "IRfSZp",
+            "FtDJfK",
+            "gkulUE",
+            "nvMmGE",
+            "ghzLRv",
+            "Wyesgy",
+            "hvzzWB",
+            "VwxiGn",
+            "UDTxqC",
+            "HJBgvw",
+            "JCACTy",
+            "NZKHOp",
+            "JzWvhj",
+            "jLIgoi",
+            "NWTKzQ",
+            "DIZZOC",
+            "RvbwSX",
+            "fnIdkJ",
+            "gDTsgG",
+            "kYjJFy",
+            "UbjYqE",
+            "SrtVAs",
+            "YbfbSC",
+            "KuhSWw",
+            "bkJsiO",
+            "WDDkVB",
+            "oaIntA",
+            "multiInputField-2",
+            "JnvsPq",
+            "yMCivI",
+            "NUZOvS",
+            "oOPUXI",
+            "NKOmNL",
+            "LlvhYl",
+            "wJrJWY",
+            "COiwQr",
+            "bRPzWU"
+        }
+    )
 
-    # print(f"Execution time: {execution_time} seconds")
-
-    repeat_count = 5  # Number of repetitions for more accurate results
+    repeat_count = 5  # Number of repetitions for more accurate results 
     execution_times = timeit.repeat(
         stmt=lambda: client.get(f"/application_export/{fund_id}/{round_id}"),
         number=1,
@@ -528,23 +698,3 @@ def test_get_application_export_500(client, seed_application_records):
 
     for i, time in enumerate(execution_times, 1):
         print(f"Execution time {i}: {time} seconds")
-
-    result = client.get(f"/application_export/{fund_id}/{round_id}").json  
-
-
-@pytest.mark.apps_to_insert([test_input_data[0].copy() for x in range(10)])
-def test_get_results_times(client, seed_application_records):
-    fund_id = seed_application_records[0]["fund_id"]
-    round_id = seed_application_records[0]["round_id"]
-
-    profiler = cProfile.Profile()
-    profiler.enable()
-
-    result = client.get(f"/application_export/{fund_id}/{round_id}").json
-
-    profiler.disable()
-
-    profiler.print_stats()
-
-    result = client.get(f"/application_export/{fund_id}/{round_id}").json
-    assert len(result) == 10

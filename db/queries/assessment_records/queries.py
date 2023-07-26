@@ -30,6 +30,8 @@ from sqlalchemy import or_
 from sqlalchemy import select
 from sqlalchemy import String
 from sqlalchemy import update
+from sqlalchemy import text
+from sqlalchemy.orm import aliased
 from sqlalchemy.dialects.postgresql import insert as postgres_insert
 from sqlalchemy.orm import defer
 from sqlalchemy.orm import load_only
@@ -755,31 +757,43 @@ def select_tags_associated_with_assessment(application_id):
 def get_export_application_data(
     fund_id: str,
     round_id: str
-) -> List[Dict]:   
+) -> List[Dict]:
 
-    statement = (
-        select(AssessmentRecord)
-        .where(
-            AssessmentRecord.fund_id == fund_id,
-            AssessmentRecord.round_id == round_id,
-        )
-    )
-
-    assessment_metadatas = db.session.scalars(statement).all()
-
-    finalList = []
+    assement_alias = aliased(AssessmentRecord)
     list_of_fields = applicant_info_mapping[fund_id]
+    rows_list = []
+    result = []
 
-    for assessment in assessment_metadatas:
-        applicant_info = {"AppId": assessment.application_id}
-        forms = assessment.jsonb_blob["forms"]
-        for form in forms:
-            questions = form["questions"]
-            for question in questions:
-                fields = question["fields"]
-                for field in fields:
-                    if field["key"] in list_of_fields:
-                        applicant_info[field["title"]] = field["answer"]
-        finalList.append(applicant_info)
+    for field_key in list_of_fields:
+        subquery = (
+            db.session.query(
+                assement_alias.application_id,
+                func.jsonb_path_query(
+                    assement_alias.jsonb_blob,
+                    text(f'\'$.forms[*].questions[*].fields[*] ? (@.key == "{field_key}").title\'') # noqa
+                ).label(f'title_{field_key}'),
+                func.jsonb_path_query(
+                    assement_alias.jsonb_blob,
+                    text(f'\'$.forms[*].questions[*].fields[*] ? (@.key == "{field_key}").answer\'') # noqa
+                ).label(f'answer_{field_key}')
+            )
+            .filter(assement_alias.fund_id == fund_id)
+            .filter(assement_alias.round_id == round_id)
+        )
 
-    return finalList
+        for row in subquery:
+            app_id = row.application_id
+            title_key = f'title_{field_key}'
+            answer_key = f'answer_{field_key}'
+
+            # Check if there is an existing row for the AppId
+            existing_row = next((r for r in rows_list if r["AppId"] == app_id),
+                                None)
+            if existing_row is None:
+                new_row = {"AppId": app_id}
+                new_row[row[title_key]] = row[answer_key]
+                rows_list.append(new_row)
+            else:
+                existing_row[row[title_key]] = row[answer_key]
+
+    return rows_list
