@@ -164,7 +164,8 @@
           "-c",
           "pytest.ini",
           "-k",
-          "test_route_fund_dashboard_shows_flagged" // modify this accordingly
+          "test_get_application_export", // modify this accordingly
+          "-rP"
       ],
       "justMyCode": false
   },

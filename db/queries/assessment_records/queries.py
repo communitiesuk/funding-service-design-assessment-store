@@ -6,6 +6,9 @@ import json
 from typing import Dict
 from typing import List
 
+from config.mappings.assessment_mapping_fund_round import (
+    applicant_info_mapping,
+)
 from db import db
 from db.models.assessment_record import AssessmentRecord
 from db.models.assessment_record import TagAssociation
@@ -29,8 +32,10 @@ from sqlalchemy import func
 from sqlalchemy import or_
 from sqlalchemy import select
 from sqlalchemy import String
+from sqlalchemy import text
 from sqlalchemy import update
 from sqlalchemy.dialects.postgresql import insert as postgres_insert
+from sqlalchemy.orm import aliased
 from sqlalchemy.orm import defer
 from sqlalchemy.orm import load_only
 
@@ -762,3 +767,30 @@ def select_tags_associated_with_assessment(application_id):
 
     db.session.commit()
     return tag_associations
+
+
+def get_export_application_data(fund_id: str, round_id: str) -> List[Dict]:
+
+    statement = select(AssessmentRecord).where(
+        AssessmentRecord.fund_id == fund_id,
+        AssessmentRecord.round_id == round_id,
+    )
+
+    assessment_metadatas = db.session.scalars(statement).all()
+
+    finalList = []
+    list_of_fields = applicant_info_mapping[fund_id]
+
+    for assessment in assessment_metadatas:
+        applicant_info = {"AppId": assessment.application_id}
+        forms = assessment.jsonb_blob["forms"]
+        for form in forms:
+            questions = form["questions"]
+            for question in questions:
+                fields = question["fields"]
+                for field in fields:
+                    if field["key"] in list_of_fields:
+                        applicant_info[field["title"]] = field["answer"]
+        finalList.append(applicant_info)
+
+    return finalList
