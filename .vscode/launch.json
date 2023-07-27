@@ -164,7 +164,7 @@
           "-c",
           "pytest.ini",
           "-k",
-          "test_thisget_application_export_500_large_data", // modify this accordingly
+          "test_get_application_export", // modify this accordingly
           "-rP"
       ],
       "justMyCode": false
