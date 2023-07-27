@@ -1,22 +1,18 @@
-import cProfile
 import json
 import random
 import string
-import timeit
 from unittest import mock
 from uuid import uuid4
 
 import pytest
+import timeit
+import cProfile
 from api.routes.subcriterias.get_sub_criteria import (
     map_application_with_sub_criteria_themes,
-)
-from config.mappings.assessment_mapping_fund_round import (
-    applicant_info_mapping,
 )
 from db.models.flags.enums import FlagType
 from db.models.flags_v2.assessment_flag import AssessmentFlag
 from db.models.flags_v2.flag_update import FlagStatus
-from db.models.tag.tags import Tag
 from db.queries.flags.queries import create_flag_for_application
 from db.queries.flags_v2.queries import (
     create_flag_for_application as create_flag_for_application_v2,
@@ -28,6 +24,23 @@ from tests.test_data.flags import add_flag_update_request_json
 from tests.test_data.flags import create_flag_request_json
 
 from ._expected_responses import subcriteria_themes_and_expected_response
+
+from config.mappings.assessment_mapping_fund_round import (
+    applicant_info_mapping
+)
+
+from db import db
+from sqlalchemy import and_
+from sqlalchemy import bindparam
+from sqlalchemy import exc
+from sqlalchemy import func
+from sqlalchemy import or_
+from sqlalchemy import select
+from sqlalchemy import String
+from sqlalchemy import update
+from sqlalchemy import text
+from sqlalchemy.orm import aliased
+from db.models.assessment_record import AssessmentRecord
 
 COF_FUND_ID = "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4"
 COF_ROUND_2_ID = "c603d114-5364-4474-a0c4-c41cbf4d3bbd"
@@ -488,32 +501,38 @@ def test_update_flag_v2(client):
         assert response.json["id"] == str(expected_flag.id)
 
 
-def test_get_tag(client, mocker):
-    tag_id = uuid4()
-    mock_tag = Tag(
-        id=tag_id,
-        value="tag value 1",
-        creator_user_id="test-user",
-        active=True,
-        fund_id=uuid4(),
-        round_id=uuid4(),
-        type_id=uuid4(),
-    )
-    with mocker.patch(
-        "api.routes.tag_routes.get_tag_by_id", return_value=mock_tag
-    ):
-        response = client.get("/funds/test-fund/rounds/round-id/tags/tag-id")
-        assert response.status_code == 200
-        assert response.json
-        assert response.json["id"] == str(tag_id)
+def generate_random_string(length):
+    letters = string.ascii_letters + string.digits
+    return ''.join(random.choice(letters) for i in range(length))
 
 
-def test_get_tag_none_exists(client, mocker):
-    with mocker.patch(
-        "api.routes.tag_routes.get_tag_by_id", return_value=None
-    ):
-        response = client.get("/funds/test-fund/rounds/round-id/tags/tag-id")
-        assert response.status_code == 404
+def test_generate_json(client):
+    modified_json_list = []
+    num_objects = 10
+
+    for _ in range(num_objects):
+        # Generate a new JSON object
+        modified_json = {
+            "account_id": generate_random_string(8),
+            "date_submitted": "2023-07-25T12:00:00.000000",
+            "forms": [],
+            "fund_id": generate_random_string(8),
+            "id": generate_random_string(8),
+            "last_edited": "2023-07-25T12:00:00.000000",
+            "project_name": generate_random_string(20),
+            "reference": generate_random_string(10),
+            "round_id": generate_random_string(8),
+            "round_name": generate_random_string(12),
+            "started_at": "2023-07-25T12:00:00.000000"
+        }
+
+        # Append the modified JSON object to the list
+        modified_json_list.append(modified_json)
+
+    for i, modified_json in enumerate(modified_json_list, 1):
+        print(f"Modified JSON Object {i}:")
+        print(modified_json)
+        print("-" * 40)
 
 
 @pytest.mark.apps_to_insert([test_input_data[0].copy() for x in range(4)])
@@ -524,10 +543,257 @@ def test_get_application_export(client, seed_application_records, monkeypatch):
 
     monkeypatch.setitem(
         applicant_info_mapping,
-        f"{fund_id}",
-        {"aHIGbK", "aAeszH", "ozgwXq", "KAgrBz"},
+        f'{fund_id}',
+        {
+            "aHIGbK",
+            "aAeszH",
+            "ozgwXq",
+            "KAgrBz"
+        }
     )
 
-    result = client.get(f"/application_export/{fund_id}/{round_id}")
+    result = my_code(fund_id, round_id)
 
     assert len(result) == 4
+
+
+data_set1 = [test_input_data[0].copy() for _ in range(4)]
+data_set2 = [test_input_data[1].copy() for _ in range(500)]
+data_set3 = [test_input_data[2].copy() for _ in range(500)]
+data_set4 = [test_input_data[3].copy() for _ in range(500)]
+data_set5 = [test_input_data[4].copy() for _ in range(500)]
+data_set6 = [test_input_data[5].copy() for _ in range(500)]
+data_set7 = [test_input_data[6].copy() for _ in range(500)]
+data_set8 = [test_input_data[7].copy() for _ in range(500)]
+data_set9 = [test_input_data[8].copy() for _ in range(500)]
+data_set10 = [test_input_data[9].copy() for _ in range(500)]
+data_set11 = [test_input_data[10].copy() for _ in range(500)]
+combined_test_data = data_set1 + data_set2 + data_set3 + data_set4 + data_set5 + data_set6 + data_set7 + data_set8 + data_set9 + data_set10 + data_set11
+
+
+@pytest.mark.apps_to_insert(data_set1)
+def testthis_get_application_export_500(client, seed_application_records, monkeypatch):
+    fund_id = seed_application_records[0]["fund_id"]
+    round_id = seed_application_records[0]["round_id"]
+
+    monkeypatch.setitem(
+        applicant_info_mapping,
+        "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4",
+        {
+            "ieRCkI",
+            "aAeszH",
+            "ozgwXq",
+            "CDwTrG"
+        }
+    )
+
+    repeat_count = 5  # Number of repetitions for more accurate results
+    execution_times = timeit.repeat(
+        stmt=lambda: my_code(fund_id=fund_id, round_id=round_id),
+        number=1,
+        repeat=repeat_count
+    )
+
+    for i, time in enumerate(execution_times, 1):
+        print(f"Execution time {i}: {time} seconds")
+
+
+data_set1 = [test_input_data[0].copy() for _ in range(500)]
+data_set2 = [test_input_data[1].copy() for _ in range(500)]
+data_set3 = [test_input_data[2].copy() for _ in range(500)]
+data_set4 = [test_input_data[3].copy() for _ in range(500)]
+data_set5 = [test_input_data[4].copy() for _ in range(500)]
+data_set6 = [test_input_data[5].copy() for _ in range(500)]
+data_set7 = [test_input_data[6].copy() for _ in range(500)]
+data_set8 = [test_input_data[7].copy() for _ in range(500)]
+data_set9 = [test_input_data[8].copy() for _ in range(500)]
+data_set10 = [test_input_data[9].copy() for _ in range(500)]
+data_set11 = [test_input_data[10].copy() for _ in range(500)]
+combined_test_data = data_set1 + data_set2 + data_set3 + data_set4 + data_set5 + data_set6 + data_set7 + data_set8 + data_set9 + data_set10 + data_set11
+
+
+@pytest.mark.apps_to_insert(combined_test_data)
+def test_thisget_application_export_500_large_data(client, seed_application_records, monkeypatch):
+    fund_id = seed_application_records[0]["fund_id"]
+    round_id = seed_application_records[0]["round_id"]
+
+    monkeypatch.setitem(
+        applicant_info_mapping,
+        "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4",
+        {
+            "ieRCkI",
+            "aAeszH",
+            "ozgwXq",
+            "CDwTrG",
+            "kxgWTy",
+            "GNhrIs",
+            "qsZLjZ",
+            "CvVZJv",
+            "KqoaJL",
+            "HvxXPI",
+            "CBIWnt",
+            "vKnMPG",
+            "rFXeZo",
+            "gScdbf",
+            "KAgrBz",
+            "wudRxx",
+            "TlGjXb",
+            "GCjCse",
+            "yEmHpp",
+            "MGRlEi",
+            "WWWWxy",
+            "YdtlQZ",
+            "iBCGxY",
+            "emVGxS",
+            "btTtIb",
+            "SkocDi",
+            "CNeeiC",
+            "BBlCko",
+            "lajFtB",
+            "aHIGbK",
+            "DwfHtk",
+            "ZQolYb",
+            "zsoLdf",
+            "FhbaEy",
+            "FcdKlB",
+            "BzxgDA",
+            "hnLurH",
+            "ZBjDTn",
+            "lRfhGB",
+            "yaQoxU",
+            "VWkLlk",
+            "IRfSZp",
+            "FtDJfK",
+            "gkulUE",
+            "nvMmGE",
+            "ghzLRv",
+            "Wyesgy",
+            "hvzzWB",
+            "VwxiGn",
+            "UDTxqC",
+            "HJBgvw",
+            "JCACTy",
+            "NZKHOp",
+            "JzWvhj",
+            "jLIgoi",
+            "NWTKzQ",
+            "DIZZOC",
+            "RvbwSX",
+            "fnIdkJ",
+            "gDTsgG",
+            "kYjJFy",
+            "UbjYqE",
+            "SrtVAs",
+            "YbfbSC",
+            "KuhSWw",
+            "bkJsiO",
+            "WDDkVB",
+            "oaIntA",
+            "multiInputField-2",
+            "JnvsPq",
+            "yMCivI",
+            "NUZOvS",
+            "oOPUXI",
+            "NKOmNL",
+            "LlvhYl",
+            "wJrJWY",
+            "COiwQr",
+            "bRPzWU"
+        }
+    )
+
+    repeat_count = 5  # Number of repetitions for more accurate results 
+    execution_times = timeit.repeat(
+        stmt=lambda: my_code(fund_id=fund_id, round_id=round_id),
+        number=1,
+        repeat=repeat_count
+    )
+
+    for i, time in enumerate(execution_times, 1):
+        print(f"Execution time {i}: {time} seconds")
+
+
+def my_code(fund_id: str, round_id: str):
+
+    assement_alias = aliased(AssessmentRecord)
+    list_of_fields = applicant_info_mapping[fund_id]
+    rows_list = []
+
+    subquery = db.session.query(assement_alias.application_id)
+
+    # for field_key in list_of_fields:
+    #     title_expression = func.jsonb_path_query(
+    #         assement_alias.jsonb_blob,
+    #         text(f'\'$.forms[*].questions[*].fields[*] ? (@.key == "{field_key}").title\'')
+    #     ).label(f'title_{field_key}')
+
+    #     answer_expression = func.jsonb_path_query(
+    #         assement_alias.jsonb_blob,
+    #         text(f'\'$.forms[*].questions[*].fields[*] ? (@.key == "{field_key}").answer\'')
+    #     ).label(f'answer_{field_key}')
+
+    #     subquery = subquery.add_columns(title_expression, answer_expression)
+
+    # subquery = subquery.filter(assement_alias.fund_id == fund_id)
+    # subquery = subquery.filter(assement_alias.round_id == round_id)
+
+
+    # results = subquery.all()
+
+    #  statement = (
+    #     select(AssessmentRecord)
+    #     .where(
+    #         AssessmentRecord.fund_id == fund_id,
+    #         AssessmentRecord.round_id == round_id,
+    #     )
+    # )
+
+    # assessment_metadatas = db.session.scalars(statement).all()
+
+    columns = []
+
+    # Build the columns dynamically for each field_key in list_of_fields
+    for field_key in list_of_fields:
+        title_expression = func.jsonb_path_query(
+            assement_alias.jsonb_blob,
+            text(f'\'$.forms[*].questions[*].fields[*] ? (@.key == "{field_key}").title\'')
+        ).label(f'title_{field_key}')
+
+        answer_expression = func.jsonb_path_query(
+            assement_alias.jsonb_blob,
+            text(f'\'$.forms[*].questions[*].fields[*] ? (@.key == "{field_key}").answer\'')
+        ).label(f'answer_{field_key}')
+
+        columns.extend([title_expression, answer_expression])
+
+    # Build the main query with the new columns
+    statement = (
+        select(assement_alias.application_id, *columns)
+        .where(
+            assement_alias.fund_id == fund_id,
+            assement_alias.round_id == round_id,
+        )
+    )
+    # Execute the combined query with a single database call
+    result_set = db.session.execute(statement)
+
+    # Fetch all the rows as tuples
+    assessment_metadatas = result_set.fetchall()
+
+
+        # for row in subquery:
+        #     app_id = row.application_id
+        #     title_key = f'title_{field_key}'
+        #     answer_key = f'answer_{field_key}'
+
+        #     # Check if there is an existing row for the AppId
+        #     existing_row = next((r for r in rows_list if r["AppId"] == app_id),
+        #                         None)
+        #     if existing_row is None:
+        #         new_row = {"AppId": app_id}
+        #         new_row[row[title_key]] = row[answer_key]
+        #         rows_list.append(new_row)
+        #     else:
+        #         existing_row[row[title_key]] = row[answer_key]
+
+    return subquery
