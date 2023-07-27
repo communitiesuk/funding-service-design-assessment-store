@@ -1,4 +1,5 @@
 # flake8: noqa
+from db.queries.tags.queries import count_tag_usage
 from db.queries.tags.queries import get_tag_by_id
 from db.queries.tags.queries import insert_tags
 from db.queries.tags.queries import select_tags_for_fund_round
@@ -63,3 +64,8 @@ def get_tag(fund_id, round_id, tag_id):
     if not tag:
         return abort(404)
     return JoinedTagSchema().dump(tag)
+
+
+def get_count_of_tag_usage(fund_id, round_id, tag_id):
+    result = count_tag_usage(fund_id, round_id, tag_id)
+    return {"count": result}

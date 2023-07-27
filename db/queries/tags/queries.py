@@ -1,9 +1,12 @@
 from typing import List
 
 from db import db
+from db.models.assessment_record.tag_association import TagAssociation
 from db.models.tag.tag_types import TagType
 from db.models.tag.tags import Tag
 from flask import current_app
+from sqlalchemy import func
+from sqlalchemy import select
 from sqlalchemy.exc import NoResultFound
 
 
@@ -107,3 +110,14 @@ def get_tag_by_id(fund_id: str, round_id: str, tag_id: str) -> Tag:
 
 def select_tags_types() -> List[TagType]:
     return db.session.query(TagType).all()
+
+
+def count_tag_usage(fund_id, round_id, tag_id) -> int:
+    stmt = (
+        select(func.count())
+        .select_from(TagAssociation)
+        .where(TagAssociation.tag_id == tag_id)
+        .where(TagAssociation.associated == True)  # noqa:E712
+    )
+    result = db.session.execute(stmt).one()
+    return result[0]
