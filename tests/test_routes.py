@@ -488,57 +488,6 @@ def test_update_flag_v2(client):
         assert response.json["id"] == str(expected_flag.id)
 
 
-def generate_random_string(length):
-    letters = string.ascii_letters + string.digits
-    return "".join(random.choice(letters) for i in range(length))
-
-
-def test_generate_json(client):
-    modified_json_list = []
-    num_objects = 10
-
-    for _ in range(num_objects):
-        # Generate a new JSON object
-        modified_json = {
-            "account_id": generate_random_string(8),
-            "date_submitted": "2023-07-25T12:00:00.000000",
-            "forms": [],
-            "fund_id": generate_random_string(8),
-            "id": generate_random_string(8),
-            "last_edited": "2023-07-25T12:00:00.000000",
-            "project_name": generate_random_string(20),
-            "reference": generate_random_string(10),
-            "round_id": generate_random_string(8),
-            "round_name": generate_random_string(12),
-            "started_at": "2023-07-25T12:00:00.000000",
-        }
-
-        # Append the modified JSON object to the list
-        modified_json_list.append(modified_json)
-
-    for i, modified_json in enumerate(modified_json_list, 1):
-        print(f"Modified JSON Object {i}:")
-        print(modified_json)
-        print("-" * 40)
-
-
-@pytest.mark.apps_to_insert([test_input_data[0].copy() for x in range(4)])
-@pytest.mark.unique_fund_round(True)
-def test_get_application_export(client, seed_application_records, monkeypatch):
-    fund_id = seed_application_records[0]["fund_id"]
-    round_id = seed_application_records[0]["round_id"]
-
-    monkeypatch.setitem(
-        applicant_info_mapping,
-        f"{fund_id}",
-        {"aHIGbK", "aAeszH", "ozgwXq", "KAgrBz"},
-    )
-
-    result = client.get(f"/application_export/{fund_id}/{round_id}")
-
-    assert len(result) == 4
-
-
 def test_get_tag(client, mocker):
     tag_id = uuid4()
     mock_tag = Tag(
@@ -565,3 +514,20 @@ def test_get_tag_none_exists(client, mocker):
     ):
         response = client.get("/funds/test-fund/rounds/round-id/tags/tag-id")
         assert response.status_code == 404
+
+
+@pytest.mark.apps_to_insert([test_input_data[0].copy() for x in range(4)])
+@pytest.mark.unique_fund_round(True)
+def test_get_application_export(client, seed_application_records, monkeypatch):
+    fund_id = seed_application_records[0]["fund_id"]
+    round_id = seed_application_records[0]["round_id"]
+
+    monkeypatch.setitem(
+        applicant_info_mapping,
+        f"{fund_id}",
+        {"aHIGbK", "aAeszH", "ozgwXq", "KAgrBz"},
+    )
+
+    result = client.get(f"/application_export/{fund_id}/{round_id}")
+
+    assert len(result) == 4
