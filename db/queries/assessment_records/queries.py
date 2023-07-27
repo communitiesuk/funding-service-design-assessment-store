@@ -6,6 +6,9 @@ import json
 from typing import Dict
 from typing import List
 
+from config.mappings.assessment_mapping_fund_round import (
+    applicant_info_mapping,
+)
 from db import db
 from db.models.assessment_record import AssessmentRecord
 from db.models.assessment_record import TagAssociation
@@ -29,15 +32,12 @@ from sqlalchemy import func
 from sqlalchemy import or_
 from sqlalchemy import select
 from sqlalchemy import String
-from sqlalchemy import update
 from sqlalchemy import text
-from sqlalchemy.orm import aliased
+from sqlalchemy import update
 from sqlalchemy.dialects.postgresql import insert as postgres_insert
+from sqlalchemy.orm import aliased
 from sqlalchemy.orm import defer
 from sqlalchemy.orm import load_only
-from config.mappings.assessment_mapping_fund_round import (
-    applicant_info_mapping,
-)
 
 
 def get_metadata_for_application(
@@ -769,17 +769,11 @@ def select_tags_associated_with_assessment(application_id):
     return tag_associations
 
 
-def get_export_application_data(
-    fund_id: str,
-    round_id: str
-) -> List[Dict]:
+def get_export_application_data(fund_id: str, round_id: str) -> List[Dict]:
 
-    statement = (
-        select(AssessmentRecord)
-        .where(
-            AssessmentRecord.fund_id == fund_id,
-            AssessmentRecord.round_id == round_id,
-        )
+    statement = select(AssessmentRecord).where(
+        AssessmentRecord.fund_id == fund_id,
+        AssessmentRecord.round_id == round_id,
     )
 
     assessment_metadatas = db.session.scalars(statement).all()

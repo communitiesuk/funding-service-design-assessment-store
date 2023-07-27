@@ -1,14 +1,17 @@
+import cProfile
 import json
 import random
 import string
+import timeit
 from unittest import mock
 from uuid import uuid4
 
 import pytest
-import timeit
-import cProfile
 from api.routes.subcriterias.get_sub_criteria import (
     map_application_with_sub_criteria_themes,
+)
+from config.mappings.assessment_mapping_fund_round import (
+    applicant_info_mapping,
 )
 from db.models.flags.enums import FlagType
 from db.models.flags_v2.assessment_flag import AssessmentFlag
@@ -25,10 +28,6 @@ from tests.test_data.flags import add_flag_update_request_json
 from tests.test_data.flags import create_flag_request_json
 
 from ._expected_responses import subcriteria_themes_and_expected_response
-
-from config.mappings.assessment_mapping_fund_round import (
-    applicant_info_mapping
-)
 
 COF_FUND_ID = "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4"
 COF_ROUND_2_ID = "c603d114-5364-4474-a0c4-c41cbf4d3bbd"
@@ -491,7 +490,7 @@ def test_update_flag_v2(client):
 
 def generate_random_string(length):
     letters = string.ascii_letters + string.digits
-    return ''.join(random.choice(letters) for i in range(length))
+    return "".join(random.choice(letters) for i in range(length))
 
 
 def test_generate_json(client):
@@ -511,7 +510,7 @@ def test_generate_json(client):
             "reference": generate_random_string(10),
             "round_id": generate_random_string(8),
             "round_name": generate_random_string(12),
-            "started_at": "2023-07-25T12:00:00.000000"
+            "started_at": "2023-07-25T12:00:00.000000",
         }
 
         # Append the modified JSON object to the list
@@ -531,13 +530,8 @@ def test_get_application_export(client, seed_application_records, monkeypatch):
 
     monkeypatch.setitem(
         applicant_info_mapping,
-        f'{fund_id}',
-        {
-            "aHIGbK",
-            "aAeszH",
-            "ozgwXq",
-            "KAgrBz"
-        }
+        f"{fund_id}",
+        {"aHIGbK", "aAeszH", "ozgwXq", "KAgrBz"},
     )
 
     result = client.get(f"/application_export/{fund_id}/{round_id}")

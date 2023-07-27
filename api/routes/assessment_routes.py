@@ -25,12 +25,12 @@ from db.queries.assessment_records.queries import get_application_jsonb_blob
 from db.queries.assessment_records.queries import (
     get_assessment_sub_critera_state,
 )
+from db.queries.assessment_records.queries import get_export_application_data
 from db.queries.assessment_records.queries import get_metadata_for_application
 from db.queries.assessment_records.queries import (
     select_tags_associated_with_assessment,
 )
 from db.queries.assessment_records.queries import update_status_to_completed
-from db.queries.assessment_records.queries import get_export_application_data
 from db.queries.comments.queries import get_sub_criteria_to_has_comment_map
 from db.queries.flags.queries import find_qa_complete_flag_for_applications
 from db.queries.flags.queries import get_latest_flags_for_each
@@ -521,13 +521,7 @@ def get_flag_v2(flag_id: str):
     return flag_schema.dump(flags, many=True)[0]
 
 
-def get_all_applications_for_export(
-    fund_id: str,
-    round_id: str   
-) -> List[Dict]:   
-    app_list = get_export_application_data(
-        fund_id=fund_id,
-        round_id=round_id
-    )
-    
+def get_all_applications_for_export(fund_id: str, round_id: str) -> List[Dict]:
+    app_list = get_export_application_data(fund_id=fund_id, round_id=round_id)
+
     return app_list

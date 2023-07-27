@@ -1343,7 +1343,7 @@ paths:
       required: true
       schema:
         type: string
-        format: path    
+        format: path
     get:
       tags:
         - assessments
@@ -1352,7 +1352,7 @@ paths:
       operationId: api.routes.get_all_applications_for_export
       responses:
         200:
-          description: SUCCESS - A list of assessments information for export 
+          description: SUCCESS - A list of assessments information for export
           content:
             application/json:
               schema:
