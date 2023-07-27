@@ -1,7 +1,10 @@
+from typing import Dict
+
 import pytest
 from api.routes.assessment_routes import get_tags_associated_with_assessment
 from db.models.assessment_record import AssessmentRecord
 from db.queries.assessment_records.queries import associate_assessment_tags
+from db.queries.tags.queries import count_tag_usage
 from sqlalchemy import select
 from tests.conftest import test_input_data
 
@@ -159,3 +162,27 @@ def test_tag_association_history_is_retained_for_reassociated_tags(
     # check total associated tags
     tags = get_tags_associated_with_assessment(app_id)
     assert tags == []  # noqa: E711
+
+
+@pytest.mark.apps_to_insert([{**test_input_data[0]}])
+def test_count_tag_usage(seed_application_records, seed_tags):
+    app: Dict = seed_application_records[0]
+
+    # add tag 0
+    associate_assessment_tags(app["application_id"], [seed_tags[0]])
+    result = count_tag_usage(
+        app["fund_id"], app["round_id"], seed_tags[0]["id"]
+    )
+    assert result == 1
+    # check tag 1 still yields a count of 0
+    result = count_tag_usage(
+        app["fund_id"], app["round_id"], seed_tags[1]["id"]
+    )
+    assert result == 0
+
+    # disassociate the tag and check count goes back to 0
+    associate_assessment_tags(app["application_id"], [])
+    result = count_tag_usage(
+        app["fund_id"], app["round_id"], seed_tags[0]["id"]
+    )
+    assert result == 0

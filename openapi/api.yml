@@ -1248,6 +1248,38 @@ paths:
             application/json:
               schema:
                 $ref: "components.yml#/components/schemas/Error"
+  '/funds/{fund_id}/rounds/{round_id}/tags/{tag_id}/count':
+    get:
+      tags:
+        - tag management
+      summary: Get the number of active associations for this tag
+      description: Returns the number of assessments that currently have this tag.
+      operationId: api.routes.tag_routes.get_count_of_tag_usage
+      parameters:
+        - in: path
+          name: fund_id
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: round_id
+          schema:
+            type: string
+          required: true
+        - in: path
+          name: tag_id
+          schema:
+            type: string
+          required: true
+      responses:
+        200:
+          description: Count of assessments using this tag
+          content:
+            application/json:
+              schema:
+                  properties:
+                    count:
+                      type: integer
   '/funds/{fund_id}/rounds/{round_id}/tags':
     get:
       tags:
