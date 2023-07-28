@@ -8,6 +8,7 @@ from db.schemas.schemas import JoinedTagSchema
 from db.schemas.schemas import TagSchema
 from db.schemas.schemas import TagTypeSchema
 from flask import abort
+from flask import current_app
 from flask import request
 from flask import Response
 
