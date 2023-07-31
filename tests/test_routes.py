@@ -513,17 +513,7 @@ def test_get_tag_none_exists(client, mocker):
         assert response.status_code == 404
 
 
-data_set1 = [test_input_data[0].copy() for _ in range(1)]
-data_set2 = [test_input_data[1].copy() for _ in range(1)]
-data_set3 = [test_input_data[2].copy() for _ in range(1)]
-data_set4 = [test_input_data[3].copy() for _ in range(1)]
-combined_test_data = (
-    data_set1
-    + data_set2
-    + data_set3
-    + data_set4
-)
-@pytest.mark.apps_to_insert(combined_test_data)
+@pytest.mark.apps_to_insert([test_input_data[0].copy() for x in range(4)])
 @pytest.mark.unique_fund_round(True)
 def test_get_application_fields_export(
     client, seed_application_records, monkeypatch
