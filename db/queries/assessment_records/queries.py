@@ -2,8 +2,8 @@
 
 Joins allowed.
 """
-from collections import OrderedDict
 import json
+from collections import OrderedDict
 from typing import Dict
 from typing import List
 
