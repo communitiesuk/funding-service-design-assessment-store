@@ -31,7 +31,7 @@ def get_tags_for_fund_round(
         return serialised_tags
 
     return Response(
-        response=f"No tags found for fund__round: {fund_id}__{round_id}.",
+        response=[],
         status=204,
     )
 
@@ -62,13 +62,13 @@ def add_tag_for_fund_round(fund_id, round_id):
         }
     ]
 
-    tags = insert_tags(tags, fund_id, round_id)
+    inserted_tags = insert_tags(tags, fund_id, round_id)
 
-    if tags:
+    if inserted_tags:
         serialiser = TagSchema()
-        serialised_tags = [serialiser.dump(r) for r in tags]
+        serialised_tags = [serialiser.dump(r) for r in inserted_tags]
         return serialised_tags
-
+    current_app.logger.error(f"Add tags attempt failed for tags: {tags}.")
     abort(404)
 
 
@@ -86,13 +86,13 @@ def update_tags_for_fund_round(fund_id, round_id):
         for arg in args
     ]
 
-    tags = update_tags(tags, fund_id, round_id)
+    updated_tags = update_tags(tags, fund_id, round_id)
 
-    if tags:
+    if updated_tags:
         serialiser = TagSchema()
-        serialised_tags = [serialiser.dump(r) for r in tags]
+        serialised_tags = [serialiser.dump(r) for r in updated_tags]
         return serialised_tags
-
+    current_app.logger.error(f"Update tags attempt failed for tags: {tags}.")
     abort(404)
 
 
