@@ -1237,13 +1237,13 @@ paths:
           required: true
       responses:
         200:
-          description: A list of tags for the given fund-round.
+          description: A tag for the given fund-round and tag_id.
           content:
             application/json:
               schema:
                 $ref : 'components.yml#/components/schemas/Tag'
         404:
-          description: "Tags not found for fund-round provided."
+          description: "Tag not found for fund-round and tag_id provided."
           content:
             application/json:
               schema:
