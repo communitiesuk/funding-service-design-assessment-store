@@ -639,7 +639,7 @@ def update_status_to_completed(application_id):
     db.session.commit()
 
 
-def get_assessment_records_by_round_id(round_id):
+def get_assessment_records_by_round_id(round_id, selected_fields=None):
     """
     Retrieve the latest scores and associated information for each subcriteria
     of AssessmentRecords matching the given round_id.
@@ -651,6 +651,20 @@ def get_assessment_records_by_round_id(round_id):
         list: A list of dictionaries, each containing the latest score and its associated
         information for each subcriteria of the AssessmentRecords that match the given round_id.
     """
+    default_fields = [
+        "Short id",
+        "Score Subcriteria",
+        "Score",
+        "Score Justification",
+        "Score Date Created",
+        "Application ID"
+    ]
+
+    # If selected_fields is not provided, use the default_fields.
+    if selected_fields is None:
+        selected_fields = default_fields
+
+    selected_fields = [field for field in selected_fields if field in default_fields]
     subquery = (
         db.session.query(
             Score.application_id,
@@ -681,19 +695,20 @@ def get_assessment_records_by_round_id(round_id):
 
     output = []
     for score in latest_scores:
-        output.append(
-            {
-                "Short id": AssessmentRecord.query.get(
-                    score.application_id
-                ).short_id,
-                "Application ID": score.application_id,
-                "Score Subcriteria": score.sub_criteria_id,
-                "Score": score.score,
-                "Score Justification": score.justification,
-                "Score Date Created": score.date_created,
-            }
-        )
 
+        score_data = {
+            "Short id": AssessmentRecord.query.get(
+                score.application_id
+            ).short_id,
+            "Application ID": score.application_id,
+            "Score Subcriteria": score.sub_criteria_id,
+            "Score": score.score,
+            "Score Justification": score.justification,
+            "Score Date Created": score.date_created.strftime("%m/%d/%Y, %H:%M:%S"),
+            }
+
+        selected_score_data = {field: score_data[field] for field in selected_fields}
+        output.append(selected_score_data)
     return output
 
 
@@ -768,7 +783,7 @@ def select_tags_associated_with_assessment(application_id):
     return tag_associations
 
 
-def get_export_application_data(fund_id: str, round_id: str) -> List[Dict]:
+def get_export_data(fund_id: str, round_id: str, report_type: str, list_of_fields: dict) -> List[Dict]: # noqa
 
     statement = select(AssessmentRecord).where(
         AssessmentRecord.fund_id == fund_id,
@@ -777,22 +792,28 @@ def get_export_application_data(fund_id: str, round_id: str) -> List[Dict]:
 
     assessment_metadatas = db.session.scalars(statement).all()
 
+    form_fields = list_of_fields[report_type].get("forms_fields", {})
     finalList = []
-    list_of_fields = applicant_info_mapping[fund_id]
 
     for assessment in assessment_metadatas:
-        applicant_info = {"AppId": assessment.application_id}
+        applicant_info = {"Application ID": assessment.application_id}
         forms = assessment.jsonb_blob["forms"]
         for form in forms:
             questions = form["questions"]
             for question in questions:
                 fields = question["fields"]
                 for field in fields:
-                    if field["key"] in list_of_fields:
+                    if field["key"] in form_fields:
                         applicant_info[field["title"]] = field["answer"]
         finalList.append(applicant_info)
 
     add_missing_elements_with_empty_values(finalList)
+
+    output = {}
+    if report_type == "OUTPUT_TRACKER":
+        output = get_assessment_records_by_round_id(round_id, list_of_fields[report_type].get("score_fields", None))
+        finalList = combine_dicts(finalList, output)    
+
     return finalList
 
 
@@ -806,3 +827,17 @@ def add_missing_elements_with_empty_values(finalList):
             ordered_dict[key] = field.get(key, "")
         field.clear()
         field.update(ordered_dict)
+
+
+def combine_dicts(applications_list, scores_list):
+    combined_list = []
+
+    for application in applications_list:
+        app_id = application["Application ID"]
+        matching_scores = [score for score in scores_list if score["Application ID"] == app_id]
+
+        for score in matching_scores:
+            combined_element = {**application, **score}
+            combined_list.append(combined_element)
+
+    return combined_list

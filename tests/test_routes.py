@@ -528,7 +528,7 @@ def test_get_application_fields_export(
     )
 
     result = client.get(
-        f"/application_fields_export/{fund_id}/{round_id}"
+        f"/application_fields_export/{fund_id}/{round_id}/OUTPUT_TRACKER"
     ).json  # noqa
 
     assert len(result) == 4
