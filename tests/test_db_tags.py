@@ -264,7 +264,7 @@ def test_deactivate_tags(_db, clear_test_data, seed_tags):
         fund_id_test, round_id_test, tag_status=False
     )
     assert result.status_code == 204
-    assert "No tags found" in result.data.decode("utf-8")
+    assert result.data.decode("utf-8") == ""
 
 
 def test_deactivate_tags_fails_for_non_existent(
