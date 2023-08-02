@@ -657,14 +657,16 @@ def get_assessment_records_by_round_id(round_id, selected_fields=None):
         "Score",
         "Score Justification",
         "Score Date Created",
-        "Application ID"
+        "Application ID",
     ]
 
     # If selected_fields is not provided, use the default_fields.
     if selected_fields is None:
         selected_fields = default_fields
 
-    selected_fields = [field for field in selected_fields if field in default_fields]
+    selected_fields = [
+        field for field in selected_fields if field in default_fields
+    ]
     subquery = (
         db.session.query(
             Score.application_id,
@@ -704,10 +706,14 @@ def get_assessment_records_by_round_id(round_id, selected_fields=None):
             "Score Subcriteria": score.sub_criteria_id,
             "Score": score.score,
             "Score Justification": score.justification,
-            "Score Date Created": score.date_created.strftime("%m/%d/%Y, %H:%M:%S"),
-            }
+            "Score Date Created": score.date_created.strftime(
+                "%m/%d/%Y, %H:%M:%S"
+            ),
+        }
 
-        selected_score_data = {field: score_data[field] for field in selected_fields}
+        selected_score_data = {
+            field: score_data[field] for field in selected_fields
+        }
         output.append(selected_score_data)
     return output
 
@@ -783,7 +789,9 @@ def select_active_tags_associated_with_assessment(application_id):
     return tag_associations
 
 
-def get_export_data(fund_id: str, round_id: str, report_type: str, list_of_fields: dict) -> List[Dict]: # noqa
+def get_export_data(
+    fund_id: str, round_id: str, report_type: str, list_of_fields: dict
+) -> List[Dict]:  # noqa
 
     statement = select(AssessmentRecord).where(
         AssessmentRecord.fund_id == fund_id,
@@ -795,7 +803,7 @@ def get_export_data(fund_id: str, round_id: str, report_type: str, list_of_field
     form_fields = list_of_fields[report_type].get("form_fields", {})
     finalList = []
 
-    if (len(form_fields) != 0):
+    if len(form_fields) != 0:
         for assessment in assessment_metadatas:
             applicant_info = {"Application ID": assessment.application_id}
             forms = assessment.jsonb_blob["forms"]
@@ -806,18 +814,28 @@ def get_export_data(fund_id: str, round_id: str, report_type: str, list_of_field
                     for field in fields:
                         if field["key"] in form_fields:
                             # This unfortuantly has to be here due to the title being named wrong if the form # noqa
-                            if (field["key"] == "GRWtfV" and field["title"] == "Both revenue and capital"):
-                                applicant_info["Revenue funding 1 April 2023 to 31 March 2024"] = field["answer"]
+                            if (
+                                field["key"] == "GRWtfV"
+                                and field["title"]
+                                == "Both revenue and capital"
+                            ):
+                                applicant_info[
+                                    "Revenue funding 1 April 2023 to 31 March 2024"
+                                ] = field["answer"]
                             else:
-                                applicant_info[field["title"]] = field["answer"]
+                                applicant_info[field["title"]] = field[
+                                    "answer"
+                                ]
             finalList.append(applicant_info)
 
         add_missing_elements_with_empty_values(finalList)
 
     output = {}
     if report_type == "OUTPUT_TRACKER":
-        output = get_assessment_records_by_round_id(round_id, list_of_fields[report_type].get("score_fields", None))
-        if (len(output) != 0):
+        output = get_assessment_records_by_round_id(
+            round_id, list_of_fields[report_type].get("score_fields", None)
+        )
+        if len(output) != 0:
             finalList = combine_dicts(finalList, output)
 
     return finalList
@@ -838,16 +856,18 @@ def add_missing_elements_with_empty_values(finalList):
 def combine_dicts(applications_list, scores_list):
     combined_list = []
 
-    if (len(applications_list) == 0 and len(scores_list) == 0):
+    if len(applications_list) == 0 and len(scores_list) == 0:
         return combine_dicts
-    if (len(applications_list) == 0):
+    if len(applications_list) == 0:
         return scores_list
-    if (len(scores_list) == 0):
+    if len(scores_list) == 0:
         return applications_list
 
     for application in applications_list:
         app_id = application["Application ID"]
-        matching_scores = [score for score in scores_list if score["Application ID"] == app_id]
+        matching_scores = [
+            score for score in scores_list if score["Application ID"] == app_id
+        ]
 
         for score in matching_scores:
             combined_element = {**application, **score}
