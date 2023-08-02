@@ -524,7 +524,11 @@ def test_get_application_fields_export(
     monkeypatch.setitem(
         applicant_info_mapping,
         f"{fund_id}",
-        {"ASSESSOR_EXPORT": {"form_fields": {"aHIGbK", "aAeszH", "ozgwXq", "KAgrBz"}}},
+        {
+            "ASSESSOR_EXPORT": {
+                "form_fields": {"aHIGbK", "aAeszH", "ozgwXq", "KAgrBz"}
+            }
+        },
     )
 
     result = client.get(

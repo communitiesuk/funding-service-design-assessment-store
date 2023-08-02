@@ -130,14 +130,14 @@ applicant_info_mapping = {
                 "GRWtfV",
                 "zvPzXN",
                 "QUCvFy",
-                "pppiYl"
+                "pppiYl",
             },
             "score_fields": {
                 "Application ID",
                 "Score Subcriteria",
-                "Score",            
-                "Score Date Created"
-            }
+                "Score",
+                "Score Date Created",
+            },
         }
     },
     "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4": {
@@ -150,8 +150,6 @@ applicant_info_mapping = {
                 "VhkCbM",
             }
         },
-        "OUTPUT_TRACKER": {
-
-        }
+        "OUTPUT_TRACKER": {},
     },
 }
