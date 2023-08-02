@@ -119,10 +119,18 @@ applicant_info_mapping = {
     "13b95669-ed98-4840-8652-d6b7a19964db": {
         "OUTPUT_TRACKER": {
             "form_fields": {
-                "SnLGJE",
+                "opFJRm",
+                "fUMWcd",
                 "CDEwxp",
-                "DvBqCJ",
-                "mhYQzL",
+                "nURkuc",
+                "pVBwci",
+                "WDouQc",
+                "SGjmSM",
+                "wTdyhk",
+                "GRWtfV",
+                "zvPzXN",
+                "QUCvFy",
+                "pppiYl"
             },
             "score_fields": {
                 "Application ID",

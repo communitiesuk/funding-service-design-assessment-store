@@ -524,11 +524,11 @@ def test_get_application_fields_export(
     monkeypatch.setitem(
         applicant_info_mapping,
         f"{fund_id}",
-        {"aHIGbK", "aAeszH", "ozgwXq", "KAgrBz"},
+        {"ASSESSOR_EXPORT": {"form_fields": {"aHIGbK", "aAeszH", "ozgwXq", "KAgrBz"}}},
     )
 
     result = client.get(
-        f"/application_fields_export/{fund_id}/{round_id}/OUTPUT_TRACKER"
+        f"/application_fields_export/{fund_id}/{round_id}/ASSESSOR_EXPORT"
     ).json  # noqa
 
     assert len(result) == 4

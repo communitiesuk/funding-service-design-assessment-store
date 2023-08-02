@@ -792,27 +792,33 @@ def get_export_data(fund_id: str, round_id: str, report_type: str, list_of_field
 
     assessment_metadatas = db.session.scalars(statement).all()
 
-    form_fields = list_of_fields[report_type].get("forms_fields", {})
+    form_fields = list_of_fields[report_type].get("form_fields", {})
     finalList = []
 
-    for assessment in assessment_metadatas:
-        applicant_info = {"Application ID": assessment.application_id}
-        forms = assessment.jsonb_blob["forms"]
-        for form in forms:
-            questions = form["questions"]
-            for question in questions:
-                fields = question["fields"]
-                for field in fields:
-                    if field["key"] in form_fields:
-                        applicant_info[field["title"]] = field["answer"]
-        finalList.append(applicant_info)
+    if (len(form_fields) != 0):
+        for assessment in assessment_metadatas:
+            applicant_info = {"Application ID": assessment.application_id}
+            forms = assessment.jsonb_blob["forms"]
+            for form in forms:
+                questions = form["questions"]
+                for question in questions:
+                    fields = question["fields"]
+                    for field in fields:
+                        if field["key"] in form_fields:
+                            # This unfortuantly has to be here due to the title being named wrong if the form # noqa
+                            if (field["key"] == "GRWtfV" and field["title"] == "Both revenue and capital"):
+                                applicant_info["Revenue funding 1 April 2023 to 31 March 2024"] = field["answer"]
+                            else:
+                                applicant_info[field["title"]] = field["answer"]
+            finalList.append(applicant_info)
 
-    add_missing_elements_with_empty_values(finalList)
+        add_missing_elements_with_empty_values(finalList)
 
     output = {}
     if report_type == "OUTPUT_TRACKER":
         output = get_assessment_records_by_round_id(round_id, list_of_fields[report_type].get("score_fields", None))
-        finalList = combine_dicts(finalList, output)    
+        if (len(output) != 0):
+            finalList = combine_dicts(finalList, output)
 
     return finalList
 
@@ -831,6 +837,13 @@ def add_missing_elements_with_empty_values(finalList):
 
 def combine_dicts(applications_list, scores_list):
     combined_list = []
+
+    if (len(applications_list) == 0 and len(scores_list) == 0):
+        return combine_dicts
+    if (len(applications_list) == 0):
+        return scores_list
+    if (len(scores_list) == 0):
+        return applications_list
 
     for application in applications_list:
         app_id = application["Application ID"]
