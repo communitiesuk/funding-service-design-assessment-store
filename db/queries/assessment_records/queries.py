@@ -7,9 +7,6 @@ from collections import OrderedDict
 from typing import Dict
 from typing import List
 
-from config.mappings.assessment_mapping_fund_round import (
-    applicant_info_mapping,
-)
 from db import db
 from db.models.assessment_record import AssessmentRecord
 from db.models.assessment_record import TagAssociation
