@@ -25,5 +25,5 @@ def get_progress_for_applications(application_ids: List[str]) -> List[dict]:
         app["progress"] = int(
             100 * app["scored_sub_criterias"] / len(scored_sub_crit_list)
         )
-
+    # test commit
     return app_prog_list
