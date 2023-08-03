@@ -696,7 +696,8 @@ def get_assessment_records_by_round_id(round_id, selected_fields=None):
     for score in latest_scores:
 
         score_data = {
-            "Application ID": AssessmentRecord.query.get(
+            "Application ID": score.application_id,
+            "Short ID": AssessmentRecord.query.get(
                 score.application_id
             ).short_id,
             "Score Subcriteria": score.sub_criteria_id,
