@@ -801,7 +801,7 @@ def get_export_data(
 
     if len(form_fields) != 0:
         for assessment in assessment_metadatas:
-            applicant_info = {"Application ID": assessment.short_id}
+            applicant_info = {"Application ID": assessment.application_id}
             forms = assessment.jsonb_blob["forms"]
             for form in forms:
                 questions = form["questions"]
