@@ -650,6 +650,7 @@ def get_assessment_records_by_round_id(round_id, selected_fields=None):
     """
     default_fields = [
         "Application ID",
+        "Short ID",
         "Score Subcriteria",
         "Score",
         "Score Justification",
