@@ -284,7 +284,7 @@ def test_bulk_update_location_json_blob(
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
 def test_get_data(seed_application_records):
-    #TODO expand this test with more scenarios
+    # TODO expand this test with more scenarios
     picked_row = get_assessment_record(
         seed_application_records[0]["application_id"]
     )
@@ -300,19 +300,20 @@ def test_get_data(seed_application_records):
     }
     create_score_for_app_sub_crit(**assessment_payload)
 
-    data = get_export_data(picked_row.fund_id, picked_row.round_id, "OUTPUT_TRACKER",  {
+    data = get_export_data(
+        picked_row.fund_id,
+        picked_row.round_id,
+        "OUTPUT_TRACKER",
+        {
             "OUTPUT_TRACKER": {
                 "form_fields": {"aHIGbK", "aAeszH", "ozgwXq", "KAgrBz"}
             }
-        })
+        },
+    )
 
     assert data[0]["Charity number "] == "Test"
-    assert (
-        data[0]["Do you need to do any further feasibility work?"] is False
-    )
+    assert data[0]["Do you need to do any further feasibility work?"] is False
     assert data[0]["Project name"] == "Save the humble pub in Bangor"
-    assert (
-        data[0]["Risks to your project (document upload)"] == "sample1.doc"
-    )
-    assert (data[0]["Score"] == 5)
-    assert (data[0]["Score Justification"] == "great")
+    assert data[0]["Risks to your project (document upload)"] == "sample1.doc"
+    assert data[0]["Score"] == 5
+    assert data[0]["Score Justification"] == "great"
