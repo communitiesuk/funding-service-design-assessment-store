@@ -784,11 +784,13 @@ def select_active_tags_associated_with_assessment(application_id):
     return tag_associations
 
 
-def get_assment_export_data(fund_id: str, round_id: str, report_type: str, list_of_fields: dict):
+def get_assment_export_data(
+    fund_id: str, round_id: str, report_type: str, list_of_fields: dict
+):
     en_statement = select(AssessmentRecord).where(
         AssessmentRecord.fund_id == fund_id,
         AssessmentRecord.round_id == round_id,
-        AssessmentRecord.language == "en"
+        AssessmentRecord.language == "en",
     )
 
     en_assessment_metadatas = db.session.scalars(en_statement).all()
@@ -796,21 +798,34 @@ def get_assment_export_data(fund_id: str, round_id: str, report_type: str, list_
     cy_statement = select(AssessmentRecord).where(
         AssessmentRecord.fund_id == fund_id,
         AssessmentRecord.round_id == round_id,
-        AssessmentRecord.language == "cy"
+        AssessmentRecord.language == "cy",
     )
 
     cy_assessment_metadatas = db.session.scalars(cy_statement).all()
 
-    en_list = get_export_data(round_id=round_id, report_type=report_type, list_of_fields=list_of_fields, assessment_metadatas=en_assessment_metadatas)
-    cy_list = get_export_data(round_id=round_id, report_type=report_type, list_of_fields=list_of_fields, assessment_metadatas=cy_assessment_metadatas)
+    en_list = get_export_data(
+        round_id=round_id,
+        report_type=report_type,
+        list_of_fields=list_of_fields,
+        assessment_metadatas=en_assessment_metadatas,
+    )
+    cy_list = get_export_data(
+        round_id=round_id,
+        report_type=report_type,
+        list_of_fields=list_of_fields,
+        assessment_metadatas=cy_assessment_metadatas,
+    )
 
     obj = {"en_list": en_list, "cy_list": cy_list}
     return obj
 
 
 def get_export_data(
-    round_id: str, report_type: str, list_of_fields: dict, assessment_metadatas: list # noqa
-) -> List[Dict]:  # noqa    
+    round_id: str,
+    report_type: str,
+    list_of_fields: dict,
+    assessment_metadatas: list,  # noqa
+) -> List[Dict]:  # noqa
 
     form_fields = list_of_fields[report_type].get("form_fields", {})
     finalList = []
