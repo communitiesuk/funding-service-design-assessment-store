@@ -460,3 +460,10 @@ components:
             type: string
             description: A description of the tag type
             example: "This tag is for these things"
+    AssessmentExport:
+        type: array
+        properties:
+          id:
+            type: string
+            description: name of the list.
+            example: en_list        

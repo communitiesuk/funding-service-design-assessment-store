@@ -1420,4 +1420,4 @@ paths:
                 schema:
                   type: array
                   items:
-                    $ref: 'components.yml#/components/schemas/Assessment'
+                    $ref: 'components.yml#/components/schemas/AssessmentExport'
