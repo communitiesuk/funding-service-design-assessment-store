@@ -649,12 +649,11 @@ def get_assessment_records_by_round_id(round_id, selected_fields=None):
         information for each subcriteria of the AssessmentRecords that match the given round_id.
     """
     default_fields = [
-        "Short id",
+        "Application ID",
         "Score Subcriteria",
         "Score",
         "Score Justification",
         "Score Date Created",
-        "Application ID",
     ]
 
     # If selected_fields is not provided, use the default_fields.
@@ -696,10 +695,9 @@ def get_assessment_records_by_round_id(round_id, selected_fields=None):
     for score in latest_scores:
 
         score_data = {
-            "Short id": AssessmentRecord.query.get(
+            "Application ID": AssessmentRecord.query.get(
                 score.application_id
             ).short_id,
-            "Application ID": score.application_id,
             "Score Subcriteria": score.sub_criteria_id,
             "Score": score.score,
             "Score Justification": score.justification,
@@ -802,7 +800,7 @@ def get_export_data(
 
     if len(form_fields) != 0:
         for assessment in assessment_metadatas:
-            applicant_info = {"Application ID": assessment.application_id}
+            applicant_info = {"Application ID": assessment.short_id}
             forms = assessment.jsonb_blob["forms"]
             for form in forms:
                 questions = form["questions"]
