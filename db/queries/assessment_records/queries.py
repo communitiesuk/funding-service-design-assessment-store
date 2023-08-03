@@ -703,7 +703,7 @@ def get_assessment_records_by_round_id(round_id, selected_fields=None):
             "Score": score.score,
             "Score Justification": score.justification,
             "Score Date Created": score.date_created.strftime("%d/%m/%Y"),
-            "Score Time Created": score.date_created.strftime("%H:%M:%S")
+            "Score Time Created": score.date_created.strftime("%H:%M:%S"),
         }
 
         selected_score_data = {
