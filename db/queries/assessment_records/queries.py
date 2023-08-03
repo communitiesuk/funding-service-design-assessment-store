@@ -653,8 +653,8 @@ def get_assessment_records_by_round_id(round_id, selected_fields=None):
         "Score Subcriteria",
         "Score",
         "Score Justification",
-        "Score Date Created",
-        "Score Time Created",
+        "Score Date",
+        "Score Time",
     ]
 
     # If selected_fields is not provided, use the default_fields.
