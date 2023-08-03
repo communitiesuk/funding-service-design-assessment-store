@@ -852,7 +852,7 @@ def combine_dicts(applications_list, scores_list):
     combined_list = []
 
     if len(applications_list) == 0 and len(scores_list) == 0:
-        return combine_dicts
+        return combined_list
     if len(applications_list) == 0:
         return scores_list
     if len(scores_list) == 0:
