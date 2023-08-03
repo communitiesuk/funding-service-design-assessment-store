@@ -654,6 +654,7 @@ def get_assessment_records_by_round_id(round_id, selected_fields=None):
         "Score",
         "Score Justification",
         "Score Date Created",
+        "Score Time Created",
     ]
 
     # If selected_fields is not provided, use the default_fields.
@@ -701,9 +702,8 @@ def get_assessment_records_by_round_id(round_id, selected_fields=None):
             "Score Subcriteria": score.sub_criteria_id,
             "Score": score.score,
             "Score Justification": score.justification,
-            "Score Date Created": score.date_created.strftime(
-                "%m/%d/%Y, %H:%M:%S"
-            ),
+            "Score Date Created": score.date_created.strftime("%d/%m/%Y"),
+            "Score Time Created": score.date_created.strftime("%H:%M:%S")
         }
 
         selected_score_data = {

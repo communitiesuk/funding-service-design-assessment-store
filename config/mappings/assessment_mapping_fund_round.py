@@ -137,6 +137,7 @@ applicant_info_mapping = {
                 "Score Subcriteria",
                 "Score",
                 "Score Date Created",
+                "Score Time Created",
             },
         }
     },
