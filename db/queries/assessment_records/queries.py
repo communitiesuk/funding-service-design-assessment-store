@@ -784,23 +784,40 @@ def select_active_tags_associated_with_assessment(application_id):
     return tag_associations
 
 
-def get_export_data(
-    fund_id: str, round_id: str, report_type: str, list_of_fields: dict
-) -> List[Dict]:  # noqa
-
-    statement = select(AssessmentRecord).where(
+def get_assment_export_data(fund_id: str, round_id: str, report_type: str, list_of_fields: dict):
+    en_statement = select(AssessmentRecord).where(
         AssessmentRecord.fund_id == fund_id,
         AssessmentRecord.round_id == round_id,
+        AssessmentRecord.language == "en"
     )
 
-    assessment_metadatas = db.session.scalars(statement).all()
+    en_assessment_metadatas = db.session.scalars(en_statement).all()
+
+    cy_statement = select(AssessmentRecord).where(
+        AssessmentRecord.fund_id == fund_id,
+        AssessmentRecord.round_id == round_id,
+        AssessmentRecord.language == "cy"
+    )
+
+    cy_assessment_metadatas = db.session.scalars(cy_statement).all()
+
+    en_list = get_export_data(round_id=round_id, report_type=report_type, list_of_fields=list_of_fields, assessment_metadatas=en_assessment_metadatas)
+    cy_list = get_export_data(round_id=round_id, report_type=report_type, list_of_fields=list_of_fields, assessment_metadatas=cy_assessment_metadatas)
+
+    obj = {"en_list": en_list, "cy_list": cy_list}
+    return obj
+
+
+def get_export_data(
+    round_id: str, report_type: str, list_of_fields: dict, assessment_metadatas: list # noqa
+) -> List[Dict]:  # noqa    
 
     form_fields = list_of_fields[report_type].get("form_fields", {})
     finalList = []
 
     if len(form_fields) != 0:
         for assessment in assessment_metadatas:
-            applicant_info = {"Application ID": assessment.short_id}
+            applicant_info = {"Application ID": assessment.application_id}
             forms = assessment.jsonb_blob["forms"]
             for form in forms:
                 questions = form["questions"]
