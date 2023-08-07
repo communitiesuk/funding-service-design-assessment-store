@@ -164,7 +164,7 @@
           "-c",
           "pytest.ini",
           "-k",
-          "test_get_data" // modify this accordingly
+          "test_get_application_fields_export" // modify this accordingly
       ],
       "justMyCode": false
   },
