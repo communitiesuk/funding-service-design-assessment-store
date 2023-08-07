@@ -652,10 +652,12 @@ def get_assessment_records_by_round_id(
     """
     default_fields = [
         "Application ID",
+        "Short ID",
         "Score Subcriteria",
         "Score",
         "Score Justification",
-        "Score Date Created",
+        "Score Date",
+        "Score Time",
     ]
 
     # If selected_fields is not provided, use the default_fields.
@@ -701,15 +703,15 @@ def get_assessment_records_by_round_id(
     for score in latest_scores:
 
         score_data = {
-            "Application ID": AssessmentRecord.query.get(
+            "Application ID": score.application_id,
+            "Short ID": AssessmentRecord.query.get(
                 score.application_id
             ).short_id,
             "Score Subcriteria": score.sub_criteria_id,
             "Score": score.score,
             "Score Justification": score.justification,
-            "Score Date Created": score.date_created.strftime(
-                "%m/%d/%Y, %H:%M:%S"
-            ),
+            "Score Date": score.date_created.strftime("%d/%m/%Y"),
+            "Score Time": score.date_created.strftime("%H:%M:%S"),
         }
 
         selected_score_data = {
