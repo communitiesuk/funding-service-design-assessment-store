@@ -792,7 +792,7 @@ def get_assessment_export_data(fund_id: str, round_id: str, report_type: str, li
     en_statement = select(AssessmentRecord).where(
         AssessmentRecord.fund_id == fund_id,
         AssessmentRecord.round_id == round_id,
-        AssessmentRecord.language == "en"
+        AssessmentRecord.language == "en",
     )
 
     en_assessment_metadatas = db.session.scalars(en_statement).all()
@@ -800,7 +800,7 @@ def get_assessment_export_data(fund_id: str, round_id: str, report_type: str, li
     cy_statement = select(AssessmentRecord).where(
         AssessmentRecord.fund_id == fund_id,
         AssessmentRecord.round_id == round_id,
-        AssessmentRecord.language == "cy"
+        AssessmentRecord.language == "cy",
     )
 
     cy_assessment_metadatas = db.session.scalars(cy_statement).all()
