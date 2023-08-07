@@ -636,7 +636,9 @@ def update_status_to_completed(application_id):
     db.session.commit()
 
 
-def get_assessment_records_by_round_id(round_id, selected_fields=None, language=None): # noqa
+def get_assessment_records_by_round_id(
+    round_id, selected_fields=None, language=None
+):  # noqa
     """
     Retrieve the latest scores and associated information for each subcriteria
     of AssessmentRecords matching the given round_id.
@@ -788,7 +790,9 @@ def select_active_tags_associated_with_assessment(application_id):
     return tag_associations
 
 
-def get_assessment_export_data(fund_id: str, round_id: str, report_type: str, list_of_fields: dict):
+def get_assessment_export_data(
+    fund_id: str, round_id: str, report_type: str, list_of_fields: dict
+):
     en_statement = select(AssessmentRecord).where(
         AssessmentRecord.fund_id == fund_id,
         AssessmentRecord.round_id == round_id,
@@ -805,16 +809,32 @@ def get_assessment_export_data(fund_id: str, round_id: str, report_type: str, li
 
     cy_assessment_metadatas = db.session.scalars(cy_statement).all()
 
-    en_list = get_export_data(round_id=round_id, report_type=report_type, list_of_fields=list_of_fields, assessment_metadatas=en_assessment_metadatas, language="en")
-    cy_list = get_export_data(round_id=round_id, report_type=report_type, list_of_fields=list_of_fields, assessment_metadatas=cy_assessment_metadatas, language="cy")
+    en_list = get_export_data(
+        round_id=round_id,
+        report_type=report_type,
+        list_of_fields=list_of_fields,
+        assessment_metadatas=en_assessment_metadatas,
+        language="en",
+    )
+    cy_list = get_export_data(
+        round_id=round_id,
+        report_type=report_type,
+        list_of_fields=list_of_fields,
+        assessment_metadatas=cy_assessment_metadatas,
+        language="cy",
+    )
 
     obj = {"en_list": en_list, "cy_list": cy_list}
     return obj
 
 
 def get_export_data(
-    round_id: str, report_type: str, list_of_fields: dict, assessment_metadatas: list, language: str # noqa
-) -> List[Dict]:  # noqa    
+    round_id: str,
+    report_type: str,
+    list_of_fields: dict,
+    assessment_metadatas: list,
+    language: str,  # noqa
+) -> List[Dict]:  # noqa
 
     form_fields = list_of_fields[report_type].get("form_fields", {})
     finalList = []
