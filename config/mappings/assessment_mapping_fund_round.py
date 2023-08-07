@@ -141,14 +141,14 @@ applicant_info_mapping = {
                 "Score Time",
             },
         },
-         "ASSESSOR_EXPORT": {
+        "ASSESSOR_EXPORT": {
             "form_fields": {
                 "fUMWcd",
                 "CDEwxp",
                 "DvBqCJ",
                 "mhYQzL",
             }
-        }
+        },
     },
     "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4": {
         "ASSESSOR_EXPORT": {

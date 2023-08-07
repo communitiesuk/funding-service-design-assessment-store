@@ -539,9 +539,13 @@ def test_get_application_fields_export(
     assert len(result["en_list"][0]) == 4
     assert result["en_list"][0]["Charity number "] == "Test"
     assert (
-        result["en_list"][0]["Do you need to do any further feasibility work?"] is False
+        result["en_list"][0]["Do you need to do any further feasibility work?"]
+        is False
     )
-    assert result["en_list"][0]["Project name"] == "Save the humble pub in Bangor"
     assert (
-        result["en_list"][0]["Risks to your project (document upload)"] == "sample1.doc"
+        result["en_list"][0]["Project name"] == "Save the humble pub in Bangor"
+    )
+    assert (
+        result["en_list"][0]["Risks to your project (document upload)"]
+        == "sample1.doc"
     )
