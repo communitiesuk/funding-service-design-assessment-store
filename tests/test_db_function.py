@@ -310,10 +310,10 @@ def test_get_data(seed_application_records):
             }
         },
     )
-
-    assert data[0]["Charity number "] == "Test"
-    assert data[0]["Do you need to do any further feasibility work?"] is False
-    assert data[0]["Project name"] == "Save the humble pub in Bangor"
-    assert data[0]["Risks to your project (document upload)"] == "sample1.doc"
-    assert data[0]["Score"] == 5
-    assert data[0]["Score Justification"] == "great"
+    # TODO add test data for cy_list
+    assert data["en_list"][0]["Charity number "] == "Test"
+    assert data["en_list"][0]["Do you need to do any further feasibility work?"] is False
+    assert data["en_list"][0]["Project name"] == "Save the humble pub in Bangor"
+    assert data["en_list"][0]["Risks to your project (document upload)"] == "sample1.doc"
+    assert data["en_list"][0]["Score"] == 5
+    assert data["en_list"][0]["Score Justification"] == "great"

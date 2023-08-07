@@ -871,7 +871,7 @@ def get_export_data(
     output = {}
     if report_type == "OUTPUT_TRACKER":
         output = get_assessment_records_by_round_id(
-            round_id, list_of_fields[report_type].get("score_fields", None)
+            round_id, list_of_fields[report_type].get("score_fields", None), language
         )
         if len(output) != 0:
             finalList = combine_dicts(finalList, output)
