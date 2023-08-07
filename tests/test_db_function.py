@@ -12,7 +12,7 @@ from db.queries.assessment_records.queries import (
     bulk_update_location_jsonb_blob,
 )
 from db.queries.assessment_records.queries import find_assessor_task_list_state
-from db.queries.assessment_records.queries import get_export_data
+from db.queries.assessment_records.queries import get_assessment_export_data
 from db.queries.comments.queries import create_comment_for_application_sub_crit
 from db.queries.comments.queries import get_comments_for_application_sub_crit
 from db.queries.scores.queries import create_score_for_app_sub_crit
@@ -300,7 +300,7 @@ def test_get_data(seed_application_records):
     }
     create_score_for_app_sub_crit(**assessment_payload)
 
-    data = get_export_data(
+    data = get_assessment_export_data(
         picked_row.fund_id,
         picked_row.round_id,
         "OUTPUT_TRACKER",
