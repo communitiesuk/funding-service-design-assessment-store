@@ -851,6 +851,7 @@ def get_export_data(
                     fields = question["fields"]
                     for field in fields:
                         if field["key"] in form_fields:
+                            # TODO Remove after assessment closes
                             # This unfortuantly has to be here due to the title being named wrong if the form # noqa
                             if (
                                 field["key"] == "GRWtfV"
