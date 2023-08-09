@@ -4,10 +4,10 @@ import pytest
 from db.models.assessment_record import AssessmentRecord
 from db.models.assessment_record.enums import Status
 from db.models.flags.flag_update import FlagStatus
-from db.queries.flags.queries import add_update_to_assessment_flag
 from db.queries.flags.queries import (
-    create_flag_for_application,
+    add_flag_for_application,
 )
+from db.queries.flags.queries import add_update_to_assessment_flag
 from db.queries.flags.queries import get_flags_for_application
 from sqlalchemy import select
 from tests._helpers import get_assessment_record
@@ -37,7 +37,7 @@ def test_create_flag(_db, seed_application_records):
         "status": FlagStatus.RAISED,
         "allocation": "TEAM_1",
     }
-    create_result = create_flag_for_application(**flag_data)
+    create_result = add_flag_for_application(**flag_data)
     assert create_result.latest_status == FlagStatus.RAISED
 
     stmt = select(AssessmentRecord).where(

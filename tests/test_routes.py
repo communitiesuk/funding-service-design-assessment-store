@@ -13,8 +13,8 @@ from config.mappings.assessment_mapping_fund_round import (
 from db.models.flags.assessment_flag import AssessmentFlag
 from db.models.flags.flag_update import FlagStatus
 from db.models.tag.tags import Tag
+from db.queries.flags.queries import add_flag_for_application
 from db.queries.flags.queries import add_update_to_assessment_flag
-from db.queries.flags.queries import create_flag_for_application
 from db.queries.qa_complete.queries import create_qa_complete_record
 from tests._expected_responses import APPLICATION_METADATA_RESPONSE
 from tests.conftest import test_input_data
@@ -54,7 +54,7 @@ def test_get_assessments_stats(client, seed_application_records):
 
     create_qa_complete_record(applications[1]["application_id"], "usera")
 
-    flag_id = create_flag_for_application(
+    flag_id = add_flag_for_application(
         justification="I think things.",
         sections_to_flag=["Overview"],
         application_id=applications[1]["application_id"],
@@ -108,7 +108,7 @@ def test_gets_all_apps_for_fund_round(
     assert len(response_json) == apps_per_round
 
     # Check application overview returns flags in order of descending
-    create_flag_for_application(
+    add_flag_for_application(
         justification="Test 1",
         sections_to_flag=["Overview"],
         application_id=application_id,
@@ -117,7 +117,7 @@ def test_gets_all_apps_for_fund_round(
         allocation="Assessor",
     )
 
-    create_flag_for_application(
+    add_flag_for_application(
         justification="Test 2",
         sections_to_flag=["Overview"],
         application_id=application_id,
@@ -126,7 +126,7 @@ def test_gets_all_apps_for_fund_round(
         allocation="Assessor",
     )
 
-    create_flag_for_application(
+    add_flag_for_application(
         justification="Test 3",
         sections_to_flag=["Overview"],
         application_id=application_id,
@@ -398,7 +398,7 @@ def test_get_team_flag_stats(client, seed_application_records):
     # Add a RAISED flag for the first application
     # so that one result from the set is flagged as RAISED
     # and only one team exists with a flag allocated
-    create_flag_for_application(
+    add_flag_for_application(
         justification="bob",
         sections_to_flag=["Overview"],
         application_id=applications[0]["application_id"],
@@ -420,7 +420,7 @@ def test_get_team_flag_stats(client, seed_application_records):
     # still only one team exists with a flag allocated
     # response should still have only one row for one team
     # 2 raised
-    create_flag_for_application(
+    add_flag_for_application(
         justification="bob",
         sections_to_flag=["Overview"],
         application_id=applications[1]["application_id"],
@@ -431,7 +431,7 @@ def test_get_team_flag_stats(client, seed_application_records):
 
     # Add a RAISED flag for first application
     # for a second team response have 2 rows for the two teams
-    create_flag_for_application(
+    add_flag_for_application(
         justification="bob",
         sections_to_flag=["Overview"],
         application_id=applications[0]["application_id"],
@@ -458,7 +458,7 @@ def test_create_flag(client):
         "application_id": str(uuid4()),
     }
     with mock.patch(
-        "api.routes.flag_routes.create_flag_for_application",
+        "api.routes.flag_routes.add_flag_for_application",
         return_value=expected_flag,
     ) as create_mock:
         response = client.post(

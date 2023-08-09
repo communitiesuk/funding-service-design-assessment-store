@@ -1,8 +1,8 @@
 # flake8: noqa
 from db.models.flags.flag_update import FlagStatus
 from db.queries import get_metadata_for_fund_round_id
+from db.queries.flags.queries import add_flag_for_application
 from db.queries.flags.queries import add_update_to_assessment_flag
-from db.queries.flags.queries import create_flag_for_application
 from db.queries.flags.queries import get_flag_by_id
 from db.queries.flags.queries import get_flags_for_application
 from db.schemas.schemas import AssessmentFlagSchema
@@ -90,7 +90,7 @@ def create_flag_for_application():
     current_app.logger.info(
         f"Create flag for application {create_flag_json['application_id']}"
     )
-    created_flag = create_flag_for_application(**create_flag_json)
+    created_flag = add_flag_for_application(**create_flag_json)
     return AssessmentFlagSchema().dump(created_flag)
 
 

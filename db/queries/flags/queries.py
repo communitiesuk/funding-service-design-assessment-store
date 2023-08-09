@@ -21,7 +21,7 @@ def get_flag_by_id(flag_id):
     return results
 
 
-def create_flag_for_application(
+def add_flag_for_application(
     justification: str,
     sections_to_flag: str,
     application_id: str,
