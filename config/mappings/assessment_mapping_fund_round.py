@@ -131,7 +131,7 @@ applicant_info_mapping = {
                 "zvPzXN",
                 "QUCvFy",
                 "pppiYl",
-                "AVShTf",                
+                "AVShTf",
             },
             "score_fields": {
                 "Application ID",
