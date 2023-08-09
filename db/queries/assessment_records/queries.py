@@ -4,6 +4,7 @@ Joins allowed.
 """
 import json
 from collections import OrderedDict
+from datetime import datetime
 from typing import Dict
 from typing import List
 
@@ -441,7 +442,9 @@ def update_status_to_completed(application_id):
     db.session.commit()
 
 
-def get_assessment_records_by_round_id(round_id, selected_fields=None):
+def get_assessment_records_by_round_id(
+    round_id, selected_fields=None, language=None
+):  # noqa
     """
     Retrieve the latest scores and associated information for each subcriteria
     of AssessmentRecords matching the given round_id.
@@ -480,7 +483,7 @@ def get_assessment_records_by_round_id(round_id, selected_fields=None):
         .subquery()
     )
 
-    latest_scores = (
+    query = (
         db.session.query(Score)
         .join(
             subquery,
@@ -495,8 +498,12 @@ def get_assessment_records_by_round_id(round_id, selected_fields=None):
             Score.application_id == AssessmentRecord.application_id,
         )
         .filter(AssessmentRecord.round_id == round_id)
-        .all()
     )
+
+    if language is not None:
+        query = query.filter(AssessmentRecord.language == language)
+
+    latest_scores = query.all()
 
     output = []
     for score in latest_scores:
@@ -591,23 +598,70 @@ def select_active_tags_associated_with_assessment(application_id):
     return tag_associations
 
 
-def get_export_data(
+def get_assessment_export_data(
     fund_id: str, round_id: str, report_type: str, list_of_fields: dict
-) -> List[Dict]:  # noqa
-
-    statement = select(AssessmentRecord).where(
+):
+    en_statement = select(AssessmentRecord).where(
         AssessmentRecord.fund_id == fund_id,
         AssessmentRecord.round_id == round_id,
+        AssessmentRecord.language == "en",
     )
 
-    assessment_metadatas = db.session.scalars(statement).all()
+    en_assessment_metadatas = db.session.scalars(en_statement).all()
+
+    cy_statement = select(AssessmentRecord).where(
+        AssessmentRecord.fund_id == fund_id,
+        AssessmentRecord.round_id == round_id,
+        AssessmentRecord.language == "cy",
+    )
+
+    cy_assessment_metadatas = db.session.scalars(cy_statement).all()
+
+    en_list = get_export_data(
+        round_id=round_id,
+        report_type=report_type,
+        list_of_fields=list_of_fields,
+        assessment_metadatas=en_assessment_metadatas,
+        language="en",
+    )
+    cy_list = get_export_data(
+        round_id=round_id,
+        report_type=report_type,
+        list_of_fields=list_of_fields,
+        assessment_metadatas=cy_assessment_metadatas,
+        language="cy",
+    )
+
+    obj = {"en_list": en_list, "cy_list": cy_list}
+    return obj
+
+
+def get_export_data(
+    round_id: str,
+    report_type: str,
+    list_of_fields: dict,
+    assessment_metadatas: list,
+    language: str,  # noqa
+) -> List[Dict]:  # noqa
 
     form_fields = list_of_fields[report_type].get("form_fields", {})
     finalList = []
 
+    current_app.logger.warn("FORM FIELDS TO SEARCH." + str(form_fields))
     if len(form_fields) != 0:
         for assessment in assessment_metadatas:
-            applicant_info = {"Application ID": assessment.application_id}
+
+            iso_format = "%Y-%m-%dT%H:%M:%S.%f"
+            iso_datetime = datetime.strptime(
+                assessment.jsonb_blob["date_submitted"], iso_format
+            )
+            formatted_date = iso_datetime.strftime("%d/%m/%Y %H:%M:%S")
+
+            applicant_info = {
+                "Application ID": assessment.application_id,
+                "Short ID": assessment.short_id,
+                "Date Submitted": formatted_date,
+            }
             forms = assessment.jsonb_blob["forms"]
             for form in forms:
                 questions = form["questions"]
@@ -615,6 +669,7 @@ def get_export_data(
                     fields = question["fields"]
                     for field in fields:
                         if field["key"] in form_fields:
+                            # TODO Remove after assessment closes
                             # This unfortuantly has to be here due to the title being named wrong if the form # noqa
                             if (
                                 field["key"] == "GRWtfV"
@@ -622,37 +677,46 @@ def get_export_data(
                                 == "Both revenue and capital"
                             ):
                                 applicant_info[
-                                    "Revenue funding 1 April 2023 to 31 March 2024"
+                                    "Revenue for 1 April 2023 to 31 March 2024"
                                 ] = field["answer"]
                             else:
                                 applicant_info[field["title"]] = field[
                                     "answer"
                                 ]
             finalList.append(applicant_info)
-
+        current_app.logger.warn(
+            "FINAL LIST BEFORE MISSING ELEMENTS." + str(finalList)
+        )
         add_missing_elements_with_empty_values(finalList)
 
+    current_app.logger.warn(
+        "FINAL LIST AFTER ADD MISSING ELEMENTS." + str(finalList)
+    )
     output = {}
     if report_type == "OUTPUT_TRACKER":
         output = get_assessment_records_by_round_id(
-            round_id, list_of_fields[report_type].get("score_fields", None)
+            round_id,
+            list_of_fields[report_type].get("score_fields", None),
+            language,
         )
         if len(output) != 0:
             finalList = combine_dicts(finalList, output)
 
+    current_app.logger.warn("RETURN FINAL LIST" + str(finalList))
     return finalList
 
 
 # adds miissing elements for use in the csv
 def add_missing_elements_with_empty_values(finalList):
-    missing_keys_order = list(finalList[0].keys())
+    if len(finalList) > 0:
+        missing_keys_order = list(finalList[0].keys())
 
-    for field in finalList:
-        ordered_dict = OrderedDict()
-        for key in missing_keys_order:
-            ordered_dict[key] = field.get(key, "")
-        field.clear()
-        field.update(ordered_dict)
+        for field in finalList:
+            ordered_dict = OrderedDict()
+            for key in missing_keys_order:
+                ordered_dict[key] = field.get(key, "")
+            field.clear()
+            field.update(ordered_dict)
 
 
 def combine_dicts(applications_list, scores_list):
