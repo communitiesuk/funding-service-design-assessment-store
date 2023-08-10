@@ -889,9 +889,7 @@ def get_export_data(
 def add_missing_elements_with_empty_values(
     applicant_info, form_fields, language
 ):
-    result_data = (
-        applicant_info.copy()
-    )
+    result_data = applicant_info.copy()
 
     for key, value in form_fields.items():
         title = value[language]["title"]
