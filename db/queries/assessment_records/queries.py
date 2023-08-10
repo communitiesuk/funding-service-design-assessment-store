@@ -891,7 +891,7 @@ def add_missing_elements_with_empty_values(
 ):
     result_data = (
         applicant_info.copy()
-    )  # Start with a copy of the original data
+    )
 
     for key, value in form_fields.items():
         title = value[language]["title"]
