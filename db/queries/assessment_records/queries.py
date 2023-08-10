@@ -857,16 +857,20 @@ def get_export_data(
                 "Short ID": assessment.short_id,
                 "Date Submitted": formatted_date,
             }
-            forms = assessment.jsonb_blob["forms"]           
+            forms = assessment.jsonb_blob["forms"]
             for form in forms:
                 questions = form["questions"]
                 for question in questions:
                     fields = question["fields"]
                     for field in fields:
                         if field["key"] in field_ids:
-                            title = form_fields[field["key"]][language]["title"]
+                            title = form_fields[field["key"]][language][
+                                "title"
+                            ]
                             applicant_info[title] = field["answer"]
-            applicant_info = add_missing_elements_with_empty_values(applicant_info, form_fields, language)
+            applicant_info = add_missing_elements_with_empty_values(
+                applicant_info, form_fields, language
+            )
             finalList.append(applicant_info)
 
     output = {}
@@ -883,8 +887,12 @@ def get_export_data(
 
 
 # adds miissing elements for use in the csv
-def add_missing_elements_with_empty_values(applicant_info, form_fields, language):
-    result_data = applicant_info.copy()  # Start with a copy of the original data
+def add_missing_elements_with_empty_values(
+    applicant_info, form_fields, language
+):
+    result_data = (
+        applicant_info.copy()
+    )  # Start with a copy of the original data
 
     for key, value in form_fields.items():
         title = value[language]["title"]
