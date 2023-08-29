@@ -137,7 +137,7 @@ def get_metadata_for_fund_round_id(
 
     if country != "" and country != "ALL":
         current_app.logger.info(
-            f"Performing assessment search on location_json_blob: {country}."
+            f"Performing assessment search on country: {country}."
         )
         statement = statement.where(
             AssessmentRecord.location_json_blob["country"].astext == country
@@ -145,7 +145,7 @@ def get_metadata_for_fund_round_id(
 
     if region != "" and region != "ALL":
         current_app.logger.info(
-            f"Performing assessment search on location_json_blob: {region}."
+            f"Performing assessment search on region: {region}."
         )
         statement = statement.where(
             AssessmentRecord.location_json_blob["region"].astext == region
