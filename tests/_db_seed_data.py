@@ -9,6 +9,7 @@ from tests._application_store_json import (
     nstfr2_application_store_json_template,
 )
 
+# Put a sample of output data (from application store) for a fund-round here
 mappings_application_store_json = {
     "COFR2W2": application_store_json_template,
     "COFR2W3": application_store_json_template,
