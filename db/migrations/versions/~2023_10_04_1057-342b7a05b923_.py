@@ -30,6 +30,7 @@ def upgrade():
             sa.Column(
                 "is_withdrawn", sa.Boolean(), nullable=False, default=False
             )
+        )
 
 
 def downgrade():
