@@ -19,12 +19,19 @@ from config.mappings.cof_mapping_parts.r3w2_scored_criteria import (
 from config.mappings.cof_mapping_parts.r3w2_unscored_sections import (
     unscored_sections as cof_unscored_sections_r3w2,
 )
-from config.mappings.nstf_mapping_parts.scored_criteria import (
+from config.mappings.cyp_mapping_parts.r1_scored_criteria import (
+    scored_criteria as cyp_scored_criteria_r1,
+)
+from config.mappings.cyp_mapping_parts.r1_unscored_criteria import (
+    unscored_sections as cyp_unscored_sections_r1,
+)
+from config.mappings.nstf_mapping_parts.r2_scored_criteria import (
     scored_criteria as nstf_scored_criteria,
 )
-from config.mappings.nstf_mapping_parts.unscored_sections import (
+from config.mappings.nstf_mapping_parts.r2_unscored_sections import (
     unscored_sections as nstf_unscored_sections,
 )
+
 
 # FUND AND ROUND CONFIGURATION (Extracted from the fund store)
 COF_FUND_ID = "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4"
@@ -76,7 +83,10 @@ fund_round_to_assessment_mapping = {
 }
 
 
-# REPORTING CONFIGURATION
+# Key information for header fields (within JSON)
+# We extract a number of field to display at a higher level
+# in the assessment view (assessor dashboard view), these
+# bits of information are extracted from the application_json
 
 
 fund_round_data_key_mappings = {
@@ -111,6 +121,12 @@ fund_round_data_key_mappings = {
         "asset_type": None,
         "funding_one": ["mCbbyN", "iZdZrr"],
         "funding_two": ["XsAoTv", "JtBjFp"],
+    },
+    "CYPR1": {
+        "location": "",
+        "asset_type": None,
+        "funding_one": "JXKUcj",
+        "funding_two": "OnPeeS",
     },
 }
 
