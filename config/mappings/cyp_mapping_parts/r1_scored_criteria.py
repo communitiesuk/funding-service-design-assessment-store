@@ -38,7 +38,7 @@ scored_criteria = [
     {
         "id": "your-project",
         "name": "Your project",
-        "weighting": 0,
+        "weighting": 0.40,
         "sub_criteria": [
             {
                 "id": "outputs",
@@ -252,7 +252,7 @@ scored_criteria = [
     {
         "id": "risk-and-deliverability",
         "name": "Risk and deliverability",
-        "weighting": 0,
+        "weighting": 0.15,
         "sub_criteria": [
             {
                 "id": "risk-and-deliverability",

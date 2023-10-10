@@ -24,7 +24,7 @@ unscored_sections = [
                             {
                                 "field_id": "KUdOhN",
                                 "form_name": "about-your-organisation-cyp",
-                                "field_type": "YesNoField",
+                                "field_type": "yesNoField",
                                 "presentation_type": "text",
                                 "question": "Does your organisation use any other names?",
                             },
