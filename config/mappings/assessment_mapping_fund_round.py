@@ -123,10 +123,11 @@ fund_round_data_key_mappings = {
         "funding_two": ["XsAoTv", "JtBjFp"],
     },
     "CYPR1": {
-        "location": "",
+        "field_type": "multiInputField",
+        "location": "rmBPvK",
         "asset_type": None,
-        "funding_one": "JXKUcj",
-        "funding_two": "OnPeeS",
+        "funding_one": None,
+        "funding_two": ["qwktzL", "JizgZP"],  # only revenue funding for cyp
     },
 }
 
