@@ -128,8 +128,6 @@ fund_round_data_key_mappings = {
         "asset_type": None,
         "funding_one": None,
         "funding_two": ["qwktzL", "JizgZP"],  # only revenue funding for cyp
-        "cohort": "vYYoAC",
-        "regional": "iqqqTk",
     },
 }
 
