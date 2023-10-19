@@ -109,18 +109,18 @@ fund_round_data_key_mappings = {
         "funding_two": "cLDRvN",
     },
     "COFR3W2": {
-        "field_type": "multiInputField",
         "location": "EfdliG",
         "asset_type": "oXGwlA",
         "funding_one": "ABROnB",
         "funding_two": ["tSKhQQ", "UyaAHw"],
+        "funding_field_type": "multiInputField",
     },
     "NSTFR2": {
-        "field_type": "multiInputField",
         "location": "mhYQzL",
         "asset_type": None,
         "funding_one": ["mCbbyN", "iZdZrr"],
         "funding_two": ["XsAoTv", "JtBjFp"],
+        "funding_field_type": "multiInputField",
     },
     "CYPR1": {
         "location": "rmBPvK",

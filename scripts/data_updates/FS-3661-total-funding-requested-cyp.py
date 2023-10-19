@@ -8,13 +8,16 @@ from sqlalchemy import select
 from sqlalchemy import update
 
 
-def update_funding_amount_requested_for_round(round_id):
+def update_funding_amount_requested_for_cyp():
     # Update the `funding_amount_requested` calculation for CYP
+    # "888aae3d-7e2c-4523-b9c1-95952b3d1644" is the round_id for CYP R1
     import jsonpath_rw_ext
 
     select_assessment_records_for_round_stmt = select(
         AssessmentRecord.application_id, AssessmentRecord.jsonb_blob
-    ).where(AssessmentRecord.round_id == round_id)
+    ).where(
+        AssessmentRecord.round_id == "888aae3d-7e2c-4523-b9c1-95952b3d1644"
+    )
 
     cyp_records = db.session.execute(select_assessment_records_for_round_stmt)
 
@@ -48,11 +51,8 @@ def update_funding_amount_requested_for_round(round_id):
 
 
 def main() -> None:
-    # "888aae3d-7e2c-4523-b9c1-95952b3d1644" is the round_id for CYP R1
     current_app.logger.warning("Updating funding_amount_requested for CYP R1")
-    update_funding_amount_requested_for_round(
-        "888aae3d-7e2c-4523-b9c1-95952b3d1644"
-    )
+    update_funding_amount_requested_for_cyp()
     current_app.logger.warning(
         "Update of funding_amount_requested for CYP R1 COMPLETE"
     )
