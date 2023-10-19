@@ -127,7 +127,7 @@ fund_round_data_key_mappings = {
         "location": "rmBPvK",
         "asset_type": None,
         "funding_one": None,
-        "funding_two": ["qwktzL", "JizgZP"],  # only revenue funding for cyp
+        "funding_two": ["JXKUcj", "OnPeeS"],  # only revenue funding for cyp
     },
 }
 
