@@ -171,6 +171,7 @@ _MULTI_INPUT_FORMAT_FRONTEND = defaultdict(
         "RadioField": "text",
         "textField": "text",
         "MonthYearField": "monthYearField",
+        "monthYearField": "monthYearField",
         "yesNoField": "text",
     },
 )
