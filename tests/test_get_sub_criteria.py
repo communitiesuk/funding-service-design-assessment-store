@@ -96,6 +96,10 @@ def test_deprecated_sort_add_another_component_contents(
                         "column_title": "Example multiline text child",
                         "type": "multilineTextField",
                     },
+                    "gggggg": {
+                        "column_title": "Example month year child 2",
+                        "type": "MonthYearField",
+                    },
                 },
             ],
             "Question title",  # post_question
@@ -107,6 +111,7 @@ def test_deprecated_sort_add_another_component_contents(
                     "dddddd": True,
                     "eeeeee": "low",
                     "ffffff": "test\r\n1",
+                    "gggggg": {"gggggg__month": "01", "gggggg__year": "2021"},
                 },
                 {
                     "aaaaaa": "test2",
@@ -115,6 +120,7 @@ def test_deprecated_sort_add_another_component_contents(
                     "dddddd": False,
                     "eeeeee": "high",
                     "ffffff": "test\r\n2",
+                    "gggggg": {"gggggg__month": "05", "gggggg__year": "2021"},
                 },
             ],
             [  # expected_nested_table_tuple
@@ -131,6 +137,11 @@ def test_deprecated_sort_add_another_component_contents(
                     "Example multiline text child",
                     ["test\r\n1", "test\r\n2"],
                     "html",
+                ],
+                [
+                    "Example month year child 2",
+                    ["01-2021", "05-2021"],
+                    "monthYearField",
                 ],
             ],
         ),
