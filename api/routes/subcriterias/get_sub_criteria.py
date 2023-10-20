@@ -201,6 +201,7 @@ def format_add_another_component_contents(
 
         table = []
         for component_id, column_config in table_config.items():
+            frontend_format = None
             title = column_config["column_title"]
             answers = component_id_to_answer_list.get(component_id)
 
