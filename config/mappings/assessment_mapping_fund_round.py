@@ -106,30 +106,29 @@ fund_round_data_key_mappings = {
         "funding_two": "cLDRvN",
     },
     "COFR3W2": {
-        "field_type": "multiInputField",
         "location": "EfdliG",
         "asset_type": "oXGwlA",
         "funding_one": "ABROnB",
         "funding_two": ["tSKhQQ", "UyaAHw"],
+        "funding_field_type": "multiInputField",
     },
     "NSTFR2": {
-        "field_type": "multiInputField",
         "location": "mhYQzL",
         "asset_type": None,
         "funding_one": ["mCbbyN", "iZdZrr"],
         "funding_two": ["XsAoTv", "JtBjFp"],
+        "funding_field_type": "multiInputField",
     },
     "CYPR1": {
-        "field_type": "multiInputField",
         "location": "rmBPvK",
         "asset_type": None,
         "funding_one": None,
-        "funding_two": ["qwktzL", "JizgZP"],  # only revenue funding for cyp
+        "funding_two": ["JXKUcj", "OnPeeS"],  # only revenue funding for cyp
     },
 }
 
 applicant_info_mapping = {
-    "13b95669-ed98-4840-8652-d6b7a19964db": {
+    NSTF_FUND_ID: {
         "OUTPUT_TRACKER": {
             "form_fields": {
                 "opFJRm": {"en": {"title": "Organisation name"}},
@@ -196,7 +195,7 @@ applicant_info_mapping = {
             }
         },
     },
-    "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4": {
+    COF_FUND_ID: {
         "ASSESSOR_EXPORT": {
             "form_fields": {
                 "SnLGJE": {
