@@ -96,6 +96,14 @@ def test_deprecated_sort_add_another_component_contents(
                         "column_title": "Example multiline text child",
                         "type": "multilineTextField",
                     },
+                    "gggggg": {
+                        "column_title": "Example month year child 2",
+                        "type": "MonthYearField",
+                    },
+                    "hhhhhh": {
+                        "column_title": "Example uk address child",
+                        "type": "ukAddressField",
+                    },
                 },
             ],
             "Question title",  # post_question
@@ -107,6 +115,14 @@ def test_deprecated_sort_add_another_component_contents(
                     "dddddd": True,
                     "eeeeee": "low",
                     "ffffff": "test\r\n1",
+                    "gggggg": {"gggggg__month": "01", "gggggg__year": "2021"},
+                    "hhhhhh": {
+                        "addressLine1": "address line 1",
+                        "addressLine2": "",
+                        "county": "",
+                        "postcode": "te4 2nf",
+                        "town": "test",
+                    },
                 },
                 {
                     "aaaaaa": "test2",
@@ -115,6 +131,8 @@ def test_deprecated_sort_add_another_component_contents(
                     "dddddd": False,
                     "eeeeee": "high",
                     "ffffff": "test\r\n2",
+                    "gggggg": {"gggggg__month": "05", "gggggg__year": "2021"},
+                    "hhhhhh": "test, null, te3 2nf, null, te4 2nf",
                 },
             ],
             [  # expected_nested_table_tuple
@@ -131,6 +149,19 @@ def test_deprecated_sort_add_another_component_contents(
                     "Example multiline text child",
                     ["test\r\n1", "test\r\n2"],
                     "html",
+                ],
+                [
+                    "Example month year child 2",
+                    ["01-2021", "05-2021"],
+                    "monthYearField",
+                ],
+                [
+                    "Example uk address child",
+                    [
+                        "address line 1, te4 2nf, test",
+                        "test, null, te3 2nf, null, te4 2nf",
+                    ],
+                    "text",
                 ],
             ],
         ),
