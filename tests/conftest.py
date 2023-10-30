@@ -51,7 +51,6 @@ def seed_application_records(
     random_round_id = str(uuid4())
 
     for app in apps:
-
         app_id = str(uuid4())
         app["id"] = app_id
         if unique_fund_round:
@@ -138,7 +137,6 @@ def seed_tags(
 def get_tag_types(
     request, app, clear_test_data, enable_preserve_test_data, _db
 ):
-
     tag_type = TagType(
         id=uuid4(),
         purpose=uuid4(),

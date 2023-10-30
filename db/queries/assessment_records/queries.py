@@ -201,7 +201,6 @@ def get_metadata_for_fund_round_id(
     if status != "ALL":
         filter_assessments = []
         for assessment in assessment_metadatas:
-
             all_latest_status = [
                 flag.latest_status for flag in assessment.flags
             ]
@@ -634,7 +633,6 @@ def get_assessment_records_by_round_id(
 
     output = []
     for score in latest_scores:
-
         score_data = {
             "Application ID": score.application_id,
             "Short ID": AssessmentRecord.query.get(
@@ -698,7 +696,6 @@ def associate_assessment_tags(application_id, tags: List):
 
 
 def select_active_tags_associated_with_assessment(application_id):
-
     tag_associations = (
         db.session.query(
             Tag.id.label("tag_id"),
@@ -774,14 +771,12 @@ def get_export_data(
     assessment_metadatas: list,
     language: str,  # noqa
 ) -> List[Dict]:  # noqa
-
     form_fields = list_of_fields[report_type].get("form_fields", {})
     field_ids = form_fields.keys()
     final_list = []
 
     if len(form_fields) != 0:
         for assessment in assessment_metadatas:
-
             iso_format = "%Y-%m-%dT%H:%M:%S.%f"
             iso_datetime = datetime.strptime(
                 assessment.jsonb_blob["date_submitted"], iso_format

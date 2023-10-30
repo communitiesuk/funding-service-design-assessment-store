@@ -211,7 +211,6 @@ def update_db_with_location_data(
 def write_locations_to_csv(
     application_ids_to_postcodes, postcodes_to_location_data, file_path
 ):
-
     """
     Writes the supplied list of application IDs and location to a CSV file
     """

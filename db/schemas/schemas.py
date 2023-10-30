@@ -169,7 +169,6 @@ class TagNestedSchema(SQLAlchemyAutoSchema):
 
 
 class JoinedTagSchema(SQLAlchemyAutoSchema):
-
     type_id = UUID()
     purpose = String()
     description = String()
