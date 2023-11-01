@@ -135,6 +135,54 @@ def seed_tags(
 
 
 @pytest.fixture(scope="function")
+def seed_scoring_system(
+    request,
+    app,
+    _db,
+    clear_test_data,
+):
+
+    scoring_system_for_rounds = [
+        {
+            "round_id": "e85ad42f-73f5-4e1b-a1eb-6bc5d7f3d762",
+            "scoring_system": "OneToFive",
+        },
+        {
+            "round_id": "6af19a5e-9cae-4f00-9194-cf10d2d7c8a7",
+            "scoring_system": "OneToFive",
+        },
+        {
+            "round_id": "888aae3d-7e2c-4523-b9c1-95952b3d1644",
+            "scoring_system": "OneToFive",
+        },
+        {
+            "round_id": "0059aad4-5eb5-11ee-8c99-0242ac120002",
+            "scoring_system": "OneToFive",
+        },
+        {
+            "round_id": "fc7aa604-989e-4364-98a7-d1234271435a",
+            "scoring_system": "OneToFive",
+        },
+        {
+            "round_id": "c603d114-5364-4474-a0c4-c41cbf4d3bbd",
+            "scoring_system": "OneToFive",
+        },
+        {
+            "round_id": "5cf439bf-ef6f-431e-92c5-a1d90a4dd32f",
+            "scoring_system": "OneToFive",
+        },
+    ]
+
+    from db.queries.scores.queries import insert_scoring_system_for_round_id
+
+    for scoring_system in scoring_system_for_rounds:
+        insert_scoring_system_for_round_id(
+            scoring_system["round_id"], scoring_system["scoring_system"]
+        )
+    yield
+
+
+@pytest.fixture(scope="function")
 def get_tag_types(
     request, app, clear_test_data, enable_preserve_test_data, _db
 ):
