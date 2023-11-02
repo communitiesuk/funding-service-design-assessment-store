@@ -244,7 +244,7 @@ def test_get_sub_criteria_to_latest_score_map(_db, seed_application_records):
     assert result[sub_criteria_2_id] == 5
 
 
-def test_get_scoring_system(seed_scoring_system):
+def test_get_scoring_system(clear_test_data, seed_scoring_system):
     """
     test_get_scoring_system
     Tests getting a scoring system for a given round_id
