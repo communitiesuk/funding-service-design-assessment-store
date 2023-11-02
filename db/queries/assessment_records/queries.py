@@ -805,7 +805,9 @@ def get_export_data(
                             ]
                             answer = field["answer"]
                             field_type = field["type"]
-                            if field_type == "list":
+                            if (
+                                field_type == "list" and type(answer) != bool
+                            ):  # Adding check for bool since yesno fields are considered lists
                                 answer = format_lists(answer)
                             applicant_info[title] = answer
             applicant_info = add_missing_elements_with_empty_values(
