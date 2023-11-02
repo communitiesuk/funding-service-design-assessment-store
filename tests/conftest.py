@@ -141,7 +141,13 @@ def seed_scoring_system(
     _db,
     clear_test_data,
 ):
-
+    """
+    Inserts the scoring_systems for each round_id.
+    If this is the first run of the tests (before any data clearing), the
+    default (pre-loaded as part of the db migrations) scoring_system
+    information might still be present. To avoid FK issues we
+    make sure these rows are removed first.
+    """
     scoring_system_for_rounds = [
         {
             "round_id": "e85ad42f-73f5-4e1b-a1eb-6bc5d7f3d762",
@@ -174,6 +180,10 @@ def seed_scoring_system(
     ]
 
     from db.queries.scores.queries import insert_scoring_system_for_round_id
+    from db.models import ScoringSystem
+
+    _db.session.query(ScoringSystem).delete()
+    _db.session.commit()
 
     for scoring_system in scoring_system_for_rounds:
         insert_scoring_system_for_round_id(
