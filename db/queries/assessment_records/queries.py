@@ -12,7 +12,7 @@ from db.models.assessment_record.enums import Status
 from db.models.flags import Flag
 from db.models.flags.enums import FlagType
 from db.queries.assessment_records._helpers import derive_application_values
-from db.queries.flags.queries import find_qa_complete_flag
+from db.queries.flags.queries import find_qa_complete_flags
 from db.schemas import AssessmentRecordMetadata
 from db.schemas import AssessmentSubCriteriaMetadata
 from db.schemas import AssessorTaskListMetadata
@@ -25,6 +25,7 @@ from sqlalchemy import select
 from sqlalchemy import update
 from sqlalchemy.dialects.postgresql import insert as postgres_insert
 from sqlalchemy.orm import defer
+from sqlalchemy.orm import joinedload
 from sqlalchemy.orm import load_only
 
 
@@ -129,16 +130,40 @@ def get_metadata_for_fund_round_id(
             )
 
     assessment_metadatas = db.session.scalars(statement).all()
-
     metadata_serialiser = AssessmentRecordMetadata(
         exclude=("jsonb_blob", "application_json_md5")
     )
 
+    app_ids = {
+        app_metadata.application_id for app_metadata in assessment_metadatas
+    }
+    app_id_is_qa_complete_dict = find_qa_complete_flags(app_ids)
     assessment_metadatas = [
         metadata_serialiser.dump(app_metadata)
-        | find_qa_complete_flag(app_metadata.application_id)
+        | {
+            "is_qa_complete": app_id_is_qa_complete_dict[
+                app_metadata.application_id
+            ]
+        }
         for app_metadata in assessment_metadatas
     ]
+
+    def sort_flags_in_assessment_records(
+        assessment_records, sort_field, sort_order
+    ):
+        """Sorts flag data in assessment_records in the provided sort order."""
+        sort_key = lambda x: x[sort_field]  # noqa E731
+        reverse = sort_order != "asc"
+        for record in assessment_records:
+            record["flags"] = sorted(
+                record["flags"], key=sort_key, reverse=reverse
+            )
+
+        return assessment_records
+
+    assessment_metadatas = sort_flags_in_assessment_records(
+        assessment_metadatas, sort_field="date_created", sort_order="asc"
+    )
 
     return assessment_metadatas
 
@@ -154,38 +179,56 @@ def bulk_insert_application_record(
     :param application_json_strings: _description_
     :param application_type: _description_
     """
-    try:
-        print("Beginning bulk application insert.")
-        rows = []
-
-        for single_application_json in application_json_strings:
-            if not is_json:
-                single_application_json = json.loads(single_application_json)
-
-            derived_values = derive_application_values(single_application_json)
-
-            row = {
-                **derived_values,
-                "jsonb_blob": single_application_json,
-                "type_of_application": application_type,
-            }
-            print(f"Appending row to insert list, values: '{derived_values}'.")
-            rows.append(row)
-
-            del single_application_json
-
-        stmt = postgres_insert(AssessmentRecord).values(rows)
-
-        upsert_rows_stmt = stmt.on_conflict_do_nothing(
-            index_elements=[AssessmentRecord.application_id]
+    print("Beginning bulk application insert.")
+    rows = []
+    if len(application_json_strings) < 1:
+        print(
+            f"No new submitted applications found for {application_type}. skipping Import..."
         )
-        print("Attemping bulk insert of all application rows.")
-        db.session.execute(upsert_rows_stmt)
-    except exc.SQLAlchemyError as e:
-        db.session.rollback()
-        print(f"Error running bulk insert: '{e}'.")
-        raise (e)
-    db.session.commit()
+        return rows
+    print("\n")
+    # Create a list of application ids to track inserted rows
+    for single_application_json in application_json_strings:
+        if not is_json:
+            single_application_json = json.loads(single_application_json)
+
+        derived_values = derive_application_values(single_application_json)
+
+        row = {
+            **derived_values,
+            "jsonb_blob": single_application_json,
+            "type_of_application": application_type,
+        }
+        try:
+            stmt = postgres_insert(AssessmentRecord).values([row])
+
+            upsert_rows_stmt = stmt.on_conflict_do_nothing(
+                index_elements=[AssessmentRecord.application_id]
+            ).returning(AssessmentRecord.application_id)
+
+            print(f"Attempting insert of application {row['application_id']}")
+            result = db.session.execute(upsert_rows_stmt)
+
+            # Check if the inserted application is in result
+            inserted_application_ids = [item.application_id for item in result]
+            if not len(inserted_application_ids):
+                print(
+                    f"Application id already exist in the database: {row['application_id']}"
+                )
+            else:
+                rows.append(row)
+            db.session.commit()
+            del single_application_json
+        except exc.SQLAlchemyError as e:
+            db.session.rollback()
+            print(
+                f"Error occurred while inserting application {row['application_id']}, error: {e}"
+            )
+
+    print(
+        "Inserted application_ids (i.e. application rows) :"
+        f" {[row['application_id'] for row in rows]}"
+    )
     return rows
 
 
@@ -333,15 +376,37 @@ def bulk_update_location_jsonb_blob(application_ids_to_location_data):
         .values(location_json_blob=bindparam("location_data"))
     )
 
-    update_params = [
-        {
-            "app_id": item["application_id"],
-            "location_data": item["location"],
-        }
-        for item in application_ids_to_location_data
-    ]
+    for item in application_ids_to_location_data:
+        existing_location_data = (
+            db.session.query(AssessmentRecord.location_json_blob)
+            .filter_by(application_id=item["application_id"])
+            .scalar()
+        )
 
-    db.session.execute(stmt, update_params)
+        if not existing_location_data:
+            print("Seeding location data")
+            db.session.execute(
+                stmt,
+                {
+                    "app_id": item["application_id"],
+                    "location_data": item["location"],
+                },
+            )
+
+        elif existing_location_data["error"] is True:
+            print("Updating location data")
+            db.session.execute(
+                stmt,
+                {
+                    "app_id": item["application_id"],
+                    "location_data": item["location"],
+                },
+            )
+
+        else:
+            print("Location data already exists")
+            continue
+
     db.session.commit()
 
 
@@ -358,3 +423,46 @@ def update_status_to_completed(application_id):
     )
 
     db.session.commit()
+
+
+def get_assessment_records_by_round_id(round_id):
+    """
+    Retrieves assessment records and scores based on the provided round ID.
+
+    Parameters:
+    - round_id: Short identification code used to query assessment records.
+
+    Returns:
+    - List of dictionaries containing relevant information extracted from assessment records and scores.
+    Each dictionary represents a record and includes the following fields:
+
+        - "Short id": Short identification code of the assessment record.
+        - "Application ID": Identification of the associated application.
+        - "Score Subcriteria": ID of the score subcriteria.
+        - "Score": Score assigned to the subcriteria.
+        - "Score Justification": Justification for the assigned score.
+        - "Score Date Created": Date when the score was created.
+    """
+    # Query assessment records and scores
+    assessment_records = (
+        AssessmentRecord.query.filter(AssessmentRecord.round_id == round_id)
+        .options(joinedload(AssessmentRecord.scores))
+        .all()
+    )
+
+    # Extract relevant information and format the output
+    output = []
+    for record in assessment_records:
+        for score in record.scores:
+            output.append(
+                {
+                    "Short id": record.short_id,
+                    "Application ID": record.application_id,
+                    "Score Subcriteria": score.sub_criteria_id,
+                    "Score": score.score,
+                    "Score Justification": score.justification,
+                    "Score Date Created": score.date_created,
+                }
+            )
+
+    return output

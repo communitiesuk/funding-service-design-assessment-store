@@ -7,6 +7,7 @@ answer_schema = {
         "properties": {
             "field_id": field_id_schema,
             "form_name": {"type": "string"},
+            "path": {"type": "string"},
             "field_type": {
                 "type": "string",
                 "enum": [
@@ -14,7 +15,7 @@ answer_schema = {
                     "yesNoField",
                     "radiosField",
                     "datePartsField",
-                    "UkAddressField",
+                    "ukAddressField",
                     "websiteField",
                     "multiInputField",
                     "multilineTextField",
@@ -23,6 +24,9 @@ answer_schema = {
                     "numberField",
                     "checkboxesField",
                     "fileUploadField",
+                    "clientSideFileUploadField",
+                    "freeTextField",
+                    "monthYearField",
                 ],
             },
             "presentation_type": {
@@ -38,9 +42,12 @@ answer_schema = {
                     # "numberField",
                     # "emailAddressField",
                     # "telephoneNumberField",
+                    # "monthYearField",
+                    "free_text",
+                    # freeTextField
                     "address",
                     # covers:
-                    # "UkAddressField",
+                    # "ukAddressField",
                     "list",
                     # covers:
                     # "multiInputField",
@@ -61,9 +68,20 @@ answer_schema = {
                     "amount",
                     # covers:
                     # "amount (£) for add-another component question"
+                    "s3bucketPath",
+                    # covers:
+                    # "clientSideFileUploadField",
+                    "table",
+                    # covers:
+                    # new add-another component with children support
+                    # see https://github.com/communitiesuk/digital-form-builder/pull/161
                 ],
             },
             "question": {"type": ["string", "array"]},
+            "branched_field": {
+                "type": ["integer"],
+                "optional": True,
+            },
         },
         "additionalProperties": False,
         "minProperties": 4,

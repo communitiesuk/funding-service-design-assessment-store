@@ -103,7 +103,7 @@ unscored_sections = [
                             {
                                 "field_id": "ZQolYb",
                                 "form_name": "organisation-information",
-                                "field_type": "UkAddressField",
+                                "field_type": "ukAddressField",
                                 "presentation_type": "address",
                                 "question": "Organisation address",
                             },
@@ -117,7 +117,7 @@ unscored_sections = [
                             {
                                 "field_id": "VhkCbM",
                                 "form_name": "organisation-information",
-                                "field_type": "UkAddressField",
+                                "field_type": "ukAddressField",
                                 "presentation_type": "address",
                                 "question": "Correspondence address",
                             },
@@ -177,7 +177,7 @@ unscored_sections = [
                             {
                                 "field_id": "biTJjF",
                                 "form_name": "organisation-information",
-                                "field_type": "UkAddressField",
+                                "field_type": "ukAddressField",
                                 "presentation_type": "address",
                                 "question": "Partner organisation address",
                             },
@@ -461,7 +461,7 @@ unscored_sections = [
                             {
                                 "field_id": "yEmHpp",
                                 "form_name": "project-information",
-                                "field_type": "UkAddressField",
+                                "field_type": "ukAddressField",
                                 "presentation_type": "address",
                                 "question": "Address of the community asset",
                             },

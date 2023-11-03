@@ -1,6 +1,9 @@
 import csv
 
 import requests
+from config.mappings.assessment_mapping_fund_round import (
+    fund_round_data_key_mappings,
+)
 from db.queries.assessment_records.queries import (
     bulk_update_location_jsonb_blob,
 )
@@ -21,20 +24,31 @@ def get_application_form(app_json_blob):
     ]
 
 
-def get_postcode_from_questions(form_questions) -> str:
+def get_postcode_from_questions(form_questions, fundround) -> str:
     """
     Retrieves the postcode from the 'address of asset' field from the
     supplied list of application form questions.
     Returns the postcode stripped of whitespace and converted to UPPERCASE
     """
+    raw_postcode = ""
+    location_key = fund_round_data_key_mappings[fundround]["location"]
     for question in form_questions:
         for field in question["fields"]:
-            if field["key"] == "yEmHpp":
+            if field["key"] == location_key:
                 answer = field["answer"]
                 raw_postcode = answer.split(",")[-1]
                 if raw_postcode:
-                    postcode = raw_postcode.strip().replace(" ", "").upper()
-                    return postcode
+                    raw_postcode = (
+                        raw_postcode.strip().replace(" ", "").upper()
+                    )
+
+    if not raw_postcode:
+        raw_postcode = "Not Available"
+        print(
+            f"The location key {location_key} is not found in the form_questions!"
+        )
+
+    return raw_postcode
 
 
 def get_all_application_ids_for_fund_round(fund_id, round_id) -> list:
@@ -55,15 +69,42 @@ def retrieve_data_from_postcodes_io(postcodes: list):
     postcodes.io bulk postcode lookup api and then writes the result to the
     specified file
     """
+
+    # Create a JSON object with the postcodes data
+    postcode_json_data = {"postcodes": postcodes}
+
+    # Set the Content-Type header to application/json
+    headers = {"Content-Type": "application/json"}
+
+    # Send a POST request to the API with the JSON object and headers
     result = requests.post(
-        url="http://api.postcodes.io/postcodes", data={"postcodes": postcodes}
+        url="http://api.postcodes.io/postcodes",
+        json=postcode_json_data,
+        headers=headers,
     )
     if result.status_code == 200:
         return result
     else:
-        print(postcodes)
+        print(postcode_json_data)
         print(result.text)
         raise Exception("Unexpected response code from postcodes.io")
+
+
+def location_not_found(error: bool = True):
+    """A function that returns a dictionary with default values
+    indicating that a location was not found.
+    Params:
+    error (bool): A boolean value of False means the location was found,
+    while a value of True means the location was not found."""
+
+    return {
+        "error": error,
+        "postcode": "Not Available",
+        "country": "Not Available",
+        "constituency": "Not Available",
+        "region": "Not Available",
+        "county": "Not Available",
+    }
 
 
 def extract_location_data(json_data_item):
@@ -104,7 +145,7 @@ def extract_location_data(json_data_item):
             }
         }
     else:
-        result = {postcode: {"error": True}}
+        result = {postcode: location_not_found()}
     return result
 
 
@@ -114,15 +155,35 @@ def get_all_location_data(just_postcodes) -> dict:
     location data for each one, and returns a map of postcodes to location
     details
     """
-    raw_location_data = retrieve_data_from_postcodes_io(just_postcodes)
+    # postcode.io API postcode query limit
+    print(f"Getting address information for {len(just_postcodes)} postcodes.")
+    max_len = 99
+    just_postcodes_sub_lists = [
+        just_postcodes[i : i + max_len]  # noqa
+        for i in range(0, len(just_postcodes), max_len)
+    ]
+
+    postcode_result_chunks = []
+    for sub_list in just_postcodes_sub_lists:
+        raw_location_data = retrieve_data_from_postcodes_io(sub_list)
+        postcode_result_chunks.append(raw_location_data)
 
     postcodes_to_location_data = {}
-
-    for postcode_data_item in raw_location_data.json()["result"]:
-        postcode = postcode_data_item["query"]
-        location_data = extract_location_data(postcode_data_item)
-        postcodes_to_location_data[postcode] = location_data[postcode]
-
+    fail_count = 0
+    for raw_location_data in postcode_result_chunks:
+        for postcode_data_item in raw_location_data.json()["result"]:
+            postcode = postcode_data_item["query"]
+            location_data = extract_location_data(postcode_data_item)
+            if location_data[postcode]["error"]:
+                print(
+                    "There was a problem extracting address"
+                    f" information for postcode: {postcode}."
+                )
+                fail_count += 1
+            postcodes_to_location_data[postcode] = location_data[postcode]
+    print(
+        f"Failed to retrieve address information for {fail_count} postcodes."
+    )
     return postcodes_to_location_data
 
 
@@ -140,6 +201,10 @@ def update_db_with_location_data(
         }
         for application_id, postcode in application_ids_to_postcodes.items()
     ]
+    print(
+        "Updating assessment records with postcode matched address"
+        " information."
+    )
     bulk_update_location_jsonb_blob(application_ids_to_location_data)
 
 
@@ -166,3 +231,39 @@ def write_locations_to_csv(
             writer.writerow(
                 {"application_id": k[1], **postcodes_to_location_data[v]}
             )
+
+
+def export_assessment_data_to_csv(output, filename):
+    """
+    Exports assessment data to a CSV file, splitting the
+    'Score Date Created' column into separate 'Date Created' and
+    'Time Created' columns for improved readability.
+
+    Parameters:
+    - output: List of dictionaries representing the assessment data.
+    - filename: Name of the output CSV file.
+    """
+    fieldnames = [
+        "Short id",
+        "Application ID",
+        "Score Subcriteria",
+        "Score",
+        "Score Justification",
+        "Date Created",
+        "Time Created",
+    ]
+
+    with open(filename, "w", newline="") as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+        writer.writeheader()
+
+        for row in output:
+            score_date_created = row["Score Date Created"]
+            row["Date Created"] = score_date_created.strftime("%d/%m/%Y")
+            row["Time Created"] = score_date_created.strftime("%H:%M:%S")
+            del row["Score Date Created"]
+
+            writer.writerow(row)
+
+    print(f"Successfully exported to {filename}")

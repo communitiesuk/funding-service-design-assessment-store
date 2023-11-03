@@ -104,10 +104,6 @@ def get_assessor_task_list_state(application_id: str) -> dict:
         metadata["fund_id"], metadata["round_id"], score_map, comment_map
     )
 
-    # we don't need to return round_id as it's not relevant to the frontend
-    # (same with fund_id, but we're using that at the moment for fund_name)
-    metadata = {k: v for k, v in metadata.items() if k not in ["round_id"]}
-
     metadata["sections"] = sections
     metadata["criterias"] = criterias
 
@@ -129,7 +125,11 @@ def update_ar_status_to_completed(application_id: str):
 
 
 def assessment_stats_for_fund_round_id(
-    fund_id: str, round_id: str
+    fund_id: str,
+    round_id: str,
+    search_term: str = "",
+    asset_type: str = "ALL",
+    status: str = "ALL",
 ) -> List[Dict]:
     """
     Function used by the endpoint
@@ -143,7 +143,11 @@ def assessment_stats_for_fund_round_id(
     """
     stats = {}
     assessments = get_metadata_for_fund_round_id(
-        fund_id=fund_id, round_id=round_id
+        fund_id=fund_id,
+        round_id=round_id,
+        search_term=search_term,
+        asset_type=asset_type,
+        status=status,
     )
     assessment_ids = [
         application["application_id"] for application in assessments
@@ -172,7 +176,7 @@ def assessment_stats_for_fund_round_id(
                 [
                     1
                     for assessment in assessments
-                    if assessment["workflow_status"] == "ASSESSING"
+                    if assessment["workflow_status"] == "IN_PROGRESS"
                 ]
             ),
             "not_started": len(

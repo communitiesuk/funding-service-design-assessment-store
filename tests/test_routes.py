@@ -7,13 +7,16 @@ from api.routes.subcriterias.get_sub_criteria import (
 from db.models.assessment_record.assessment_records import AssessmentRecord
 from db.models.flags.enums import FlagType
 from db.queries.flags.queries import create_flag_for_application
-from fsd_utils import CommonConfig
 from tests._expected_responses import APPLICATION_METADATA_RESPONSE
 from tests._expected_responses import ASSESSMENTS_STATS_RESPONSE
 from tests._helpers import get_rows_by_filters
 from tests.conftest import test_input_data
 
 from ._expected_responses import subcriteria_themes_and_expected_response
+
+COF_FUND_ID = "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4"
+COF_ROUND_2_ID = "c603d114-5364-4474-a0c4-c41cbf4d3bbd"
+COF_ROUND_2_W3_ID = "5cf439bf-ef6f-431e-92c5-a1d90a4dd32f"
 
 
 @pytest.mark.apps_to_insert(test_input_data)
@@ -30,7 +33,7 @@ def test_get_assessments_stats(client, seed_application_records):
     # so that one result from the set is flagged as QA_COMPLETED
     create_flag_for_application(
         justification="bob",
-        section_to_flag="Overview",
+        sections_to_flag=["Overview"],
         application_id=applications[0]["application_id"],
         user_id="abc",
         flag_type=FlagType.QA_COMPLETED,
@@ -50,7 +53,7 @@ def test_get_assessments_stats(client, seed_application_records):
 
     create_flag_for_application(
         justification="QA Complete Test 1",
-        section_to_flag="Overview",
+        sections_to_flag=["Overview"],
         application_id=applications[1]["application_id"],
         user_id="abc",
         flag_type=FlagType.QA_COMPLETED,
@@ -58,7 +61,7 @@ def test_get_assessments_stats(client, seed_application_records):
 
     create_flag_for_application(
         justification="QA Complete Test 1",
-        section_to_flag="Overview",
+        sections_to_flag=["Overview"],
         application_id=applications[1]["application_id"],
         user_id="abc",
         flag_type=FlagType.FLAGGED,
@@ -96,7 +99,7 @@ def test_gets_all_apps_for_fund_round(
     # Check application overview returns flags in order of descending
     create_flag_for_application(
         justification="Test 1",
-        section_to_flag="Overview",
+        sections_to_flag=["Overview"],
         application_id=application_id,
         user_id="abc",
         flag_type=FlagType.FLAGGED,
@@ -104,7 +107,7 @@ def test_gets_all_apps_for_fund_round(
 
     create_flag_for_application(
         justification="Test 2",
-        section_to_flag="Overview",
+        sections_to_flag=["Overview"],
         application_id=application_id,
         user_id="abc",
         flag_type=FlagType.RESOLVED,
@@ -112,7 +115,7 @@ def test_gets_all_apps_for_fund_round(
 
     create_flag_for_application(
         justification="Test 3",
-        section_to_flag="Overview",
+        sections_to_flag=["Overview"],
         application_id=application_id,
         user_id="abc",
         flag_type=FlagType.STOPPED,
@@ -296,8 +299,8 @@ def test_random_theme_content(seed_application_records):
     result = map_application_with_sub_criteria_themes(
         application_id,
         theme_id,
-        CommonConfig.COF_FUND_ID,
-        CommonConfig.COF_ROUND_2_W3_ID,
+        COF_FUND_ID,
+        COF_ROUND_2_W3_ID,
     )
 
     assert result[0]["answer"] == expected_response
@@ -316,8 +319,8 @@ def test_convert_boolean_values(seed_application_records):
     results = map_application_with_sub_criteria_themes(
         application_id,
         theme_id,
-        CommonConfig.COF_FUND_ID,
-        CommonConfig.COF_ROUND_2_W3_ID,
+        COF_FUND_ID,
+        COF_ROUND_2_W3_ID,
     )
 
     assert [

@@ -3,6 +3,7 @@
 Joins allowed.
 """
 from typing import Dict
+from typing import Iterable
 
 from db import db
 from db.models import Flag
@@ -13,14 +14,14 @@ from sqlalchemy import and_
 
 def create_flag_for_application(
     justification: str,
-    section_to_flag: str,
+    sections_to_flag: str,
     application_id: str,
     user_id: str,
     flag_type: FlagType,
 ) -> Dict:
     flag = Flag(
         justification=justification,
-        section_to_flag=section_to_flag,
+        sections_to_flag=sections_to_flag,
         application_id=application_id,
         user_id=user_id,
         flag_type=flag_type,
@@ -28,6 +29,14 @@ def create_flag_for_application(
     db.session.add(flag)
     db.session.commit()
 
+    metadata_serialiser = FlagMetadata()
+    flag_metadata = metadata_serialiser.dump(flag)
+
+    return flag_metadata
+
+
+def retrieve_flag(flag_id: str) -> dict:
+    flag = Flag.query.filter(Flag.id == flag_id).first()
     metadata_serialiser = FlagMetadata()
     flag_metadata = metadata_serialiser.dump(flag)
 
@@ -45,6 +54,30 @@ def retrieve_flag_for_application(application_id: str) -> dict:
     flag_metadata = metadata_serialiser.dump(flag)
 
     return flag_metadata
+
+
+def retrieve_all_flags_for_application(application_id: str) -> list[dict]:
+    flags = (
+        Flag.query.filter(Flag.application_id == application_id)
+        .order_by(Flag.date_created.desc())
+        .all()
+    )
+    metadata_serialiser = FlagMetadata()
+    flag_metadata_list = [metadata_serialiser.dump(flag) for flag in flags]
+    return flag_metadata_list
+
+
+def find_qa_complete_flags(application_ids: Iterable[str]) -> dict[str, bool]:
+    flags = Flag.query.filter(
+        Flag.application_id.in_(application_ids),
+        Flag.flag_type == "QA_COMPLETED",
+    ).all()
+
+    qa_completed_application_ids = {flag.application_id for flag in flags}
+    return {
+        app_id: app_id in qa_completed_application_ids
+        for app_id in application_ids
+    }
 
 
 def find_qa_complete_flag(application_id):

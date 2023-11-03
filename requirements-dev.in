@@ -3,7 +3,7 @@ bandit
 black
 deepdiff
 invoke
-pip-tools
+pip-tools>=6.13.0
 pre-commit
 pytest
 pytest-env
@@ -14,3 +14,4 @@ json2html==1.3.0
 colored
 mypy
 sqlalchemy-stubs
+debugpy
