@@ -5129,3 +5129,817 @@ cypr1_application_store_json_template = Template(
 }
 """
 )
+
+dpifr2_application_store_json_template = Template(
+    """
+{
+  "account_id": "cc689365-3fde-43af-bcda-d12f92592b8d",
+  "date_submitted": "2023-10-26T15:18:31.661941",
+  "fund_id": "1baa0f68-4e0a-4b02-9dfe-b5646f089e65",
+  "id": "$app_id",
+  "language": "en",
+  "last_edited": "2023-10-26T15:17:56.662405",
+  "project_name": "Other Test App",
+  "reference": "CYP-R1-UPDGIA",
+  "round_id": "888aae3d-7e2c-4523-b9c1-95952b3d1644",
+  "round_name": "Round 1",
+  "started_at": "2023-10-26T15:10:37.126520",
+  "status": "SUBMITTED",
+  "forms": [
+    {
+      "name": "existing-work-cyp",
+      "questions": [
+        {
+          "category": "PPssHV",
+          "fields": [
+            {
+              "answer": "<p>asdasd</p>",
+              "key": "MbDkNZ",
+              "title": "How will you avoid duplicating existing work or projects in this area?",
+              "type": "freeText"
+            }
+          ],
+          "index": 0,
+          "question": "How will you avoid duplicating existing work or projects in this area?",
+          "status": "COMPLETED"
+        },
+        {
+          "category": null,
+          "fields": [
+            {
+              "answer": true,
+              "key": "markAsComplete",
+              "title": "Do you want to mark this section as complete?",
+              "type": "boolean"
+            }
+          ],
+          "question": "MarkAsComplete",
+          "status": "COMPLETED"
+        }
+      ],
+      "status": "COMPLETED"
+    },
+    {
+      "name": "project-milestones-cyp",
+      "questions": [
+        {
+          "category": "zACCPu",
+          "fields": [
+            {
+              "answer": [
+                {
+                  "HpLJDu": "asdasd",
+                  "LZbOBu": {
+                    "LZbOBu__month": 11,
+                    "LZbOBu__year": 2111
+                  }
+                }
+              ],
+              "key": "tAoOKx",
+              "title": "Project milestones",
+              "type": "multiInput"
+            }
+          ],
+          "index": 0,
+          "question": "Project milestones",
+          "status": "COMPLETED"
+        },
+        {
+          "category": null,
+          "fields": [
+            {
+              "answer": true,
+              "key": "markAsComplete",
+              "title": "Do you want to mark this section as complete?",
+              "type": "boolean"
+            }
+          ],
+          "question": "MarkAsComplete",
+          "status": "COMPLETED"
+        }
+      ],
+      "status": "COMPLETED"
+    },
+    {
+      "name": "working-with-fund-beneficiaries-cyp",
+      "questions": [
+        {
+          "category": "Nyppws",
+          "fields": [
+            {
+              "answer": "<p>asdasd</p>",
+              "key": "XPDbsh",
+              "title": "Tell us how you will identify and work with the intended fund beneficiaries",
+              "type": "freeText"
+            }
+          ],
+          "index": 0,
+          "question": "Tell us how you will identify and work with the intended fund beneficiaries",
+          "status": "COMPLETED"
+        },
+        {
+          "category": null,
+          "fields": [
+            {
+              "answer": true,
+              "key": "markAsComplete",
+              "title": "Do you want to mark this section as complete?",
+              "type": "boolean"
+            }
+          ],
+          "question": "MarkAsComplete",
+          "status": "COMPLETED"
+        }
+      ],
+      "status": "COMPLETED"
+    },
+    {
+      "name": "name-your-application-cyp",
+      "questions": [
+        {
+          "category": "XDnkqz",
+          "fields": [
+            {
+              "answer": "Other Test App",
+              "key": "bsUoNG",
+              "title": "Name your application",
+              "type": "text"
+            }
+          ],
+          "index": 0,
+          "question": "Name your application",
+          "status": "COMPLETED"
+        },
+        {
+          "category": null,
+          "fields": [
+            {
+              "answer": true,
+              "key": "markAsComplete",
+              "title": "Do you want to mark this section as complete?",
+              "type": "boolean"
+            }
+          ],
+          "question": "MarkAsComplete",
+          "status": "COMPLETED"
+        }
+      ],
+      "status": "COMPLETED"
+    },
+    {
+      "name": "applicant-information-cyp",
+      "questions": [
+        {
+          "category": "pyQsHV",
+          "fields": [
+            {
+              "answer": "asdasd",
+              "key": "rKHBnt",
+              "title": "Name of lead contact",
+              "type": "text"
+            },
+            {
+              "answer": "asdasd",
+              "key": "yWtfkb",
+              "title": "Alternative name",
+              "type": "text"
+            },
+            {
+              "answer": "asdasd",
+              "key": "kbOHaM",
+              "title": "Lead contact job title",
+              "type": "text"
+            },
+            {
+              "answer": "a@a.com",
+              "key": "BKOHaM",
+              "title": "Lead contact email address",
+              "type": "text"
+            },
+            {
+              "answer": "2655566",
+              "key": "CyANDT",
+              "title": "Lead contact telephone number",
+              "type": "text"
+            },
+            {
+              "answer": true,
+              "key": "DbFHbD",
+              "title": "Is the lead contact the same person as the authorised signatory?",
+              "type": "list"
+            }
+          ],
+          "index": 0,
+          "question": "Lead contact details",
+          "status": "COMPLETED"
+        },
+        {
+          "category": null,
+          "fields": [
+            {
+              "answer": true,
+              "key": "markAsComplete",
+              "title": "Do you want to mark this section as complete?",
+              "type": "boolean"
+            }
+          ],
+          "question": "MarkAsComplete",
+          "status": "COMPLETED"
+        }
+      ],
+      "status": "COMPLETED"
+    },
+    {
+      "name": "skills-and-experience-cyp",
+      "questions": [
+        {
+          "category": "pyQhSV",
+          "fields": [
+            {
+              "answer": false,
+              "key": "HrGXKi",
+              "title": "Have you delivered projects like this before?",
+              "type": "list"
+            }
+          ],
+          "index": 0,
+          "question": "Have you delivered projects like this before?",
+          "status": "COMPLETED"
+        },
+        {
+          "category": null,
+          "fields": [
+            {
+              "answer": true,
+              "key": "markAsComplete",
+              "title": "Do you want to mark this section as complete?",
+              "type": "boolean"
+            }
+          ],
+          "question": "MarkAsComplete",
+          "status": "COMPLETED"
+        }
+      ],
+      "status": "COMPLETED"
+    },
+    {
+      "name": "objectives-and-activities-cyp",
+      "questions": [
+        {
+          "category": "zzpzem",
+          "fields": [
+            {
+              "answer": [
+                {
+                  "HpLJCu": "asdasd",
+                  "kaQUfV": "asdasd"
+                }
+              ],
+              "key": "tAoPKx",
+              "title": "Objectives and activities",
+              "type": "multiInput"
+            }
+          ],
+          "index": 0,
+          "question": "Objectives and activities",
+          "status": "COMPLETED"
+        },
+        {
+          "category": null,
+          "fields": [
+            {
+              "answer": true,
+              "key": "markAsComplete",
+              "title": "Do you want to mark this section as complete?",
+              "type": "boolean"
+            }
+          ],
+          "question": "MarkAsComplete",
+          "status": "COMPLETED"
+        }
+      ],
+      "status": "COMPLETED"
+    },
+    {
+      "name": "location-of-activities-cyp",
+      "questions": [
+        {
+          "category": "wxOzRK",
+          "fields": [
+            {
+              "answer": true,
+              "key": "iqqqTk",
+              "title": "Is the project taking place regionally?",
+              "type": "list"
+            }
+          ],
+          "index": 0,
+          "question": "Is the project taking place regionally?",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "wxOzRK",
+          "fields": [
+            {
+              "answer": [
+                {
+                  "kaQUSV": "asdasda"
+                }
+              ],
+              "key": "tApPKx",
+              "title": "Which local authority areas will you work across?",
+              "type": "multiInput"
+            }
+          ],
+          "index": 0,
+          "question": "Which local authority areas will you work across?",
+          "status": "COMPLETED"
+        },
+        {
+          "category": null,
+          "fields": [
+            {
+              "answer": true,
+              "key": "markAsComplete",
+              "title": "Do you want to mark this section as complete?",
+              "type": "boolean"
+            }
+          ],
+          "question": "MarkAsComplete",
+          "status": "COMPLETED"
+        }
+      ],
+      "status": "COMPLETED"
+    },
+    {
+      "name": "outputs-and-outcomes-cyp",
+      "questions": [
+        {
+          "category": "vhPnrc",
+          "fields": [
+            {
+              "answer": "<p>asdasd</p>",
+              "key": "MADkNZ",
+              "title": "Give a brief summary of your project, including what you hope to achieve",
+              "type": "freeText"
+            }
+          ],
+          "index": 0,
+          "question": "Give a brief summary of your project, including what you hope to achieve",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "vhPnrc",
+          "fields": [
+            {
+              "answer": "<p>asdasd</p>",
+              "key": "nbDkNZ",
+              "title": "How will you measure the outcome of your project?",
+              "type": "freeText"
+            }
+          ],
+          "index": 0,
+          "question": "How will you measure the outcome of your project?",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "vhPnrc",
+          "fields": [
+            {
+              "answer": [
+                "trauma-support"
+              ],
+              "key": "fHodTO",
+              "title": "What is the main focus of your project?",
+              "type": "list"
+            }
+          ],
+          "index": 0,
+          "question": "What is the main focus of your project?",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "vhPnrc",
+          "fields": [
+            {
+              "answer": [
+                "ukrainian-schemes"
+              ],
+              "key": "vYYoAC",
+              "title": "Which cohort will your project focus on?",
+              "type": "list"
+            }
+          ],
+          "index": 0,
+          "question": "Which cohort will your project focus on?",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "vhPnrc",
+          "fields": [
+            {
+              "answer": "453",
+              "key": "tAtJGz",
+              "title": "How many fund recipients from the Ukraine schemes do you expect your project to support with the funding?",
+              "type": "text"
+            }
+          ],
+          "index": 0,
+          "question": "How many fund recipients from the Ukraine schemes do you expect your project to support with the funding?",
+          "status": "COMPLETED"
+        },
+        {
+          "category": null,
+          "fields": [
+            {
+              "answer": true,
+              "key": "markAsComplete",
+              "title": "Do you want to mark this section as complete?",
+              "type": "boolean"
+            }
+          ],
+          "question": "MarkAsComplete",
+          "status": "COMPLETED"
+        }
+      ],
+      "status": "COMPLETED"
+    },
+    {
+      "name": "risk-and-deliverability-cyp",
+      "questions": [
+        {
+          "category": "hhbMar",
+          "fields": [
+            {
+              "answer": [
+                {
+                  "CzoasH": "asdasd",
+                  "MPHvIr": "High",
+                  "SKQluJ": "asdasd",
+                  "eADHGN": "High"
+                }
+              ],
+              "key": "qQLYzL",
+              "title": "Risks to the project",
+              "type": "multiInput"
+            }
+          ],
+          "index": 0,
+          "question": "Risks to the project",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "hhbMar",
+          "fields": [
+            {
+              "answer": "asdasd",
+              "key": "KHESdE",
+              "title": "Who owns the overall risk register?",
+              "type": "text"
+            }
+          ],
+          "index": 0,
+          "question": "Who owns the overall risk register?",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "hhbMar",
+          "fields": [
+            {
+              "answer": "<p>asdasd</p>",
+              "key": "KHESFr",
+              "title": "Tell us about your organisation's governance structure",
+              "type": "freeText"
+            }
+          ],
+          "index": 0,
+          "question": "Tell us about your organisation's governance structure",
+          "status": "COMPLETED"
+        },
+        {
+          "category": null,
+          "fields": [
+            {
+              "answer": true,
+              "key": "markAsComplete",
+              "title": "Do you want to mark this section as complete?",
+              "type": "boolean"
+            }
+          ],
+          "question": "MarkAsComplete",
+          "status": "COMPLETED"
+        }
+      ],
+      "status": "COMPLETED"
+    },
+    {
+      "name": "value-for-money-cyp",
+      "questions": [
+        {
+          "category": "xYdwyD",
+          "fields": [
+            {
+              "answer": "43545",
+              "key": "JXKUcj",
+              "title": "27 September 2023 to 31 March 2024",
+              "type": "text"
+            },
+            {
+              "answer": "3454",
+              "key": "OnPeeS",
+              "title": "1 April 2024 to 31 March 2025",
+              "type": "text"
+            }
+          ],
+          "index": 0,
+          "question": "Funding requested",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "xYdwyD",
+          "fields": [
+            {
+              "answer": [
+                {
+                  "JizgZP": 122,
+                  "gLQlyJ": "asdasd",
+                  "kjuHtl": "27 September 2023 to 31 March 2024"
+                }
+              ],
+              "key": "qwktzL",
+              "title": "Item of expenditure",
+              "type": "multiInput"
+            }
+          ],
+          "index": 0,
+          "question": "Item of expenditure",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "xYdwyD",
+          "fields": [
+            {
+              "answer": true,
+              "key": "qwktlZ",
+              "title": "Will you use additional funding for your project?",
+              "type": "list"
+            }
+          ],
+          "index": 0,
+          "question": "Will you use additional funding for your project?",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "xYdwyD",
+          "fields": [
+            {
+              "answer": [
+                {
+                  "HpLJyL": {
+                    "HpLJyL__month": 11,
+                    "HpLJyL__year": 1242
+                  },
+                  "MadvIr": "Capital",
+                  "gLqiyJ": "asdasd",
+                  "yuzbjT": 2123
+                }
+              ],
+              "key": "qqktzL",
+              "title": "Funding source",
+              "type": "multiInput"
+            }
+          ],
+          "index": 0,
+          "question": "Additional funding",
+          "status": "COMPLETED"
+        },
+        {
+          "category": null,
+          "fields": [
+            {
+              "answer": true,
+              "key": "markAsComplete",
+              "title": "Do you want to mark this section as complete?",
+              "type": "boolean"
+            }
+          ],
+          "question": "MarkAsComplete",
+          "status": "COMPLETED"
+        }
+      ],
+      "status": "COMPLETED"
+    },
+    {
+      "name": "about-your-organisation-cyp",
+      "questions": [
+        {
+          "category": "uLwBuz",
+          "fields": [
+            {
+              "answer": "Another test org",
+              "key": "JbmcJE",
+              "title": "Organisation name",
+              "type": "text"
+            },
+            {
+              "answer": false,
+              "key": "KUdOhN",
+              "title": "Does your organisation use any other names?",
+              "type": "list"
+            }
+          ],
+          "index": 0,
+          "question": "Organisation details",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "uLwBuz",
+          "fields": [
+            {
+              "answer": "<p>asdasd</p>",
+              "key": "kxgOne",
+              "title": "Activity 1",
+              "type": "freeText"
+            },
+            {
+              "answer": null,
+              "key": "kxgTwo",
+              "title": "Activity 2 (optional)",
+              "type": "freeText"
+            },
+            {
+              "answer": null,
+              "key": "kxgThr",
+              "title": "Activity 3 (optional)",
+              "type": "freeText"
+            }
+          ],
+          "index": 0,
+          "question": "Tell us about your organisation's main activities",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "uLwBuz",
+          "fields": [
+            {
+              "answer": "upper-or-lower-tier-local-authority",
+              "key": "jcmcJE",
+              "title": "Organisation classification",
+              "type": "list"
+            }
+          ],
+          "index": 0,
+          "question": "How is your organisation classified?",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "uLwBuz",
+          "fields": [
+            {
+              "answer": "asdasd",
+              "key": "jencJE",
+              "title": "Company registration number",
+              "type": "text"
+            }
+          ],
+          "index": 0,
+          "question": "Company registration number (optional)",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "uLwBuz",
+          "fields": [
+            {
+              "answer": "asd, asda, sdas, dasd, ss22ss",
+              "key": "rmBPvK",
+              "title": "Registered organisation address",
+              "type": "text"
+            }
+          ],
+          "index": 0,
+          "question": "Registered organisation address",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "uLwBuz",
+          "fields": [
+            {
+              "answer": null,
+              "key": "smBPvK",
+              "title": "Alternative organisation address",
+              "type": "text"
+            }
+          ],
+          "index": 0,
+          "question": "Alternative organisation address (optional)",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "uLwBuz",
+          "fields": [
+            {
+              "answer": false,
+              "key": "MRdGKt",
+              "title": "Is your application a joint bid in partnership with other organisations?",
+              "type": "list"
+            }
+          ],
+          "index": 0,
+          "question": "Is your application a joint bid in partnership with other organisations?",
+          "status": "COMPLETED"
+        },
+        {
+          "category": "uLwBuz",
+          "fields": [
+            {
+              "answer": [
+                {
+                  "EShKlA": "http://localhost:3009/about-your-organisation-cyp/website-and-social-media?form_session_identifier=81eb9af9-10a1-4ed1-8cc0-9043c05153f9"
+                }
+              ],
+              "key": "tYoOqx",
+              "title": "Website and social media",
+              "type": "multiInput"
+            }
+          ],
+          "index": 0,
+          "question": "Website and social media",
+          "status": "COMPLETED"
+        },
+        {
+          "category": null,
+          "fields": [
+            {
+              "answer": true,
+              "key": "markAsComplete",
+              "title": "Do you want to mark this section as complete?",
+              "type": "boolean"
+            }
+          ],
+          "question": "MarkAsComplete",
+          "status": "COMPLETED"
+        }
+      ],
+      "status": "COMPLETED"
+    },
+    {
+      "name": "declarations-cyp",
+      "questions": [
+        {
+          "category": "OEGHno",
+          "fields": [
+            {
+              "answer": true,
+              "key": "sdeLyR",
+              "title": "Confirm your organisation adheres to the government code of conduct",
+              "type": "list"
+            },
+            {
+              "answer": true,
+              "key": "SUTxtj",
+              "title": "Confirm your organisation has a data handling process in place",
+              "type": "list"
+            },
+            {
+              "answer": true,
+              "key": "WWHYDI",
+              "title": "Confirm you have a bank account set up and associated with the organisation you are applying on behalf of",
+              "type": "list"
+            },
+            {
+              "answer": true,
+              "key": "WGmcyu",
+              "title": "Confirm that your organisation's safegaurding policies are up to date",
+              "type": "list"
+            },
+            {
+              "answer": true,
+              "key": "WGmDZu",
+              "title": "Confirm that the information you've provided in this application is accurate to the best of your knowledge on the date of submission",
+              "type": "list"
+            }
+          ],
+          "index": 0,
+          "question": "Agree to the final confirmations",
+          "status": "COMPLETED"
+        },
+        {
+          "category": null,
+          "fields": [
+            {
+              "answer": true,
+              "key": "markAsComplete",
+              "title": "Do you want to mark this section as complete?",
+              "type": "boolean"
+            }
+          ],
+          "question": "MarkAsComplete",
+          "status": "COMPLETED"
+        }
+      ],
+      "status": "COMPLETED"
+    }
+  ]
+}
+"""
+)
