@@ -6,10 +6,10 @@ from typing import Dict
 
 from db import db
 from db.models import AssessmentRecord
+from db.models.score import AssessmentRound
 from db.models.score import Score
-from db.models.score import ScoringSystem
+from db.schemas import AssessmentRoundMetadata
 from db.schemas import ScoreMetadata
-from db.schemas import ScoringSystemMetadata
 from sqlalchemy import select
 
 
@@ -108,11 +108,11 @@ def get_sub_criteria_to_latest_score_map(application_id: str) -> dict:
 
 def get_scoring_system_for_round_id(round_id: str) -> dict:
     stmt = select(
-        [ScoringSystem.scoring_system, ScoringSystem.round_id]
-    ).where(ScoringSystem.round_id == round_id)
+        [AssessmentRound.scoring_system, AssessmentRound.round_id]
+    ).where(AssessmentRound.round_id == round_id)
 
     scoring_system = db.session.execute(stmt).one()
-    metadata_serialiser = ScoringSystemMetadata()
+    metadata_serialiser = AssessmentRoundMetadata()
     processed_scoring_system = metadata_serialiser.dump(scoring_system)
 
     return processed_scoring_system
@@ -121,13 +121,13 @@ def get_scoring_system_for_round_id(round_id: str) -> dict:
 def insert_scoring_system_for_round_id(
     round_id: str, scoring_system: str
 ) -> dict:
-    scoring_system = ScoringSystem(
+    scoring_system = AssessmentRound(
         round_id=round_id,
         scoring_system=scoring_system,
     )
     db.session.add(scoring_system)
     db.session.commit()
 
-    metadata_serialiser = ScoringSystemMetadata()
+    metadata_serialiser = AssessmentRoundMetadata()
     inserted_scoring_system = metadata_serialiser.dump(scoring_system)
     return inserted_scoring_system

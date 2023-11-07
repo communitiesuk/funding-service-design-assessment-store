@@ -38,11 +38,11 @@ class Score(db.Model):
     user_id = db.Column("user_id", db.String(), nullable=False)
 
 
-class ScoringSystem(db.Model):
+class AssessmentRound(db.Model):
     """The sqlalchemy-flask model class used to define the
-    `scoring_system` table in the Postgres database."""
+    `assessment round` table in the Postgres database."""
 
-    __tablename__ = "scoring_system"
+    __tablename__ = "assessment_round"
 
     round_id = db.Column(
         "round_id", UUID(as_uuid=True), default=uuid.uuid4, primary_key=True
