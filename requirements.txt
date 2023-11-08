@@ -5,7 +5,11 @@
 #    pip-compile requirements.in
 #
 alembic==1.9.4
-    # via flask-migrate
+    # via
+    #   alembic-utils
+    #   flask-migrate
+alembic-utils==0.8.2
+    # via -r requirements.in
 apscheduler==3.10.4
     # via flask-apscheduler
 async-timeout==4.0.2
@@ -80,6 +84,8 @@ flask-sqlalchemy==3.0.3
     #   funding-service-design-utils
 flipper-client==1.3.1
     # via funding-service-design-utils
+flupy==1.2.0
+    # via alembic-utils
 funding-service-design-utils==2.0.30
     # via -r requirements.in
 gunicorn==20.1.0
@@ -137,6 +143,8 @@ packaging==21.3
     #   marshmallow
     #   marshmallow-sqlalchemy
     #   prance
+parse==1.19.1
+    # via alembic-utils
 pathable==0.4.3
     # via jsonschema-spec
 pbr==5.11.0
@@ -222,6 +230,7 @@ sqlalchemy==2.0.23
     # via
     #   -r requirements.in
     #   alembic
+    #   alembic-utils
     #   flask-sqlalchemy
     #   marshmallow-sqlalchemy
     #   sqlalchemy-utils
@@ -237,6 +246,8 @@ thrift==0.16.0
     # via flipper-client
 typing-extensions==4.4.0
     # via
+    #   alembic-utils
+    #   flupy
     #   jsonschema-spec
     #   sqlalchemy
 tzlocal==5.0.1
