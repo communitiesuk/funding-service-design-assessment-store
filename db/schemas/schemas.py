@@ -147,6 +147,7 @@ class JoinedTagAssociationSchema(SQLAlchemyAutoSchema):
     associated = Boolean()
     application_id = UUID()
     user_id = UUID()
+    created_at = String()
 
     class Meta:
         model = None  # Set the model to None since it doesn't directly map to a single model

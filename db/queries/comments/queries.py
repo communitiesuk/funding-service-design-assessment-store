@@ -12,7 +12,7 @@ from sqlalchemy import select
 
 # May need rewrite after testing
 def get_comments_for_application_sub_crit(
-    application_id: str, sub_criteria_id: str, theme_id: str = None
+    application_id: str, sub_criteria_id: str = None, theme_id: str = None
 ) -> Dict:
     """get_comments_for_application_sub_crit executes a query on comments
     which returns a list of comments for the given application_id and
@@ -35,6 +35,14 @@ def get_comments_for_application_sub_crit(
             )
             .order_by(Comment.date_created.desc())
         )
+
+    if not sub_criteria_id and not theme_id:
+        stmt = (
+            select(Comment)
+            .where(Comment.application_id == application_id)
+            .order_by(Comment.date_created.desc())
+        )
+
     else:
         stmt = (
             select(Comment)

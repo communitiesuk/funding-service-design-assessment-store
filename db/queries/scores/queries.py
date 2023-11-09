@@ -12,7 +12,9 @@ from sqlalchemy import select
 
 
 def get_scores_for_app_sub_crit(
-    application_id: str, sub_criteria_id: str, score_history: bool = False
+    application_id: str,
+    sub_criteria_id: str = None,
+    score_history: bool = False,
 ) -> list[dict]:
     """get_scores_for_app_sub_crit executes a query on scores
     which returns the most recent score or all scores for the
@@ -24,14 +26,23 @@ def get_scores_for_app_sub_crit(
     :return: dictionary.
     """
 
-    stmt = (
-        select(Score)
-        .where(
-            Score.application_id == application_id,
-            Score.sub_criteria_id == sub_criteria_id,
+    if sub_criteria_id:
+        stmt = (
+            select(Score)
+            .where(
+                Score.application_id == application_id,
+                Score.sub_criteria_id == sub_criteria_id,
+            )
+            .order_by(Score.date_created.desc())
         )
-        .order_by(Score.date_created.desc())
-    )
+    else:
+        stmt = (
+            select(Score)
+            .where(
+                Score.application_id == application_id,
+            )
+            .order_by(Score.date_created.desc())
+        )
 
     if not score_history:
         stmt = stmt.limit(1)

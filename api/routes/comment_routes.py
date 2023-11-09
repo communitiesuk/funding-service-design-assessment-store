@@ -6,7 +6,7 @@ from flask import request
 
 
 def comments_for_application_sub_criteria(
-    application_id: str, sub_criteria_id: str, theme_id: str = None
+    application_id: str, sub_criteria_id: str = None, theme_id: str = None
 ) -> Dict:
     """comments_for_application_sub_criteria Function
     used by the get endpoint `/applications/{application_id}/
