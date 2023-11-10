@@ -26,8 +26,8 @@ from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 
 
 class AssessmentRecordMetadata(SQLAlchemyAutoSchema):
-    """AssessmentRecordMetadata The marshmallow class used to turn SQLAlchemy
-    rows into json for return in http responses."""
+    """AssessmentRecordMetadata The marshmallow class used to turn SQLAlchemy rows
+    into json for return in http responses."""
 
     class Meta:
         model = AssessmentRecord
@@ -49,8 +49,8 @@ class AssessmentRecordMetadata(SQLAlchemyAutoSchema):
 
 
 class ScoreMetadata(SQLAlchemyAutoSchema):
-    """ScoreMetadata The marshmallow class used to turn SQLAlchemy
-    rows into json for return in http responses."""
+    """ScoreMetadata The marshmallow class used to turn SQLAlchemy rows into json
+    for return in http responses."""
 
     class Meta:
         model = Score
@@ -61,8 +61,8 @@ class ScoreMetadata(SQLAlchemyAutoSchema):
 
 
 class CommentMetadata(SQLAlchemyAutoSchema):
-    """CommentMetadata The marshmallow class used to turn SQLAlchemy
-    rows into json for return in http responses."""
+    """CommentMetadata The marshmallow class used to turn SQLAlchemy rows into
+    json for return in http responses."""
 
     class Meta:
         model = Comment
@@ -74,8 +74,8 @@ class CommentMetadata(SQLAlchemyAutoSchema):
 
 
 class QaCompleteMetadata(SQLAlchemyAutoSchema):
-    """QaCompleteMetadata The marshmallow class used to turn SQLAlchemy
-    rows into json for return in http responses."""
+    """QaCompleteMetadata The marshmallow class used to turn SQLAlchemy rows into
+    json for return in http responses."""
 
     class Meta:
         model = QaComplete
@@ -86,9 +86,8 @@ class QaCompleteMetadata(SQLAlchemyAutoSchema):
 
 
 class AssessorTaskListMetadata(AssessmentRecordMetadata):
-    """AssessorTaskListMetadata The marshmallow class used to turn SQLAlchemy
-    rows into json for return in http responses.
-    """
+    """AssessorTaskListMetadata The marshmallow class used to turn SQLAlchemy rows
+    into json for return in http responses."""
 
     short_id = auto_field(data_key="short_id")
     date_submitted = Field(
@@ -98,8 +97,7 @@ class AssessorTaskListMetadata(AssessmentRecordMetadata):
 
 class AssessmentSubCriteriaMetadata(AssessmentRecordMetadata):
     """AssessmentSubCriteriaMetadata The marshmallow class used to turn SQLAlchemy
-    rows into json for return in http responses.
-    """
+    rows into json for return in http responses."""
 
     funding_amount_requested = auto_field(data_key="funding_amount_requested")
     project_name = auto_field(data_key="project_name")
@@ -174,7 +172,6 @@ class TagNestedSchema(SQLAlchemyAutoSchema):
 
 
 class JoinedTagSchema(SQLAlchemyAutoSchema):
-
     type_id = UUID()
     purpose = String()
     description = String()
@@ -185,7 +182,6 @@ class JoinedTagSchema(SQLAlchemyAutoSchema):
 
 
 class AssessmentRoundMetadata(SQLAlchemyAutoSchema):
-
     scoring_system = fields.Function(lambda obj: obj.scoring_system.name)
 
     class Meta:
