@@ -305,9 +305,8 @@ def test_get_tag(seed_tags):
 def test_get_tag_has_correct_tag_association_count(
     seed_application_records, seed_tags
 ):
-    """
-    The tag association count should update when a tag is disassociated from an application
-    """
+    """The tag association count should update when a tag is disassociated from an
+    application."""
     seeded_tags_info = (
         (seed_tags[0]["id"], seed_tags[0]["value"]),
         (seed_tags[1]["id"], seed_tags[1]["value"]),
@@ -318,9 +317,8 @@ def test_get_tag_has_correct_tag_association_count(
     round_id = seed_tags[0]["round_id"]
 
     def check_tags(expected_associated_count):
-        """ "
-        Compare the seeded tag info with the tag info retrieved from the database
-        """
+        """" Compare the seeded tag info with the tag info retrieved from the
+        database."""
         for seeded_tag in seeded_tags_info:
             tag = get_tag_by_id(fund_id, round_id, seeded_tag[0])
 
