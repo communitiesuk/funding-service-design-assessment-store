@@ -47,6 +47,7 @@ def test_jsonb_blob_immutable(_db, seed_application_records):
     though the sqlalchemy interface raises an error.
 
     Error is defined in `db.models.assessment_record.db_triggers`.
+
     """
 
     picked_row = get_assessment_record(
@@ -81,8 +82,8 @@ def test_non_blob_columns_mutable(_db, seed_application_records):
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
 def test_find_assessor_task_list_ui_metadata(seed_application_records):
-    """test_find_assessor_task_list_ui_metadata Tests that the correct metadata
-    is returned for the assessor task list UI."""
+    """test_find_assessor_task_list_ui_metadata Tests that the correct metadata is
+    returned for the assessor task list UI."""
 
     metadata = find_assessor_task_list_state(
         seed_application_records[0]["application_id"]
@@ -100,8 +101,8 @@ def test_find_assessor_task_list_ui_metadata(seed_application_records):
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
 def test_post_comment(seed_application_records):
-    """test_post_comment tests we can create
-    comment records in the comments table."""
+    """test_post_comment tests we can create comment records in the comments
+    table."""
 
     picked_row = get_assessment_record(
         seed_application_records[0]["application_id"]
@@ -128,9 +129,8 @@ def test_post_comment(seed_application_records):
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
 def test_get_comments(seed_application_records):
-    """test_get_comments tests we can get all comment
-    records in the comments table filtered by application_id,
-    subcriteria_id and theme_id"""
+    """test_get_comments tests we can get all comment records in the comments
+    table filtered by application_id, subcriteria_id and theme_id."""
 
     picked_row = get_assessment_record(
         seed_application_records[0]["application_id"]

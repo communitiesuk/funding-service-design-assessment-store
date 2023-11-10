@@ -14,8 +14,8 @@ from tests.conftest import test_input_data
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
 def test_create_scores_for_application_sub_crit(_db, seed_application_records):
-    """test_create_scores_for_application_sub_crit Tests we can create
-    score records in the scores table in the appropriate format."""
+    """test_create_scores_for_application_sub_crit Tests we can create score
+    records in the scores table in the appropriate format."""
 
     picked_row = get_assessment_record(
         seed_application_records[0]["application_id"]
@@ -39,8 +39,8 @@ def test_create_scores_for_application_sub_crit(_db, seed_application_records):
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
 def test_get_latest_score_for_application_sub_crit(seed_application_records):
-    """test_get_latest_score_for_application_sub_crit Tests we can add
-    score records in the scores table and return the most recently created."""
+    """test_get_latest_score_for_application_sub_crit Tests we can add score
+    records in the scores table and return the most recently created."""
 
     picked_row = get_assessment_record(
         seed_application_records[0]["application_id"]
@@ -73,8 +73,8 @@ def test_get_latest_score_for_application_sub_crit(seed_application_records):
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
 def test_get_score_history(seed_application_records):
-    """test_get_score_history Tests we can get all score
-    records in the scores table"""
+    """test_get_score_history Tests we can get all score records in the scores
+    table."""
 
     picked_row = get_assessment_record(
         seed_application_records[0]["application_id"]
@@ -118,8 +118,8 @@ def test_get_score_history(seed_application_records):
 
 @pytest.mark.apps_to_insert(test_input_data)
 def test_get_progress_for_applications(seed_application_records):
-    """test_create_scores_for_application_sub_crit Tests we can create
-    score records in the scores table in the appropriate format."""
+    """test_create_scores_for_application_sub_crit Tests we can create score
+    records in the scores table in the appropriate format."""
 
     application_id_1 = seed_application_records[0]["application_id"]
     application_id_2 = seed_application_records[1]["application_id"]

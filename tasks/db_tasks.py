@@ -16,6 +16,7 @@ def bootstrap_dev_db(c):
     """Create a clean database for development.
 
     Unit testing makes a seperate db.
+
     """
 
     from sqlalchemy_utils.functions import create_database
@@ -60,8 +61,8 @@ def generate_test_data(c):
     }
 )
 def seed_dev_db(c, fundround=None, appcount=None):
-    """Uses the `tests.conftest.seed_database` function to insert test data
-    into your dev database."""
+    """Uses the `tests.conftest.seed_database` function to insert test data into
+    your dev database."""
     from flask_migrate import upgrade
 
     with _env_var("FLASK_ENV", "development"):

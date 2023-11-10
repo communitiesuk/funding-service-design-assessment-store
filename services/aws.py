@@ -55,18 +55,18 @@ def unpack_message(msg):
 
 
 def submit_message(queue_url, messages, DelaySeconds=1):
-    """
-    Send a batch of messages in a single request to an SQS queue.
-    This request may return overall success even when some messages were not sent.
-    The caller must inspect the Successful and Failed lists in the response and
-    resend any failed messages.
+    """Send a batch of messages in a single request to an SQS queue. This request
+    may return overall success even when some messages were not sent. The caller
+    must inspect the Successful and Failed lists in the response and resend any
+    failed messages.
 
     :param queue_url: SQS Queue url.
     :param queue: The queue to receive the messages.
-    :param messages: The messages to send to the queue. These are simplified to
-                     contain only the message body and attributes.
-    :return: The response from SQS that contains the list of successful and failed
-             messages.
+    :param messages: The messages to send to the queue. These are
+        simplified to contain only the message body and attributes.
+    :return: The response from SQS that contains the list of successful
+        and failed messages.
+
     """
     try:
         entries = [
@@ -101,21 +101,23 @@ def submit_message(queue_url, messages, DelaySeconds=1):
 
 
 def receive_messages(queue_url, max_number, visibility_time=1, wait_time=1):
-    """
-    Receive a batch of messages in a single request from an SQS queue.
+    """Receive a batch of messages in a single request from an SQS queue.
 
     :param queue_url: SQS Queue url
-    :param max_number: The maximum number of messages to receive. The actual number
-                       of messages received might be less.
-    :param visibility_time: The maximum time for message to temporarily invisible to other receivers.
-                            This gives the initial receiver a chance to process the message. If the receiver
-                            successfully processes and deletes the message within the visibility timeout,
-                            the message is removed from the queue.
-    :param wait_time: The maximum time to wait (in seconds) before returning. When
-                      this number is greater than zero, long polling is used. This
-                      can result in reduced costs and fewer false empty responses.
-    :return: The list of Message objects received. These each contain the body
-             of the message and metadata and custom attributes.
+    :param max_number: The maximum number of messages to receive. The
+        actual number of messages received might be less.
+    :param visibility_time: The maximum time for message to temporarily
+        invisible to other receivers. This gives the initial receiver a
+        chance to process the message. If the receiver successfully
+        processes and deletes the message within the visibility timeout,
+        the message is removed from the queue.
+    :param wait_time: The maximum time to wait (in seconds) before
+        returning. When this number is greater than zero, long polling
+        is used. This can result in reduced costs and fewer false empty
+        responses.
+    :return: The list of Message objects received. These each contain
+        the body of the message and metadata and custom attributes.
+
     """
     try:
         response = _SQS_CLIENT.receive_message(
@@ -146,13 +148,14 @@ def receive_messages(queue_url, max_number, visibility_time=1, wait_time=1):
 
 
 def delete_messages(queue_url, message_receipt_handles):
-    """
-    Delete a batch of messages from a queue in a single request.
+    """Delete a batch of messages from a queue in a single request.
 
     :param queue_url: SQS Queue url
-    :param message_receipt_handles: The list of messages handles to delete.
-    :return: The response from SQS that contains the list of successful and failed
-             message deletions.
+    :param message_receipt_handles: The list of messages handles to
+        delete.
+    :return: The response from SQS that contains the list of successful
+        and failed message deletions.
+
     """
     try:
         entries = [

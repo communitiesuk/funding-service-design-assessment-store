@@ -29,10 +29,11 @@ with open("tests/test_data/hand-crafted-apps.json", "r") as f:
 def seed_application_records(
     request, app, clear_test_data, enable_preserve_test_data, _db
 ):
-    """
-    Inserts test assessment_record data into the unit test DB according
-    to what's supplied using the marker apps_to_insert.
+    """Inserts test assessment_record data into the unit test DB according to
+    what's supplied using the marker apps_to_insert.
+
     Supplies these inserted records back to the requesting test function
+
     """
     marker = request.node.get_closest_marker("apps_to_insert")
     if marker is None:
