@@ -38,5 +38,11 @@ def get_data(endpoint: str, payload: Dict = None):
 def get_account_name(id: str):
     url = Config.ACCOUNT_STORE_API_HOST + Config.ACCOUNTS_ENDPOINT
     params = {"account_id": id}
-    response = get_data(url, params)
+    # When developing locally, all comments and scores (etc) are
+    # created by the local debug user by default . This user is not seeded
+    # in the account store, it is not required as we circumnavigate SSO in assessment frontend.
+    if id == "00000000-0000-0000-0000-000000000000":
+        return "Local Debug User"
+    else:
+        response = get_data(url, params)
     return response["full_name"]
