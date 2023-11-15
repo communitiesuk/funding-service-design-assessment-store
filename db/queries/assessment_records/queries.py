@@ -21,6 +21,7 @@ from db.schemas import AssessmentRecordMetadata
 from db.schemas import AssessmentSubCriteriaMetadata
 from db.schemas import AssessorTaskListMetadata
 from flask import current_app
+from services.data_services import get_account_name
 from sqlalchemy import and_
 from sqlalchemy import bindparam
 from sqlalchemy import exc
@@ -593,6 +594,7 @@ def get_assessment_records_by_round_id(
         "Score Justification",
         "Score Date",
         "Score Time",
+        "Scorer Name",
     ]
 
     # If selected_fields is not provided, use the default_fields.
@@ -649,6 +651,7 @@ def get_assessment_records_by_round_id(
             "Score Justification": score.justification,
             "Score Date": score.date_created.strftime("%d/%m/%Y"),
             "Score Time": score.date_created.strftime("%H:%M:%S"),
+            "Scorer Name": get_account_name(score.user_id),
         }
 
         selected_score_data = {
