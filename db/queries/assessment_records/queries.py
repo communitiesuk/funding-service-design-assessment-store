@@ -572,7 +572,7 @@ def update_status_to_completed(application_id):
     db.session.commit()
 
 
-def get_assessment_records_by_round_id(
+def get_assessment_records_score_data_by_round_id(
     round_id, selected_fields=None, language=None
 ):  # noqa
     """Retrieve the latest scores and associated information for each subcriteria
@@ -820,13 +820,14 @@ def get_export_data(
             final_list.append(applicant_info)
 
     if report_type == "OUTPUT_TRACKER":
-        output = get_assessment_records_by_round_id(
+        score_info_output = get_assessment_records_score_data_by_round_id(
             round_id,
             list_of_fields[report_type].get("score_fields", None),
             language,
         )
-        if len(output) != 0:
-            final_list = combine_dicts(final_list, output)
+
+        if len(score_info_output) != 0:
+            final_list = combine_dicts(final_list, score_info_output)
 
     return final_list
 
