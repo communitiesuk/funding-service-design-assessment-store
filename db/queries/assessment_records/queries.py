@@ -830,7 +830,7 @@ def get_export_data(
     return final_list
 
 
-# adds miissing elements for use in the csv
+# adds missing elements for use in the csv
 def add_missing_elements_with_empty_values(
     applicant_info, form_fields, language
 ):
