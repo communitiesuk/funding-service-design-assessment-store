@@ -669,49 +669,122 @@ def create_tag(application_id, tag_id, associated, user_id):
 
 def associate_assessment_tags(application_id, tags: List):
 
-    # Step 1: Get existing tags
+    # Step 1: Retrieve existing tags associated with a given application_id from the database.
     existing_tags = TagAssociation.query.filter(
         TagAssociation.application_id == application_id,
     ).all()
 
-    # Step 2: iterate through incoming tags
+    # Step 2: Organize existing tags by tag IDs, keeping track of the most recent timestamp for each tag.
+    def get_most_recent_tags():
+        most_recent_true_tags = defaultdict(list)
+        for existing_tag in existing_tags:
+            tag_id = str(existing_tag.tag_id)
+            most_recent_true_tags[tag_id].append(
+                (existing_tag.created_at, existing_tag)
+            )
+        return most_recent_true_tags
+
+    # Step 3: iterate through incoming tags
     for incoming_tag in tags:
         incoming_user_id = incoming_tag.get("user_id")
-        incoming_tag_id = incoming_tag.get("id", None)
+        incoming_tag_id = incoming_tag.get("id")
 
-        # Step 3: if tags have incoming tag_id the create a new associated tag
         if incoming_tag_id:
-            current_app.logger.info(f"Creating new tag: {incoming_tag_id}")
-            create_tag(application_id, incoming_tag_id, True, incoming_user_id)
-
-        # Step 4: if incoming tags have no tag_id which means the call trying to update
-        # the existing tag with new information and associted set to False (False ..
-        # .. means dis-associating the current tag.)
-        else:
-            most_recent_true_tags = defaultdict(list)
-            for existing_tag in existing_tags:
-                tag_id = str(existing_tag.tag_id)
-                most_recent_true_tags[tag_id].append(
-                    (existing_tag.created_at, existing_tag)
+            # Step 4: If no existing tags are found, create a new tag(s) with incoming tags info.
+            if not existing_tags:
+                current_app.logger.info(
+                    f"Creating new tag(s) for {incoming_tag_id}"
+                )
+                create_tag(
+                    application_id, incoming_tag_id, True, incoming_user_id
                 )
 
-            for tag_id, tag_list in most_recent_true_tags.items():
-                most_recent_true_tag = max(tag_list, key=lambda x: x[0])[1]
-                associated_tag = most_recent_true_tag.associated
-                if associated_tag:
-                    existing_tag_id = most_recent_true_tag.tag_id
+            # Step 5: For each incoming tag:
+            #  - Check if the tag already exists based on its `tag_id`.
+            #  - If the tag exists:
+            #     - Find the most recent version of the tag.
+            #     - If it's already associated, log a message; otherwise, create a new associated tag.
+            #  - If the tag doesn't exist, create a new tag.
+            else:
+                most_recent_true_tags = get_most_recent_tags()
+                tag_exists = incoming_tag_id in most_recent_true_tags.keys()
+                if tag_exists:
+                    most_recent_true_tag = max(
+                        most_recent_true_tags[incoming_tag_id],
+                        key=lambda x: x[0],
+                    )[1]
+                    associated_tag = most_recent_true_tag.associated
+                    if associated_tag:
+                        current_app.logger.info(
+                            f"Tag is alreday associated: { most_recent_true_tag.tag_id}"
+                        )
+                    else:
+                        current_app.logger.info(
+                            f"Creating new tag: {incoming_tag_id}"
+                        )
+                        create_tag(
+                            application_id,
+                            incoming_tag_id,
+                            True,
+                            incoming_user_id,
+                        )
+                else:
                     current_app.logger.info(
-                        f"Dis-associating existing associated tag_id: {existing_tag_id}"
+                        f"Creating new tag: {incoming_tag_id}"
+                    )
+                    create_tag(
+                        application_id, incoming_tag_id, True, incoming_user_id
+                    )
+
+        # Step 6: Update Existing Tags with no incoming_tag_id
+        # filter all recent tags and find if the incoming_tag_id exist in the most recent tags
+        # then exclude those tags otherwise grab all other tags.
+        # For each tag to be updated:
+        #  - Find the most recent version.
+        #  - If it's associated, log a message and create a new version with association set to False,
+        #  - effectively disassociating it.
+
+        if not incoming_tag_id:
+
+            def filter_tags(tags, most_recent_true_tags):
+                filtered_tags = []
+                for tag_id, tag_list in most_recent_true_tags.items():
+                    # Use next to find the incoming tag with a matching tag ID
+                    incoming_tag = next(
+                        (tag for tag in tags if tag.get("id") == tag_id), None
+                    )
+                    if incoming_tag:
+                        incoming_tag_id = incoming_tag.get("id")
+                        if incoming_tag_id == tag_id:
+                            current_app.logger.info(
+                                f"Tag_id is already associated: {tag_id}"
+                            )
+                        else:
+                            filtered_tags.append(tag_list)
+                    else:
+                        # If incoming_tag is None, it means no matching ID was found, so append the tag_list
+                        filtered_tags.append(tag_list)
+
+                return filtered_tags
+
+            most_recent_true_tags = get_most_recent_tags()
+            filter_tags_data = filter_tags(tags, most_recent_true_tags)
+            for _tag in filter_tags_data:
+                most_recent_true_tag = max(_tag, key=lambda x: x[0])[1]
+                if most_recent_true_tag.associated:
+                    current_app.logger.info(
+                        f"Dis-associating existing associated tag_id: {most_recent_true_tag.tag_id}"
                     )
                     create_tag(
                         application_id,
-                        existing_tag_id,
+                        most_recent_true_tag.tag_id,
                         False,
                         incoming_user_id,
                     )
+    # Step 7: Commit Changes to Database
     db.session.commit()
 
-    # Step 5: Retrieve all records for a specific application_id
+    # Step 8: Retrieve all records for a specific application_id
     subquery = (
         TagAssociation.query.filter(
             TagAssociation.application_id == application_id
@@ -721,7 +794,7 @@ def associate_assessment_tags(application_id, tags: List):
         .subquery()
     )
 
-    # Step 6: Use a subquery to get the most recent record for each tag_id
+    # Step 9: Use a subquery to get the most recent record for each tag_id
     alias = aliased(TagAssociation, subquery)
     recent_records = (
         db.session.query(alias)
@@ -730,10 +803,12 @@ def associate_assessment_tags(application_id, tags: List):
         .all()
     )
 
-    # Step 7: Check if the most recent record for each tag_id has associated set to True
+    # Step 10: Check if the most recent record for each tag_id has associated set to True
     associated_tags = [
         record for record in recent_records if record.associated
     ]
+
+    # Step 11: Return Associated Tags
     return associated_tags
 
 
