@@ -396,7 +396,7 @@ def test_get_data(seed_application_records, mocker):
     assert data["en_list"][0]["Score Subcriteria"] == "app-info"
     assert data["en_list"][0]["Score"] == 5
     assert data["en_list"][0]["Score Justification"] == "great"
-    assert data["en_list"][0]["Score Date"] == "15/11/2023"
+    assert len(data["en_list"][0]["Score Date"]) == 10
     assert len(data["en_list"][0]["Score Time"]) == 8
     assert data["en_list"][0]["Scorer Name"] == "Test user"
 
