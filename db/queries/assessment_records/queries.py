@@ -825,9 +825,7 @@ def get_export_data(
             list_of_fields[report_type].get("score_fields", None),
             language,
         )
-
-        if len(score_info_output) != 0:
-            final_list = combine_dicts(final_list, score_info_output)
+        final_list = combine_dicts(final_list, score_info_output)
 
     return final_list
 
@@ -860,19 +858,18 @@ def combine_dicts(applications_list, scores_list):
 
     if len(applications_list) == 0 and len(scores_list) == 0:
         return combined_list
-    if len(applications_list) == 0:
-        return scores_list
-    if len(scores_list) == 0:
-        return applications_list
 
     for application in applications_list:
         app_id = application["Application ID"]
         matching_scores = [
             score for score in scores_list if score["Application ID"] == app_id
         ]
-
-        for score in matching_scores:
-            combined_element = {**application, **score}
-            combined_list.append(combined_element)
+        if matching_scores:
+            for score in matching_scores:
+                combined_element = {**application, **score}
+                combined_list.append(combined_element)
+        else:
+            application_with_nulls = {**application, "Score": "No scores yet"}
+            combined_list.append(application_with_nulls)
 
     return combined_list
