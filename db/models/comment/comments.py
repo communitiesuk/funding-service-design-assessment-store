@@ -1,6 +1,5 @@
-"""The module containing all code related to the `comments` table
-within the Postgres db.
-"""
+"""The module containing all code related to the `comments` table within the
+Postgres db."""
 import uuid
 
 from db import db
@@ -9,11 +8,12 @@ from sqlalchemy import ForeignKey
 from sqlalchemy import func
 from sqlalchemy.dialects.postgresql import ENUM
 from sqlalchemy.dialects.postgresql import UUID
+from sqlalchemy.orm import relationship
 
 
 class Comment(db.Model):
-    """Comment The sqlalchemy-flask model class used to define the
-    `Comment` table in the Postgres database."""
+    """Comment The sqlalchemy-flask model class used to define the `Comment` table
+    in the Postgres database."""
 
     __tablename__ = "comments"
 
@@ -24,8 +24,6 @@ class Comment(db.Model):
     application_id = db.Column(
         "application_id", UUID, ForeignKey("assessment_records.application_id")
     )
-
-    comment = db.Column("comment", db.Text(), nullable=False)
 
     user_id = db.Column("user_id", db.String(), nullable=False)
 
@@ -38,3 +36,5 @@ class Comment(db.Model):
     comment_type = db.Column("comment_type", ENUM(CommentType), nullable=True)
 
     theme_id = db.Column("theme_id", db.String(), nullable=True)
+
+    updates = relationship("CommentsUpdate", lazy="selectin")

@@ -127,8 +127,6 @@ components:
           type: string
         application_id:
           type: string
-        comment:
-          type: string
         user_id:
           type: string
         date_created:
@@ -137,12 +135,14 @@ components:
           type: string
         comment_type:
           type: string
+        updates:
+            type: array
     PostComment:
       type: object
       properties:
-        application_id:
+        id:
           type: string
-        comment:
+        application_id:
           type: string
         user_id:
           type: string
@@ -152,6 +152,25 @@ components:
           type: string
         theme_id:
           type: string
+        updates:
+          type: array
+    PutComment:
+      type: object
+      properties:
+        id:
+          type: string
+        application_id:
+          type: string
+        user_id:
+          type: string
+        sub_criteria_id:
+          type: string
+        comment_type:
+          type: string
+        theme_id:
+          type: string
+        updates:
+          type: array
     ApplicationOverview:
       type: object
       properties:
@@ -464,3 +483,14 @@ components:
             type: string
             description: A description of the tag type
             example: "This tag is for these things"
+    ScoringSystem:
+        type: object
+        properties:
+          round_id:
+            type: string
+            description: uuid for round_id
+            example: uuif7eaf61b-093e-4464-a4da-b36b849f0a1b
+          scoring_system:
+            type: string
+            description: scoring system
+            example: OneToFive

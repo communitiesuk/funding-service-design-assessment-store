@@ -1,7 +1,7 @@
 from uuid import uuid4
 
 from db import db
-from flask_sqlalchemy import DefaultMeta
+from flask_sqlalchemy.model import DefaultMeta
 from sqlalchemy import Column
 from sqlalchemy import ForeignKey
 from sqlalchemy import String
@@ -12,7 +12,6 @@ BaseModel: DefaultMeta = db.Model
 
 
 class QaComplete(BaseModel):
-
     __tablename__ = "qa_complete"
 
     id = Column("id", UUID(as_uuid=True), default=uuid4, primary_key=True)

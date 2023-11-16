@@ -6,6 +6,7 @@ from db.models import Comment
 from db.models import Score
 from db.models.assessment_record.assessment_records import AssessmentRecord
 from db.models.assessment_record.enums import Status
+from db.models.comment import CommentsUpdate
 from db.models.comment.enums import CommentType
 from db.queries import find_answer_by_key_runner
 from db.queries.assessment_records.queries import (
@@ -15,6 +16,8 @@ from db.queries.assessment_records.queries import find_assessor_task_list_state
 from db.queries.assessment_records.queries import get_assessment_export_data
 from db.queries.comments.queries import create_comment_for_application_sub_crit
 from db.queries.comments.queries import get_comments_for_application_sub_crit
+from db.queries.comments.queries import get_sub_criteria_to_has_comment_map
+from db.queries.comments.queries import update_comment_for_application_sub_crit
 from db.queries.scores.queries import create_score_for_app_sub_crit
 from tests._expected_responses import BULK_UPDATE_LOCATION_JSONB_BLOB
 from tests._helpers import get_assessment_record
@@ -47,6 +50,7 @@ def test_jsonb_blob_immutable(_db, seed_application_records):
     though the sqlalchemy interface raises an error.
 
     Error is defined in `db.models.assessment_record.db_triggers`.
+
     """
 
     picked_row = get_assessment_record(
@@ -56,7 +60,6 @@ def test_jsonb_blob_immutable(_db, seed_application_records):
 
     try:
         with pytest.raises(sqlalchemy.exc.InternalError) as excinfo:
-
             _db.session.commit()
         assert "Cannot mutate application json" in str(excinfo.value)
     finally:
@@ -82,8 +85,8 @@ def test_non_blob_columns_mutable(_db, seed_application_records):
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
 def test_find_assessor_task_list_ui_metadata(seed_application_records):
-    """test_find_assessor_task_list_ui_metadata Tests that the correct metadata
-    is returned for the assessor task list UI."""
+    """test_find_assessor_task_list_ui_metadata Tests that the correct metadata is
+    returned for the assessor task list UI."""
 
     metadata = find_assessor_task_list_state(
         seed_application_records[0]["application_id"]
@@ -101,8 +104,8 @@ def test_find_assessor_task_list_ui_metadata(seed_application_records):
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
 def test_post_comment(seed_application_records):
-    """test_post_comment tests we can create
-    comment records in the comments table."""
+    """test_post_comment tests we can create comment records in the comments
+    table."""
 
     picked_row = get_assessment_record(
         seed_application_records[0]["application_id"]
@@ -128,10 +131,45 @@ def test_post_comment(seed_application_records):
 
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
+def test_put_comment(seed_application_records):
+    """test_put_comment tests we can create comment records in the comments
+    table."""
+
+    picked_row = get_assessment_record(
+        seed_application_records[0]["application_id"]
+    )
+    application_id = picked_row.application_id
+    sub_criteria_id = "test-app-info"
+
+    assessment_payload = {
+        "application_id": application_id,
+        "sub_criteria_id": sub_criteria_id,
+        "comment": "Please provide more information",
+        "comment_type": "COMMENT",
+        "user_id": "test",
+        "theme_id": "something",
+    }
+    comment_metadata = create_comment_for_application_sub_crit(
+        **assessment_payload
+    )
+
+    assert len(comment_metadata) == 8
+    assert comment_metadata["user_id"] == "test"
+    assert comment_metadata["theme_id"] == "something"
+
+    updated_comment = "This is updated comment"
+    comment_metadata = update_comment_for_application_sub_crit(
+        comment_id=comment_metadata["id"], comment=updated_comment
+    )
+
+    assert len(comment_metadata) == 8
+    assert comment_metadata["updates"][-1]["comment"] == updated_comment
+
+
+@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_get_comments(seed_application_records):
-    """test_get_comments tests we can get all comment
-    records in the comments table filtered by application_id,
-    subcriteria_id and theme_id"""
+    """test_get_comments tests we can get all comment records in the comments
+    table filtered by application_id, subcriteria_id and theme_id."""
 
     picked_row = get_assessment_record(
         seed_application_records[0]["application_id"]
@@ -191,6 +229,29 @@ def test_get_comments(seed_application_records):
     assert len(comment_metadata_score_theme_id) == 3
 
 
+@pytest.mark.apps_to_insert([test_input_data[0]])
+def test_get_sub_criteria_to_has_comment_map(seed_application_records):
+    picked_row: AssessmentRecord = get_assessment_record(
+        seed_application_records[0]["application_id"]
+    )
+    application_id = picked_row.application_id
+    sub_criteria_id = "app-info"
+    theme_id = "theme"
+
+    assessment_payload_1 = {
+        "application_id": application_id,
+        "sub_criteria_id": sub_criteria_id,
+        "comment": "Please provide more information",
+        "comment_type": "COMMENT",
+        "user_id": "test",
+        "theme_id": theme_id,
+    }
+    create_comment_for_application_sub_crit(**assessment_payload_1)
+
+    result = get_sub_criteria_to_has_comment_map(picked_row.application_id)
+    assert result[sub_criteria_id] is True
+
+
 @pytest.mark.parametrize(
     "insertion_object",
     [
@@ -205,8 +266,8 @@ def test_get_comments(seed_application_records):
             application_id="a3ec41db-3eac-4220-90db-c92dea049c01",
             sub_criteria_id="test",
             user_id="test",
-            comment="great",
             comment_type=CommentType.COMMENT,
+            updates=[CommentsUpdate(comment="great")],
         ),
     ],
 )

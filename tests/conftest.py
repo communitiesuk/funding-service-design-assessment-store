@@ -4,15 +4,18 @@ from uuid import uuid4
 
 import pytest
 from app import create_app
+from db.models import AssessmentRound
 from db.models.assessment_record import AssessmentRecord
 from db.models.assessment_record.tag_association import TagAssociation
 from db.models.comment import Comment
+from db.models.comment import CommentsUpdate
 from db.models.flags.assessment_flag import AssessmentFlag
 from db.models.flags.flag_update import FlagUpdate
 from db.models.qa_complete import QaComplete
 from db.models.score import Score
 from db.models.tag.tag_types import TagType
 from db.queries import bulk_insert_application_record
+from db.queries.scores.queries import insert_scoring_system_for_round_id
 from db.queries.tags.queries import insert_tags
 from db.schemas.schemas import TagSchema
 from db.schemas.schemas import TagTypeSchema
@@ -29,10 +32,11 @@ with open("tests/test_data/hand-crafted-apps.json", "r") as f:
 def seed_application_records(
     request, app, clear_test_data, enable_preserve_test_data, _db
 ):
-    """
-    Inserts test assessment_record data into the unit test DB according
-    to what's supplied using the marker apps_to_insert.
+    """Inserts test assessment_record data into the unit test DB according to
+    what's supplied using the marker apps_to_insert.
+
     Supplies these inserted records back to the requesting test function
+
     """
     marker = request.node.get_closest_marker("apps_to_insert")
     if marker is None:
@@ -51,7 +55,6 @@ def seed_application_records(
     random_round_id = str(uuid4())
 
     for app in apps:
-
         app_id = str(uuid4())
         app["id"] = app_id
         if unique_fund_round:
@@ -96,6 +99,7 @@ def seed_application_records(
     TagAssociation.query.delete()
     Score.query.delete()
     QaComplete.query.delete()
+    CommentsUpdate.query.delete()
     Comment.query.delete()
     AssessmentRecord.query.delete()
     _db.session.commit()
@@ -135,10 +139,65 @@ def seed_tags(
 
 
 @pytest.fixture(scope="function")
+def seed_scoring_system(
+    request,
+    app,
+    _db,
+    clear_test_data,
+):
+    """Inserts the scoring_systems for each round_id.
+
+    If this is the first run of the tests (before any data clearing),
+    the default (pre-loaded as part of the db migrations) scoring_system
+    information might still be present. To avoid FK issues we make sure
+    these rows are removed first.
+
+    """
+    scoring_system_for_rounds = [
+        {
+            "round_id": "e85ad42f-73f5-4e1b-a1eb-6bc5d7f3d762",
+            "scoring_system": "OneToFive",
+        },
+        {
+            "round_id": "6af19a5e-9cae-4f00-9194-cf10d2d7c8a7",
+            "scoring_system": "OneToFive",
+        },
+        {
+            "round_id": "888aae3d-7e2c-4523-b9c1-95952b3d1644",
+            "scoring_system": "OneToFive",
+        },
+        {
+            "round_id": "0059aad4-5eb5-11ee-8c99-0242ac120002",
+            "scoring_system": "OneToFive",
+        },
+        {
+            "round_id": "fc7aa604-989e-4364-98a7-d1234271435a",
+            "scoring_system": "OneToFive",
+        },
+        {
+            "round_id": "c603d114-5364-4474-a0c4-c41cbf4d3bbd",
+            "scoring_system": "OneToFive",
+        },
+        {
+            "round_id": "5cf439bf-ef6f-431e-92c5-a1d90a4dd32f",
+            "scoring_system": "OneToFive",
+        },
+    ]
+
+    _db.session.query(AssessmentRound).delete()
+    _db.session.commit()
+
+    for scoring_system in scoring_system_for_rounds:
+        insert_scoring_system_for_round_id(
+            scoring_system["round_id"], scoring_system["scoring_system"]
+        )
+    yield
+
+
+@pytest.fixture(scope="function")
 def get_tag_types(
     request, app, clear_test_data, enable_preserve_test_data, _db
 ):
-
     tag_type = TagType(
         id=uuid4(),
         purpose=uuid4(),

@@ -46,7 +46,6 @@ def get_tags_for_fund_round(
 
 
 def get_tag_types():
-
     tag_types = select_tags_types()
 
     if tag_types:

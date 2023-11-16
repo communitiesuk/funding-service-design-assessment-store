@@ -3,6 +3,7 @@ import uuid
 from unittest.mock import MagicMock
 
 import pytest
+from api.routes import get_scoring_system_for_round
 from api.routes.progress_routes import get_progress_for_applications
 from db.models import Score
 from db.queries.scores.queries import create_score_for_app_sub_crit
@@ -14,8 +15,8 @@ from tests.conftest import test_input_data
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
 def test_create_scores_for_application_sub_crit(_db, seed_application_records):
-    """test_create_scores_for_application_sub_crit Tests we can create
-    score records in the scores table in the appropriate format."""
+    """test_create_scores_for_application_sub_crit Tests we can create score
+    records in the scores table in the appropriate format."""
 
     picked_row = get_assessment_record(
         seed_application_records[0]["application_id"]
@@ -39,8 +40,8 @@ def test_create_scores_for_application_sub_crit(_db, seed_application_records):
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
 def test_get_latest_score_for_application_sub_crit(seed_application_records):
-    """test_get_latest_score_for_application_sub_crit Tests we can add
-    score records in the scores table and return the most recently created."""
+    """test_get_latest_score_for_application_sub_crit Tests we can add score
+    records in the scores table and return the most recently created."""
 
     picked_row = get_assessment_record(
         seed_application_records[0]["application_id"]
@@ -73,8 +74,8 @@ def test_get_latest_score_for_application_sub_crit(seed_application_records):
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
 def test_get_score_history(seed_application_records):
-    """test_get_score_history Tests we can get all score
-    records in the scores table"""
+    """test_get_score_history Tests we can get all score records in the scores
+    table."""
 
     picked_row = get_assessment_record(
         seed_application_records[0]["application_id"]
@@ -118,8 +119,8 @@ def test_get_score_history(seed_application_records):
 
 @pytest.mark.apps_to_insert(test_input_data)
 def test_get_progress_for_applications(seed_application_records):
-    """test_create_scores_for_application_sub_crit Tests we can create
-    score records in the scores table in the appropriate format."""
+    """test_create_scores_for_application_sub_crit Tests we can create score
+    records in the scores table in the appropriate format."""
 
     application_id_1 = seed_application_records[0]["application_id"]
     application_id_2 = seed_application_records[1]["application_id"]
@@ -241,3 +242,21 @@ def test_get_sub_criteria_to_latest_score_map(_db, seed_application_records):
 
     assert result[sub_criteria_1_id] == 2
     assert result[sub_criteria_2_id] == 5
+
+
+def test_get_scoring_system(seed_scoring_system):
+    """test_get_scoring_system Tests getting a scoring system for a given
+    round_id.
+
+    Note: The scoring systems are loaded into the database as part of the migration
+
+    """
+    test_cases = {
+        "e85ad42f-73f5-4e1b-a1eb-6bc5d7f3d762": "OneToFive",
+        "888aae3d-7e2c-4523-b9c1-95952b3d1644": "OneToFive",
+        # Add more test cases as needed
+    }
+    for round_id, scoring_system in test_cases.items():
+        returned_scoring_system = get_scoring_system_for_round(round_id)
+        assert returned_scoring_system["scoring_system"] == scoring_system
+        assert returned_scoring_system["round_id"] == round_id
