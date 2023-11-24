@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import jsonpath_rw_ext
 import requests
 from config.mappings.assessment_mapping_fund_round import (
@@ -191,3 +193,38 @@ def derive_application_values(application_json):
         derived_values["location_json_blob"]["postcode"] = FIELD_DEFAULT_VALUE
 
     return derived_values
+
+
+def get_most_recent_tags(tag_associations):
+    # Create a dictionary to group tag_associations by tag_id
+    tag_id_dict = {}
+    for tag_assoc in tag_associations:
+        tag_id = tag_assoc["tag"]["id"]
+        tag_id_dict.setdefault(tag_id, []).append(tag_assoc)
+
+    updated_tag_associations = []
+    for assoc_list in tag_id_dict.values():
+        # Sort each group by created_at timestamp to find the most recent entry
+        sorted_tags = sorted(
+            assoc_list,
+            key=lambda x: datetime.strptime(
+                x["created_at"], "%Y-%m-%dT%H:%M:%S.%f%z"
+            ),
+            reverse=True,
+        )
+        # Append the most recent tag association to the updated list
+        updated_tag_associations.append(sorted_tags[0])
+
+    return updated_tag_associations
+
+
+def update_tag_associations(assessment_metadatas):
+    for metadata in assessment_metadatas:
+        # Retrieve tag associations for the current metadata
+        tag_associations = metadata.get("tag_associations", [])
+        if tag_associations:
+            # Update tag_associations for the current metadata with the most recent entries
+            metadata["tag_associations"] = get_most_recent_tags(
+                tag_associations
+            )
+    return assessment_metadatas

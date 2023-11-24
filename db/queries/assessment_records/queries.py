@@ -18,6 +18,7 @@ from db.models.score import Score
 from db.models.tag.tag_types import TagType
 from db.models.tag.tags import Tag
 from db.queries.assessment_records._helpers import derive_application_values
+from db.queries.assessment_records._helpers import update_tag_associations
 from db.schemas import AssessmentRecordMetadata
 from db.schemas import AssessmentSubCriteriaMetadata
 from db.schemas import AssessorTaskListMetadata
@@ -237,7 +238,10 @@ def get_metadata_for_fund_round_id(
         for app_metadata in assessment_metadatas
     ]
 
-    return assessment_metadatas
+    assessment_metadatas_with_recent_tags = update_tag_associations(
+        assessment_metadatas
+    )
+    return assessment_metadatas_with_recent_tags
 
 
 def bulk_insert_application_record(

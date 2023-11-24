@@ -144,7 +144,7 @@ class TagAssociationSchema(SQLAlchemyAutoSchema):
 class TagAssociationNestedSchema(SQLAlchemyAutoSchema):
     class Meta:
         model = TagAssociation
-        fields = ("id", "user_id", "associated", "tag")
+        fields = ("id", "user_id", "associated", "tag", "created_at")
 
     tag = Nested("TagNestedSchema")
 
