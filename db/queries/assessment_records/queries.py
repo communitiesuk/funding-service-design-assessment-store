@@ -172,7 +172,6 @@ def get_metadata_for_fund_round_id(
             AssessmentRecord.location_json_blob["region"].astext == region
         )
 
-    #
     if datasets != "" and datasets != "ALL":
         datasets = (
             True
@@ -188,7 +187,7 @@ def get_metadata_for_fund_round_id(
 
     if publish_datasets != "" and publish_datasets != "ALL":
         current_app.logger.info(
-            f"Performing assessment search on region: {publish_datasets}."
+            f"Performing assessment search on publish_datasets: {publish_datasets}."
         )
         statement = statement.where(
             cast(AssessmentRecord.publish_datasets, String).ilike(
