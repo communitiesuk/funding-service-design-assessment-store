@@ -9,7 +9,7 @@ from flask import request
 
 
 def get_score_for_application_sub_criteria(
-    application_id: str,
+    application_id: str = None,
     sub_criteria_id: str = None,
     score_history: bool = False,
 ) -> List[Dict]:
