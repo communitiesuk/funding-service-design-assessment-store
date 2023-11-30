@@ -226,7 +226,7 @@ def test_get_comments(seed_application_records):
 
     # test without application_id
     comment_metadata_for_comment_id = get_comments_for_application_sub_crit(
-        application_id=None, comment_id=comment_metadata["id"]
+        comment_id=comment_metadata["id"]
     )
     assert len(comment_metadata_for_comment_id) == 1
 
