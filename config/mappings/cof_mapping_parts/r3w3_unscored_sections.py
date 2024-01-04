@@ -436,15 +436,15 @@ unscored_sections = [
                             {
                                 "field_id": "mZwrmI",
                                 "form_name": "asset-information-cof",
-                                "field_type": "checkboxesField",
-                                "presentation_type": "list",
+                                "field_type": "yesNoField",
+                                "presentation_type": "text",
                                 "question": "Are there assets or services of a similar type available locally?",
                             },
                             {
                                 "field_id": "BfgLCc",
                                 "form_name": "asset-information-cof",
-                                "field_type": "checkboxesField",
-                                "presentation_type": "list",
+                                "field_type": "yesNoField",
+                                "presentation_type": "text",
                                 "question": "Is your asset different from what is available locally?",
                             },
                             {
@@ -464,8 +464,8 @@ unscored_sections = [
                             {
                                 "field_id": "CFFsxV",
                                 "form_name": "asset-information-cof",
-                                "field_type": "checkboxesField",
-                                "presentation_type": "list",
+                                "field_type": "yesNoField",
+                                "presentation_type": "text",
                                 "question": "Does part of your project include a commercial aspect?",
                             },
                             {
