@@ -1,4 +1,4 @@
-"""Empty message.
+"""Adds COF R3W3 scoring system to the assesssment_rounds table.
 
 Revision ID: 5c03105a204c
 Revises: af78512b644f
