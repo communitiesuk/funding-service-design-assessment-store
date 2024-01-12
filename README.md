@@ -243,7 +243,7 @@ Please provide the `--fund_id`, `--round_id` and any additional arguments as sho
       "--write_csv", "False"]
   },
  ```
- 
+
 # Builds and Deploys
 Details on how our pipelines work and the release process is available [here](https://dluhcdigital.atlassian.net/wiki/spaces/FS/pages/73695505/How+do+we+deploy+our+code+to+prod)
 ## Copilot
