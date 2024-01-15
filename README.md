@@ -10,8 +10,8 @@ This repository offers an API and corresponding model implementation for streaml
 
 This service depends on:
 - A postgres database
-- funding-service-design-account-store
-- funding-service-design-application-store
+- [Account Store](https://github.com/communitiesuk/funding-service-design-account-store)
+- [Application Store](https://github.com/communitiesuk/funding-service-design-application-store)
 - SQS Queue
 
 # IDE Setup
