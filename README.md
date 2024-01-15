@@ -14,6 +14,9 @@ This service depends on:
 - Application store
 - SQS Queue
 
+# IDE Setup
+[Python IDE Setup](https://github.com/communitiesuk/funding-service-design-workflows/blob/main/readmes/python-repos-ide-setup.md)
+
 # Data
 ## Local DB Setup
 General instructions for local db development are available here: [Local database development](https://github.com/communitiesuk/funding-service-design-workflows/blob/main/readmes/python-repos-db-development.md)
@@ -70,13 +73,6 @@ GITHUB_SHA
 DATABASE_URL
 
 # Configuration
-
-# Pipelines
-
-These are the current pipelines running on the repo:
-
-* Deploy to Gov PaaS - This is a simple pipeline to demonstrate capabilities.  Builds, tests and deploys a simple python application to the PaaS for evaluation in Dev and Test Only.
-* NOTE: THIS IS A CUSTOM DEPLOY WORKFLOW AND DOES NOT YET USE THE WORKFLOW TEMPLATE FOR FUNDING SERVICE DESIGN PENDING UPDATE
 
 # Testing
 ## Import submitted applications from application_store
@@ -180,21 +176,6 @@ Performance tests are stored in a separate repository which is then run in the p
 You've deleted your unit test db or done something manually, so pytest's cache is confused.
 Run `pytest --cache-clear` to fix your problem.
 
-# IDE Setup
-[Python IDE Setup](https://github.com/communitiesuk/funding-service-design-workflows/blob/main/readmes/python-repos-ide-setup.md)
-
-# Database on Paas
-Create db service with:
-
-    cf create-service postgres medium-13 assessment-store-dev-db
-
-Ensure the following elements are present in your `manifest.yml`. The `run_migrations_paas.py` is what initialises the database, and the `services` element binds the application to the database service.
-
-    command: scripts/run_migrations_paas.py && gunicorn wsgi:app -c run/gunicorn/devtest.py
-
-    services:
-        - assessment-store-dev-db
-
 # Launch Configurations in VsCode
 <a id="launch-config-vscode"></a>
 If you are using VsCode, we have prepared frequently used scripts in the launch configuration that can be handy for quick development. Below are some launch configurations that you will find in the `launch.json` file.
@@ -249,6 +230,6 @@ Please provide the `--fund_id`, `--round_id` and any additional arguments as sho
 # Builds and Deploys
 Details on how our pipelines work and the release process is available [here](https://dluhcdigital.atlassian.net/wiki/spaces/FS/pages/73695505/How+do+we+deploy+our+code+to+prod)
 ## Copilot
-Copilot is used for infrastructure deployment. Instructions are available [here](https://github.com/communitiesuk/funding-service-design-workflows/blob/main/readmes/python-repos-copilot.md), with the following values for the fund store:
-- service-name: fsd-fund-store
-- image-name: funding-service-design-fund-store
+Copilot is used for infrastructure deployment. Instructions are available [here](https://github.com/communitiesuk/funding-service-design-workflows/blob/main/readmes/python-repos-copilot.md), with the following values for the assessment store:
+- service-name: fsd-assessment-store
+- image-name: funding-service-design-assessment-store
