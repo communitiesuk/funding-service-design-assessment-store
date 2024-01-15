@@ -10,7 +10,9 @@ This repository offers an API and corresponding model implementation for streaml
 
 This service depends on:
 - A postgres database
-- No other microservices
+- Account store
+- Application store
+- SQS Queue
 
 # Data
 ## Local DB Setup
