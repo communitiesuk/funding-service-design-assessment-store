@@ -93,7 +93,7 @@ commonmark==0.9.1
     #   rich
 connexion==2.14.2
     # via -r requirements.txt
-cryptography==41.0.6
+cryptography==41.0.7
     # via
     #   -r requirements.txt
     #   pyjwt
@@ -123,7 +123,7 @@ flask==2.2.5
     #   funding-service-design-utils
     #   pytest-flask
     #   sentry-sdk
-flask-apscheduler==1.12.4
+flask-apscheduler==1.13.1
     # via -r requirements.txt
 flask-babel==2.0.0
     # via
@@ -150,7 +150,7 @@ flupy==1.2.0
     # via
     #   -r requirements.txt
     #   alembic-utils
-funding-service-design-utils==2.0.30
+funding-service-design-utils==2.0.34
     # via -r requirements.txt
 gitdb==4.0.9
     # via gitpython
@@ -323,7 +323,7 @@ pytest==7.4.3
     #   pytest-mock
 pytest-env==0.8.1
     # via -r requirements-dev.in
-pytest-flask==1.2.0
+pytest-flask==1.3.0
     # via -r requirements-dev.in
 pytest-mock==3.12.0
     # via -r requirements-dev.in
@@ -444,7 +444,7 @@ stringcase==1.2.0
     # via
     #   -r requirements.txt
     #   dataclass-dict-convert
-swagger-ui-bundle==0.0.9
+swagger-ui-bundle==1.1.0
     # via -r requirements.txt
 thrift==0.16.0
     # via
