@@ -173,7 +173,7 @@ def get_sub_criteria_theme_answers(application_id: str, theme_id: str):
 def get_all_uploaded_document_theme_answers(application_id: str):
     metadata = find_assessor_task_list_state(application_id)
     field_answers = get_all_uploaded_document_field_answers(
-        metadata["fund_id"], metadata["round_id"]
+        metadata["fund_id"], metadata["round_id"], metadata["language"]
     )
     return map_application_with_sub_criteria_themes_fields(
         application_id, "all_uploaded_documents", field_answers

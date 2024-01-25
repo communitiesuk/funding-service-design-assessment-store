@@ -74,11 +74,22 @@ def get_themes_fields(
 
 
 def get_all_uploaded_document_field_answers(
-    fund_id: str, round_id: str
+    fund_id: str,
+    round_id: str,
+    language: str,
 ) -> list[dict]:
     sub_criterias = get_all_subcriteria(fund_id, round_id)
     filtered_answers = [
-        {**answer, "question": f"{theme['name']}, {answer['question']}"}
+        {
+            **answer,
+            "question": f"{theme['name']}, {answer['question']}",
+            "form_name": answer["form_name"][language]
+            if isinstance(answer["form_name"], dict)
+            else answer["form_name"],
+            "path": answer["path"][language]
+            if isinstance(answer["path"], dict)
+            else answer["path"],
+        }
         for item in sub_criterias
         for theme in item["themes"]
         for answer in theme["answers"]
