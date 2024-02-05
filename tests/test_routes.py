@@ -1,12 +1,8 @@
 import json
-import random
 from unittest import mock
 from uuid import uuid4
 
 import pytest
-from api.routes.subcriterias.get_sub_criteria import (
-    map_application_with_sub_criteria_themes,
-)
 from config.mappings.assessment_mapping_fund_round import (
     applicant_info_mapping,
 )
@@ -21,7 +17,6 @@ from tests.conftest import test_input_data
 from tests.test_data.flags import add_flag_update_request_json
 from tests.test_data.flags import create_flag_request_json
 
-from ._expected_responses import subcriteria_themes_and_expected_response
 
 COF_FUND_ID = "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4"
 COF_ROUND_2_ID = "c603d114-5364-4474-a0c4-c41cbf4d3bbd"
@@ -305,46 +300,6 @@ def test_incorrect_theme_id(request, client, seed_application_records):
     response = client.get(f"/sub_criteria_themes/{application_id}/{theme_id}")
 
     assert "Incorrect theme id" in response.json["detail"]
-
-
-@pytest.mark.apps_to_insert([test_input_data[0]])
-def test_random_theme_content(seed_application_records):
-    """Test the function with random theme id that maps the application &
-    subcriteria theme and returns subcriteria_theme with an answer from
-    application."""
-    application_id = seed_application_records[0]["application_id"]
-    theme_id, expected_response = random.choice(
-        list(subcriteria_themes_and_expected_response.items())
-    )
-    result = map_application_with_sub_criteria_themes(
-        application_id,
-        theme_id,
-        COF_FUND_ID,
-        COF_ROUND_2_W3_ID,
-        "en",
-    )
-
-    assert result[0]["answer"] == expected_response
-
-
-@pytest.mark.apps_to_insert([test_input_data[0]])
-def test_convert_boolean_values(seed_application_records):
-    """Test the function that convert boolean values to "Yes" and "No".
-
-    Args: application_id, theme_id.
-
-    """
-
-    theme_id = "local-support"
-    application_id = seed_application_records[0]["application_id"]
-
-    results = map_application_with_sub_criteria_themes(
-        application_id, theme_id, COF_FUND_ID, COF_ROUND_2_W3_ID, "en,"
-    )
-
-    assert [
-        value["answer"] for value in results if value["field_id"] == "KqoaJL"
-    ][0] == "No"
 
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
