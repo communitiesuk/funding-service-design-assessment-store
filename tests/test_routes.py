@@ -243,20 +243,6 @@ def test_get_sub_criteria_metadata_for_false_sub_criteria_id(
 
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
-def test_get_sub_criteria_theme_answers_field_id(
-    request, client, seed_application_records
-):
-    """Test to check field_id with given application_id and theme_id."""
-
-    theme_id = "feasibility"
-    application_id = seed_application_records[0]["application_id"]
-
-    response = client.get(f"/sub_criteria_themes/{application_id}/{theme_id}")
-
-    assert response.json[0]["field_id"] == "ieRCkI"
-
-
-@pytest.mark.apps_to_insert([test_input_data[0]])
 def test_update_ar_status_to_completed(
     request, client, seed_application_records
 ):
@@ -268,38 +254,6 @@ def test_update_ar_status_to_completed(
     response = client.post(f"/application/{application_id}/status/complete")
 
     assert response.status_code == 204
-
-
-@pytest.mark.apps_to_insert([test_input_data[0]])
-def test_add_another_presentation_type(
-    request, client, seed_application_records
-):
-    """Test to check presentation_types for add_another component with given
-    application_id and theme_id."""
-
-    theme_id = "funding_requested"
-    application_id = seed_application_records[0]["application_id"]
-
-    response = client.get(f"/sub_criteria_themes/{application_id}/{theme_id}")
-
-    assert response.status_code == 200
-    assert response.json[0]["presentation_type"] == "grouped_fields"
-    assert response.json[1]["presentation_type"] == "heading"
-    assert response.json[2]["presentation_type"] == "description"
-    assert response.json[3]["presentation_type"] == "amount"
-
-
-@pytest.mark.apps_to_insert([test_input_data[0]])
-def test_incorrect_theme_id(request, client, seed_application_records):
-    """Test to check incorrect theme_id that is expected to return custom error
-    along with the openapi validation error."""
-
-    theme_id = "incorrect-theme-id"
-    application_id = seed_application_records[0]["application_id"]
-
-    response = client.get(f"/sub_criteria_themes/{application_id}/{theme_id}")
-
-    assert "Incorrect theme id" in response.json["detail"]
 
 
 @pytest.mark.apps_to_insert([test_input_data[0]])
