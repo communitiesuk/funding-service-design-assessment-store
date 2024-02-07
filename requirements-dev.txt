@@ -85,12 +85,6 @@ clickclick==20.10.2
     # via
     #   -r requirements.txt
     #   connexion
-colorama==0.4.6
-    # via
-    #   bandit
-    #   build
-    #   click
-    #   pytest
 colored==1.4.4
     # via -r requirements-dev.in
 commonmark==0.9.1
@@ -164,7 +158,7 @@ funding-service-design-utils==2.0.34
     # via -r requirements.txt
 gitdb==4.0.9
     # via gitpython
-gitpython==3.1.37
+gitpython==3.1.41
     # via bandit
 greenlet==3.0.1
     # via
@@ -326,6 +320,7 @@ pyjwt[crypto]==2.6.0
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
+    #   pyjwt
 pyparsing==3.0.9
     # via
     #   -r requirements.txt
@@ -424,6 +419,7 @@ sentry-sdk[flask]==1.31.0
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
+    #   sentry-sdk
 six==1.16.0
     # via
     #   -r requirements.txt
@@ -470,8 +466,6 @@ typing-extensions==4.4.0
     #   alembic-utils
     #   flupy
     #   sqlalchemy
-tzdata==2023.4
-    # via tzlocal
 tzlocal==5.0.1
     # via
     #   -r requirements.txt
