@@ -7,39 +7,25 @@ from flask import current_app
 
 def get_all_subcriteria(fund_id, round_id, language):
     sub_criterias = []
-    display_config = copy.deepcopy(
-        Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"]
-    )
-    for section in (
-        display_config["scored_criteria"] + display_config["unscored_sections"]
-    ):
+    display_config = copy.deepcopy(Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"])
+    for section in display_config["scored_criteria"] + display_config["unscored_sections"]:
         for sub_criteria in section["sub_criteria"]:
             for theme in sub_criteria["themes"]:
                 for answer in theme["answers"]:
                     answer["form_name"] = (
-                        answer["form_name"][language]
-                        if isinstance(answer["form_name"], dict)
-                        else answer["form_name"]
+                        answer["form_name"][language] if isinstance(answer["form_name"], dict) else answer["form_name"]
                     )
                     if "path" in answer:
                         answer["path"] = (
-                            answer["path"][language]
-                            if isinstance(answer["path"], dict)
-                            else answer["path"]
+                            answer["path"][language] if isinstance(answer["path"], dict) else answer["path"]
                         )
             sub_criterias.append(sub_criteria)
     return sub_criterias
 
 
-def return_subcriteria_from_mapping(
-    sub_criteria_id, fund_id, round_id, language
-):
-    current_app.logger.info(
-        f"Finding sub criteria data in config for: {sub_criteria_id}"
-    )
-    display_config = copy.deepcopy(
-        Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"]
-    )
+def return_subcriteria_from_mapping(sub_criteria_id, fund_id, round_id, language):
+    current_app.logger.info(f"Finding sub criteria data in config for: {sub_criteria_id}")
+    display_config = copy.deepcopy(Config.ASSESSMENT_MAPPING_CONFIG[f"{fund_id}:{round_id}"])
     sub_criterias = get_all_subcriteria(fund_id, round_id, language)
     matching_sub_criteria = list(
         filter(
