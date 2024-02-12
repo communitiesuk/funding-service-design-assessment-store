@@ -122,7 +122,11 @@ def derive_application_values(application_json):
         print("Could not extract address from application: " + f"{application_id}.")
 
     derived_values["application_id"] = application_id
-    derived_values["project_name"] = application_json["project_name"]
+    if application_json["project_name"] is None and fund_round_shortname == "COFEOI":
+        derived_values["project_name"] = ""
+    else:
+        derived_values["project_name"] = application_json["project_name"]
+
     derived_values["short_id"] = application_json["reference"]
     derived_values["fund_id"] = application_json["fund_id"]
     derived_values["round_id"] = application_json["round_id"]
