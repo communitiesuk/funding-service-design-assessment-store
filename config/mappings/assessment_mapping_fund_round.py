@@ -353,7 +353,7 @@ fund_round_mapping_config = {
     "COFEOI": {
         "fund_id": COF_EOI_FUND_ID,
         "round_id": COF_EOI_ROUND_ID,
-        "type_of_application": "COFEOI",
+        "type_of_application": "COF-EOI",
     },
     "NSTFR2": {
         "fund_id": NSTF_FUND_ID,
