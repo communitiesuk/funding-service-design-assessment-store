@@ -123,7 +123,9 @@ def derive_application_values(application_json):
 
     derived_values["application_id"] = application_id
     if application_json["project_name"] is None and fund_round_shortname == "COFEOI":
-        derived_values["project_name"] = ""
+        derived_values[
+            "project_name"
+        ] = ""  # EOI does not have a project name form compoent. Maybe this has to become nullable?
     else:
         derived_values["project_name"] = application_json["project_name"]
 
