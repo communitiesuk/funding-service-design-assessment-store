@@ -107,7 +107,7 @@ fund_round_to_assessment_mapping = {
         "scored_criteria": cof_scored_criteria_r3w3,
     },
     f"{COF_FUND_ID}:{COF_ROUND_4_W1_ID}": {
-        "schema_id": "cof_r3w3_assessment",
+        "schema_id": "cof_r4w1_assessment",
         "unscored_sections": cof_unscored_sections_r4w1,
         "scored_criteria": cof_scored_criteria_r4w1,
     },
