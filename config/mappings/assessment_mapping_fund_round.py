@@ -281,7 +281,23 @@ applicant_info_mapping = {
         },
         "OUTPUT_TRACKER": {},
     },
-    COF_EOI_FUND_ID: {},
+    COF_EOI_FUND_ID: {
+        "ASSESSOR_EXPORT": {
+            "form_fields": {
+                "OpeSdM": {
+                    "en": {
+                        "title": "Organisation address",
+                        "field_type": "ukAddressField",
+                    },
+                    "cy": {
+                        "title": "Cyfeiriad y sefydliad",
+                        "field_type": "ukAddressField",
+                    },
+                },
+            }
+        },
+        "OUTPUT_TRACKER": {},
+    },
     CYP_FUND_ID: {
         "ASSESSOR_EXPORT": {
             "form_fields": {
