@@ -188,20 +188,6 @@ unscored_sections = [
                                 "question": "Where do you plan to source match funding?",
                             },
                             {
-                                "field_id": "qgytim",
-                                "form_name": "your-funding-request",
-                                "field_type": "checkboxesField",
-                                "presentation_type": "list",
-                                "question": "Cash match funding",
-                            },
-                            {
-                                "field_id": "daJkaD",
-                                "form_name": "your-funding-request",
-                                "field_type": "checkboxesField",
-                                "presentation_type": "list",
-                                "question": "Or",
-                            },
-                            {
                                 "field_id": "yZxdeJ",
                                 "form_name": "your-funding-request",
                                 "field_type": "yesNoField",
