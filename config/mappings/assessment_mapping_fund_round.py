@@ -432,29 +432,29 @@ applicant_info_mapping = {
                 "qkNYMP": {
                     "en": {"title": "Alternative name 1", "field_type": "textField"},
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "Enw amgen 1",
+                        "field_type": "textField",
                     },
                 },
                 "mVxvon": {
                     "en": {"title": "Alternative name 2", "field_type": "textField"},
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "Enw amgen 2",
+                        "field_type": "textField",
                     },
                 },
                 "DaIVVm": {
                     "en": {"title": "Alternative name 3", "field_type": "textField"},
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "Enw amgen 3",
+                        "field_type": "textField",
                     },
                 },
                 "aocRmv": {
                     "en": {"title": "What do you plan to use COF's funding for?", "field_type": "checkboxesField"},
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "At ba ddiben ydych chi'n bwriadu defnyddio cyllid o'r Gronfa Perchnogaeth Gymunedol?",
+                        "field_type": "checkboxesField",
                     },
                 },
                 "foQgiy": {
@@ -463,8 +463,8 @@ applicant_info_mapping = {
                         "field_type": "yesNoField",
                     },
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "A fydd gan y lesddaliad o leiaf 15 mlynedd pan fydd eich sefydliad yn cyflwyno cais llawn?",
+                        "field_type": "yesNoField",
                     },
                 },
                 "fZAMFv": {
@@ -473,43 +473,43 @@ applicant_info_mapping = {
                         "field_type": "numberField",
                     },
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "Faint o gyllid cyfalaf ydych chi'n gwneud cais amdano o'r Gronfa Perchnogaeth Gymunedol?",
+                        "field_type": "numberField",
                     },
                 },
                 "oblxxv": {
                     "en": {"title": "Do you plan to request any revenue funding?", "field_type": "yesNoField"},
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "A ydych yn bwriadu gwneud cais am unrhyw gyllid refeniw?",
+                        "field_type": "yesNoField",
                     },
                 },
                 "eOWKoO": {
                     "en": {"title": "Do you plan to secure match funding?", "field_type": "yesNoField"},
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "A ydych yn bwriadu sicrhau arian cyfatebol?",
+                        "field_type": "yesNoField",
                     },
                 },
                 "BykoQQ": {
                     "en": {"title": "In-kind and cash match funding", "field_type": "checkboxesField"},
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "O ble rydych yn bwriadu cael arian cyfatebol?",
+                        "field_type": "checkboxesField",
                     },
                 },
                 "yZxdeJ": {
                     "en": {"title": "Does your project include an element of housing?", "field_type": "yesNoField"},
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "A yw eich prosiect yn cynnwys elfen dai?",
+                        "field_type": "yesNoField",
                     },
                 },
                 "UORyaF": {
                     "en": {"title": "Will you need planning permission for your project?", "field_type": "radiosField"},
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "A fydd angen caniatâd cynllunio ar gyfer eich prosiect?",
+                        "field_type": "radiosField",
                     },
                 },
                 "jICagT": {
@@ -518,15 +518,15 @@ applicant_info_mapping = {
                         "field_type": "radiosField",
                     },
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "Pa gam ydych chi wedi'i gyrraedd yn y broses o sicrhau caniatâd cynllunio?",
+                        "field_type": "radiosField",
                     },
                 },
                 "kWRuac": {
                     "en": {"title": "What progress have you made to secure this funding?", "field_type": "radiosField"},
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "Pa gynnydd ydych chi wedi'i wneud i sicrhau'r arian hwn?",
+                        "field_type": "radiosField",
                     },
                 },
                 "iXmKyq": {
@@ -535,8 +535,8 @@ applicant_info_mapping = {
                         "field_type": "yesNoField",
                     },
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "A hoffech i'r darparwr cymorth datblygu gysylltu â chi, os ydych yn gymwys i gael cymorth manwl?",
+                        "field_type": "yesNoField",
                     },
                 },
                 "ObIBSx": {
@@ -545,36 +545,36 @@ applicant_info_mapping = {
                         "field_type": "checkboxesField",
                     },
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "Beth yw'r prif bethau y mae angen cymorth arnoch gyda nhw er mwyn cyflwyno cais da i'r Gronfa Perchnogaeth Gymunedol yn eich barn chi?",
+                        "field_type": "checkboxesField",
                     },
                 },
                 "MxzEYq": {
                     "en": {"title": "Describe your project and its aims", "field_type": "freeTextField"},
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "Disgrifiwch eich prosiect a'i nodau",
+                        "field_type": "freeTextField",
                     },
                 },
                 "xWnVof": {
                     "en": {"title": "Name of lead contact", "field_type": "textField"},
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "Enw'r prif unigolyn cyswllt",
+                        "field_type": "textField",
                     },
                 },
                 "NQoGIm": {
                     "en": {"title": "Lead contact email address", "field_type": "emailAddressField"},
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "Cyfeiriad e-bost y prif unigolyn cyswllt",
+                        "field_type": "emailAddressField",
                     },
                 },
                 "srxZmv": {
                     "en": {"title": "Lead contact telephone number", "field_type": "telephoneNumberField"},
                     "cy": {
-                        "title": "",
-                        "field_type": "",
+                        "title": "Rhif ffôn y prif unigolyn cyswllt",
+                        "field_type": "telephoneNumberField",
                     },
                 },
             }
