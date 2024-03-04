@@ -1,5 +1,6 @@
 import copy
 
+from bs4 import BeautifulSoup
 from config import Config
 from db.models.assessment_record.enums import Status
 from flask import current_app
@@ -57,3 +58,19 @@ def transform_to_assessor_task_list_metadata(
     ]
 
     return sections, criterias
+
+
+def strip_tags(text):
+    soup = BeautifulSoup(text, "html.parser")
+    return soup.get_text()
+
+
+def remove_html_tags(data):
+    if isinstance(data, dict):
+        for key, value in data.items():
+            data[key] = remove_html_tags(value)
+    elif isinstance(data, list):
+        data = [remove_html_tags(item) for item in data]
+    if isinstance(data, str):
+        data = strip_tags(data)
+    return data
