@@ -3,7 +3,6 @@ from typing import Dict
 from typing import List
 
 from api.models.sub_criteria import SubCriteria
-from api.routes._helpers import remove_html_tags
 from api.routes._helpers import transform_to_assessor_task_list_metadata
 from api.routes.subcriterias.get_sub_criteria import (
     get_all_subcriteria,
@@ -275,5 +274,4 @@ def get_application_data_for_export(fund_id: str, round_id: str, report_type: st
         list_of_fields=applicant_info_mapping[fund_id],
     )
 
-    remove_html_tags(app_list)
     return app_list

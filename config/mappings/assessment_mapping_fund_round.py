@@ -347,7 +347,9 @@ applicant_info_mapping = {
                 },
                 "oblxxv": {"en": {"title": "Do you plan to request any revenue funding?", "field_type": "yesNoField"}},
                 "eOWKoO": {"en": {"title": "Do you plan to secure match funding?", "field_type": "yesNoField"}},
-                "BykoQQ": {"en": {"title": "In-kind and cash match funding", "field_type": "checkboxesField"}},
+                "BykoQQ": {
+                    "en": {"title": "Where do you plan to source match funding?", "field_type": "checkboxesField"}
+                },
                 "yZxdeJ": {
                     "en": {"title": "Does your project include an element of housing?", "field_type": "yesNoField"}
                 },
