@@ -492,16 +492,11 @@ applicant_info_mapping = {
                     },
                 },
                 "BykoQQ": {
-                    "en": {"title": "In-kind and cash match funding", "field_type": "checkboxesField"},
+                    "en": {"title": "Where do you plan to source match funding?", "field_type": "checkboxesField"},
                     "cy": {
                         "title": "O ble rydych yn bwriadu cael arian cyfatebol?",
                         "field_type": "checkboxesField",
                     },
-                },
-                "oblxxv": {"en": {"title": "Do you plan to request any revenue funding?", "field_type": "yesNoField"}},
-                "eOWKoO": {"en": {"title": "Do you plan to secure match funding?", "field_type": "yesNoField"}},
-                "BykoQQ": {
-                    "en": {"title": "Where do you plan to source match funding?", "field_type": "checkboxesField"}
                 },
                 "yZxdeJ": {
                     "en": {"title": "Does your project include an element of housing?", "field_type": "yesNoField"},
