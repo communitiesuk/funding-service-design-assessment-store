@@ -61,7 +61,7 @@ unscored_sections = [
                                 "form_name": "organisation-details",
                                 "field_type": "radiosField",
                                 "presentation_type": "text",
-                                "question": "How is you organisation classified",
+                                "question": "How your organisation is classified",
                             },
                             {
                                 "field_id": "NcQSbU",
