@@ -74,7 +74,7 @@ unscored_sections = [
                     },
                     {
                         "id": "about-your-asset",
-                        "name": "About your assset",
+                        "name": "About your asset",
                         "answers": [
                             {
                                 "field_id": "eEaDGz",
