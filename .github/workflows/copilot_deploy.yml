@@ -38,6 +38,7 @@ on:
       - 'db/**'
       - 'openapi/**'
       - 'scripts/**'
+      - 'services/**'
       - 'tests/**'
       - 'requirements-dev.in'
       - 'requirements-dev.txt'
