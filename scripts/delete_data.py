@@ -64,6 +64,10 @@ def delete_all_assessments_in_round(round_id):
 
 if __name__ == "__main__":
     from app import app
+    from config import Config
 
     with app.app_context():
+        if Config.FLASK_ENV.casefold() == "production":
+            print("Will not run in production")
+            exit(1)
         cli()
