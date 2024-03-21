@@ -13,7 +13,9 @@ from db.models.score import Score
 
 
 def delete_single_assessment(application_id: str):
-    assessment_record = AssessmentRecord.query.get(application_id)
+    assessment_record = (
+        db.session.query(AssessmentRecord).where(AssessmentRecord.application_id == application_id).one()
+    )
     if assessment_record:
         print(f"{datetime.now()} Starting to delete assessment record {application_id}")
         tags_deleted = db.session.query(TagAssociation).filter(TagAssociation.application_id == application_id).delete()
@@ -41,8 +43,10 @@ def delete_single_assessment(application_id: str):
             ).delete()
             comments.delete()
         db.session.delete(assessment_record)
-        db.session.commit()
+        # db.session.commit()
         print(f"{datetime.now()} Deleted assessment record with application id {application_id}")
+    else:
+        print(f"No assessment record exists with application id {application_id}")
 
 
 @click.group()
