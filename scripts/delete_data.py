@@ -12,7 +12,7 @@ from db.models.flags import FlagUpdate
 from db.models.score import Score
 
 
-def delete_single_assessment(application_id: str):
+def delete_single_assessment(application_id: str, do_commit: bool = False):
     assessment_record = (
         db.session.query(AssessmentRecord).where(AssessmentRecord.application_id == application_id).one()
     )
@@ -43,37 +43,49 @@ def delete_single_assessment(application_id: str):
             ).delete()
             comments.delete()
         db.session.delete(assessment_record)
-        # db.session.commit()
+        if do_commit:
+            db.session.commit()
         print(f"{datetime.now()} Deleted assessment record with application id {application_id}")
     else:
         print(f"No assessment record exists with application id {application_id}")
 
 
 @click.group()
+@click.option("-q", help="Do not prompt for confirmation", flag_value=True, default=False)
 @click.pass_context
-def cli(ctx):
+def cli(ctx, q):
     # Ensure that ctx.obj exists and is a dict
     ctx.ensure_object(dict)
+    # Apply group-wide feature switches
+    ctx.obj["q"] = q
 
 
 @cli.command()
 @click.option("-id", prompt=True)
-def delete_assessment_record(id):
+@click.option("-c", "--do-commit", flag_value=True, default=False, help="Whether to commit changes to DB")
+def delete_assessment_record(id, do_commit):
     """Deletes a single assessment record, along with child records (tags,
     comments, scores, flags)"""
-    delete_single_assessment(id)
+    delete_single_assessment(id, do_commit)
 
 
 @cli.command()
 @click.option("-r", "--round-id", prompt=True)
-def delete_all_assessments_in_round(round_id):
+@click.option("-c", "--do-commit", flag_value=True, default=False, help="Whether to commit changes to DB")
+@click.pass_context
+def delete_all_assessments_in_round(ctx, round_id, do_commit):
     """Deletes all assessment records in a round, along with their child records
     (tags, comments, scores, flags)"""
     results = db.session.query(AssessmentRecord.application_id).filter(AssessmentRecord.round_id == round_id)
     if results.count() > 0:
         print(f"Found {results.count()} assessments to delete")
-        for r in results.all():
-            delete_single_assessment(str(r[0]))
+        print(f"These deletes will{'' if do_commit else ' not'} be committed to the database")
+        q = ctx.obj.get("q")
+        if not q and click.confirm("Do you want to continue?"):
+            for r in results.all():
+                delete_single_assessment(str(r[0]), do_commit)
+        print(f"These deletes WERE{'' if do_commit else ' NOT'} committed to the database")
+
     else:
         print(f"No assessments found for round {round_id}")
 
