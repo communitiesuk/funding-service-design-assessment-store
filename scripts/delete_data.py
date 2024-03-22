@@ -14,7 +14,7 @@ from db.models.score import Score
 
 def delete_single_assessment(application_id: str, do_commit: bool = False):
     assessment_record = (
-        db.session.query(AssessmentRecord).where(AssessmentRecord.application_id == application_id).one()
+        db.session.query(AssessmentRecord).where(AssessmentRecord.application_id == application_id).one_or_none()
     )
     if assessment_record:
         print(f"{datetime.now()} Starting to delete assessment record {application_id}")
@@ -25,7 +25,7 @@ def delete_single_assessment(application_id: str, do_commit: bool = False):
 
         associated_flags = db.session.query(AssessmentFlag).filter(AssessmentFlag.application_id == application_id)
         if associated_flags.count() > 0:
-            print(f"\tDeleteing {associated_flags.count()} flags")
+            print(f"\tDeleting {associated_flags.count()} flags")
             db.session.query(FlagUpdate).filter(
                 FlagUpdate.assessment_flag_id.in_(
                     db.session.query(AssessmentFlag.id).filter(AssessmentFlag.application_id == application_id)
@@ -35,7 +35,7 @@ def delete_single_assessment(application_id: str, do_commit: bool = False):
 
         comments = db.session.query(Comment).filter(Comment.application_id == application_id)
         if comments.count() > 0:
-            print(f"\tDeleteing {comments.count()} comments")
+            print(f"\tDeleting {comments.count()} comments")
             db.session.query(CommentsUpdate).filter(
                 CommentsUpdate.comment_id.in_(
                     db.session.query(Comment.id).filter(Comment.application_id == application_id)
@@ -63,10 +63,14 @@ def cli(ctx, q):
 @cli.command()
 @click.option("-id", prompt=True)
 @click.option("-c", "--do-commit", flag_value=True, default=False, help="Whether to commit changes to DB")
-def delete_assessment_record(id, do_commit):
+@click.pass_context
+def delete_assessment_record(ctx, id, do_commit):
     """Deletes a single assessment record, along with child records (tags,
     comments, scores, flags)"""
-    delete_single_assessment(id, do_commit)
+    print(f"Record with application id {id} will be deleted, {'and committed' if do_commit else 'but not committed'}")
+    q = ctx.obj.get("q")
+    if q or (not q and click.confirm("Do you want to continue?")):
+        delete_single_assessment(id, do_commit)
 
 
 @cli.command()
@@ -81,7 +85,7 @@ def delete_all_assessments_in_round(ctx, round_id, do_commit):
         print(f"Found {results.count()} assessments to delete")
         print(f"These deletes will{'' if do_commit else ' not'} be committed to the database")
         q = ctx.obj.get("q")
-        if not q and click.confirm("Do you want to continue?"):
+        if q or (not q and click.confirm("Do you want to continue?")):
             for r in results.all():
                 delete_single_assessment(str(r[0]), do_commit)
         print(f"These deletes WERE{'' if do_commit else ' NOT'} committed to the database")

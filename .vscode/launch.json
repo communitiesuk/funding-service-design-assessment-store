@@ -42,7 +42,7 @@
       "env": { "PYTHONPATH":"${workspaceFolder}"},
       "envFile": "${workspaceFolder}/.env.development",
       "justMyCode": false,
-      "args": ["delete-all-assessments-in-round", "-r", "4efc3263-aefe-4071-b5f4-0910abec12d2"]
+      "args": ["delete-assessment-record", "-id", "4efc3263-aefe-4071-b5f4-0910abec12d2"],
   },
   {
     "name": "Upgrade DB",
