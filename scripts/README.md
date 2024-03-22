@@ -109,5 +109,5 @@ python -m scripts.delete_data delete-all-assessments-in-round -r <round_id_to_de
 
 To run on AWS, wrap the above commands in:
 ```
-copilot svc exec --command "launcher <command goes here>"
+copilot svc exec --name fsd-assessment-store --app pre-award --command "launcher <command goes here>"
 ```
