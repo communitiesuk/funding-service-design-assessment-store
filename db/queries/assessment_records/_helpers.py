@@ -45,12 +45,12 @@ def get_location_json_from_postcode(raw_postcode):
         {
             "error": False,
             "postcode": raw_postcode,
-            "county": postcode_data["admin_county"]
-            if postcode_data["admin_county"]
-            else postcode_data["admin_district"],
-            "region": postcode_data["region"]
-            if postcode_data["region"]
-            else postcode_data["european_electoral_region"],
+            "county": (
+                postcode_data["admin_county"] if postcode_data["admin_county"] else postcode_data["admin_district"]
+            ),
+            "region": (
+                postcode_data["region"] if postcode_data["region"] else postcode_data["european_electoral_region"]
+            ),
             "country": postcode_data["country"],
             "constituency": postcode_data["parliamentary_constituency"],
         }
@@ -123,9 +123,9 @@ def derive_application_values(application_json):
 
     derived_values["application_id"] = application_id
     if application_json["project_name"] is None and fund_round_shortname == "COFEOI":
-        derived_values[
-            "project_name"
-        ] = ""  # EOI does not have a project name form compoent. Maybe this has to become nullable?
+        derived_values["project_name"] = (
+            ""  # EOI does not have a project name form component. Maybe this has to become nullable?
+        )
     else:
         derived_values["project_name"] = application_json["project_name"]
 
@@ -139,9 +139,9 @@ def derive_application_values(application_json):
         derived_values["location_json_blob"] = location_data
     else:
         derived_values["location_json_blob"] = {
-            "error": True
-            if fund_round_data_key_mappings[fund_round_shortname]["location"]
-            else False  # if location is not mandatory for a fund, then treat error as `False`
+            "error": (
+                True if fund_round_data_key_mappings[fund_round_shortname]["location"] else False
+            )  # if location is not mandatory for a fund, then treat error as `False`
         }
 
         FIELD_DEFAULT_VALUE = "Not Available"
