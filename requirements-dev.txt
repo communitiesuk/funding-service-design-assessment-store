@@ -131,7 +131,7 @@ flask-babel==2.0.0
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
-flask-migrate==4.0.5
+flask-migrate==4.0.7
     # via
     #   -r requirements.txt
     #   funding-service-design-utils

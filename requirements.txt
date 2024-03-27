@@ -73,7 +73,7 @@ flask-apscheduler==1.13.1
     # via -r requirements.in
 flask-babel==2.0.0
     # via funding-service-design-utils
-flask-migrate==4.0.5
+flask-migrate==4.0.7
     # via
     #   -r requirements.in
     #   funding-service-design-utils
