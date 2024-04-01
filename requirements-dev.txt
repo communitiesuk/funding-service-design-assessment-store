@@ -281,7 +281,7 @@ platformdirs==2.5.4
     # via
     #   black
     #   virtualenv
-pluggy==1.0.0
+pluggy==1.4.0
     # via pytest
 ply==3.11
     # via
@@ -317,7 +317,7 @@ pyparsing==3.0.9
     # via
     #   -r requirements.txt
     #   packaging
-pytest==7.4.3
+pytest==8.1.1
     # via
     #   -r requirements-dev.in
     #   pytest-env
