@@ -874,6 +874,8 @@ def get_export_data(
                             if field["answer"] and field_type == "ukAddressField":
                                 address_parts = field["answer"].split(", ")
                                 answer = ", ".join([part for part in address_parts if part != "null"])
+                            elif field["answer"] and field_type == "uk_postcode":
+                                answer = field["answer"].split(", ")[-1]
                             else:
                                 answer = field["answer"]
 
