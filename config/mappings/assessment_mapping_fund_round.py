@@ -310,7 +310,10 @@ applicant_info_mapping = {
                     "cy": {"title": "Cod post o ased", "field_type": "uk_postcode"},
                 },
                 "ABROnB": {"en": {"title": "Capital funding request"}, "cy": {"title": "Cais cyllido cyfalaf"}},
-                "tSKhQQ": {"en": {"title": "Revenue costs (optional)"}, "cy": {"title": "Costau refeniw (dewisol)"}},
+                "tSKhQQ": {
+                    "en": {"title": "Revenue costs (optional)", "field_type": "sum_list", "field_to_sum": "UyaAHw"},
+                    "cy": {"title": "Costau refeniw (dewisol)"},
+                },
                 "apGjFS": {"en": {"title": "Project name"}, "cy": {"title": "Enw'r prosiect"}},
             }
         },

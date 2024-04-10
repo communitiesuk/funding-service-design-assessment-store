@@ -5159,20 +5159,42 @@
             "status": "COMPLETED",
             "category": "bgUGuD",
             "question": "Unsecured match funding"
-          },
-          {
-            "index": 0,
+          },{
+            "category": "bgUGuD",
             "fields": [
               {
+                "answer": true,
                 "key": "matkNH",
-                "type": "list",
                 "title": "Are you applying for revenue funding from the Community Ownership Fund? (optional)",
-                "answer": false
+                "type": "list"
               }
             ],
-            "status": "COMPLETED",
+            "index": 0,
+            "question": "Revenue funding",
+            "status": "COMPLETED"
+          },
+          {
             "category": "bgUGuD",
-            "question": "Revenue funding"
+            "fields": [
+              {
+                "answer": [
+                  {
+                    "UyaAHw": 234,
+                    "hGsUaZ": "asdf"
+                  },
+                  {
+                    "UyaAHw": 222,
+                    "hGsUaZ": "two"
+                  }
+                ],
+                "key": "tSKhQQ",
+                "title": "Revenue costs (optional)",
+                "type": "multiInput"
+              }
+            ],
+            "index": 0,
+            "question": "Revenue costs (optional)",
+            "status": "COMPLETED"
           },
           {
             "fields": [

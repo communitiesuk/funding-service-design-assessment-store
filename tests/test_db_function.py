@@ -406,9 +406,11 @@ def test_output_tracker_with_no_scores_data(seed_application_records, mocker):
 
 @pytest.mark.apps_to_insert([test_input_data[4]])  # taken from assessment store for cof r4w1
 def test_get_cof_r4w1_export_data_en(seed_application_records):
-    test_record = get_assessment_record(test_input_data[4]["id"])
+    app_id = test_input_data[4]["id"]
+    test_record = get_assessment_record(app_id)
     result = get_export_data("round_id", "ASSESSOR_EXPORT", applicant_info_mapping[COF_FUND_ID], [test_record], "en")
     assert len(result) == 1
+    assert str(result[0]["Application ID"]) == app_id
     assert result[0]["Name of lead contact"] == "test lead person"
     assert result[0]["Type of organisation"] == "CIO"
     assert result[0]["Asset type"] == "community-centre"
@@ -416,13 +418,17 @@ def test_get_cof_r4w1_export_data_en(seed_application_records):
     assert result[0]["Charity number"] == "786786"
     assert result[0]["Organisation address"] == "test, test, test, test, ss12ss"
     assert result[0]["Postcode of asset"] == "NP10 8QQ"
+    assert result[0]["Capital funding request"] == "966585"
+    assert result[0]["Revenue costs (optional)"] == 456
 
 
 @pytest.mark.apps_to_insert([test_input_data[5]])  # taken from assessment store for cof r4w1
 def test_get_cof_r4w1_export_data_cy(seed_application_records):
-    test_record = get_assessment_record(test_input_data[5]["id"])
+    app_id = test_input_data[5]["id"]
+    test_record = get_assessment_record(app_id)
     result = get_export_data("round_id", "ASSESSOR_EXPORT", applicant_info_mapping[COF_FUND_ID], [test_record], "cy")
     assert len(result) == 1
+    assert str(result[0]["Application ID"]) == app_id
     assert result[0]["Enw'r cyswllt arweiniol"] == "asdf"
     assert result[0]["Math o sefydliad"] == "Cwmni cydweithredol, fel cymdeithas budd cymunedol"
     assert result[0]["Math o ased"] == "Arall"
@@ -430,3 +436,5 @@ def test_get_cof_r4w1_export_data_cy(seed_application_records):
     assert result[0]["Rhif elusen"] == ""
     assert result[0]["Cyfeiriad y sefydliad"] == "line 1, town, county, PL11RN"
     assert result[0]["Cod post o ased"] == "PL11RN"
+    assert result[0]["Cais cyllido cyfalaf"] == "234234"
+    assert result[0]["Costau refeniw (dewisol)"] == ""
