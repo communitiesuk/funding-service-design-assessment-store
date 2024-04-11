@@ -27,8 +27,6 @@ def bootstrap_dev_db(c):
     from sqlalchemy_utils.functions import database_exists
 
     with _env_var("FLASK_ENV", "development"):
-        # from app import app
-
         with app.app_context():
             from config import Config
 
@@ -70,8 +68,6 @@ def seed_dev_db(c, fundround=None, appcount=None):
     from flask_migrate import upgrade
 
     with _env_var("FLASK_ENV", "development"):
-        # from app import app
-
         with app.app_context():
             from tests._helpers import seed_database_for_fund_round
             from config import Config
