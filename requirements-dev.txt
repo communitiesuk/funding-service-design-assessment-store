@@ -156,6 +156,8 @@ flupy==1.2.0
     #   alembic-utils
 funding-service-design-utils==2.0.42
     # via -r requirements.txt
+greenlet==3.0.3
+    # via sqlalchemy
 gunicorn==20.1.0
     # via
     #   -r requirements.txt
@@ -279,7 +281,7 @@ platformdirs==2.5.4
     # via
     #   black
     #   virtualenv
-pluggy==1.0.0
+pluggy==1.5.0
     # via pytest
 ply==3.11
     # via
@@ -315,7 +317,7 @@ pyparsing==3.0.9
     # via
     #   -r requirements.txt
     #   packaging
-pytest==7.4.3
+pytest==8.2.0
     # via
     #   -r requirements-dev.in
     #   pytest-env
