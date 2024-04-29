@@ -156,13 +156,17 @@ flupy==1.2.0
     #   alembic-utils
 funding-service-design-utils==2.0.42
     # via -r requirements.txt
+greenlet==3.0.3
+    # via
+    #   -r requirements.txt
+    #   sqlalchemy
 gunicorn==20.1.0
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
 identify==2.5.8
     # via pre-commit
-idna==3.4
+idna==3.7
     # via
     #   -r requirements.txt
     #   requests

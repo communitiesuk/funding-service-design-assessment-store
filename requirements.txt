@@ -90,9 +90,11 @@ flupy==1.2.0
     # via alembic-utils
 funding-service-design-utils==2.0.42
     # via -r requirements.in
+greenlet==3.0.3
+    # via sqlalchemy
 gunicorn==20.1.0
     # via funding-service-design-utils
-idna==3.4
+idna==3.7
     # via requests
 inflection==0.5.1
     # via connexion
