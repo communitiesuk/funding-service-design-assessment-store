@@ -54,7 +54,7 @@ connexion==2.14.2
     # via -r requirements.in
 cryptography==42.0.4
     # via pyjwt
-dataclass-dict-convert==1.7.1
+dataclass-dict-convert==1.7.3
     # via -r requirements.in
 decorator==5.1.1
     # via jsonpath-rw
@@ -90,6 +90,8 @@ flupy==1.2.0
     # via alembic-utils
 funding-service-design-utils==2.0.42
     # via -r requirements.in
+greenlet==3.0.3
+    # via sqlalchemy
 gunicorn==20.1.0
     # via funding-service-design-utils
 idna==3.7

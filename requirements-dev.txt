@@ -95,7 +95,7 @@ cryptography==42.0.4
     # via
     #   -r requirements.txt
     #   pyjwt
-dataclass-dict-convert==1.7.1
+dataclass-dict-convert==1.7.3
     # via -r requirements.txt
 debugpy==1.8.0
     # via -r requirements-dev.in
@@ -156,6 +156,10 @@ flupy==1.2.0
     #   alembic-utils
 funding-service-design-utils==2.0.42
     # via -r requirements.txt
+greenlet==3.0.3
+    # via
+    #   -r requirements.txt
+    #   sqlalchemy
 gunicorn==20.1.0
     # via
     #   -r requirements.txt
