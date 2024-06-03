@@ -1,12 +1,11 @@
-import connexion
-from fsd_utils.services.aws_extended_client import SQSExtendedClient
 from os import getenv
 
+import connexion
 from _helpers.context_aware_executor import ContextAwareExecutor
 from _helpers.scheduler_service import scheduler_executor
 from _helpers.task_executer_service import TaskExecutorService
-from config import Config
 from apscheduler.schedulers.background import BackgroundScheduler
+from config import Config
 from connexion.resolver import MethodViewResolver
 from flask import Flask
 from fsd_utils import init_sentry
@@ -14,6 +13,7 @@ from fsd_utils.healthchecks.checkers import DbChecker
 from fsd_utils.healthchecks.checkers import FlaskRunningChecker
 from fsd_utils.healthchecks.healthcheck import Healthcheck
 from fsd_utils.logging import logging
+from fsd_utils.services.aws_extended_client import SQSExtendedClient
 from openapi.utils import get_bundled_specs
 
 
@@ -104,5 +104,6 @@ def create_sqs_extended_client(flask_app):
             delete_payload_from_s3=True,
             logger=flask_app.logger,
         )
+
 
 app = create_app()

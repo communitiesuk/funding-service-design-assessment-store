@@ -6,17 +6,15 @@ from uuid import uuid4
 
 import boto3
 import pytest
-from moto import mock_aws
-from sqlalchemy.exc import SQLAlchemyError
-
 from _helpers.context_aware_executor import ContextAwareExecutor
 from _helpers.task_executer_service import TaskExecutorService
 from config import Config
+from moto import mock_aws
+from sqlalchemy.exc import SQLAlchemyError
 from tests.test_data.test_data_util import send_message_to_queue
 
 
 class TestTaskExecutorService(unittest.TestCase):
-
     @mock_aws
     @pytest.mark.usefixtures("live_server")
     def test_message_in_mock_environment_processing_without_errors(self):
@@ -64,14 +62,14 @@ class TestTaskExecutorService(unittest.TestCase):
                 "S3Key": {
                     "StringValue": "assessment",
                     "DataType": "String",
-                }
+                },
             }
             message_id = self.task_executor.sqs_extended_client.submit_single_message(
                 queue_url=self.queue_response["QueueUrl"],
                 message=send_message_to_queue,
                 message_group_id="import_applications_group",
                 message_deduplication_id=str(uuid4()),  # ensures message uniqueness
-                extra_attributes=application_attributes
+                extra_attributes=application_attributes,
             )
             assert message_id is not None
 

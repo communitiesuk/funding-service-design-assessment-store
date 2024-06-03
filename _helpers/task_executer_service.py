@@ -3,12 +3,10 @@ import threading
 from concurrent.futures import as_completed
 from os import getenv
 
-from db.queries import bulk_insert_application_record
-from fsd_utils.services.aws_extended_client import SQSExtendedClient
-
-
 from config import Config
 from config.mappings.assessment_mapping_fund_round import fund_round_data_key_mappings
+from db.queries import bulk_insert_application_record
+from fsd_utils.services.aws_extended_client import SQSExtendedClient
 
 
 class TaskExecutorService:
@@ -28,10 +26,10 @@ class TaskExecutorService:
         )
 
     def process_messages(self):
-        """
-        Scheduler calling this method based on a cron job for every given second then messages will be read
-        from the SQS queue in AWS and if S3 usage is allowed then it will interact each other to retrieve the messages
-        """
+        """Scheduler calling this method based on a cron job for every given
+        second then messages will be read from the SQS queue in AWS and if S3
+        usage is allowed then it will interact each other to retrieve the
+        messages."""
         current_thread = threading.current_thread()
         thread_id = f"[{current_thread.name}:{current_thread.ident}]"
         self.logger.debug(f"{thread_id} Triggered schedular to get messages")
@@ -43,10 +41,8 @@ class TaskExecutorService:
         self.logger.debug(f"{thread_id} Message Processing completed and will start again later")
 
     def _assessment_task(self, message):
-        """
-        Processing the message in a separate worker thread and this will call the GOV notify service to send emails
-        :param message Json message
-        """
+        """Processing the message in a separate worker thread and this will call
+        the GOV notify service to send emails :param message Json message."""
         current_thread = threading.current_thread()
         thread_id = f"[{current_thread.name}:{current_thread.ident}]"
         self.logger.info(f"[{thread_id}] Notification Triggered")
@@ -74,9 +70,8 @@ class TaskExecutorService:
             self.logger.error(f"An error occurred while processing the message {massage_id}", e)
 
     def _handle_message_receiving_and_processing(self):
-        """
-        Handle message retrieve from the SQS service and get the json from S3 bucket
-        """
+        """Handle message retrieve from the SQS service and get the json from S3
+        bucket."""
         current_thread = threading.current_thread()
         thread_id = f"[{current_thread.name}:{current_thread.ident}]"
         running_threads = []
@@ -106,11 +101,9 @@ class TaskExecutorService:
         return running_threads, read_msg_ids
 
     def _handle_message_delete_processing(self, running_threads, read_msg_ids):
-        """
-        Handling the message delete process from the SQS and S3 bucket if it is completed
-        :param read_msg_ids All the message ids that taken from SQS
-        :param running_threads Executing tasks to send emails
-        """
+        """Handling the message delete process from the SQS and S3 bucket if it is
+        completed :param read_msg_ids All the message ids that taken from SQS
+        :param running_threads Executing tasks to send emails."""
         current_thread = threading.current_thread()
         thread_id = f"[{current_thread.name}:{current_thread.ident}]"
         receipt_handles_to_delete = []
