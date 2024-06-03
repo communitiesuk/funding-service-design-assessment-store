@@ -65,12 +65,21 @@ class DefaultConfig:
             AWS_SQS_IMPORT_APP_PRIMARY_QUEUE_URL = sqs_credentials["primary_queue_url"]
             AWS_SQS_IMPORT_APP_SECONDARY_QUEUE_URL = sqs_credentials["secondary_queue_url"]
     else:
-        AWS_ACCESS_KEY_ID = environ.get("AWS_ACCESS_KEY_ID")
-        AWS_SECRET_ACCESS_KEY = environ.get("AWS_SECRET_ACCESS_KEY")
-        AWS_REGION = environ.get("AWS_REGION")
+        AWS_SQS_ACCESS_KEY_ID = AWS_ACCESS_KEY_ID = environ.get("AWS_ACCESS_KEY_ID")
+        AWS_SQS_SECRET_ACCESS_KEY = AWS_SECRET_ACCESS_KEY = environ.get("AWS_SECRET_ACCESS_KEY")
+        AWS_SQS_REGION = AWS_REGION = environ.get("AWS_REGION")
         AWS_SQS_IMPORT_APP_PRIMARY_QUEUE_URL = environ.get("AWS_SQS_IMPORT_APP_PRIMARY_QUEUE_URL")
         AWS_SQS_IMPORT_APP_SECONDARY_QUEUE_URL = environ.get("AWS_SQS_IMPORT_APP_SECONDARY_QUEUE_URL")
     AWS_DLQ_MAX_RECIEVE_COUNT = int(environ.get("AWS_DLQ_MAX_RECIEVE_COUNT", 3))
+
+    # ---------------
+    # S3 Config
+    # ---------------
+    AWS_MSG_BUCKET_NAME = environ.get("AWS_MSG_BUCKET_NAME")
+    # ---------------
+    # Task Executor Config
+    # ---------------
+    TASK_EXECUTOR_MAX_THREAD = int(environ.get("TASK_EXECUTOR_MAX_THREAD", 5))  # max amount of threads
 
     # ---------------
     # SQS Config

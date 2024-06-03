@@ -1,5 +1,11 @@
 import connexion
-from _helpers.import_application import import_applications_from_queue
+from fsd_utils.services.aws_extended_client import SQSExtendedClient
+from os import getenv
+
+from _helpers.context_aware_executor import ContextAwareExecutor
+from _helpers.scheduler_service import scheduler_executor
+from _helpers.task_executer_service import TaskExecutorService
+from config import Config
 from apscheduler.schedulers.background import BackgroundScheduler
 from connexion.resolver import MethodViewResolver
 from flask import Flask
@@ -30,6 +36,9 @@ def create_app() -> Flask:
     # Initialise logging
     logging.init_app(flask_app)
 
+    # Initialize sqs extended client
+    create_sqs_extended_client(flask_app)
+
     from db import db, migrate
 
     # Bind SQLAlchemy ORM to Flask app
@@ -48,15 +57,18 @@ def create_app() -> Flask:
     health.add_check(FlaskRunningChecker())
     health.add_check(DbChecker(db))
 
-    # TODO: Flask-Apscheduler is a short-term solution for processing messages
-    # on queue periodically. Will move to SNS trigger after the AWS migration
-
+    executor = ContextAwareExecutor(
+        max_workers=Config.TASK_EXECUTOR_MAX_THREAD, thread_name_prefix="NotifTask", flask_app=flask_app
+    )
+    # Configure Task Executor service
+    task_executor_service = TaskExecutorService(flask_app=flask_app, executor=executor)
     # Configurations for Flask-Apscheduler
     scheduler = BackgroundScheduler()
     scheduler.add_job(
-        func=import_applications_from_queue,
+        func=scheduler_executor,
         trigger="interval",
         seconds=flask_app.config["SQS_RECEIVE_MESSAGE_CYCLE_TIME"],  # Run the job every 'x' seconds
+        kwargs={"task_executor_service": task_executor_service},
     )
     scheduler.start()
 
@@ -67,5 +79,30 @@ def create_app() -> Flask:
         # shutdown if execption occurs when returning app
         return scheduler.shutdown()
 
+
+def create_sqs_extended_client(flask_app):
+    if (
+        getenv("AWS_ACCESS_KEY_ID", "Access Key Not Available") == "Access Key Not Available"
+        and getenv("AWS_SECRET_ACCESS_KEY", "Secret Key Not Available") == "Secret Key Not Available"
+    ):
+        flask_app.extensions["sqs_extended_client"] = SQSExtendedClient(
+            region_name=Config.AWS_REGION,
+            endpoint_url=getenv("AWS_ENDPOINT_OVERRIDE", None),
+            large_payload_support=Config.AWS_MSG_BUCKET_NAME,
+            always_through_s3=True,
+            delete_payload_from_s3=True,
+            logger=flask_app.logger,
+        )
+    else:
+        flask_app.extensions["sqs_extended_client"] = SQSExtendedClient(
+            aws_access_key_id=Config.AWS_ACCESS_KEY_ID,
+            aws_secret_access_key=Config.AWS_SECRET_ACCESS_KEY,
+            region_name=Config.AWS_REGION,
+            endpoint_url=getenv("AWS_ENDPOINT_OVERRIDE", None),
+            large_payload_support=Config.AWS_MSG_BUCKET_NAME,
+            always_through_s3=True,
+            delete_payload_from_s3=True,
+            logger=flask_app.logger,
+        )
 
 app = create_app()
