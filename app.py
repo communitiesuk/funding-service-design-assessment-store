@@ -1,8 +1,4 @@
-from os import getenv
-
 import connexion
-from _helpers.context_aware_executor import ContextAwareExecutor
-from _helpers.scheduler_service import scheduler_executor
 from _helpers.task_executer_service import TaskExecutorService
 from apscheduler.schedulers.background import BackgroundScheduler
 from config import Config
@@ -13,7 +9,8 @@ from fsd_utils.healthchecks.checkers import DbChecker
 from fsd_utils.healthchecks.checkers import FlaskRunningChecker
 from fsd_utils.healthchecks.healthcheck import Healthcheck
 from fsd_utils.logging import logging
-from fsd_utils.services.aws_extended_client import SQSExtendedClient
+from fsd_utils.sqs_scheduler.context_aware_executor import ContextAwareExecutor
+from fsd_utils.sqs_scheduler.scheduler_service import scheduler_executor
 from openapi.utils import get_bundled_specs
 
 
@@ -35,9 +32,6 @@ def create_app() -> Flask:
 
     # Initialise logging
     logging.init_app(flask_app)
-
-    # Initialize sqs extended client
-    create_sqs_extended_client(flask_app)
 
     from db import db, migrate
 
@@ -61,7 +55,20 @@ def create_app() -> Flask:
         max_workers=Config.TASK_EXECUTOR_MAX_THREAD, thread_name_prefix="NotifTask", flask_app=flask_app
     )
     # Configure Task Executor service
-    task_executor_service = TaskExecutorService(flask_app=flask_app, executor=executor)
+    task_executor_service = TaskExecutorService(
+        flask_app=flask_app,
+        executor=executor,
+        s3_bucket=Config.AWS_MSG_BUCKET_NAME,
+        sqs_primary_url=Config.AWS_SQS_IMPORT_APP_PRIMARY_QUEUE_URL,
+        task_executor_max_thread=Config.TASK_EXECUTOR_MAX_THREAD,
+        sqs_batch_size=Config.SQS_BATCH_SIZE,
+        visibility_time=Config.SQS_VISIBILITY_TIME,
+        sqs_wait_time=Config.SQS_WAIT_TIME,
+        region_name=Config.AWS_REGION,
+        endpoint_url_override=Config.AWS_ENDPOINT_OVERRIDE,
+        aws_access_key_id=Config.AWS_SQS_ACCESS_KEY_ID,
+        aws_secret_access_key=Config.AWS_SQS_ACCESS_KEY_ID,
+    )
     # Configurations for Flask-Apscheduler
     scheduler = BackgroundScheduler()
     scheduler.add_job(
@@ -72,38 +79,7 @@ def create_app() -> Flask:
     )
     scheduler.start()
 
-    try:
-        # To keep the main thread alive (scheduler to run only on main thread)
-        return flask_app
-    except Exception:
-        # shutdown if execption occurs when returning app
-        return scheduler.shutdown()
-
-
-def create_sqs_extended_client(flask_app):
-    if (
-        getenv("AWS_ACCESS_KEY_ID", "Access Key Not Available") == "Access Key Not Available"
-        and getenv("AWS_SECRET_ACCESS_KEY", "Secret Key Not Available") == "Secret Key Not Available"
-    ):
-        flask_app.extensions["sqs_extended_client"] = SQSExtendedClient(
-            region_name=Config.AWS_REGION,
-            endpoint_url=getenv("AWS_ENDPOINT_OVERRIDE", None),
-            large_payload_support=Config.AWS_MSG_BUCKET_NAME,
-            always_through_s3=True,
-            delete_payload_from_s3=True,
-            logger=flask_app.logger,
-        )
-    else:
-        flask_app.extensions["sqs_extended_client"] = SQSExtendedClient(
-            aws_access_key_id=Config.AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=Config.AWS_SECRET_ACCESS_KEY,
-            region_name=Config.AWS_REGION,
-            endpoint_url=getenv("AWS_ENDPOINT_OVERRIDE", None),
-            large_payload_support=Config.AWS_MSG_BUCKET_NAME,
-            always_through_s3=True,
-            delete_payload_from_s3=True,
-            logger=flask_app.logger,
-        )
+    return flask_app
 
 
 app = create_app()

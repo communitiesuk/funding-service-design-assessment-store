@@ -157,7 +157,7 @@ send_message_to_queue = """
                     "fields": [
                         {
                             "key": "QUaOGq",
-                            "title": "By submitting this application, you confirm that the information you have provided is correct.",
+"title": "By submitting this application, you confirm that the information you have provided is correct.",
                             "type": "list",
                             "answer": [
                                 "confirm"
@@ -707,11 +707,11 @@ send_message_to_queue = """
                 },
                 {
                     "category": "ISBazm",
-                    "question": "Before you served notice, what contact did you make with the landlord about the property\u2019s vacant status?",
+"question": "Before you served notice, what contact did you make with the landlord about the property vacant status?",
                     "fields": [
                         {
                             "key": "vAvGTE",
-                            "title": "Before you served notice, what contact did you make with the landlord about the property\u2019s vacant status?",
+"title": "Before you served notice, what contact did you make with the landlord about the property vacant status?",
                             "type": "freeText",
                             "answer": "<p>eee</p>"
                         }

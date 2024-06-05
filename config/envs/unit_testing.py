@@ -38,3 +38,11 @@ class UnitTestingConfig(DefaultConfig):
     AWS_SQS_REGION = AWS_REGION = "eu-west-2"
     AWS_SQS_IMPORT_APP_PRIMARY_QUEUE_URL = "test_primary_url"
     AWS_SQS_IMPORT_APP_SECONDARY_QUEUE_URL = "test_secondary_url"
+
+    # ---------------
+    # SQS Config
+    # ---------------
+    SQS_WAIT_TIME = 2  # max time to wait (in sec) before returning
+    SQS_BATCH_SIZE = 10  # MaxNumber Of Messages to process
+    SQS_VISIBILITY_TIME = 1  # time for message to temporarily invisible to others (in sec)
+    SQS_RECEIVE_MESSAGE_CYCLE_TIME = 5  # Run the job every 'x' seconds
