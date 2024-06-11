@@ -1,5 +1,4 @@
 import copy
-import gzip
 import json
 from uuid import UUID
 
@@ -16,10 +15,10 @@ def compress_response(data):
                 return obj.hex
             return json.JSONEncoder.default(self, obj)
 
-    content = gzip.compress(json.dumps(data, cls=UUIDEncoder).encode("utf8"), 5)
+    content = json.dumps(data, cls=UUIDEncoder, separators=(",", ":"))
     response = make_response(content)
     response.headers["Content-length"] = len(content)
-    response.headers["Content-Encoding"] = "gzip"
+    response.headers["Content-Type"] = "application/json"
     return response
 
 
