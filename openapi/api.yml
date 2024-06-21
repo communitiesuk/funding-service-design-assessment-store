@@ -1385,11 +1385,11 @@ paths:
           required: true
       responses:
         200:
-          description: SUCCESS - A list of users
+          description: SUCCESS - An user application association
           content:
             application/json:
               schema:
-                type: array
+                type: object
                 items:
                   $ref: 'components.yml#/components/schemas/UserAssociation'
     post:
@@ -1446,10 +1446,37 @@ paths:
                $ref: 'components.yml#/components/schemas/UserAssociation'
       responses:
         200:
-          description: SUCCESS - Tag Updated
+          description: SUCCESS - Association Updated
+          content:
+            application/json:
+              schema:
+                type: object
+                items:
+                  $ref: 'components.yml#/components/schemas/UserAssociation'
+  '/user/{user_id}/applications':
+    get:
+      tags:
+        - application user association
+      summary: Get all applications that are assigned to the user
+      description: returns all applications assigned to the user
+      operationId: api.routes.user_routes.get_all_applications_associated_with_user
+      parameters:
+        - name: user_id
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: active
+          in: query
+          schema:
+            type: boolean
+          required: false
+      responses:
+        200:
+          description: SUCCESS - A list of applications
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: 'components.yml#/components/schemas/Tag'
+                  $ref: 'components.yml#/components/schemas/UserAssociation'

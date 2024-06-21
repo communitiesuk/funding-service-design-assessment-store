@@ -485,6 +485,10 @@ components:
             type: string
             description: uuid of user who associated
             example: "uuif7eaf61b-093e-4464-a4da-b36b849f0a1b"
+          created:
+            type: string
+            description: Date time the association was created
+            example : "2024-06-10T15:35:47Z"
           active:
             type: boolean
             description: If the association is active
