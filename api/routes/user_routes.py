@@ -35,7 +35,7 @@ def add_user_application_association(application_id, user_id):
 
     if association:
         serialiser = AllocationAssociationSchema()
-        return serialiser.dump(association)
+        return serialiser.dump(association), 201
 
     current_app.logger.error(f"Could not create association between {user_id} and application {application_id}")
     abort(404)

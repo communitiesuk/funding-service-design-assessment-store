@@ -1443,7 +1443,7 @@ paths:
             schema:
               type: object
               items:
-               $ref: 'components.yml#/components/schemas/UserAssociation'
+               $ref: 'components.yml#/components/schemas/PutUserAssociation'
       responses:
         200:
           description: SUCCESS - Association Updated
