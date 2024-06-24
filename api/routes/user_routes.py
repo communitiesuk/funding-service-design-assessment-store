@@ -10,6 +10,19 @@ from flask import request
 
 
 def get_all_users_associated_with_application(application_id, active=None):
+    """Fetches all users associated with a given application.
+
+    Parameters:
+        application_id (str): UUID of the application.
+        active (bool, optional): Filter for active associations. Defaults to None.
+
+    Returns:
+        list: Serialized list of user associations.
+
+    Raises:
+        404: If no users are found for the given application.
+
+    """
     associations = get_user_application_associations(application_id=application_id, active=active)
     if associations:
         serialiser = AllocationAssociationSchema()
@@ -20,6 +33,19 @@ def get_all_users_associated_with_application(application_id, active=None):
 
 
 def get_user_application_association(application_id, user_id):
+    """Fetches the association between a given user and application.
+
+    Parameters:
+        application_id (str): UUID of the application.
+        user_id (str): UUID of the user.
+
+    Returns:
+        dict: Serialized user application association.
+
+    Raises:
+        404: If no association is found between the user and the application.
+
+    """
     association = get_user_application_associations(application_id=application_id, user_id=user_id)
 
     if association:
@@ -31,6 +57,19 @@ def get_user_application_association(application_id, user_id):
 
 
 def add_user_application_association(application_id, user_id):
+    """Creates a new association between a user and an application.
+
+    Parameters:
+        application_id (str): UUID of the application.
+        user_id (str): UUID of the user.
+
+    Returns:
+        dict: Serialized new user application association.
+
+    Raises:
+        404: If the association cannot be created.
+
+    """
     association = create_user_application_association(application_id=application_id, user_id=user_id)
 
     if association:
@@ -42,6 +81,21 @@ def add_user_application_association(application_id, user_id):
 
 
 def update_user_application_association(application_id, user_id):
+    """Updates the active status of an association between a user and an
+    application.
+
+    Parameters:
+        application_id (str): UUID of the application.
+        user_id (str): UUID of the user.
+
+    Returns:
+        dict: Serialized updated user application association.
+
+    Raises:
+        400: If the 'active' parameter is missing in the request.
+        404: If the association cannot be updated.
+
+    """
     args = request.get_json()
     if "active" not in args:
         abort(400)
@@ -58,6 +112,19 @@ def update_user_application_association(application_id, user_id):
 
 
 def get_all_applications_associated_with_user(user_id, active=None):
+    """Fetches all applications associated with a given user.
+
+    Parameters:
+        user_id (str): UUID of the user.
+        active (bool, optional): Filter for active associations. Defaults to None.
+
+    Returns:
+        list: Serialized list of application associations.
+
+    Raises:
+        404: If no applications are found for the given user.
+
+    """
     associations = get_user_application_associations(user_id=user_id, active=active)
     if associations:
         serialiser = AllocationAssociationSchema()
