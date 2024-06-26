@@ -90,6 +90,8 @@ flupy==1.2.0
     # via alembic-utils
 funding-service-design-utils==2.0.52
     # via -r requirements.in
+greenlet==3.0.3
+    # via sqlalchemy
 gunicorn==20.1.0
     # via funding-service-design-utils
 idna==3.7
@@ -266,7 +268,7 @@ typing-extensions==4.4.0
     #   sqlalchemy
 tzlocal==5.0.1
     # via apscheduler
-urllib3==1.26.18
+urllib3==1.26.19
     # via
     #   botocore
     #   requests
