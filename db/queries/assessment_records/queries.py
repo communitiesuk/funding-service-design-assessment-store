@@ -9,9 +9,8 @@ from datetime import timezone
 from typing import Dict
 from typing import List
 
-from bs4 import BeautifulSoup
-
 from _helpers.custom_decorators import time_it
+from bs4 import BeautifulSoup
 from config.mappings.assessment_mapping_fund_round import (
     fund_round_mapping_config_with_round_id,
 )

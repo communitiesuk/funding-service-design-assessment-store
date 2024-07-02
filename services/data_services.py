@@ -2,7 +2,6 @@ import traceback
 from typing import Dict
 
 import requests
-
 from _helpers.custom_decorators import time_it
 from config import Config  # noqa: E402
 from flask import current_app
