@@ -9,6 +9,7 @@ from datetime import timezone
 from typing import Dict
 from typing import List
 
+from _helpers.custom_decorators import time_it
 from bs4 import BeautifulSoup
 from config.mappings.assessment_mapping_fund_round import (
     fund_round_mapping_config_with_round_id,
@@ -560,6 +561,7 @@ def update_status_to_completed(application_id):
     db.session.commit()
 
 
+@time_it
 def get_assessment_records_score_data_by_round_id(round_id, selected_fields=None, language=None):  # noqa
     """Retrieve the latest scores and associated information for each subcriteria
     of AssessmentRecords matching the given round_id.
@@ -859,6 +861,7 @@ def get_assessment_export_data(fund_id: str, round_id: str, report_type: str, li
     return obj
 
 
+@time_it
 def get_export_data(
     round_id: str,
     report_type: str,
@@ -939,6 +942,7 @@ def get_export_data(
 
 
 # adds missing elements for use in the csv
+@time_it
 def add_missing_elements_with_empty_values(applicant_info, form_fields, language):
     result_data = applicant_info.copy()
 
@@ -949,6 +953,7 @@ def add_missing_elements_with_empty_values(applicant_info, form_fields, language
     return result_data
 
 
+@time_it
 def format_lists(answer):
     formatted_elements = []
     indent = " " * 5
