@@ -2,6 +2,7 @@
 from typing import Dict
 from typing import List
 
+from _helpers.custom_decorators import time_it
 from api.models.sub_criteria import SubCriteria
 from api.routes._helpers import compress_response
 from api.routes._helpers import transform_to_assessor_task_list_metadata
@@ -269,7 +270,7 @@ def assessment_stats_for_fund_round_id(
 def get_application_json(application_id):
     return get_application_jsonb_blob(application_id)
 
-
+@time_it
 def get_application_data_for_export(fund_id: str, round_id: str, report_type: str) -> List[Dict]:
     app_list = get_assessment_export_data(
         fund_id=fund_id,

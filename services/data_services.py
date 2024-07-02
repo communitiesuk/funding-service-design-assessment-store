@@ -2,6 +2,8 @@ import traceback
 from typing import Dict
 
 import requests
+
+from _helpers.custom_decorators import time_it
 from config import Config  # noqa: E402
 from flask import current_app
 
@@ -28,6 +30,7 @@ def get_data(endpoint: str, payload: Dict = None):
         current_app.logger.error(f"{e}\n{stack_trace}")
 
 
+@time_it
 def get_account_name(id: str):
     url = Config.ACCOUNT_STORE_API_HOST + Config.ACCOUNTS_ENDPOINT
     params = {"account_id": id}
