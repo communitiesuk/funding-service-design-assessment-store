@@ -80,3 +80,4 @@ def create_app() -> FlaskApp:
 
 
 app = create_app()
+application = app.app
