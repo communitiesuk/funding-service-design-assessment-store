@@ -174,7 +174,7 @@ flupy==1.2.0
     # via
     #   -r requirements.txt
     #   alembic-utils
-funding-service-design-utils @ git+https://github.com/communitiesuk/funding-service-design-utils.git@update-software-versions
+funding-service-design-utils==4.0.0
     # via -r requirements.txt
 gunicorn==22.0.0
     # via
@@ -459,7 +459,7 @@ s3transfer==0.10.2
     # via
     #   -r requirements.txt
     #   boto3
-sentry-sdk[flask]==1.45.0
+sentry-sdk[flask]==2.9.0
     # via
     #   -r requirements.txt
     #   funding-service-design-utils
