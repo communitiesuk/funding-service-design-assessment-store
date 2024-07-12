@@ -102,6 +102,7 @@ def get_metadata_for_fund_round_id(
             defer(AssessmentRecord.jsonb_blob),
             selectinload(AssessmentRecord.qa_complete),
             selectinload(AssessmentRecord.flags),
+            selectinload(AssessmentRecord.user_associations),
             selectinload(AssessmentRecord.tag_associations).selectinload(TagAssociation.tag).selectinload(Tag.tag_type),
         ).where(
             AssessmentRecord.fund_id == fund_id,
@@ -979,7 +980,7 @@ def combine_dicts(applications_list, scores_list):
     return combined_list
 
 
-def get_user_application_associations(application_id=None, user_id=None, active=None):
+def get_user_application_associations(application_id=None, user_id=None, assigner_id=None, active=None):
     query = db.session.query(AllocationAssociation)
     if application_id:
         query = query.filter(AllocationAssociation.application_id == application_id)
@@ -987,16 +988,20 @@ def get_user_application_associations(application_id=None, user_id=None, active=
     if user_id:
         query = query.filter(AllocationAssociation.user_id == user_id)
 
+    if assigner_id:
+        query = query.filter(AllocationAssociation.assigner_id == assigner_id)
+
     if active is not None:
         query = query.filter(AllocationAssociation.active == active)
 
     return query.all()
 
 
-def create_user_application_association(application_id, user_id):
+def create_user_application_association(application_id, user_id, assigner_id):
     allocation_association = AllocationAssociation(
         user_id=user_id,
         application_id=application_id,
+        assigner_id=assigner_id,
         active=True,
         log={datetime.now(tz=timezone.utc).isoformat(): "activated"},
     )
