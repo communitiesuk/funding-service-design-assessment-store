@@ -45,7 +45,7 @@ botocore==1.34.137
     #   s3transfer
 cachetools==5.3.3
     # via flipper-client
-certifi==2024.6.2
+certifi==2024.7.4
     # via
     #   httpcore
     #   httpx
@@ -105,6 +105,8 @@ flupy==1.2.0
     # via alembic-utils
 funding-service-design-utils==4.0.0
     # via -r requirements.in
+greenlet==3.0.3
+    # via sqlalchemy
 gunicorn==22.0.0
     # via funding-service-design-utils
 h11==0.14.0
