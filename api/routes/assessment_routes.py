@@ -36,7 +36,7 @@ from flask import current_app
 from flask import request
 
 
-def calculate_total_score_percentage_for_application(app):
+def calculate_overall_score_percentage_for_application(app):
     scoring_system = get_scoring_system_for_round_id(app["round_id"])
 
     # Deep copy the assessment mapping configuration for the specific fund and round
@@ -123,7 +123,7 @@ def all_assessments_for_fund_round_id(
 
     # Calculate and assign score percentages for each application
     for app in app_list:
-        app["score_percentage"] = calculate_total_score_percentage_for_application(app)
+        app["overall_score_percentage"] = calculate_overall_score_percentage_for_application(app)
 
     return compress_response(app_list)
 

@@ -120,7 +120,7 @@ components:
           items: {}
         is_qa_complete:
           type: boolean
-        score_percentage:
+        overall_score_percentage:
           type: number
     UpdateStatus:
       type: object

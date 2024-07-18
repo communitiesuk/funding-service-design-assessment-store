@@ -5,7 +5,7 @@ from unittest import mock
 from uuid import uuid4
 
 import pytest
-from api.routes.assessment_routes import calculate_total_score_percentage_for_application
+from api.routes.assessment_routes import calculate_overall_score_percentage_for_application
 from config.mappings.assessment_mapping_fund_round import (
     applicant_info_mapping,
 )
@@ -113,7 +113,7 @@ def test_gets_all_apps_for_fund_round(request, flask_test_client, seed_applicati
         "asset_type": str,
         "tag_associations": list,
         "is_qa_complete": bool,
-        "score_percentage": (int, float),
+        "overall_score_percentage": (int, float),
     }
     for response_json in response_jsons:
         # Assert that each key is present in the response and has the correct type
@@ -648,10 +648,10 @@ def mock_get_scores(mocker):
     )
 
 
-def test_calculate_total_score_percentage_for_application(mocker, mock_get_scores, mock_get_scoring_system):
+def test_calculate_overall_score_percentage_for_application(mocker, mock_get_scores, mock_get_scoring_system):
     mock_config = mocker.patch("api.routes.assessment_routes.Config")
     mock_config.ASSESSMENT_MAPPING_CONFIG = mapping_config
-    result = calculate_total_score_percentage_for_application(app)
+    result = calculate_overall_score_percentage_for_application(app)
     expected_score = ((3 * 2 + 4 * 2 + 5 * 1) / (5 * 2 * 2 + 5 * 1 * 1)) * 100
     assert result == expected_score, "The calculated score did not match the expected score"
 
@@ -660,7 +660,7 @@ def test_with_no_sub_criteria_scores(mocker, mock_get_scores, mock_get_scoring_s
     mock_config = mocker.patch("api.routes.assessment_routes.Config")
     mock_config.ASSESSMENT_MAPPING_CONFIG = mapping_config
     mock_get_scores.return_value = {}
-    result = calculate_total_score_percentage_for_application(app)
+    result = calculate_overall_score_percentage_for_application(app)
     assert result == 0, "The result should be 0 when there are no sub-criteria scores"
 
 
@@ -669,4 +669,4 @@ def test_with_invalid_application_id(mocker, mock_get_scores, mock_get_scoring_s
     mock_config.ASSESSMENT_MAPPING_CONFIG = mapping_config
     mock_get_scores.side_effect = KeyError("Invalid application ID")
     with pytest.raises(KeyError):
-        calculate_total_score_percentage_for_application(app)
+        calculate_overall_score_percentage_for_application(app)
