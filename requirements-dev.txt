@@ -176,6 +176,8 @@ flupy==1.2.0
     #   alembic-utils
 funding-service-design-utils==4.0.0
     # via -r requirements.txt
+greenlet==3.0.3
+    # via sqlalchemy
 gunicorn==22.0.0
     # via
     #   -r requirements.txt
@@ -205,8 +207,6 @@ idna==3.7
     #   anyio
     #   httpx
     #   requests
-importlib-metadata==8.0.0
-    # via build
 inflection==0.5.1
     # via
     #   -r requirements.txt
@@ -359,7 +359,7 @@ pyproject-hooks==1.1.0
     # via
     #   build
     #   pip-tools
-pytest==8.2.2
+pytest==8.3.2
     # via
     #   -r requirements-dev.in
     #   pytest-env
@@ -571,8 +571,6 @@ wheel==0.43.0
     # via pip-tools
 xmltodict==0.13.0
     # via moto
-zipp==3.19.2
-    # via importlib-metadata
 
 # The following packages are considered to be unsafe in a requirements file:
 # pip
