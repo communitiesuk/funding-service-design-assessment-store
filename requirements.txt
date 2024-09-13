@@ -37,6 +37,12 @@ blinker==1.8.2
     # via
     #   flask
     #   sentry-sdk
+boto3==1.35.18
+    # via funding-service-design-utils
+botocore==1.35.18
+    # via
+    #   boto3
+    #   s3transfer
 certifi==2024.6.2
     # via
     #   httpcore
@@ -93,7 +99,7 @@ flask-sqlalchemy==3.1.1
     #   funding-service-design-utils
 flupy==1.2.0
     # via alembic-utils
-funding-service-design-utils==5.0.4
+funding-service-design-utils==5.0.6
     # via -r requirements.in
 gunicorn==22.0.0
     # via funding-service-design-utils
@@ -122,6 +128,10 @@ jinja2==3.1.4
     #   flask
     #   flask-babel
     #   swagger-ui-bundle
+jmespath==1.0.1
+    # via
+    #   boto3
+    #   botocore
 jsonpath-rw==1.4.0
     # via jsonpath-rw-ext
 jsonpath-rw-ext==1.2.2
@@ -177,9 +187,12 @@ pycparser==2.22
 pygments==2.18.0
     # via rich
 pyjwt[crypto]==2.8.0
-    # via funding-service-design-utils
+    # via
+    #   funding-service-design-utils
+    #   pyjwt
 python-dateutil==2.9.0.post0
     # via
+    #   botocore
     #   dataclass-dict-convert
     #   flask-apscheduler
 python-dotenv==1.0.1
@@ -227,6 +240,8 @@ ruamel-yaml==0.18.6
     # via prance
 ruamel-yaml-clib==0.2.8
     # via ruamel-yaml
+s3transfer==0.10.2
+    # via boto3
 sentry-sdk[flask]==2.9.0
     # via funding-service-design-utils
 six==1.16.0
@@ -277,6 +292,7 @@ tzlocal==5.2
     # via apscheduler
 urllib3==2.2.2
     # via
+    #   botocore
     #   requests
     #   sentry-sdk
 uvicorn[standard]==0.30.1
