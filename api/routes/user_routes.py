@@ -1,5 +1,3 @@
-from api.models.notification import Notification
-from config import Config  # noqa: E402
 from db.queries.assessment_records.queries import create_user_application_association
 from db.queries.assessment_records.queries import get_metadata_for_application
 from db.queries.assessment_records.queries import get_user_application_associations
@@ -11,7 +9,7 @@ from flask import abort
 from flask import current_app
 from flask import request
 from fsd_utils.config.notify_constants import NotifyConstants
-from services.data_services import get_data
+from services.data_services import send_notification_email
 
 
 def get_all_users_associated_with_application(application_id, active=None):
@@ -86,8 +84,9 @@ def add_user_application_association(application_id, user_id):
 
     if association:
         if send_email:
+            application = get_metadata_for_application(application_id)
             send_notification_email(
-                application_id=application_id,
+                application=application,
                 user_id=user_id,
                 template=NotifyConstants.TEMPLATE_TYPE_ASSESSMENT_APPLICATION_ASSIGNED,
                 assigner_id=args["assigner_id"],
@@ -132,8 +131,9 @@ def update_user_application_association(application_id, user_id):
 
     if association:
         if send_email:
+            application = get_metadata_for_application(application_id)
             send_notification_email(
-                application_id=application_id,
+                application=application,
                 user_id=user_id,
                 template=NotifyConstants.TEMPLATE_TYPE_ASSESSMENT_APPLICATION_ASSIGNED
                 if active
@@ -193,47 +193,3 @@ def get_all_associations_assigned_by_user(assigner_id, active=None):
 
     current_app.logger.error(f"Could not find any applications assigned by user {assigner_id}")
     abort(404)
-
-
-def send_notification_email(application_id, user_id, assigner_id, template, message=None):
-    """Sends a notification email to inform the user (specified by user_id) that
-    an application has been assigned to them.
-
-    Parameters:
-        application_id (str): id of application that has been assigned
-        user_id (str): id of assignee and recipient of email
-        assigner_id (str): id of the assigner.
-        template (str): template of email (either assignment or unassignment)
-        message (str): Custom message provided by assigner
-
-    """
-    application = get_metadata_for_application(application_id)
-    user_response = get_data(Config.ACCOUNT_STORE_API_HOST + Config.ACCOUNTS_ENDPOINT, {"account_id": user_id})
-    assigner_response = get_data(Config.ACCOUNT_STORE_API_HOST + Config.ACCOUNTS_ENDPOINT, {"account_id": assigner_id})
-    fund_response = get_data(
-        Config.FUND_STORE_API_HOST + Config.FUND_ENDPOINT.format(fund_id=application["fund_id"], use_short_name=False)
-    )
-    content = {
-        "fund_name": fund_response["name"],
-        "reference_number": application["short_id"],
-        "project_name": application["project_name"],
-        "lead_assessor_email": assigner_response["email_address"],
-        "assessment_link": Config.ASSESSMENT_API_HOST
-        + Config.ASSESSMENT_APPLICATION_ENDPOINT.format(application_id=application["application_id"]),
-    }
-
-    if message:
-        content["message"] = message
-
-    try:
-        message_id = Notification.send(
-            template,
-            user_response["email_address"],
-            user_response["full_name"] if user_response["full_name"] else None,
-            content,
-        )
-        current_app.logger.info(f"Message added to the queue msg_id: [{message_id}]")
-    except Exception:
-        current_app.logger.info(
-            f"Could not send email for template: {template}, user: {user_id}, application {application_id}"
-        )
