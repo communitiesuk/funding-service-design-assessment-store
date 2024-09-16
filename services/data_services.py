@@ -78,8 +78,8 @@ def send_notification_email(application, user_id, assigner_id, template, message
         current_app.logger.info(f"Message added to the queue msg_id: [{message_id}]")
     except Exception:
         current_app.logger.info(
-            f"Could not send email for template: {template}, user: {user_id},"
-            "application {application['application_id']}"
+            f"Could not send email for template: {template}, user: {user_id}, "
+            f"application {application['application_id']}"
         )
 
 
