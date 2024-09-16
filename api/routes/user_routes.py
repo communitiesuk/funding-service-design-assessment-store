@@ -13,8 +13,6 @@ from flask import request
 from fsd_utils.config.notify_constants import NotifyConstants
 from services.data_services import get_data
 
-# from models.notification import Notification
-
 
 def get_all_users_associated_with_application(application_id, active=None):
     """Fetches all users associated with a given application.
@@ -88,7 +86,7 @@ def add_user_application_association(application_id, user_id):
 
     if association:
         if send_email:
-            notify_email(
+            send_notification_email(
                 application_id=application_id,
                 user_id=user_id,
                 template=NotifyConstants.TEMPLATE_TYPE_ASSESSMENT_APPLICATION_ASSIGNED,
@@ -134,7 +132,7 @@ def update_user_application_association(application_id, user_id):
 
     if association:
         if send_email:
-            notify_email(
+            send_notification_email(
                 application_id=application_id,
                 user_id=user_id,
                 template=NotifyConstants.TEMPLATE_TYPE_ASSESSMENT_APPLICATION_ASSIGNED
@@ -197,7 +195,18 @@ def get_all_associations_assigned_by_user(assigner_id, active=None):
     abort(404)
 
 
-def notify_email(application_id, user_id, assigner_id, template, message=None):
+def send_notification_email(application_id, user_id, assigner_id, template, message=None):
+    """Sends a notification email to inform the user (specified by user_id) that
+    an application has been assigned to them.
+
+    Parameters:
+        application_id (str): id of application that has been assigned
+        user_id (str): id of assignee and recipient of email
+        assigner_id (str): id of the assigner.
+        template (str): template of email (either assignment or unassignment)
+        message (str): Custom message provided by assigner
+
+    """
     application = get_metadata_for_application(application_id)
     user_response = get_data(Config.ACCOUNT_STORE_API_HOST + Config.ACCOUNTS_ENDPOINT, {"account_id": user_id})
     assigner_response = get_data(Config.ACCOUNT_STORE_API_HOST + Config.ACCOUNTS_ENDPOINT, {"account_id": assigner_id})

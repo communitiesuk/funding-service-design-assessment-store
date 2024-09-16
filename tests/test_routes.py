@@ -516,7 +516,7 @@ def test_add_user_application_association(flask_test_client, send_email_value):
 
     with mock.patch(
         "api.routes.user_routes.create_user_application_association", return_value=mock_association
-    ) as mock_create_association, mock.patch("api.routes.user_routes.notify_email") as mock_notify_email:
+    ) as mock_create_association, mock.patch("api.routes.user_routes.send_notification_email") as mock_notify_email:
         response = flask_test_client.post(
             "/application/app1/user/user1", json={"assigner_id": "assigner1", "send_email": send_email_value}
         )
@@ -546,7 +546,7 @@ def test_update_user_application_association(flask_test_client, send_email_value
 
     with mock.patch(
         "api.routes.user_routes.update_user_application_association_db", return_value=mock_association
-    ) as mock_update_association, mock.patch("api.routes.user_routes.notify_email") as mock_notify_email:
+    ) as mock_update_association, mock.patch("api.routes.user_routes.send_notification_email") as mock_notify_email:
         response = flask_test_client.put(
             "/application/app1/user/user1",
             json={"active": "false", "assigner_id": "assigner1", "send_email": send_email_value},
