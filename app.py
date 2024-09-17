@@ -86,29 +86,16 @@ def create_app() -> FlaskApp:
 
 
 def create_sqs_extended_client(flask_app):
-    if (
-        getenv("AWS_ACCESS_KEY_ID", "Access Key Not Available") == "Access Key Not Available"
-        and getenv("AWS_SECRET_ACCESS_KEY", "Secret Key Not Available") == "Secret Key Not Available"
-    ):
-        flask_app.extensions["sqs_extended_client"] = SQSExtendedClient(
-            region_name=Config.AWS_REGION,
-            endpoint_url=getenv("AWS_ENDPOINT_OVERRIDE", None),
-            large_payload_support=Config.AWS_MSG_BUCKET_NAME,
-            always_through_s3=True,
-            delete_payload_from_s3=True,
-            logger=flask_app.logger,
-        )
-    else:
-        flask_app.extensions["sqs_extended_client"] = SQSExtendedClient(
-            aws_access_key_id=Config.AWS_ACCESS_KEY_ID,
-            aws_secret_access_key=Config.AWS_SECRET_ACCESS_KEY,
-            region_name=Config.AWS_REGION,
-            endpoint_url=getenv("AWS_ENDPOINT_OVERRIDE", None),
-            large_payload_support=Config.AWS_MSG_BUCKET_NAME,
-            always_through_s3=True,
-            delete_payload_from_s3=True,
-            logger=flask_app.logger,
-        )
+    flask_app.extensions["sqs_extended_client"] = SQSExtendedClient(
+        aws_access_key_id=Config.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=Config.AWS_SECRET_ACCESS_KEY,
+        region_name=Config.AWS_REGION,
+        endpoint_url=getenv("AWS_ENDPOINT_OVERRIDE", None),
+        large_payload_support=Config.AWS_MSG_BUCKET_NAME,
+        always_through_s3=True,
+        delete_payload_from_s3=True,
+        logger=flask_app.logger,
+    )
 
 
 app = create_app()
