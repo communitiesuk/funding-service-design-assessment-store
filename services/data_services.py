@@ -38,7 +38,9 @@ def get_fund_data(fund_id: str):
 
 
 def create_assessment_url_for_application(application_id: str):
-    return Config.ASSESSMENT_API_HOST + Config.ASSESSMENT_APPLICATION_ENDPOINT.format(application_id=application_id)
+    return Config.ASSESSMENT_FRONTEND_HOST + Config.ASSESSMENT_APPLICATION_ENDPOINT.format(
+        application_id=application_id
+    )
 
 
 def send_notification_email(application, user_id, assigner_id, template, message=None):

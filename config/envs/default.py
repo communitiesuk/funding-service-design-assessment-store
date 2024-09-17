@@ -41,7 +41,7 @@ class DefaultConfig:
     FUNDS_ENDPOINT = CommonConfig.FUNDS_ENDPOINT
     FUND_ENDPOINT = CommonConfig.FUND_ENDPOINT + "?use_short_name={use_short_name}"
 
-    ASSESSMENT_API_HOST = environ.get("ASSESSMENT_API_HOST")
+    ASSESSMENT_FRONTEND_HOST = environ.get("ASSESSMENT_FRONTEND_HOST")
     ASSESSMENT_APPLICATION_ENDPOINT = "/assess/application/{application_id}"
 
     # ---------------
