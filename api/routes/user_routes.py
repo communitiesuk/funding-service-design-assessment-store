@@ -135,9 +135,11 @@ def update_user_application_association(application_id, user_id):
             send_notification_email(
                 application=application,
                 user_id=user_id,
-                template=NotifyConstants.TEMPLATE_TYPE_ASSESSMENT_APPLICATION_ASSIGNED
-                if active
-                else NotifyConstants.TEMPLATE_TYPE_ASSESSMENT_APPLICATION_UNASSIGNED,
+                template=(
+                    NotifyConstants.TEMPLATE_TYPE_ASSESSMENT_APPLICATION_ASSIGNED
+                    if active
+                    else NotifyConstants.TEMPLATE_TYPE_ASSESSMENT_APPLICATION_UNASSIGNED
+                ),
                 assigner_id=args["assigner_id"],
                 message=args.get("email_content"),
             )
