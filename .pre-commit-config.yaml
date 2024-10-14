@@ -1,24 +1,24 @@
 repos:
 - repo: https://github.com/psf/black
-  rev: 23.10.1
+  rev: 24.10.0
   hooks:
   - id: black
     language_version: python3
     args:
       - --target-version=py310
 -   repo: https://github.com/PyCQA/flake8
-    rev: 7.0.0
+    rev: 7.1.1
     hooks:
     - id: flake8
       additional_dependencies: [Flake8-pyproject]
 - repo: https://github.com/pre-commit/pre-commit-hooks
-  rev: v4.5.0
+  rev: v5.0.0
   hooks:
     - id: trailing-whitespace
     - id: end-of-file-fixer
     - id: check-ast
 - repo: https://github.com/asottile/reorder-python-imports
-  rev: v3.12.0
+  rev: v3.14.0
   hooks:
     - id: reorder-python-imports
       name: Reorder Python imports (src, tests)
@@ -29,7 +29,7 @@ repos:
     - id: docformatter
       additional_dependencies: [tomli]
 - repo: https://github.com/Yelp/detect-secrets
-  rev: v1.4.0
+  rev: v1.5.0
   hooks:
   -   id: detect-secrets
       args: ['--disable-plugin', 'HexHighEntropyString']
