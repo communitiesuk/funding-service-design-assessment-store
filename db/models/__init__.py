@@ -12,6 +12,13 @@ from db.models.score import ScoringSystem
 from db.models.tag import Tag
 from db.models.tag import TagType
 
+from .application import Applications
+from .eligibility import Eligibility
+from .feedback import EndOfApplicationSurveyFeedback
+from .feedback import Feedback
+from .forms import Forms
+from .research import ResearchSurvey
+
 __all__ = [
     "AssessmentRecord",
     "AllocationAssociation",
@@ -25,4 +32,10 @@ __all__ = [
     "TagType",
     "Tag",
     "QaComplete",
+    "Applications",
+    "Forms",
+    "Feedback",
+    "EndOfApplicationSurveyFeedback",
+    "Eligibility",
+    "ResearchSurvey",
 ]
