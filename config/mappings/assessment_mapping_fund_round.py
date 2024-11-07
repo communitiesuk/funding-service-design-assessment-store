@@ -274,6 +274,12 @@ fund_round_data_key_mappings = {
         "funding_one": None,
         "funding_two": None,
     },
+    "SF1R1": {
+        "location": None,
+        "asset_type": None,
+        "funding_one": None,
+        "funding_two": None,
+    },
 }
 
 applicant_info_mapping = {
