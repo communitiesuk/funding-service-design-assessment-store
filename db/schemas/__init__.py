@@ -1,3 +1,6 @@
+from .application import ApplicationSchema
+from .eligibility import EligibilitySchema
+from .form import FormsRunnerSchema
 from .schemas import AssessmentRecordMetadata
 from .schemas import AssessmentRoundMetadata
 from .schemas import AssessmentSubCriteriaMetadata
@@ -14,4 +17,7 @@ __all__ = [
     "CommentMetadata",
     "AssessmentRoundMetadata",
     "ScoringSystemMetadata",
+    "ApplicationSchema",
+    "FormsRunnerSchema",
+    "EligibilitySchema",
 ]

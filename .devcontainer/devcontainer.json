@@ -2,6 +2,7 @@
     "dockerComposeFile": [
         "../docker-compose.yml"
     ],
+    "name": "assesplication",
     "service": "assesplication-store",
     "workspaceFolder": "/assesplication-store",
     "shutdownAction": "none",

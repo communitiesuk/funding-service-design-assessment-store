@@ -47,6 +47,8 @@ def create_app() -> FlaskApp:
     health.add_check(FlaskRunningChecker())
     health.add_check(DbChecker(db))
 
+    # TODO work out sqs stuff where same app is writing to and reading from the queue
+
     # Initialize sqs extended client
     # create_sqs_extended_client(flask_app)
 

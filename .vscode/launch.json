@@ -5,6 +5,22 @@
   "version": "0.2.0",
   "configurations": [
     {
+      // launch command is python -m debugpy --listen 0.0.0.0:5678 -m wsgi
+      "name": "Python Debugger: Remote Attach",
+      "type": "debugpy",
+      "request": "attach",
+      "connect": {
+        "host": "localhost",
+        "port": 5678
+      },
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}",
+          "remoteRoot": "."
+        }
+      ]
+    },
+    {
       "name": "Docker-Runner assessment-store",
       "type": "python",
       "request": "attach",
@@ -25,7 +41,10 @@
       "type": "python",
       "request": "launch",
       "module": "flask",
-      "args": ["run", "--no-reload"],
+      "args": [
+        "run",
+        "--no-reload"
+      ],
       "jinja": true,
       "justMyCode": false,
       "envFile": "${workspaceFolder}/.env.development",
@@ -39,45 +58,47 @@
       "host": "localhost",
       "port": 9091,
       "cwd": "${workspaceFolder}",
-      "env": { "PYTHONPATH":"${workspaceFolder}"},
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}"
+      },
       "envFile": "${workspaceFolder}/.env.development",
       "justMyCode": false,
-  },
-  {
-    "name": "Upgrade DB",
-    "type": "python",
-    "request": "launch",
-    "module": "flask",
-    "envFile": "${workspaceFolder}/.env.development",
-    "args": [
-      "db",
-      "upgrade"
-    ]
-  },
-  {
-    "name": "Downgrade DB",
-    "type": "python",
-    "request": "launch",
-    "module": "flask",
-    "envFile": "${workspaceFolder}/.env.development",
-    "args": [
-      "db",
-      "downgrade",
-      "6c8205510de6" // modify the downgrade revision accordingly
-    ]
-  },
-  {
-    "name": "Prepare DB Migration",
-    "type": "python",
-    "request": "launch",
-    "module": "flask",
-    "envFile": "${workspaceFolder}/.env.development",
-    "args": [
-      "db",
-      "migrate"
-    ]
-  },
-  {
+    },
+    {
+      "name": "Upgrade DB",
+      "type": "python",
+      "request": "launch",
+      "module": "flask",
+      "envFile": "${workspaceFolder}/.env.development",
+      "args": [
+        "db",
+        "upgrade"
+      ]
+    },
+    {
+      "name": "Downgrade DB",
+      "type": "python",
+      "request": "launch",
+      "module": "flask",
+      "envFile": "${workspaceFolder}/.env.development",
+      "args": [
+        "db",
+        "downgrade",
+        "6c8205510de6" // modify the downgrade revision accordingly
+      ]
+    },
+    {
+      "name": "Prepare DB Migration",
+      "type": "python",
+      "request": "launch",
+      "module": "flask",
+      "envFile": "${workspaceFolder}/.env.development",
+      "args": [
+        "db",
+        "migrate"
+      ]
+    },
+    {
       "name": "Import Applications to Assessment",
       "type": "python",
       "request": "launch",
@@ -88,14 +109,16 @@
       "cwd": "${workspaceFolder}",
       "envFile": "${workspaceFolder}/.env.development",
       "env": {
-        "PYTHONPATH":"${workspaceFolder}",
+        "PYTHONPATH": "${workspaceFolder}",
       },
       "justMyCode": false,
       // modify the args accordingly
       "args": [
-        "--fundround", "NSTFR2"]
-  },
-  {
+        "--fundround",
+        "NSTFR2"
+      ]
+    },
+    {
       "name": "Seed Applications in assessment-store",
       "type": "python",
       "request": "launch",
@@ -106,38 +129,43 @@
       "cwd": "${workspaceFolder}",
       "envFile": "${workspaceFolder}/.env.development",
       "justMyCode": false,
-      "args": ["seed_dev_db"]
-  },
-  {
-    "name": "Feed location in assessment-store",
-    "type": "python",
-    "request": "launch",
-    "program": "${workspaceFolder}/scripts/populate_location_data.py",
-    "console": "integratedTerminal",
-    "host": "localhost",
-    "port": 9091,
-    "cwd": "${workspaceFolder}",
-    "envFile": "${workspaceFolder}/.env.development",
-    "env": {
-      "PYTHONPATH":"${workspaceFolder}",
+      "args": [
+        "seed_dev_db"
+      ]
     },
-    "justMyCode": false,
-    // modify the args accordingly
-    "args": [
-      "--fundround", "NSTFR2",
-      "--update_db", "True",
-      "--write_csv", "False"
-    ]
-  },
-  {
+    {
+      "name": "Feed location in assessment-store",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/populate_location_data.py",
+      "console": "integratedTerminal",
+      "host": "localhost",
+      "port": 9091,
+      "cwd": "${workspaceFolder}",
+      "envFile": "${workspaceFolder}/.env.development",
+      "env": {
+        "PYTHONPATH": "${workspaceFolder}",
+      },
+      "justMyCode": false,
+      // modify the args accordingly
+      "args": [
+        "--fundround",
+        "NSTFR2",
+        "--update_db",
+        "True",
+        "--write_csv",
+        "False"
+      ]
+    },
+    {
       "name": "Run Tests: All",
       "type": "python",
       "request": "launch",
       "module": "pytest",
       "console": "integratedTerminal",
       "envFile": "${workspaceFolder}/.env.development",
-  },
-  {
+    },
+    {
       "name": "Run Tests: Current File (debug)",
       "type": "python",
       "request": "launch",
@@ -146,13 +174,13 @@
       "cwd": "${workspaceFolder}",
       "envFile": "${workspaceFolder}/.env.development",
       "args": [
-          "-c",
-          "pytest.ini",
-          "${file}"
+        "-c",
+        "pytest.ini",
+        "${file}"
       ],
       "justMyCode": false
-  },
-  {
+    },
+    {
       "name": "Run Tests: Current Function (debug)",
       "type": "python",
       "request": "launch",
@@ -161,12 +189,12 @@
       "cwd": "${workspaceFolder}",
       "envFile": "${workspaceFolder}/.env.development",
       "args": [
-          "-c",
-          "pytest.ini",
-          "-k",
-          "test_get_application_fields_export" // modify this accordingly
+        "-c",
+        "pytest.ini",
+        "-k",
+        "test_get_application_fields_export" // modify this accordingly
       ],
       "justMyCode": false
-  },
+    },
   ]
 }
