@@ -22,7 +22,7 @@ class UnitTestingConfig(DefaultConfig):
 
     WARN_IF_QUERIES_OVER_MS = 5
 
-    SQLALCHEMY_DATABASE_URI = DefaultConfig.SQLALCHEMY_DATABASE_URI + "_UNIT_TEST"
+    SQLALCHEMY_DATABASE_URI = DefaultConfig.SQLALCHEMY_DATABASE_URI + "_unit_test"
 
     # ---------------
     # Task Executor Config
@@ -46,3 +46,5 @@ class UnitTestingConfig(DefaultConfig):
     SQS_BATCH_SIZE = 10  # MaxNumber Of Messages to process
     SQS_VISIBILITY_TIME = 1  # time for message to temporarily invisible to others (in sec)
     SQS_RECEIVE_MESSAGE_CYCLE_TIME = 5  # Run the job every 'x' seconds
+
+    USE_LOCAL_DATA = True

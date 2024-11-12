@@ -5,6 +5,7 @@
   },
   "editor.formatOnSave": false,
   "python.testing.pytestArgs": [
+    "tests_apply",
     "tests"
   ],
   "python.testing.unittestEnabled": false,

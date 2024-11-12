@@ -35,3 +35,6 @@ prance==23.6.21.0
 
 dataclass_dict_convert==1.7.3
 jsonpath-rw-ext==1.2.2
+
+pandas
+openpyxl

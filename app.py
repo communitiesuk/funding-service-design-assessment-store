@@ -3,6 +3,7 @@ from os import getenv
 import connexion
 from config import Config
 from connexion import FlaskApp
+from connexion.resolver import MethodResolver
 from connexion.resolver import MethodViewResolver
 from fsd_utils import init_sentry
 from fsd_utils.healthchecks.checkers import DbChecker
@@ -20,6 +21,13 @@ def create_app() -> FlaskApp:
         get_bundled_specs("/openapi/api.yml"),
         validate_responses=True,
         resolver=MethodViewResolver("api"),
+        base_path="/assess",
+    )
+    connexion_app.add_api(
+        get_bundled_specs("/openapi/apply_api.yml"),
+        validate_responses=True,
+        resolver=MethodResolver("api"),
+        base_path="/apply",
     )
 
     flask_app = connexion_app.app

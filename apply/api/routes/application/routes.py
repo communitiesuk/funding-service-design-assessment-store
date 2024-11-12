@@ -109,17 +109,6 @@ class ApplicationsView(MethodView):
         fund_id: Optional[list] = [],
         format: Optional[str] = "csv",
     ):
-        print("hello")
-        current_app.logger.warning("hello")
-        return jsonify(
-            {
-                "metrics": [
-                    {"fund_id": "asdf", "rounds": [{"round_id": "123", "application_statuses": {"NOT_STARTED": 12}}]}
-                ]
-            }
-        )
-        print("hello")
-        current_app.logger.warning("hello")
         if not round_id and not fund_id:
             print("No params")
             return jsonify({"code": 404, "message": "No funds or rounds specified"})

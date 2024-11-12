@@ -21,7 +21,7 @@ class DefaultConfig:
     FLASK_ROOT = str(Path(__file__).parent.parent.parent)
     FLASK_ENV = CommonConfig.FLASK_ENV
     FORCE_HTTPS = CommonConfig.FORCE_HTTPS
-    FSD_LOG_LEVEL = CommonConfig.FSD_LOG_LEVEL
+    FSD_LOG_LEVEL = "DEBUG"
 
     # ---------------
     # APIs Config: contains api hosts (set in manifest.yml)
@@ -71,6 +71,7 @@ class DefaultConfig:
     # S3 Config
     # ---------------
     AWS_MSG_BUCKET_NAME = environ.get("AWS_MSG_BUCKET_NAME")
+    AWS_BUCKET_NAME = environ.get("AWS_BUCKET_NAME")
     # ---------------
     # Task Executor Config
     # ---------------
