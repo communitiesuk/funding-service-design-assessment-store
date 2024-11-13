@@ -267,7 +267,7 @@ sqlalchemy-utils==0.41.2
     # via
     #   -r requirements.in
     #   funding-service-design-utils
-starlette==0.37.2
+starlette==0.40.0
     # via connexion
 stringcase==1.2.0
     # via dataclass-dict-convert
