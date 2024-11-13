@@ -16,7 +16,7 @@ dependencies = [
     "flask==3.0.3",
     "funding-service-design-utils>=5.0.8,<6.0.0",
     "jsonpath-rw-ext==1.2.2",
-    "marshmallow-sqlalchemy==1.0.0",
+    "marshmallow-sqlalchemy==1.1.0",
     "openapi-spec-validator>=0.7.1",
     "prance==23.6.21.0",
     "psycopg2-binary==2.9.9",
