@@ -34,7 +34,7 @@ def get_account_data(account_id: str):
 
 
 def get_fund_data(fund_id: str):
-    return get_data(Config.FUND_STORE_API_HOST + Config.FUND_ENDPOINT.format(fund_id=fund_id, use_short_name=False))
+    return get_data(Config.FUND_STORE_API_HOST + Config.FUND_ENDPOINT.format(fund_id=fund_id) + "?use_short_name=False")
 
 
 def create_assessment_url_for_application(application_id: str):

@@ -44,7 +44,7 @@ def get_remote_data(endpoint, params: Optional[dict] = None):
         params = {k: v for k, v in params.items() if v is not None}
         query_string = urlencode(params)
 
-    endpoint = endpoint + "?" + query_string
+        endpoint = endpoint + "?" + query_string
 
     response = requests.get(endpoint)
     if response.status_code == 200:

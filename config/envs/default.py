@@ -40,7 +40,7 @@ class DefaultConfig:
     # Fund Store
     FUND_STORE_API_HOST = CommonConfig.FUND_STORE_API_HOST
     FUNDS_ENDPOINT = CommonConfig.FUNDS_ENDPOINT
-    FUND_ENDPOINT = CommonConfig.FUND_ENDPOINT + "?use_short_name={use_short_name}"
+    FUND_ENDPOINT = CommonConfig.FUND_ENDPOINT
 
     ASSESSMENT_FRONTEND_HOST = environ.get("ASSESSMENT_FRONTEND_HOST")
     ASSESSMENT_APPLICATION_ENDPOINT = "/assess/application/{application_id}"
