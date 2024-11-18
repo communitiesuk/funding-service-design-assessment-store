@@ -102,6 +102,9 @@ DPIF_ROUND_2_ID = "0059aad4-5eb5-11ee-8c99-0242ac120002"
 HSRA_FUND_ID = "1e4bd8b0-b399-466d-bbd1-572171bbc7bd"
 HSRA_ROUND_ID = "50062ff6-e696-474d-a560-4d9af784e6e5"
 
+SF_FUND_ID = "91504db1-2f21-4177-ac1b-05c9246d5b55"
+SF_ROUND_1_ID = "f54d5cfa-79b5-4706-9c55-37cc927af66f"
+
 # ASSESSMENT DISPLAY CONFIGURATION
 
 fund_round_to_assessment_mapping = {
@@ -175,6 +178,37 @@ fund_round_to_assessment_mapping = {
         "unscored_sections": hsra_unscored_sections,
         "scored_criteria": hsra_scored_criteria,
     },
+    f"{SF_FUND_ID}:{SF_ROUND_1_ID}": {
+        "schema_id": "sf_r1_assessment",
+        "unscored_sections": [
+            {
+                "id": "unscored",
+                "name": "Unscored",
+                "sub_criteria": [
+                    {
+                        "id": "project_name",
+                        "name": "Project name",
+                        "themes": [
+                            {
+                                "id": "project_name",
+                                "name": "Project name",
+                                "answers": [
+                                    {
+                                        "field_id": "VcyKVN",
+                                        "form_name": "project-name-sample",
+                                        "field_type": "textField",
+                                        "presentation_type": "text",
+                                        "question": "Project name",
+                                    }
+                                ],
+                            }
+                        ],
+                    },
+                ],
+            }
+        ],
+        "scored_criteria": [],
+    },
 }
 
 # Key information for header fields (within JSON)
@@ -184,6 +218,12 @@ fund_round_to_assessment_mapping = {
 
 
 fund_round_data_key_mappings = {
+    "SFR1": {
+        "location": None,
+        "asset_type": None,
+        "funding_one": None,
+        "funding_two": None,
+    },
     "COFR2W2": {
         "location": "yEmHpp",
         "asset_type": "yaQoxU",
@@ -1148,6 +1188,11 @@ applicant_info_mapping = {
 # APPLICATION SEEDING CONFIGURATION
 
 fund_round_mapping_config = {
+    "SFR1": {
+        "fund_id": SF_FUND_ID,
+        "round_id": SF_ROUND_1_ID,
+        "type_of_application": "SF",
+    },
     "COFR2W2": {
         "fund_id": COF_FUND_ID,
         "round_id": COF_ROUND_2_ID,
