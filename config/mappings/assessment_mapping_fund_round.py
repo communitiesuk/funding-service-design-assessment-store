@@ -73,6 +73,9 @@ from config.mappings.nstf_mapping_parts.r2_scored_criteria import (
 from config.mappings.nstf_mapping_parts.r2_unscored_sections import (
     unscored_sections as nstf_unscored_sections,
 )
+from config.mappings.sf_mapping_parts.r1_unscored_sections import (
+    unscored_sections as sf_unscored_sections,
+)
 
 # FUND AND ROUND CONFIGURATION (Extracted from the fund store)
 COF_FUND_ID = "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4"
@@ -180,33 +183,7 @@ fund_round_to_assessment_mapping = {
     },
     f"{SF_FUND_ID}:{SF_ROUND_1_ID}": {
         "schema_id": "sf_r1_assessment",
-        "unscored_sections": [
-            {
-                "id": "unscored",
-                "name": "Unscored",
-                "sub_criteria": [
-                    {
-                        "id": "project_name",
-                        "name": "Project name",
-                        "themes": [
-                            {
-                                "id": "project_name",
-                                "name": "Project name",
-                                "answers": [
-                                    {
-                                        "field_id": "VcyKVN",
-                                        "form_name": "project-name-sample",
-                                        "field_type": "textField",
-                                        "presentation_type": "text",
-                                        "question": "Project name",
-                                    }
-                                ],
-                            }
-                        ],
-                    },
-                ],
-            }
-        ],
+        "unscored_sections": sf_unscored_sections,
         "scored_criteria": [],
     },
 }
