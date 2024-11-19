@@ -1,7 +1,8 @@
 FROM python:3.10-bullseye
 
 WORKDIR /app
-
+# Install Git
+RUN apt-get update && apt-get install -y git
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
 # Install the project's dependencies using the lockfile and settings

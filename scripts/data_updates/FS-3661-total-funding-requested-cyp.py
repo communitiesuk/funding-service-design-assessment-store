@@ -1,6 +1,4 @@
-from config.mappings.assessment_mapping_fund_round import (
-    fund_round_data_key_mappings,
-)
+from config import Config
 from db import db
 from db.models import AssessmentRecord
 from flask import current_app
@@ -22,7 +20,7 @@ def update_funding_amount_requested_for_cyp():
     for application_id, jsonb_blob in cyp_records:
         current_app.logger.info(f"Processing application id {application_id}.")
         total_funding = 0
-        for key in fund_round_data_key_mappings["CYPR1"]["funding_two"]:
+        for key in Config.DATA_KEY_MAPPING_CONFIG["CYPR1"]["funding_two"]:
             total_funding = total_funding + int(
                 float(
                     (

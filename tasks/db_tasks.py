@@ -3,11 +3,10 @@ import sys
 
 sys.path.insert(1, ".")
 
-from invoke import task  # noqa:E402
-from tasks.helper_tasks import _echo_input  # noqa:E402
-from tasks.helper_tasks import _echo_print  # noqa:E402
-from tasks.helper_tasks import _env_var  # noqa:E402
-from app import app as connexionapp  # noqa:E402
+from invoke import task  # noqa: E402
+
+from app import app as connexionapp  # noqa: E402
+from tasks.helper_tasks import _echo_input, _echo_print, _env_var  # noqa: E402
 
 # Needed for invoke to work on python3.11
 # Remove once invoke has been updated.
@@ -23,8 +22,7 @@ def bootstrap_dev_db(c):
 
     """
 
-    from sqlalchemy_utils.functions import create_database
-    from sqlalchemy_utils.functions import database_exists
+    from sqlalchemy_utils.functions import create_database, database_exists
 
     with _env_var("FLASK_ENV", "development"):
         with connexionapp.app.app_context():
@@ -45,8 +43,9 @@ def bootstrap_dev_db(c):
 
 @task
 def generate_test_data(c):
-    from tests._db_seed_data import get_dynamic_rows
     import json
+
+    from tests._db_seed_data import get_dynamic_rows
 
     _echo_print("Generating data.")
     rows = [json.loads(row) for row in get_dynamic_rows(3, 3, 10)]
@@ -69,15 +68,12 @@ def seed_dev_db(c, fundround=None, appcount=None):
 
     with _env_var("FLASK_ENV", "development"):
         with connexionapp.app.app_context():
-            from tests._helpers import seed_database_for_fund_round
             from config import Config
-            from config.mappings.assessment_mapping_fund_round import (
-                fund_round_mapping_config,
-            )
+            from tests._helpers import seed_database_for_fund_round
 
             choosing = not bool(fundround and appcount)
             if not choosing:
-                fund_round = fund_round_mapping_config[fundround]
+                fund_round = Config.FUND_ROUND_MAPPING_CONFIG[fundround]
                 apps = int(appcount)
                 print(f"Seeding {apps} applications for " f"fund_round: '{fundround}'")
 
@@ -87,11 +83,11 @@ def seed_dev_db(c, fundround=None, appcount=None):
                     _echo_input(
                         "Please type the fund-round to seed:"
                         f"\nfund-rounds available to seed: "
-                        f"{new_line} - {f' {new_line} - '.join(fund_round_mapping_config.keys())}"
+                        f"{new_line} - {f' {new_line} - '.join(Config.FUND_ROUND_MAPPING_CONFIG.keys())}"
                         f"{new_line} > "
                     ),
                 )
-                fund_round = fund_round_mapping_config[fundround]
+                fund_round = Config.FUND_ROUND_MAPPING_CONFIG[fundround]
                 apps = int(_echo_input("How many applications?" f"{new_line} > "))
                 choosing = (
                     not _echo_input(f"Would you like to insert {apps} applications" f" for {fundround}? y/n \n").lower()

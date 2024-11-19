@@ -1,7 +1,6 @@
 import json
 import threading
 
-from config.mappings.assessment_mapping_fund_round import fund_round_data_key_mappings
 from db.queries import bulk_insert_application_record
 from fsd_utils.sqs_scheduler.task_executer_service import TaskExecutorService
 
@@ -19,7 +18,7 @@ class AssessmentTaskExecutorService(TaskExecutorService):
             application_json_list = []
             fund_round_shortname = "".join(application_json["reference"].split("-")[:2])
             # Check if the import config exists for the application
-            if fund_round_shortname not in fund_round_data_key_mappings.keys():
+            if fund_round_shortname not in self.fund_round_data_key_mapping.keys():
                 self.logger.warning(f"Missing import config for the application: {application_json['reference']}.")
                 return message
 

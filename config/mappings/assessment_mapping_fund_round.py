@@ -73,9 +73,6 @@ from config.mappings.nstf_mapping_parts.r2_scored_criteria import (
 from config.mappings.nstf_mapping_parts.r2_unscored_sections import (
     unscored_sections as nstf_unscored_sections,
 )
-from config.mappings.sf_mapping_parts.r1_unscored_sections import (
-    unscored_sections as sf_unscored_sections,
-)
 
 # FUND AND ROUND CONFIGURATION (Extracted from the fund store)
 COF_FUND_ID = "47aef2f5-3fcb-4d45-acb5-f0152b5f03c4"
@@ -104,9 +101,6 @@ DPIF_ROUND_2_ID = "0059aad4-5eb5-11ee-8c99-0242ac120002"
 
 HSRA_FUND_ID = "1e4bd8b0-b399-466d-bbd1-572171bbc7bd"
 HSRA_ROUND_ID = "50062ff6-e696-474d-a560-4d9af784e6e5"
-
-SF_FUND_ID = "91504db1-2f21-4177-ac1b-05c9246d5b55"
-SF_ROUND_1_ID = "f54d5cfa-79b5-4706-9c55-37cc927af66f"
 
 # ASSESSMENT DISPLAY CONFIGURATION
 
@@ -180,11 +174,6 @@ fund_round_to_assessment_mapping = {
         "schema_id": "hsra_r1_assessment",
         "unscored_sections": hsra_unscored_sections,
         "scored_criteria": hsra_scored_criteria,
-    },
-    f"{SF_FUND_ID}:{SF_ROUND_1_ID}": {
-        "schema_id": "sf_r1_assessment",
-        "unscored_sections": sf_unscored_sections,
-        "scored_criteria": [],
     },
 }
 
@@ -1165,11 +1154,6 @@ applicant_info_mapping = {
 # APPLICATION SEEDING CONFIGURATION
 
 fund_round_mapping_config = {
-    "SFR1": {
-        "fund_id": SF_FUND_ID,
-        "round_id": SF_ROUND_1_ID,
-        "type_of_application": "SF",
-    },
     "COFR2W2": {
         "fund_id": COF_FUND_ID,
         "round_id": COF_ROUND_2_ID,
@@ -1245,9 +1229,4 @@ fund_round_mapping_config = {
         "round_id": uuid4(),
         "type_of_application": "RFR",
     },
-}
-
-fund_round_mapping_config_with_round_id = {
-    v["round_id"]: {"fund_id": v["fund_id"], "type_of_application": v["type_of_application"]}
-    for k, v in fund_round_mapping_config.items()
 }

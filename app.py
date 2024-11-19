@@ -60,6 +60,7 @@ def create_app() -> FlaskApp:
     # Configure Task Executor service
     task_executor_service = AssessmentTaskExecutorService(
         flask_app=flask_app,
+        fund_round_data_key_mapping=Config.FUND_ROUND_MAPPING_CONFIG,
         executor=executor,
         s3_bucket=Config.AWS_MSG_BUCKET_NAME,
         sqs_primary_url=Config.AWS_SQS_IMPORT_APP_PRIMARY_QUEUE_URL,

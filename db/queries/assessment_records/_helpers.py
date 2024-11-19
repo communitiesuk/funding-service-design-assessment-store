@@ -3,9 +3,7 @@ from datetime import datetime
 
 import jsonpath_rw_ext
 import requests
-from config.mappings.assessment_mapping_fund_round import (
-    fund_round_data_key_mappings,
-)
+from config import Config
 from db.models.assessment_record import TagAssociation
 from flask import current_app
 
@@ -71,16 +69,16 @@ def derive_application_values(application_json):
     # search for asset_type
     try:
         asset_type = "No asset type specified."
-        if asset_key := fund_round_data_key_mappings[fund_round_shortname]["asset_type"]:
+        if asset_key := Config.DATA_KEY_MAPPING_CONFIG[fund_round_shortname]["asset_type"]:
             asset_type = get_answer_value(application_json, asset_key)
     except Exception:
         print(f"Could not extract asset_type from application: {application_id}.")
 
     # search for capital funding
-    funding_field_type = fund_round_data_key_mappings.get(fund_round_shortname, {}).get("funding_field_type")
+    funding_field_type = Config.DATA_KEY_MAPPING_CONFIG.get(fund_round_shortname, {}).get("funding_field_type")
     try:
         funding_one = 0
-        if funding_one_keys := fund_round_data_key_mappings[fund_round_shortname]["funding_one"]:
+        if funding_one_keys := Config.DATA_KEY_MAPPING_CONFIG[fund_round_shortname]["funding_one"]:
             funding_one_keys = [funding_one_keys] if isinstance(funding_one_keys, str) else funding_one_keys
 
             if funding_field_type == "multiInputField" and len(funding_one_keys) > 1:
@@ -97,7 +95,7 @@ def derive_application_values(application_json):
     # search for revenue funding
     try:
         funding_two = 0
-        if funding_two_keys := fund_round_data_key_mappings[fund_round_shortname]["funding_two"]:
+        if funding_two_keys := Config.DATA_KEY_MAPPING_CONFIG[fund_round_shortname]["funding_two"]:
             funding_two_keys = [funding_two_keys] if isinstance(funding_two_keys, str) else funding_two_keys
             if funding_field_type == "multiInputField" and len(funding_two_keys) > 1:
                 funding_two = get_answer_value_for_multi_input(
@@ -112,7 +110,7 @@ def derive_application_values(application_json):
     # search for location postcode
     try:
         location_data = ""
-        if address_key := fund_round_data_key_mappings[fund_round_shortname]["location"]:
+        if address_key := Config.DATA_KEY_MAPPING_CONFIG[fund_round_shortname]["location"]:
             address = get_answer_value(application_json, address_key)
             raw_postcode = address.split(",")[-1].strip().replace(" ", "").upper()
             location_data = get_location_json_from_postcode(raw_postcode)
@@ -140,7 +138,7 @@ def derive_application_values(application_json):
     else:
         derived_values["location_json_blob"] = {
             "error": True
-            if fund_round_data_key_mappings[fund_round_shortname]["location"]
+            if Config.DATA_KEY_MAPPING_CONFIG[fund_round_shortname]["location"]
             else False  # if location is not mandatory for a fund, then treat error as `False`
         }
 

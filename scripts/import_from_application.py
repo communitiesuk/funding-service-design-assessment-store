@@ -5,9 +5,6 @@ import argparse
 import requests
 from app import app  # noqa: E402
 from config import Config  # noqa: E402
-from config.mappings.assessment_mapping_fund_round import (
-    fund_round_mapping_config,
-)
 from db.queries import bulk_insert_application_record  # noqa: E402
 from fsd_utils import CommonConfig  # noqa: E402
 
@@ -39,8 +36,8 @@ def main() -> None:
     args = parser.parse_args()
 
     if args.fundround:
-        roundid = fund_round_mapping_config[args.fundround]["round_id"]
-        app_type = fund_round_mapping_config[args.fundround]["type_of_application"]
+        roundid = Config.FUND_ROUND_MAPPING_CONFIG[args.fundround]["round_id"]
+        app_type = Config.FUND_ROUND_MAPPING_CONFIG[args.fundround]["type_of_application"]
     elif args.roundid and args.app_type:
         roundid = args.roundid
         app_type = args.app_type

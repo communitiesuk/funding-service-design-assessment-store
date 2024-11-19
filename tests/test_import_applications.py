@@ -3,9 +3,7 @@ from argparse import Namespace
 from unittest import mock
 
 import pytest
-from config.mappings.assessment_mapping_fund_round import (
-    fund_round_mapping_config,
-)
+from config import Config
 from requests import Response
 from scripts.import_from_application import main
 from tests._helpers import row_data
@@ -17,12 +15,12 @@ def mock_request_get_application(request):
         fundround = request.getfixturevalue("fundround")
     if "roundid" in request.fixturenames:
         roundid = request.getfixturevalue("roundid")
-        for k, v in fund_round_mapping_config.items():
+        for k, v in Config.FUND_ROUND_MAPPING_CONFIG.items():
             if v["round_id"] == roundid:
                 fundround = k
                 break
     appcount = request.getfixturevalue("appcount")
-    fund_round_config = {fundround: fund_round_mapping_config[fundround]}
+    fund_round_config = {fundround: Config.FUND_ROUND_MAPPING_CONFIG[fundround]}
     application_json_strings = row_data(appcount, 1, 1, fund_round_config)
     application_json_list = [json.loads(application_json) for application_json in application_json_strings]
     with (
@@ -84,7 +82,7 @@ def test_import_application_with_fundround(
     mock_request_get_application,
     mock_bulk_insert_application_records,
 ):
-    roundid = fund_round_mapping_config[fundround]["round_id"]
+    roundid = Config.FUND_ROUND_MAPPING_CONFIG[fundround]["round_id"]
     inserted_rows = main()
     assert len(inserted_rows) == appcount
     assert inserted_rows[0].round_id == roundid

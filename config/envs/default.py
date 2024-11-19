@@ -2,9 +2,9 @@
 from os import environ
 from pathlib import Path
 
-from config.mappings.assessment_mapping_fund_round import (
-    fund_round_to_assessment_mapping,
-)
+from config.mappings.assessment_mapping_fund_round import fund_round_data_key_mappings
+from config.mappings.assessment_mapping_fund_round import fund_round_mapping_config
+from config.mappings.assessment_mapping_fund_round import fund_round_to_assessment_mapping
 from fsd_utils import CommonConfig
 from fsd_utils import configclass
 
@@ -54,7 +54,8 @@ class DefaultConfig:
     SQLALCHEMY_ENGINE_OPTIONS = {"future": True}
 
     ASSESSMENT_MAPPING_CONFIG = fund_round_to_assessment_mapping
-
+    DATA_KEY_MAPPING_CONFIG = fund_round_data_key_mappings
+    FUND_ROUND_MAPPING_CONFIG = fund_round_mapping_config
     # ---------------
     # AWS Config
     # ---------------

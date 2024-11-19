@@ -1,5 +1,8 @@
 """Flask Unit Testing Environment Configuration."""
 from config.envs.default import DefaultConfig
+from config.mappings.assessment_mapping_fund_round import (
+    fund_round_data_key_mappings,
+)
 from fsd_utils import CommonConfig
 from fsd_utils import configclass
 
@@ -46,3 +49,16 @@ class UnitTestingConfig(DefaultConfig):
     SQS_BATCH_SIZE = 10  # MaxNumber Of Messages to process
     SQS_VISIBILITY_TIME = 1  # time for message to temporarily invisible to others (in sec)
     SQS_RECEIVE_MESSAGE_CYCLE_TIME = 5  # Run the job every 'x' seconds
+
+    fund_round_data_key_mappings.update(
+        {
+            "TESTREF": {
+                "location": "yEmHpp",
+                "asset_type": "yaQoxU",
+                "funding_one": "JzWvhj",
+                "funding_two": "jLIgoi",
+            }
+        }
+    )
+
+    DATA_KEY_MAPPING_CONFIG = fund_round_data_key_mappings

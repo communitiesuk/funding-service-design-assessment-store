@@ -1,6 +1,7 @@
 from uuid import UUID
 
 import pytest
+from config import Config
 from config.mappings.assessment_mapping_fund_round import applicant_info_mapping
 from config.mappings.assessment_mapping_fund_round import COF25_EOI_FUND_ID
 from config.mappings.assessment_mapping_fund_round import COF25_EOI_ROUND_ID
@@ -8,10 +9,6 @@ from config.mappings.assessment_mapping_fund_round import COF25_FUND_ID
 from config.mappings.assessment_mapping_fund_round import COF25_ROUND_ID
 from config.mappings.assessment_mapping_fund_round import COF_EOI_FUND_ID
 from config.mappings.assessment_mapping_fund_round import COF_EOI_ROUND_ID
-from config.mappings.assessment_mapping_fund_round import fund_round_data_key_mappings
-from config.mappings.assessment_mapping_fund_round import fund_round_mapping_config
-from config.mappings.assessment_mapping_fund_round import fund_round_mapping_config_with_round_id
-from config.mappings.assessment_mapping_fund_round import fund_round_to_assessment_mapping
 
 
 def test_fund_round_ids_are_valid_uuids():
@@ -33,24 +30,24 @@ def test_fund_round_to_assessment_mapping_structure():
     """Test the structure and content of fund_round_to_assessment_mapping."""
     # Test COF EOI mapping
     cof_key = f"{COF_EOI_FUND_ID}:{COF_EOI_ROUND_ID}"
-    assert cof_key in fund_round_to_assessment_mapping
-    assert fund_round_to_assessment_mapping[cof_key]["schema_id"] == "cof_eoi_assessment"
-    assert isinstance(fund_round_to_assessment_mapping[cof_key]["unscored_sections"], list)
-    assert isinstance(fund_round_to_assessment_mapping[cof_key]["scored_criteria"], list)
+    assert cof_key in Config.ASSESSMENT_MAPPING_CONFIG
+    assert Config.ASSESSMENT_MAPPING_CONFIG[cof_key]["schema_id"] == "cof_eoi_assessment"
+    assert isinstance(Config.ASSESSMENT_MAPPING_CONFIG[cof_key]["unscored_sections"], list)
+    assert isinstance(Config.ASSESSMENT_MAPPING_CONFIG[cof_key]["scored_criteria"], list)
 
     # Test COF25 EOI mapping
     cof25eoi_key = f"{COF25_EOI_FUND_ID}:{COF25_EOI_ROUND_ID}"
-    assert cof25eoi_key in fund_round_to_assessment_mapping
-    assert fund_round_to_assessment_mapping[cof25eoi_key]["schema_id"] == "cof25_eoi_assessment"
-    assert isinstance(fund_round_to_assessment_mapping[cof25eoi_key]["unscored_sections"], list)
-    assert isinstance(fund_round_to_assessment_mapping[cof25eoi_key]["scored_criteria"], list)
+    assert cof25eoi_key in Config.ASSESSMENT_MAPPING_CONFIG
+    assert Config.ASSESSMENT_MAPPING_CONFIG[cof25eoi_key]["schema_id"] == "cof25_eoi_assessment"
+    assert isinstance(Config.ASSESSMENT_MAPPING_CONFIG[cof25eoi_key]["unscored_sections"], list)
+    assert isinstance(Config.ASSESSMENT_MAPPING_CONFIG[cof25eoi_key]["scored_criteria"], list)
 
     # Test COF25 mapping
     cof25_key = f"{COF25_FUND_ID}:{COF25_ROUND_ID}"
-    assert cof25_key in fund_round_to_assessment_mapping
-    assert fund_round_to_assessment_mapping[cof25_key]["schema_id"] == "cof25_r1_assessment"
-    assert isinstance(fund_round_to_assessment_mapping[cof25_key]["unscored_sections"], list)
-    assert isinstance(fund_round_to_assessment_mapping[cof25_key]["scored_criteria"], list)
+    assert cof25_key in Config.ASSESSMENT_MAPPING_CONFIG
+    assert Config.ASSESSMENT_MAPPING_CONFIG[cof25_key]["schema_id"] == "cof25_r1_assessment"
+    assert isinstance(Config.ASSESSMENT_MAPPING_CONFIG[cof25_key]["unscored_sections"], list)
+    assert isinstance(Config.ASSESSMENT_MAPPING_CONFIG[cof25_key]["scored_criteria"], list)
 
 
 def test_fund_round_data_key_mappings_structure():
@@ -58,19 +55,19 @@ def test_fund_round_data_key_mappings_structure():
     expected_keys_eoi = ["location", "asset_type", "funding_one", "funding_two"]
     expected_keys_cof = ["location", "asset_type", "funding_one", "funding_two", "funding_field_type"]
 
-    assert "COFEOI" in fund_round_data_key_mappings
-    assert "COF25EOI" in fund_round_data_key_mappings
-    assert "COF25R1" in fund_round_data_key_mappings
+    assert "COFEOI" in Config.DATA_KEY_MAPPING_CONFIG
+    assert "COF25EOI" in Config.DATA_KEY_MAPPING_CONFIG
+    assert "COF25R1" in Config.DATA_KEY_MAPPING_CONFIG
 
     for fund_type in ["COFEOI", "COF25EOI"]:
         for key in expected_keys_eoi:
-            assert key in fund_round_data_key_mappings[fund_type]
-            assert fund_round_data_key_mappings[fund_type][key] is None
+            assert key in Config.DATA_KEY_MAPPING_CONFIG[fund_type]
+            assert Config.DATA_KEY_MAPPING_CONFIG[fund_type][key] is None
 
     for fund_type in ["COF25R1"]:
         for key in expected_keys_cof:
-            assert key in fund_round_data_key_mappings[fund_type]
-            assert fund_round_data_key_mappings[fund_type][key] is not None
+            assert key in Config.DATA_KEY_MAPPING_CONFIG[fund_type]
+            assert Config.DATA_KEY_MAPPING_CONFIG[fund_type][key] is not None
 
 
 def test_applicant_info_mapping_structure():
@@ -111,22 +108,14 @@ def test_fund_round_mapping_config_structure():
     """Test the structure and content of fund_round_mapping_config."""
     expected_keys = ["fund_id", "round_id", "type_of_application"]
 
-    assert "COFEOI" in fund_round_mapping_config
-    assert "COF25EOI" in fund_round_mapping_config
-    assert "COF25R1" in fund_round_mapping_config
-    assert "RANDOM_FUND_ROUND" in fund_round_mapping_config
+    assert "COFEOI" in Config.FUND_ROUND_MAPPING_CONFIG
+    assert "COF25EOI" in Config.FUND_ROUND_MAPPING_CONFIG
+    assert "COF25R1" in Config.FUND_ROUND_MAPPING_CONFIG
+    assert "RANDOM_FUND_ROUND" in Config.FUND_ROUND_MAPPING_CONFIG
 
-    for config_type in fund_round_mapping_config.values():
+    for config_type in Config.FUND_ROUND_MAPPING_CONFIG.values():
         for key in expected_keys:
             assert key in config_type
-
-
-def test_fund_round_mapping_config_with_round_id_generation():
-    """Test the generation of fund_round_mapping_config_with_round_id."""
-    # Check that all round IDs from the original config are present as keys
-    for config_key, config in fund_round_mapping_config.items():
-        round_id = config["round_id"]
-        assert round_id in fund_round_mapping_config_with_round_id
 
 
 def test_field_types_consistency():

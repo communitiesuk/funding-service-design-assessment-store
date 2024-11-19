@@ -5,24 +5,20 @@ import sys
 
 sys.path.insert(1, ".")
 
-
-# from app import app  # noqa: E402
-from db.queries.assessment_records.queries import (  # noqa: E402
-    get_application_jsonb_blob,  # noqa: E402
-)  # noqa: E402
-from config.mappings.assessment_mapping_fund_round import (  # noqa: E402
-    fund_round_mapping_config,  # noqa: E402
-)  # noqa: E402
 from distutils.util import strtobool  # noqa: E402
-from scripts.location_utils import (  # noqa: E402
-    get_all_application_ids_for_fund_round,  # noqa: E402
-)  # noqa: E402
-from scripts.location_utils import get_all_location_data  # noqa: E402
-from scripts.location_utils import get_application_form  # noqa: E402
-from scripts.location_utils import get_postcode_from_questions  # noqa: E402
-from scripts.location_utils import update_db_with_location_data  # noqa: E402
-from scripts.location_utils import write_locations_to_csv  # noqa: E402
 
+from config import Config  # noqa: E402
+from db.queries.assessment_records.queries import (  # noqa: E402
+    get_application_jsonb_blob,
+)
+from scripts.location_utils import (  # noqa: E402
+    get_all_application_ids_for_fund_round,
+    get_all_location_data,
+    get_application_form,
+    get_postcode_from_questions,
+    update_db_with_location_data,
+    write_locations_to_csv,
+)
 
 local_workspace = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
 file_locations_csv = local_workspace + "/locations.csv"
@@ -36,7 +32,7 @@ def process_locations(fund_id, round_id, update_db: bool, write_csv: bool, csv_l
     then update the DB with this information
 
     """
-    for k, v in fund_round_mapping_config.items():
+    for k, v in Config.FUND_ROUND_MAPPING_CONFIG.items():
         if round_id == v["round_id"] and fund_id == v["fund_id"]:
             fundround = k
             break
@@ -101,8 +97,8 @@ def main() -> None:
     parser = init_argparse()
     args = parser.parse_args()
     if args.fundround:
-        fund_id = fund_round_mapping_config[args.fundround]["fund_id"]
-        round_id = fund_round_mapping_config[args.fundround]["round_id"]
+        fund_id = Config.FUND_ROUND_MAPPING_CONFIG[args.fundround]["fund_id"]
+        round_id = Config.FUND_ROUND_MAPPING_CONFIG[args.fundround]["round_id"]
     elif args.round_id and args.fund_id:
         fund_id = args.fund_id
         round_id = args.round_id

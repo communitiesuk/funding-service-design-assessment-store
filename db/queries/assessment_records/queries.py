@@ -10,9 +10,7 @@ from typing import Dict
 from typing import List
 
 from bs4 import BeautifulSoup
-from config.mappings.assessment_mapping_fund_round import (
-    fund_round_mapping_config_with_round_id,
-)
+from config import Config
 from db import db
 from db.models.assessment_record import AssessmentRecord
 from db.models.assessment_record import TagAssociation
@@ -270,6 +268,11 @@ def bulk_insert_application_record(
         if not is_json:
             single_application_json = json.loads(single_application_json)
         if not application_type:
+            fund_round_mapping_config_with_round_id = {
+                v["round_id"]: {"fund_id": v["fund_id"], "type_of_application": v["type_of_application"]}
+                for k, v in Config.FUND_ROUND_MAPPING_CONFIG.items()
+            }
+
             application_type = fund_round_mapping_config_with_round_id[single_application_json["round_id"]][
                 "type_of_application"
             ]

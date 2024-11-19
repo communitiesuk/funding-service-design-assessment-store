@@ -53,6 +53,7 @@ class TestAssessmentTaskExecutorService(unittest.TestCase):
         Config.AWS_SQS_IMPORT_APP_PRIMARY_QUEUE_URL = self.queue_response["QueueUrl"]
         self.task_executor = TaskExecutorService(
             flask_app=MagicMock(),
+            fund_round_data_key_mapping={},
             executor=self.executor,
             s3_bucket=Config.AWS_MSG_BUCKET_NAME,
             sqs_primary_url=Config.AWS_SQS_IMPORT_APP_PRIMARY_QUEUE_URL,
