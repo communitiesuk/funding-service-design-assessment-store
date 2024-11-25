@@ -258,10 +258,17 @@ def assessment_stats_for_fund_round_id(
 
     """
 
+    # add application updated to _workflow_ status, whenever a comment is added it should go back to in progress
+    # add changes requested to display _statuses_ which can be derived based on just flags
+
+    # whyy is this here because its actually just mapped in the assessment frontend anyway
     def determine_display_status(assessment):
         all_latest_status = [flag["latest_status"] for flag in assessment["flags"]]
+        # has_requested_changes = True in [flag.is_change_request for flag in assessment.flags]
         if FlagStatus.STOPPED in all_latest_status:
             display_status = "STOPPED"
+        # elif has_requested_changes:
+        # display_status = "WAITING_FOR_APPLICANT"
         elif all_latest_status.count(FlagStatus.RAISED) > 1:
             display_status = "MULTIPLE_FLAGS"
         elif all_latest_status.count(FlagStatus.RAISED) == 1:
@@ -283,6 +290,8 @@ def assessment_stats_for_fund_round_id(
         funding_type=funding_type,
         countries=[_fix_country(c) for c in countries.split(",") if c],
     )
+
+    # stats doesnt know about new flags yet
     stats.update(
         {
             "completed": len([1 for assessment in assessments if determine_display_status(assessment) == "COMPLETED"]),

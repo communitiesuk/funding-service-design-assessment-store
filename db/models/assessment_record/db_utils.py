@@ -48,7 +48,7 @@ def update_workflow_status(_, connection, target):
         text(
             "UPDATE assessment_records SET workflow_status = 'IN_PROGRESS' "
             "WHERE application_id = :application_id "
-            "AND workflow_status = 'NOT_STARTED'"
+            "AND workflow_status = 'NOT_STARTED' OR workflow_status = 'APPLICANT_UPDATED'"
         ),
         {"application_id": target.application_id},
     )

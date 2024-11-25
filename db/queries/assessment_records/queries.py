@@ -18,7 +18,9 @@ from db.models.assessment_record import AssessmentRecord
 from db.models.assessment_record import TagAssociation
 from db.models.assessment_record.allocation_association import AllocationAssociation
 from db.models.assessment_record.enums import Status
+from db.models.flags.assessment_flag import AssessmentFlag
 from db.models.flags.flag_update import FlagStatus
+from db.models.flags.flag_update import FlagUpdate
 from db.models.score import Score
 from db.models.tag.tag_types import TagType
 from db.models.tag.tags import Tag
@@ -213,6 +215,7 @@ def get_metadata_for_fund_round_id(
     raw_results = db.session.execute(statement)
     assessment_metadatas = raw_results.unique().scalars().all()
 
+    # this will need to be udpated for search
     if status != "ALL":
         filter_assessments = []
         for assessment in assessment_metadatas:
@@ -288,22 +291,90 @@ def bulk_insert_application_record(
             "type_of_application": application_type,
         }
         try:
-            stmt = postgres_insert(AssessmentRecord).values([row])
-
-            upsert_rows_stmt = stmt.on_conflict_do_nothing(index_elements=[AssessmentRecord.application_id]).returning(
-                AssessmentRecord.application_id
+            application = db.session.scalar(
+                select(AssessmentRecord)
+                .where(
+                    AssessmentRecord.application_id == row["application_id"],
+                    AssessmentRecord.is_withdrawn == False,  # noqa: E712
+                )
+                .options(load_only(AssessmentRecord.jsonb_blob, AssessmentRecord.workflow_status))
             )
 
-            print(f"Attempting insert of application {row['application_id']}")
-            result = db.session.execute(upsert_rows_stmt)
+            if application:
+                # application already exists - we'll check for certain conditions and update it instead
+                # should check that we are:
+                # - an uncompeted fund
+                # - have open change request flags against this application
+                map = {}
+                for form in application.jsonb_blob["forms"]:
+                    for section in form["questions"]:
+                        for field in section["fields"]:
+                            map[field["key"]] = field["answer"]
 
-            # Check if the inserted application is in result
-            inserted_application_ids = [item.application_id for item in result]
-            if not len(inserted_application_ids):
-                print(f"Application id already exist in the database: {row['application_id']}")
-            rows.append(row)
-            db.session.commit()
-            del single_application_json
+                for form in row["jsonb_blob"]["forms"]:
+                    form_had_update = False
+                    for section in form["questions"]:
+                        section_had_update = False
+                        for field in section["fields"]:
+                            if field["answer"] != map.get(field["key"]):
+                                field["change_request_changed"] = True
+                                field["change_request_compare_value"] = map.get(field["key"])
+                                section_had_update = True
+                                form_had_update = True
+
+                        if section_had_update:
+                            section["change_request_changed"] = True
+                    if form_had_update:
+                        form["change_request_changed"] = True
+
+                if application.workflow_status == Status.NOT_STARTED or Status.IN_PROGRESS:
+                    row["workflow_status"] = "APPLICANT_UPDATED"
+
+                stmt = postgres_insert(AssessmentRecord).values(row)
+
+                # setting with an update makes surethe derived values which are put in columns are appropriately reset
+                update_row_statement = stmt.on_conflict_do_update(
+                    index_elements=[AssessmentRecord.application_id], set_=row
+                ).returning(AssessmentRecord.application_id)
+
+                db.session.execute(update_row_statement)
+
+                # resolve flags - any application re-submission resolves all change request flags
+                flags = db.session.scalars(
+                    select(AssessmentFlag).where(
+                        AssessmentFlag.application_id == row["application_id"], AssessmentFlag.is_change_request is True
+                    )
+                ).all()
+
+                for flag in flags:
+                    flag_update = FlagUpdate(
+                        justification="Applicant updated their submission",
+                        status=FlagStatus.RESOLVED,
+                        assessment_flag_id=flag.id,
+                    )
+                    flag.updates.append(flag_update)
+                    flag.latest_status = flag_update.status
+                    db.session.add(flag)
+
+                db.session.commit()
+                print("Updated application")
+            else:
+                stmt = postgres_insert(AssessmentRecord).values([row])
+
+                upsert_rows_stmt = stmt.on_conflict_do_nothing(
+                    index_elements=[AssessmentRecord.application_id]
+                ).returning(AssessmentRecord.application_id)
+
+                print(f"Attempting insert of application {row['application_id']}")
+                result = db.session.execute(upsert_rows_stmt)
+
+                # Check if the inserted application is in result
+                inserted_application_ids = [item.application_id for item in result]
+                if not len(inserted_application_ids):
+                    print(f"Application id already exist in the database: {row['application_id']}")
+                rows.append(row)
+                db.session.commit()
+                del single_application_json
         except exc.SQLAlchemyError as e:
             db.session.rollback()
             print(f"Error occurred while inserting application {row['application_id']}, error: {e}")

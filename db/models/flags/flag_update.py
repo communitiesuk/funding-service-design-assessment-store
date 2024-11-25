@@ -28,7 +28,8 @@ class FlagUpdate(BaseModel):
         UUID(as_uuid=True),
         ForeignKey("assessment_flag.id"),
     )
-    user_id = Column("user_id", String, nullable=False)
+    # this lets me resolve the flags when the application is updated
+    user_id = Column("user_id", String, nullable=True)
     date_created = Column("date_created", db.DateTime(), server_default=func.now())
     justification = Column("justification", String)
     status = Column("status", ENUM(FlagStatus))
