@@ -7,7 +7,7 @@ license = "MIT License"
 
 requires-python = ">=3.10, <3.11"
 dependencies = [
-    "alembic-utils==0.8.3",
+    "alembic-utils==0.8.5",
     "connexion[flask,swagger-ui,uvicorn]==3.1.0",
     "dataclass-dict-convert==1.7.3",
     "flask-apscheduler==1.13.1",
