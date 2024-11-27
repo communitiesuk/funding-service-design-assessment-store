@@ -342,7 +342,7 @@ def bulk_insert_application_record(
                 # resolve flags - any application re-submission resolves all change request flags
                 flags = db.session.scalars(
                     select(AssessmentFlag).where(
-                        AssessmentFlag.application_id == row["application_id"], AssessmentFlag.is_change_request is True
+                        AssessmentFlag.application_id == row["application_id"], AssessmentFlag.is_change_request == True
                     )
                 ).all()
 
