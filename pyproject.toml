@@ -22,7 +22,7 @@ dependencies = [
     "psycopg2-binary==2.9.9",
     "requests==2.32.3",
     "sqlalchemy-utils==0.41.2",
-    "sqlalchemy==2.0.31",
+    "sqlalchemy==2.0.36",
     "swagger-ui-bundle==1.1.0",
     "uvicorn==0.30.1",
 ]
