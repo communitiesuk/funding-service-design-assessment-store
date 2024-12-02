@@ -19,7 +19,7 @@ dependencies = [
     "marshmallow-sqlalchemy==1.0.0",
     "openapi-spec-validator==0.7.1",
     "prance==23.6.21.0",
-    "psycopg2-binary==2.9.9",
+    "psycopg2-binary==2.9.10",
     "requests==2.32.3",
     "sqlalchemy-utils==0.41.2",
     "sqlalchemy==2.0.31",
